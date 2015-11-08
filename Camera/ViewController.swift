@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     let captureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
     var captureDevice: AVCaptureDevice?
+    let stillImageOutput = AVCaptureStillImageOutput()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,7 +44,6 @@ class ViewController: UIViewController {
     func beginSession() {
         
         do {
-//            configureDevice()
             captureSession.addInput(try AVCaptureDeviceInput(device: captureDevice!))
             
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
@@ -51,24 +51,31 @@ class ViewController: UIViewController {
             previewLayer?.frame = self.view.layer.frame
             captureSession.startRunning()
             
+            stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
+            if captureSession.canAddOutput(stillImageOutput) {
+                captureSession.addOutput(stillImageOutput)
+            }
+            
         } catch let err as NSError {
             print(err)
         }
         
     }
     
-//    func configureDevice() {
-//        if let device = captureDevice {
-//            do {
-//                try device.lockForConfiguration()
-//            } catch {
-//                return
-//            }
-//            
-//            device.focusMode = .Locked
-//            device.unlockForConfiguration()
-//        }
-//    }
+    @IBAction func tapButton(sender: AnyObject) {
+        view.alpha = 0
+        view.backgroundColor = UIColor.whiteColor()
+        delay(0.1) {
+            self.view.alpha = 1
+        }
+        if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
+            stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
+                (imageDataSampleBuffer, error) -> Void in
+                let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
+                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
+            }
+        }
+    }
 
 }
 
