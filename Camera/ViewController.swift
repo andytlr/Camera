@@ -43,6 +43,7 @@ class ViewController: UIViewController {
     func beginSession() {
         
         do {
+//            configureDevice()
             captureSession.addInput(try AVCaptureDeviceInput(device: captureDevice!))
             
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
@@ -55,6 +56,19 @@ class ViewController: UIViewController {
         }
         
     }
+    
+//    func configureDevice() {
+//        if let device = captureDevice {
+//            do {
+//                try device.lockForConfiguration()
+//            } catch {
+//                return
+//            }
+//            
+//            device.focusMode = .Locked
+//            device.unlockForConfiguration()
+//        }
+//    }
 
 }
 
