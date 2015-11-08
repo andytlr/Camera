@@ -22,6 +22,16 @@
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ox4-w2-oTz">
+                                <rect key="frame" x="0.0" y="544" width="147" height="80"/>
+                                <animations/>
+                                <state key="normal" title="Switch">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapSwitchButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fhL-N1-ApB"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C5M-M4-Sak">
                                 <rect key="frame" x="147" y="544" width="80" height="80"/>
                                 <animations/>
@@ -38,6 +48,7 @@
                     <connections>
                         <outlet property="cameraView" destination="OOk-t2-LFN" id="Qle-nc-yK1"/>
                         <outlet property="recordButton" destination="C5M-M4-Sak" id="XrD-qD-V43"/>
+                        <outlet property="switchButton" destination="Ox4-w2-oTz" id="v08-ys-5xA"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

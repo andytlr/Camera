@@ -13,15 +13,19 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var recordButton: UIButton!
+    @IBOutlet weak var switchButton: UIButton!
     
+    var backCamera: Bool = true
     let captureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
     var captureDevice: AVCaptureDevice?
     let stillImageOutput = AVCaptureStillImageOutput()
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
+    }
+    
+    func setupCamera() {
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
         let devices = AVCaptureDevice.devices()
         
@@ -38,16 +42,27 @@ class ViewController: UIViewController {
             // Make sure this particular device supports video
             if device.hasMediaType(AVMediaTypeVideo) {
                 // Finally check the position and confirm we've got the back camera
-                if device.position == AVCaptureDevicePosition.Front {
-                    captureDevice = device as? AVCaptureDevice
+                switch backCamera {
+                case true:
+                    if device.position == AVCaptureDevicePosition.Back {
+                        captureDevice = device as? AVCaptureDevice
+                    }
+                case false:
+                    if device.position == AVCaptureDevicePosition.Front {
+                        captureDevice = device as? AVCaptureDevice
+                    }
                 }
             }
         }
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupCamera()
         
         if captureDevice != nil {
             beginSession()
         }
-        
     }
     
     func beginSession() {
@@ -69,6 +84,10 @@ class ViewController: UIViewController {
             print(err)
         }
         
+    }
+    
+    @IBAction func tapSwitchButton(sender: AnyObject) {
+
     }
     
     @IBAction func tapButton(sender: AnyObject) {
