@@ -16,7 +16,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var switchButton: UIButton!
     
     var usingbackCamera: Bool = true
-    let captureSession = AVCaptureSession()
+    var captureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
     var captureDevice: AVCaptureDevice?
     var backCamera: AVCaptureDevice?
@@ -45,7 +45,7 @@ class ViewController: UIViewController {
 //        print(microphone)
         
         if backCamera != nil {
-            beginSession()
+            beginSession(backCamera!)
         }
     }
     
@@ -76,10 +76,16 @@ class ViewController: UIViewController {
         }
     }
     
-    func beginSession() {
+    func endSession() {
+        previewLayer?.removeFromSuperlayer()
+        captureSession.stopRunning()
+        captureSession = AVCaptureSession()
+    }
+    
+    func beginSession(device: AVCaptureDevice) {
         
         do {
-            captureSession.addInput(try AVCaptureDeviceInput(device: backCamera!))
+            captureSession.addInput(try AVCaptureDeviceInput(device: device))
             
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             self.cameraView.layer.addSublayer(previewLayer!)
@@ -99,7 +105,13 @@ class ViewController: UIViewController {
     
     @IBAction func tapSwitchButton(sender: AnyObject) {
         if usingbackCamera == true {
-            
+            endSession()
+            beginSession(frontCamera!)
+            usingbackCamera = false
+        } else {
+            endSession()
+            beginSession(backCamera!)
+            usingbackCamera = true
         }
     }
     
