@@ -137,17 +137,22 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     }
     
     func startRecording() {
+        print("Start Recording")
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        let outputPath = "\(documentsPath)/output.mov"
+        let outputPath = "\(documentsPath)/output3.mov"
         let outputFileUrl = NSURL(fileURLWithPath: outputPath)
         videoOutput.startRecordingToOutputFileURL(outputFileUrl, recordingDelegate: self)
     }
     
     func stopRecording() {
+        print("Stop Recording")
         videoOutput.stopRecording()
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        UISaveVideoAtPathToSavedPhotosAlbum("\(documentsPath)/output3.mov", nil, nil, nil)
     }
     
     func takeStillImage() {
+        print("Take Photo")
         cameraView.alpha = 0
         delay(0.085) {
             self.cameraView.alpha = 1
@@ -161,14 +166,21 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         }
     }
     
-    @IBAction func tapButton(sender: AnyObject) {
-//        startRecording()
-//        delay(3) {
-//            self.stopRecording()
-//        }
+    @IBAction func longPressButton(sender: UILongPressGestureRecognizer) {
         
-        takeStillImage()
+        if sender.state == .Began {
+            startRecording()
+        }
+        if sender.state == .Changed {
 
+        }
+        if sender.state == .Ended {
+            self.stopRecording()
+        }
+    }
+    
+    @IBAction func tapButton(sender: AnyObject) {
+        takeStillImage()
     }
 
 }

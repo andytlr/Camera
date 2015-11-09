@@ -26,8 +26,10 @@
                                 <rect key="frame" x="147" y="544" width="80" height="80"/>
                                 <animations/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
                                 <connections>
                                     <action selector="tapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="z7X-p0-ohW"/>
+                                    <outletCollection property="gestureRecognizers" destination="H7V-co-Tg3" appends="YES" id="h3D-An-t6T"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ox4-w2-oTz">
@@ -52,6 +54,11 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="H7V-co-Tg3" userLabel="Long Press Record Button">
+                    <connections>
+                        <action selector="longPressButton:" destination="BYZ-38-t0r" id="6OW-RO-Frd"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="536.5" y="995.5"/>
         </scene>
