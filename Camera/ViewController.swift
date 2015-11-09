@@ -142,6 +142,14 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         randomVideoFileName = randomStringWithLength(56) as String
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.5).CGColor
         recordButton.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.2)
+        
+        UIView.animateWithDuration(0.6, delay: 0, options: [.Repeat, .Autoreverse, .CurveEaseInOut], animations: { () -> Void in
+            
+            self.recordButton.transform = CGAffineTransformMakeScale(1.4, 1.4)
+            
+            }) { (Bool) -> Void in
+        }
+        
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         let outputPath = "\(documentsPath)/\(randomVideoFileName).mov"
         let outputFileUrl = NSURL(fileURLWithPath: outputPath)
@@ -154,6 +162,12 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         print("Stop Recording")
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5).CGColor
         recordButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2)
+        
+        UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
+            self.recordButton.transform = CGAffineTransformMakeScale(1, 1)
+            }) { (Bool) -> Void in
+        }
+        
         videoOutput.stopRecording()
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         UISaveVideoAtPathToSavedPhotosAlbum("\(documentsPath)/\(randomVideoFileName).mov", nil, nil, nil)
