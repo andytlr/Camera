@@ -159,6 +159,23 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         UISaveVideoAtPathToSavedPhotosAlbum("\(documentsPath)/\(randomVideoFileName).mov", nil, nil, nil)
         
         print("file name after save \(randomVideoFileName)")
+        
+        // give it a couple secs before deleting
+        delay(2) {
+            let fileManager = NSFileManager.defaultManager()
+
+            if fileManager.fileExistsAtPath("\(documentsPath)/\(self.randomVideoFileName).mov") {
+                print("it exists to delete")
+                do {
+                    try fileManager.removeItemAtPath("\(documentsPath)/\(self.randomVideoFileName).mov")
+                    listContentsOfDocumentsDirectory()
+                } catch {
+                    
+                }
+            }
+            
+        }
+        
     }
     
     func takeStillImage() {

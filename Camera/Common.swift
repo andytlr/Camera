@@ -41,3 +41,26 @@ func randomStringWithLength(len: Int) -> NSString {
     
     return randomString
 }
+
+func returnContentsOfDocumentsDirectory() -> [NSURL] {
+    let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
+    do {
+        let directoryContents = try NSFileManager.defaultManager().contentsOfDirectoryAtURL(documentsUrl, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions())
+        return directoryContents
+        
+    } catch let error as NSError {
+        print(error.localizedDescription)
+        return []
+    }
+}
+
+func listContentsOfDocumentsDirectory() {
+    let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
+    do {
+        let directoryContents = try NSFileManager.defaultManager().contentsOfDirectoryAtURL(documentsUrl, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions())
+        print(directoryContents)
+        
+    } catch let error as NSError {
+        print(error.localizedDescription)
+    }
+}
