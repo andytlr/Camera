@@ -6,10 +6,11 @@
 //  Copyright © 2015 Andy Taylor. All rights reserved.
 //
 
+//import Foundation
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var recordButton: UIButton!
@@ -22,14 +23,17 @@ class ViewController: UIViewController {
     var backCamera: AVCaptureDevice?
     var frontCamera: AVCaptureDevice?
     
-    
     let stillImageOutput = AVCaptureStillImageOutput()
-    let audioOutput = AVCaptureAudioDataOutput()
-    let videoOutput = AVCaptureVideoDataOutput()
+    let videoOutput = AVCaptureMovieFileOutput()
+//    let audioOutput = AVCaptureAudioDataOutput()
     let devices = AVCaptureDevice.devices()
     
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
+        
     }
 
     override func viewDidLoad() {
@@ -108,6 +112,9 @@ class ViewController: UIViewController {
             if captureSession.canAddOutput(stillImageOutput) {
                 captureSession.addOutput(stillImageOutput)
             }
+            if captureSession.canAddOutput(videoOutput) {
+                captureSession.addOutput(videoOutput)
+            }
             
         } catch let err as NSError {
             print(err)
@@ -129,7 +136,18 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func tapButton(sender: AnyObject) {
+    func startRecording() {
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        let outputPath = "\(documentsPath)/output.mov"
+        let outputFileUrl = NSURL(fileURLWithPath: outputPath)
+        videoOutput.startRecordingToOutputFileURL(outputFileUrl, recordingDelegate: self)
+    }
+    
+    func stopRecording() {
+        videoOutput.stopRecording()
+    }
+    
+    func takeStillImage() {
         cameraView.alpha = 0
         delay(0.085) {
             self.cameraView.alpha = 1
@@ -141,6 +159,16 @@ class ViewController: UIViewController {
                 UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
             }
         }
+    }
+    
+    @IBAction func tapButton(sender: AnyObject) {
+//        startRecording()
+//        delay(3) {
+//            self.stopRecording()
+//        }
+        
+        takeStillImage()
+
     }
 
 }
