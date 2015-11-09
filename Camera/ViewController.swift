@@ -35,17 +35,29 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCamera()
+        setButtonLabel()
         
 //        let backCamera = devices[0] as? AVCaptureDevice
 //        let frontCamera = devices[1] as? AVCaptureDevice
 //        let microphone = devices[2] as? AVCaptureDevice
-//        
 //        print(backCamera)
 //        print(frontCamera)
 //        print(microphone)
         
         if backCamera != nil {
             beginSession(backCamera!)
+        }
+        
+        if frontCamera == nil {
+            switchButton.alpha = 0
+        }
+    }
+    
+    func setButtonLabel() {
+        if usingbackCamera == true {
+            switchButton.setTitle("Selfie", forState: UIControlState.Normal)
+        } else {
+            switchButton.setTitle("Backie", forState: UIControlState.Normal)
         }
     }
     
@@ -108,10 +120,12 @@ class ViewController: UIViewController {
             endSession()
             beginSession(frontCamera!)
             usingbackCamera = false
+            setButtonLabel()
         } else {
             endSession()
             beginSession(backCamera!)
             usingbackCamera = true
+            setButtonLabel()
         }
     }
     
