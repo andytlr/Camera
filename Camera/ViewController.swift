@@ -15,19 +15,42 @@ class ViewController: UIViewController {
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var switchButton: UIButton!
     
-    var backCamera: Bool = true
+    var usingbackCamera: Bool = true
     let captureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
     var captureDevice: AVCaptureDevice?
+    var backCamera: AVCaptureDevice?
+    var frontCamera: AVCaptureDevice?
+    
+    
     let stillImageOutput = AVCaptureStillImageOutput()
+    let audioOutput = AVCaptureAudioDataOutput()
+    let videoOutput = AVCaptureVideoDataOutput()
+    let devices = AVCaptureDevice.devices()
     
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupCamera()
+        
+//        let backCamera = devices[0] as? AVCaptureDevice
+//        let frontCamera = devices[1] as? AVCaptureDevice
+//        let microphone = devices[2] as? AVCaptureDevice
+//        
+//        print(backCamera)
+//        print(frontCamera)
+//        print(microphone)
+        
+        if backCamera != nil {
+            beginSession()
+        }
+    }
     
     func setupCamera() {
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
-        let devices = AVCaptureDevice.devices()
         
         recordButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2)
         recordButton.layer.cornerRadius = 40;
@@ -35,40 +58,28 @@ class ViewController: UIViewController {
         recordButton.layer.borderWidth = 2;
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5).CGColor
         
-        print(devices)
-        
         // Loop through all the capture devices on this phone
         for device in devices {
             // Make sure this particular device supports video
             if device.hasMediaType(AVMediaTypeVideo) {
                 // Finally check the position and confirm we've got the back camera
-                switch backCamera {
-                case true:
-                    if device.position == AVCaptureDevicePosition.Back {
-                        captureDevice = device as? AVCaptureDevice
-                    }
-                case false:
-                    if device.position == AVCaptureDevicePosition.Front {
-                        captureDevice = device as? AVCaptureDevice
-                    }
+                if device.position == AVCaptureDevicePosition.Back {
+                    backCamera = device as? AVCaptureDevice
+                }
+                if device.position == AVCaptureDevicePosition.Front {
+                    frontCamera = device as? AVCaptureDevice
                 }
             }
-        }
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setupCamera()
-        
-        if captureDevice != nil {
-            beginSession()
+            if device.hasMediaType(AVMediaTypeAudio) {
+                print(device)
+            }
         }
     }
     
     func beginSession() {
         
         do {
-            captureSession.addInput(try AVCaptureDeviceInput(device: captureDevice!))
+            captureSession.addInput(try AVCaptureDeviceInput(device: backCamera!))
             
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             self.cameraView.layer.addSublayer(previewLayer!)
@@ -87,7 +98,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func tapSwitchButton(sender: AnyObject) {
-
+        if usingbackCamera == true {
+            
+        }
     }
     
     @IBAction func tapButton(sender: AnyObject) {
