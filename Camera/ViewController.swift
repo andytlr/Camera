@@ -6,10 +6,11 @@
 //  Copyright © 2015 Andy Taylor. All rights reserved.
 //
 
+//import Foundation
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var recordButton: UIButton!
@@ -21,31 +22,47 @@ class ViewController: UIViewController {
     var captureDevice: AVCaptureDevice?
     var backCamera: AVCaptureDevice?
     var frontCamera: AVCaptureDevice?
-    
+    var randomVideoFileName: String = ""
     
     let stillImageOutput = AVCaptureStillImageOutput()
-    let audioOutput = AVCaptureAudioDataOutput()
-    let videoOutput = AVCaptureVideoDataOutput()
+    let videoOutput = AVCaptureMovieFileOutput()
+//    let audioOutput = AVCaptureAudioDataOutput()
     let devices = AVCaptureDevice.devices()
     
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
+    
+    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
+        
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         setupCamera()
+        setButtonLabel()
         
 //        let backCamera = devices[0] as? AVCaptureDevice
 //        let frontCamera = devices[1] as? AVCaptureDevice
 //        let microphone = devices[2] as? AVCaptureDevice
-//        
 //        print(backCamera)
 //        print(frontCamera)
 //        print(microphone)
         
         if backCamera != nil {
             beginSession(backCamera!)
+        }
+        
+        if frontCamera == nil {
+            switchButton.alpha = 0
+        }
+    }
+    
+    func setButtonLabel() {
+        if usingbackCamera == true {
+            switchButton.setTitle("Selfie", forState: UIControlState.Normal)
+        } else {
+            switchButton.setTitle("Backie", forState: UIControlState.Normal)
         }
     }
     
@@ -96,6 +113,9 @@ class ViewController: UIViewController {
             if captureSession.canAddOutput(stillImageOutput) {
                 captureSession.addOutput(stillImageOutput)
             }
+            if captureSession.canAddOutput(videoOutput) {
+                captureSession.addOutput(videoOutput)
+            }
             
         } catch let err as NSError {
             print(err)
@@ -108,14 +128,41 @@ class ViewController: UIViewController {
             endSession()
             beginSession(frontCamera!)
             usingbackCamera = false
+            setButtonLabel()
         } else {
             endSession()
             beginSession(backCamera!)
             usingbackCamera = true
+            setButtonLabel()
         }
     }
     
-    @IBAction func tapButton(sender: AnyObject) {
+    func startRecording() {
+        print("Start Recording")
+        randomVideoFileName = randomStringWithLength(56) as String
+        recordButton.layer.borderColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.5).CGColor
+        recordButton.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.2)
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        let outputPath = "\(documentsPath)/\(randomVideoFileName).mov"
+        let outputFileUrl = NSURL(fileURLWithPath: outputPath)
+        videoOutput.startRecordingToOutputFileURL(outputFileUrl, recordingDelegate: self)
+        
+        print("file name at start \(randomVideoFileName)")
+    }
+    
+    func stopRecording() {
+        print("Stop Recording")
+        recordButton.layer.borderColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5).CGColor
+        recordButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2)
+        videoOutput.stopRecording()
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        UISaveVideoAtPathToSavedPhotosAlbum("\(documentsPath)/\(randomVideoFileName).mov", nil, nil, nil)
+        
+        print("file name after save \(randomVideoFileName)")
+    }
+    
+    func takeStillImage() {
+        print("Take Photo")
         cameraView.alpha = 0
         delay(0.085) {
             self.cameraView.alpha = 1
@@ -127,6 +174,23 @@ class ViewController: UIViewController {
                 UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
             }
         }
+    }
+    
+    @IBAction func longPressButton(sender: UILongPressGestureRecognizer) {
+        
+        if sender.state == .Began {
+            startRecording()
+        }
+        if sender.state == .Changed {
+
+        }
+        if sender.state == .Ended {
+            self.stopRecording()
+        }
+    }
+    
+    @IBAction func tapButton(sender: AnyObject) {
+        takeStillImage()
     }
 
 }
