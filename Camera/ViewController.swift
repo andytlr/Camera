@@ -136,19 +136,27 @@ class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
         }
     }
     
+    var randomVideoFileName: String = ""
+    
     func startRecording() {
+        randomVideoFileName = randomStringWithLength(56) as String
+        
         print("Start Recording")
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        let outputPath = "\(documentsPath)/output3.mov"
+        let outputPath = "\(documentsPath)/\(randomVideoFileName).mov"
         let outputFileUrl = NSURL(fileURLWithPath: outputPath)
         videoOutput.startRecordingToOutputFileURL(outputFileUrl, recordingDelegate: self)
+        
+        print("file name at start \(randomVideoFileName)")
     }
     
     func stopRecording() {
         print("Stop Recording")
         videoOutput.stopRecording()
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        UISaveVideoAtPathToSavedPhotosAlbum("\(documentsPath)/output3.mov", nil, nil, nil)
+        UISaveVideoAtPathToSavedPhotosAlbum("\(documentsPath)/\(randomVideoFileName).mov", nil, nil, nil)
+        
+        print("file name after save \(randomVideoFileName)")
     }
     
     func takeStillImage() {
