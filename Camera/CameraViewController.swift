@@ -10,7 +10,7 @@
 import UIKit
 import AVFoundation
 
-class ViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
+class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var recordButton: UIButton!
