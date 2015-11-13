@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		616937DF1BF64AEA00B47C38 /* ListViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */; };
 		C21477BF1BEE9FE7001474A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21477BE1BEE9FE7001474A4 /* AppDelegate.swift */; };
 		C21477C11BEE9FE7001474A4 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21477C01BEE9FE7001474A4 /* CameraViewController.swift */; };
 		C21477C41BEE9FE7001474A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C21477C21BEE9FE7001474A4 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewViewController.swift; sourceTree = "<group>"; };
 		C21477BB1BEE9FE7001474A4 /* Camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C21477BE1BEE9FE7001474A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C21477C01BEE9FE7001474A4 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 				C21477BE1BEE9FE7001474A4 /* AppDelegate.swift */,
 				C21477C01BEE9FE7001474A4 /* CameraViewController.swift */,
 				C21477C21BEE9FE7001474A4 /* Main.storyboard */,
+				616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */,
 				C2B733C81BF643E400337CD6 /* PreviewViewController.swift */,
 				C21477D01BEFE7BB001474A4 /* Common.swift */,
 				C21477C51BEE9FE7001474A4 /* Assets.xcassets */,
@@ -146,6 +149,7 @@
 				C21477D11BEFE7BB001474A4 /* Common.swift in Sources */,
 				C21477BF1BEE9FE7001474A4 /* AppDelegate.swift in Sources */,
 				C2B733C91BF643E400337CD6 /* PreviewViewController.swift in Sources */,
+				616937DF1BF64AEA00B47C38 /* ListViewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
