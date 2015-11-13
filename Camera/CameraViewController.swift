@@ -174,21 +174,27 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         print("file name after save \(randomVideoFileName)")
         
+        let testFrame: CGRect = CGRectMake(0, 0, view.frame.width, view.frame.height)
+        let testView: UIView = UIView(frame: testFrame)
+        testView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+        self.view.addSubview(testView)
+        
+        
         // give it a couple secs before deleting
-        delay(2) {
-            let fileManager = NSFileManager.defaultManager()
-
-            if fileManager.fileExistsAtPath("\(documentsPath)/\(self.randomVideoFileName).mov") {
-                print("it exists to delete")
-                do {
-                    try fileManager.removeItemAtPath("\(documentsPath)/\(self.randomVideoFileName).mov")
-                    listContentsOfDocumentsDirectory()
-                } catch {
-                    
-                }
-            }
-            
-        }
+//        delay(2) {
+//            let fileManager = NSFileManager.defaultManager()
+//
+//            if fileManager.fileExistsAtPath("\(documentsPath)/\(self.randomVideoFileName).mov") {
+//                print("it exists to delete")
+//                do {
+//                    try fileManager.removeItemAtPath("\(documentsPath)/\(self.randomVideoFileName).mov")
+//                    listContentsOfDocumentsDirectory()
+//                } catch {
+//                    
+//                }
+//            }
+//            
+//        }
         
     }
     
