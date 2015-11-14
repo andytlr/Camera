@@ -8,6 +8,7 @@
 
 //import Foundation
 import UIKit
+import AVKit
 import AVFoundation
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
@@ -139,7 +140,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func startRecording() {
         print("Start Recording")
-        randomVideoFileName = randomStringWithLength(56) as String
+        randomVideoFileName = randomStringWithLength(12) as String
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.5).CGColor
         recordButton.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.2)
         
@@ -164,21 +165,38 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         recordButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2)
         
         UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
+            
             self.recordButton.transform = CGAffineTransformMakeScale(1, 1)
+            
             }) { (Bool) -> Void in
         }
         
         videoOutput.stopRecording()
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        UISaveVideoAtPathToSavedPhotosAlbum("\(documentsPath)/\(randomVideoFileName).mov", nil, nil, nil)
+//        UISaveVideoAtPathToSavedPhotosAlbum("\(documentsPath)/\(randomVideoFileName).mov", nil, nil, nil)
         
-        print("file name after save \(randomVideoFileName)")
         
-        let testFrame: CGRect = CGRectMake(0, 0, view.frame.width, view.frame.height)
-        let testView: UIView = UIView(frame: testFrame)
-        testView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
-        self.view.addSubview(testView)
+//        let videoPath = NSURL(string: "\(documentsPath)/\(randomVideoFileName).mov")!
+        let videoPath = NSBundle.mainBundle().URLForResource("big_buck_bunny", withExtension: "mp4")!
         
+        print("path: \(videoPath)")
+        
+        let movieFrame: CGRect = self.view.bounds
+        let movieView: UIView = UIView(frame: movieFrame)
+        movieView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
+        self.view.addSubview(movieView)
+        
+        let playerLayer = AVPlayerLayer()
+        playerLayer.frame = view.bounds
+
+        let player = AVPlayer(URL: videoPath)
+
+//        player.actionAtItemEnd = .None
+        playerLayer.player = player
+        playerLayer.backgroundColor = UIColor.purpleColor().CGColor
+        playerLayer.videoGravity = AVLayerVideoGravityResize
+        movieView.layer.addSublayer(playerLayer)
+        player.play()
         
         // give it a couple secs before deleting
 //        delay(2) {
