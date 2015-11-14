@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="96O-5S-Syf">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -60,7 +60,7 @@
                     </connections>
                 </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="536.5" y="995.5"/>
+            <point key="canvasLocation" x="511.5" y="995.5"/>
         </scene>
         <!--Preview View Controller-->
         <scene sceneID="XsK-vB-FpF">
@@ -87,7 +87,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NTo-5E-bJE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="966.5" y="995.5"/>
+            <point key="canvasLocation" x="948.5" y="995.5"/>
         </scene>
         <!--List Review -->
         <scene sceneID="1ie-Mf-JnA">
@@ -116,7 +116,46 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XRo-ij-n4Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1440.5" y="995.5"/>
+            <point key="canvasLocation" x="1399.5" y="995.5"/>
+        </scene>
+        <!--Edit Clip View Controller-->
+        <scene sceneID="fuB-Kn-2tf">
+            <objects>
+                <viewController id="96O-5S-Syf" customClass="EditClipViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="B5F-G1-A52"/>
+                        <viewControllerLayoutGuide type="bottom" id="X1t-Ry-7WR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="uS7-cZ-Tdi">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SDA-dQ-wYt">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="nsz-p9-p38" appends="YES" id="Mcb-8C-qw2"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="clipView" destination="SDA-dQ-wYt" id="MSN-4w-DXr"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1XQ-TL-dNx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="nsz-p9-p38" userLabel="Tap to Add Text">
+                    <connections>
+                        <action selector="showTextInput:" destination="96O-5S-Syf" id="qJ2-6G-bMJ"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1850.5" y="995.5"/>
         </scene>
     </scenes>
 </document>
