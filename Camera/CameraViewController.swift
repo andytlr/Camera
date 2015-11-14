@@ -177,7 +177,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         
 //        let videoPath = NSURL(string: "\(documentsPath)/\(randomVideoFileName).mov")!
-        let videoPath = NSBundle.mainBundle().URLForResource("big_buck_bunny", withExtension: "mp4")!
+        let videoPath = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")!
         
         print("path: \(videoPath)")
         
@@ -191,12 +191,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
         let player = AVPlayer(URL: videoPath)
 
-//        player.actionAtItemEnd = .None
+        player.actionAtItemEnd = .None
         playerLayer.player = player
         playerLayer.backgroundColor = UIColor.purpleColor().CGColor
         playerLayer.videoGravity = AVLayerVideoGravityResize
         movieView.layer.addSublayer(playerLayer)
         player.play()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
         
         // give it a couple secs before deleting
 //        delay(2) {
@@ -214,6 +216,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 //            
 //        }
         
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func playerDidReachEndNotificationHandler(notification: NSNotification) {
+        let playerItem = notification.object as! AVPlayerItem
+        playerItem.seekToTime(kCMTimeZero)
     }
     
     func takeStillImage() {
