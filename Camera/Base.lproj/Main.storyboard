@@ -132,6 +132,16 @@
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SDA-dQ-wYt">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type something, yo" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H4j-rC-jmg">
+                                        <rect key="frame" x="8" y="319" width="359" height="30"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
@@ -146,12 +156,13 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="clipView" destination="SDA-dQ-wYt" id="MSN-4w-DXr"/>
+                        <outlet property="textInputTextField" destination="H4j-rC-jmg" id="zro-w3-PCW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1XQ-TL-dNx" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="nsz-p9-p38" userLabel="Tap to Add Text">
                     <connections>
-                        <action selector="showTextInput:" destination="96O-5S-Syf" id="qJ2-6G-bMJ"/>
+                        <action selector="toggleTextInput:" destination="96O-5S-Syf" id="c2c-jJ-nXI"/>
                     </connections>
                 </tapGestureRecognizer>
             </objects>
