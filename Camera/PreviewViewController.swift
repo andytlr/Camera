@@ -16,6 +16,8 @@ class PreviewViewController: UIViewController {
     @IBOutlet weak var discardButton: UIButton!
     @IBOutlet weak var acceptButton: UIButton!
     
+    let blackView = UIView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -100,6 +102,9 @@ class PreviewViewController: UIViewController {
             view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
             discardButton.alpha = 0
             acceptButton.alpha = 0
+            
+            blackView.frame = self.view.bounds
+            view.insertSubview(blackView, atIndex: 0)
         }
         if sender.state == .Changed {
             print("translation x \(abs(translation.x))")
@@ -108,9 +113,17 @@ class PreviewViewController: UIViewController {
             previewView.frame.origin.x = translation.x
             previewView.frame.origin.y = translation.y
             
-            let adjustAlphaOnPan = convertValue(abs(translation.y), r1Min: 0, r1Max: view.frame.height, r2Min: 1, r2Max: 0)
+            let makeTransparentOnPan = convertValue(abs(translation.y), r1Min: 0, r1Max: view.frame.height, r2Min: 1, r2Max: 0)
             
-            view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: adjustAlphaOnPan)
+            let makeOpaqueOnPan = convertValue(abs(translation.y), r1Min: 0, r1Max: view.frame.height, r2Min: 0.7, r2Max: 1)
+            
+            blackView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: makeTransparentOnPan)
+            
+            if translation.y > 0 {
+                view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: makeOpaqueOnPan)
+            } else {
+                view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: makeOpaqueOnPan)
+            }
         }
         if sender.state == .Ended {
             
@@ -124,6 +137,7 @@ class PreviewViewController: UIViewController {
                     
                     }, completion: { (Bool) -> Void in
                         
+                        self.blackView.removeFromSuperview()
                         self.discardButton.alpha = 1
                         self.acceptButton.alpha = 1
                 })
