@@ -63,31 +63,56 @@
             <point key="canvasLocation" x="536.5" y="995.5"/>
         </scene>
         <!--Preview View Controller-->
-        <scene sceneID="XsK-vB-FpF">
+        <scene sceneID="emP-RQ-0jc">
             <objects>
-                <viewController id="BFv-2p-XNT" customClass="PreviewViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="utw-gT-5h1" customClass="PreviewViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="IfS-fH-N8k"/>
-                        <viewControllerLayoutGuide type="bottom" id="NBj-T3-oNg"/>
+                        <viewControllerLayoutGuide type="top" id="hJi-7f-EI2"/>
+                        <viewControllerLayoutGuide type="bottom" id="ykY-V4-PB3"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="9Qh-n5-46G">
+                    <view key="view" contentMode="scaleToFill" id="wIb-Vp-0L8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="csh-PL-dRW">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wfF-60-exu">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqZ-i7-b2i">
+                                        <rect key="frame" x="37" y="544" width="80" height="80"/>
+                                        <animations/>
+                                        <color key="backgroundColor" red="1" green="0.0" blue="0.45658016204833984" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <action selector="tapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vYt-RR-418"/>
+                                            <action selector="tapDiscardButton:" destination="utw-gT-5h1" eventType="touchUpInside" id="eWv-mV-u1N"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZy-Pv-Lde">
+                                <rect key="frame" x="147" y="544" width="80" height="80"/>
+                                <animations/>
+                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <action selector="tapAcceptButton:" destination="utw-gT-5h1" eventType="touchUpInside" id="I6d-4U-8RW"/>
+                                    <action selector="tapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Os1-sA-b9x"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="previewView" destination="wfF-60-exu" id="MMB-jK-R4f"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NTo-5E-bJE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zy6-hr-ood" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="966.5" y="995.5"/>
+            <point key="canvasLocation" x="974.5" y="995.5"/>
         </scene>
         <!--List Review -->
         <scene sceneID="1ie-Mf-JnA">
