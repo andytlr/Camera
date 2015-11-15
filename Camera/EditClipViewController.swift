@@ -37,7 +37,7 @@ class EditClipViewController: UIViewController {
     
     func showTextInput() {
         print("showing text input")
-        textInputTextField.frame.origin = CGPoint(x: 30, y: 345)
+        textInputTextField.frame.origin = CGPoint(x: 30, y: 385)
         textInputTextField.hidden = false
         textInputTextField.becomeFirstResponder()
     }
