@@ -91,7 +91,7 @@ class PreviewViewController: UIViewController {
     }
     
     @IBAction func tapAcceptButton(sender: UIButton) {
-        
+        view.removeFromSuperview()
     }
 
     @IBAction func tapDiscardButton(sender: UIButton) {
