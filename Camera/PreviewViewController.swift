@@ -115,7 +115,7 @@ class PreviewViewController: UIViewController {
             previewView.frame.origin.y = translation.y
             
             let rotation = convertValue(translation.x, r1Min: 0, r1Max: view.frame.width, r2Min: 0, r2Max: 10)
-//
+
             previewView.transform = CGAffineTransformMakeDegreeRotation(rotation)
             
             let makeTransparentOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 2), r2Min: 0.8, r2Max: 0)
@@ -132,8 +132,12 @@ class PreviewViewController: UIViewController {
         }
         if sender.state == .Ended {
             
-            if abs(translation.y) > (view.frame.height / 2) {
-                print("Accept Yo")
+            print(translation.y)
+            
+            if translation.y > (view.frame.height / 2) {
+                print("Delete Yo")
+            } else if translation.y < (view.frame.height / 2) * -1 {
+                print("Keep Yo")
             } else {
                 UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
                     
