@@ -256,6 +256,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 
                 imageData.writeToFile(outputPath, atomically: true)
                 
+                let image = UIImage(contentsOfFile: outputPath)
+                let imageView = UIImageView(image: image!)
+                imageView.frame = self.view.bounds
+                self.view.addSubview(imageView)
+                
 //                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
             }
         }
