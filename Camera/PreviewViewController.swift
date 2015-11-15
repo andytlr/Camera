@@ -13,6 +13,8 @@ import AVFoundation
 class PreviewViewController: UIViewController {
 
     @IBOutlet weak var previewView: UIView!
+    @IBOutlet weak var discardButton: UIButton!
+    @IBOutlet weak var acceptButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,6 +90,45 @@ class PreviewViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    @IBAction func panPreviewView(sender: UIPanGestureRecognizer) {
+        
+        let translation = sender.translationInView(view)
+//        let velocity = sender.velocityInView(view)
+        
+        if sender.state == .Began {
+            view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+            discardButton.alpha = 0
+            acceptButton.alpha = 0
+        }
+        if sender.state == .Changed {
+            print("translation x \(abs(translation.x))")
+            print("translation y \(abs(translation.y))")
+            
+            previewView.frame.origin.x = translation.x
+            previewView.frame.origin.y = translation.y
+            
+            let adjustAlphaOnPan = convertValue(abs(translation.y), r1Min: 0, r1Max: view.frame.height, r2Min: 1, r2Max: 0)
+            
+            view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: adjustAlphaOnPan)
+        }
+        if sender.state == .Ended {
+            
+            if abs(translation.y) > (view.frame.height / 2) {
+                print("Accept Yo")
+            } else {
+                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
+                    
+                    self.previewView.frame.origin.x = 0
+                    self.previewView.frame.origin.y = 0
+                    
+                    }, completion: { (Bool) -> Void in
+                        
+                        self.discardButton.alpha = 1
+                        self.acceptButton.alpha = 1
+                })
+            }
+        }
     }
     
     @IBAction func tapAcceptButton(sender: UIButton) {

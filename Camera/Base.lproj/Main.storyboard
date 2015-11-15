@@ -79,6 +79,9 @@
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="bVy-eS-xBu" appends="YES" id="PJB-w9-Qna"/>
+                                </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqZ-i7-b2i">
                                 <rect key="frame" x="33" y="544" width="80" height="80"/>
@@ -91,7 +94,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZy-Pv-Lde">
-                                <rect key="frame" x="147" y="544" width="80" height="80"/>
+                                <rect key="frame" x="147" y="545" width="80" height="80"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <gestureRecognizers/>
@@ -106,10 +109,17 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="acceptButton" destination="aZy-Pv-Lde" id="BcZ-K3-HsC"/>
+                        <outlet property="discardButton" destination="yqZ-i7-b2i" id="li2-Rg-Wqz"/>
                         <outlet property="previewView" destination="wfF-60-exu" id="MMB-jK-R4f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zy6-hr-ood" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="bVy-eS-xBu" userLabel="Preivew View Pan Gesture Recognizer">
+                    <connections>
+                        <action selector="panPreviewView:" destination="utw-gT-5h1" id="Vh9-E8-sUC"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="974.5" y="995.5"/>
         </scene>
