@@ -16,8 +16,10 @@ class EditClipViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("Edit clip view controller did load")
+        // Register for keyboard events
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillChangeFrameNotification, object: nil)
         
+        // Set up UI
         setUpTextInput()
     }
 
@@ -29,13 +31,19 @@ class EditClipViewController: UIViewController {
         textInputTextField.hidden = true
     }
     
+    func keyboardWillShow(notification: NSNotification) {
+        // TODO: get keyboard frame
+    }
+    
     func showTextInput() {
         print("showing text input")
+        textInputTextField.frame.origin = CGPoint(x: 30, y: 345)
         textInputTextField.hidden = false
         textInputTextField.becomeFirstResponder()
     }
     
     func hideTextInput() {
+        let text = textInputTextField.text!
         let characterCount = textInputTextField.text?.characters.count
         
         print("hiding text field")
@@ -43,10 +51,21 @@ class EditClipViewController: UIViewController {
         textInputTextField.endEditing(true)
         
         if characterCount == 0 {
-            // dismiss
+            // No text entered
         } else {
-            // add text to view
+            textInputTextField.text = ""
+            commitText(text)
         }
+    }
+    
+    func commitText(text: String) {
+        print("commiting text: \(text)")
+        
+        let newTextField: UITextField = UITextField(frame: CGRect(x: 0, y: 0, width: 375, height: 100))
+        newTextField.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+        newTextField.text = text
+        
+        self.view.addSubview(newTextField)
     }
     
     @IBAction func toggleTextInput(sender: AnyObject) {
@@ -54,3 +73,6 @@ class EditClipViewController: UIViewController {
         textInputTextField.hidden ? showTextInput() : hideTextInput()
     }
 }
+
+
+
