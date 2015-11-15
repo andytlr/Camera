@@ -27,8 +27,12 @@ class PreviewViewController: UIViewController {
         
         print("Image shown in view: \(latestItemInCameraRoll)")
         
-        let image = UIImage(contentsOfFile: uiImageFriendlyUrl)
-        let imageView = UIImageView(image: image!)
+        
+        let image = UIImage(contentsOfFile: uiImageFriendlyUrl)!
+        let imageView = UIImageView(image: image)
+        // Conditionally use lines below to mirror preview a selfie.
+//        let mirrorImage = UIImage(CGImage: image.CGImage!, scale: 1.0, orientation: .LeftMirrored)
+//        let imageView = UIImageView(image: mirrorImage)
         imageView.frame = self.view.bounds
         previewView.addSubview(imageView)
     }

@@ -253,6 +253,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
                 
                 let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+                
                 let outputPath = "\(documentsPath)/\(currentTimeStamp()).jpg"
                 
                 print("URL when saved: \(outputPath)")
