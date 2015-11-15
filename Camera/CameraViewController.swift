@@ -263,9 +263,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 self.previewViewController.willMoveToParentViewController(self)
                 self.view.addSubview(self.previewViewController.view)
                 self.previewViewController.didMoveToParentViewController(self)
-                self.previewViewController.view.backgroundColor = UIColor.greenColor()
-                
-//                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
             }
         }
     }
