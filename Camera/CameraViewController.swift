@@ -186,7 +186,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         // Line below returns the documents directory as a path without the file:
 //        let documentsURL = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         
+        // This should be the most recently recorded file...
         let videoPath = NSURL(string: "\(documentsURL)\(randomVideoFileName).mov")!
+        
+        // This is the example recording added to the app bundle.
 //        let videoPath = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")!
         
         print(videoPath)
@@ -209,19 +212,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
         
         // give it a couple secs before deleting
-//        delay(2) {
-//            let fileManager = NSFileManager.defaultManager()
-//
-//            if fileManager.fileExistsAtPath("\(documentsPath)/\(self.randomVideoFileName).mov") {
-//                print("it exists to delete")
-//                do {
-//                    try fileManager.removeItemAtPath("\(documentsPath)/\(self.randomVideoFileName).mov")
-//                    listContentsOfDocumentsDirectory()
-//                } catch {
-//                    
-//                }
+//        let fileManager = NSFileManager.defaultManager()
+//        
+//        if fileManager.fileExistsAtPath("\(documentsPath)/\(self.randomVideoFileName).mov") {
+//            print("it exists to delete")
+//            do {
+//                try fileManager.removeItemAtPath("\(documentsPath)/\(self.randomVideoFileName).mov")
+//                listContentsOfDocumentsDirectory()
+//            } catch {
+//                
 //            }
-//            
 //        }
         
     }
