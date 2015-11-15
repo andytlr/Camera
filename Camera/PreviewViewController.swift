@@ -49,6 +49,6 @@ class PreviewViewController: UIViewController {
     @IBAction func tapDiscardButton(sender: UIButton) {
         view.removeFromSuperview()
         
-        // Need to delete the latest file
+        // Need to delete the latest file here
     }
 }
