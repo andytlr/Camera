@@ -13,6 +13,8 @@ class EditClipViewController: UIViewController {
     @IBOutlet weak var clipView: UIView!
     @IBOutlet weak var textInputTextField: UITextField!
     
+    var textFieldOrigin = CGPoint(x: 30, y: 385)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,42 +37,30 @@ class EditClipViewController: UIViewController {
         // TODO: get keyboard frame
     }
     
-    func showTextInput() {
+    func beginTextInput() {
         print("showing text input")
-        textInputTextField.frame.origin = CGPoint(x: 30, y: 385)
+        textInputTextField.frame.origin = textFieldOrigin
         textInputTextField.hidden = false
         textInputTextField.becomeFirstResponder()
     }
     
-    func hideTextInput() {
-        let text = textInputTextField.text!
+    func endTextInput() {
         let characterCount = textInputTextField.text?.characters.count
-        
-        print("hiding text field")
-        textInputTextField.hidden = true
-        textInputTextField.endEditing(true)
-        
-        if characterCount == 0 {
-            // No text entered
-        } else {
-            textInputTextField.text = ""
-            commitText(text)
-        }
+        characterCount != 0 ? commitTextInput() : cancelTextInput()
     }
     
-    func commitText(text: String) {
-        print("commiting text: \(text)")
-        
-        let newTextField: UITextField = UITextField(frame: CGRect(x: 0, y: 0, width: 375, height: 100))
-        newTextField.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
-        newTextField.text = text
-        
-        self.view.addSubview(newTextField)
+    func commitTextInput() {
+        textInputTextField.endEditing(true)
+    }
+    
+    func cancelTextInput() {
+        textInputTextField.hidden = true
+        textInputTextField.endEditing(true)
     }
     
     @IBAction func toggleTextInput(sender: AnyObject) {
         print(textInputTextField.hidden)
-        textInputTextField.hidden ? showTextInput() : hideTextInput()
+        textInputTextField.hidden ? beginTextInput() : endTextInput()
     }
 }
 
