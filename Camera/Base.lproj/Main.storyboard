@@ -65,7 +65,7 @@
         <!--Preview View Controller-->
         <scene sceneID="emP-RQ-0jc">
             <objects>
-                <viewController id="utw-gT-5h1" customClass="PreviewViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PreviewViewController" id="utw-gT-5h1" customClass="PreviewViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="hJi-7f-EI2"/>
                         <viewControllerLayoutGuide type="bottom" id="ykY-V4-PB3"/>
@@ -76,21 +76,19 @@
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wfF-60-exu">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqZ-i7-b2i">
-                                        <rect key="frame" x="37" y="544" width="80" height="80"/>
-                                        <animations/>
-                                        <color key="backgroundColor" red="1" green="0.0" blue="0.45658016204833984" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <gestureRecognizers/>
-                                        <connections>
-                                            <action selector="tapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vYt-RR-418"/>
-                                            <action selector="tapDiscardButton:" destination="utw-gT-5h1" eventType="touchUpInside" id="eWv-mV-u1N"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqZ-i7-b2i">
+                                <rect key="frame" x="33" y="544" width="80" height="80"/>
+                                <animations/>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.45658016204833984" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <action selector="tapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vYt-RR-418"/>
+                                    <action selector="tapDiscardButton:" destination="utw-gT-5h1" eventType="touchUpInside" id="eWv-mV-u1N"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZy-Pv-Lde">
                                 <rect key="frame" x="147" y="544" width="80" height="80"/>
                                 <animations/>

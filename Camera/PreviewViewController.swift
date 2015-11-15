@@ -16,8 +16,17 @@ class PreviewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        let cameraRoll = returnContentsOfDocumentsDirectory()
+        
+        let latestItemInCameraRoll = String(cameraRoll.last!).stringByReplacingOccurrencesOfString("file:///private", withString: "")
+        
+        print(latestItemInCameraRoll)
+        
+        let image = UIImage(contentsOfFile: latestItemInCameraRoll)
+        let imageView = UIImageView(image: image!)
+        imageView.frame = self.view.bounds
+        previewView.addSubview(imageView)
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,6 +39,8 @@ class PreviewViewController: UIViewController {
     }
 
     @IBAction func tapDiscardButton(sender: UIButton) {
+        view.removeFromSuperview()
         
+        // Need to delete the latest file
     }
 }

@@ -13,6 +13,8 @@ import AVFoundation
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
+    var previewViewController: UIViewController!
+    
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var switchButton: UIButton!
@@ -23,8 +25,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var captureDevice: AVCaptureDevice?
     var backCamera: AVCaptureDevice?
     var frontCamera: AVCaptureDevice?
-    var randomVideoFileName: String = ""
-    var randomPhotoFileName: String = ""
     
     let stillImageOutput = AVCaptureStillImageOutput()
     let videoOutput = AVCaptureMovieFileOutput()
@@ -41,6 +41,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController")
+        
         setupCamera()
         setButtonLabel()
         
@@ -141,7 +146,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func startRecording() {
         print("Start Recording")
-        randomVideoFileName = randomStringWithLength(12) as String
+        
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.5).CGColor
         recordButton.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.2)
         
@@ -153,7 +158,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        let outputPath = "\(documentsPath)/\(randomVideoFileName).mov"
+        let outputPath = "\(documentsPath)/\(currentTimeStamp()).mov"
         let outputFileUrl = NSURL(fileURLWithPath: outputPath)
         videoOutput.startRecordingToOutputFileURL(outputFileUrl, recordingDelegate: self)
         
@@ -187,7 +192,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 //        let documentsURL = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         
         // This should be the most recently recorded file...
-        let videoPath = NSURL(string: "\(documentsURL)\(randomVideoFileName).mov")!
+        let videoPath = NSURL(string: "\(documentsURL)\(currentTimeStamp()).mov")!
         
         // This is the example recording added to the app bundle.
 //        let videoPath = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")!
@@ -245,21 +250,18 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
                 (imageDataSampleBuffer, error) -> Void in
                 
-                self.randomPhotoFileName = randomStringWithLength(12) as String
-                
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
                 
                 let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-                let outputPath = "\(documentsPath)/\(self.randomPhotoFileName).jpg"
+                let outputPath = "\(documentsPath)/\(currentTimeStamp()).jpg"
                 
                 print("\(outputPath)")
                 
                 imageData.writeToFile(outputPath, atomically: true)
                 
-                let image = UIImage(contentsOfFile: outputPath)
-                let imageView = UIImageView(image: image!)
-                imageView.frame = self.view.bounds
-                self.view.addSubview(imageView)
+//                previewViewController.view.frame.size = view.bounds
+                self.view.addSubview(self.previewViewController.view)
+                self.previewViewController.view.backgroundColor = UIColor.greenColor()
                 
 //                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
             }
