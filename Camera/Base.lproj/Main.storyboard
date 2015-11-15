@@ -158,6 +158,10 @@
                                             </imageView>
                                         </subviews>
                                         <animations/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="1Qz-GR-Yxu" appends="YES" id="wgw-Jw-Gtz"/>
+                                        </connections>
                                     </view>
                                 </subviews>
                                 <animations/>
@@ -169,8 +173,17 @@
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
+                    <connections>
+                        <outlet property="ListView" destination="9xq-x4-zzY" id="wGz-Nf-Ota"/>
+                        <outlet property="SceneOne" destination="IrB-lN-gWw" id="5AS-0Y-DhN"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XRo-ij-n4Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="1Qz-GR-Yxu">
+                    <connections>
+                        <action selector="ScenePan:" destination="nhD-o7-srJ" id="YNs-je-Vlj"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1440.5" y="995.5"/>
         </scene>
