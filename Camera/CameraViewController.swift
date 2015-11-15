@@ -42,6 +42,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+//        recordButton.alpha = 0
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController")
@@ -130,7 +132,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
     }
     
-    @IBAction func tapSwitchButton(sender: AnyObject) {
+    func switchCameras() {
         if usingbackCamera == true {
             endSession()
             beginSession(frontCamera!)
@@ -142,6 +144,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             usingbackCamera = true
             setButtonLabel()
         }
+    }
+    
+    @IBAction func tapSwitchButton(sender: AnyObject) {
+        switchCameras()
     }
     
     func startRecording() {
@@ -209,6 +215,27 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 self.previewViewController.didMoveToParentViewController(self)
             }
         }
+    }
+    
+    @IBAction func longPressWholeView(sender: UILongPressGestureRecognizer) {
+        if sender.state == .Began {
+            startRecording()
+        }
+        if sender.state == .Changed {
+            
+        }
+        if sender.state == .Ended {
+            self.stopRecording()
+        }
+    }
+    
+    @IBAction func tapWholeView(sender: UITapGestureRecognizer) {
+        
+        takeStillImage()
+    }
+    
+    @IBAction func swipeRight(sender: UISwipeGestureRecognizer) {
+        switchCameras()
     }
     
     @IBAction func longPressButton(sender: UILongPressGestureRecognizer) {

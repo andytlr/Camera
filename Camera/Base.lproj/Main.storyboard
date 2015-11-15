@@ -21,6 +21,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="fi7-FT-psy" appends="YES" id="wC0-RW-yl8"/>
+                                    <outletCollection property="gestureRecognizers" destination="a6g-gA-HGj" appends="YES" id="MwZ-dF-csi"/>
+                                    <outletCollection property="gestureRecognizers" destination="Ock-s3-pv7" appends="YES" id="6d2-6A-8dY"/>
+                                    <outletCollection property="gestureRecognizers" destination="wir-N4-Xbu" appends="YES" id="D5Q-QO-ePJ"/>
+                                </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C5M-M4-Sak">
                                 <rect key="frame" x="147" y="544" width="80" height="80"/>
@@ -59,6 +66,26 @@
                         <action selector="longPressButton:" destination="BYZ-38-t0r" id="6OW-RO-Frd"/>
                     </connections>
                 </pongPressGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="fi7-FT-psy" userLabel="Long Press Whole View">
+                    <connections>
+                        <action selector="longPressWholeView:" destination="BYZ-38-t0r" id="IEM-v1-i5C"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+                <tapGestureRecognizer id="a6g-gA-HGj" userLabel="Tap Whole View">
+                    <connections>
+                        <action selector="tapWholeView:" destination="BYZ-38-t0r" id="hUI-nv-l4L"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="Ock-s3-pv7" userLabel="Swipe Right">
+                    <connections>
+                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="6XP-0M-yHL"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="wir-N4-Xbu" userLabel="Swipe Left">
+                    <connections>
+                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="YJC-4t-OEp"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="536.5" y="995.5"/>
         </scene>
@@ -83,34 +110,12 @@
                                     <outletCollection property="gestureRecognizers" destination="bVy-eS-xBu" appends="YES" id="PJB-w9-Qna"/>
                                 </connections>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yqZ-i7-b2i">
-                                <rect key="frame" x="33" y="544" width="80" height="80"/>
-                                <animations/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.45658016204833984" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <action selector="tapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vYt-RR-418"/>
-                                    <action selector="tapDiscardButton:" destination="utw-gT-5h1" eventType="touchUpInside" id="eWv-mV-u1N"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aZy-Pv-Lde">
-                                <rect key="frame" x="147" y="545" width="80" height="80"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <action selector="tapAcceptButton:" destination="utw-gT-5h1" eventType="touchUpInside" id="I6d-4U-8RW"/>
-                                    <action selector="tapButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Os1-sA-b9x"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="acceptButton" destination="aZy-Pv-Lde" id="BcZ-K3-HsC"/>
-                        <outlet property="discardButton" destination="yqZ-i7-b2i" id="li2-Rg-Wqz"/>
                         <outlet property="previewView" destination="wfF-60-exu" id="MMB-jK-R4f"/>
                     </connections>
                 </viewController>
