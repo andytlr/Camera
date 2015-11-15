@@ -19,41 +19,48 @@ class PreviewViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
+        
         let cameraRoll = returnContentsOfDocumentsDirectory()
         
         let latestItemInCameraRoll = String(cameraRoll.last!)
         
         let uiImageFriendlyUrl = latestItemInCameraRoll.stringByReplacingOccurrencesOfString("file:///private", withString: "")
         
-        print("Image shown in view: \(latestItemInCameraRoll)")
+        let avPlayerLayerFriendlyString = latestItemInCameraRoll.stringByReplacingOccurrencesOfString("/private", withString: "")
         
-        let fileExtensionIndex = latestItemInCameraRoll.endIndex.advancedBy(-4)
-        let fileExtension = latestItemInCameraRoll[Range(start: fileExtensionIndex, end: latestItemInCameraRoll.endIndex)]
+        let avPlayerLayerFriendlyUrl = NSURL(string: avPlayerLayerFriendlyString)
         
-        if fileExtension == ".jpg" {
+        let bundleVideoUrl = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")
+        
+        let latestFileFileExtensionIndex = latestItemInCameraRoll.endIndex.advancedBy(-4)
+        
+        let latestFileFileExtension = latestItemInCameraRoll[Range(start: latestFileFileExtensionIndex, end: latestItemInCameraRoll.endIndex)]
+        
+        if latestFileFileExtension == ".jpg" {
             
             let image = UIImage(contentsOfFile: uiImageFriendlyUrl)!
             let imageView = UIImageView(image: image)
+            
             // Conditionally use lines below to mirror preview a selfie.
-            //        let mirrorImage = UIImage(CGImage: image.CGImage!, scale: 1.0, orientation: .LeftMirrored)
-            //        let imageView = UIImageView(image: mirrorImage)
+            
+//            let mirrorImage = UIImage(CGImage: image.CGImage!, scale: 1.0, orientation: .LeftMirrored)
+//            let imageView = UIImageView(image: mirrorImage)
+            
             imageView.frame = self.view.bounds
             previewView.addSubview(imageView)
             
-        } else if fileExtension == ".mov" {
-            
-            // This should be the most recently recorded file...
-            //        let videoPath = NSURL(string: "\(documentsURL)\(currentTimeStamp()).mov")!
-            
-            // This is the example recording added to the app bundle.
-            let videoPath = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")!
-            
-            print(videoPath)
+        } else if latestFileFileExtension == ".mov" {
             
             let playerLayer = AVPlayerLayer()
             playerLayer.frame = view.bounds
             
-            let videoAsset = AVAsset(URL: videoPath)
+//            let videoAsset = AVAsset(URL: avPlayerLayerFriendlyUrl!)
+            let videoAsset = AVAsset(URL: bundleVideoUrl!)
+            
+            // These follow the same patter WTF
+            print("avPlayerLayerURL: \(avPlayerLayerFriendlyUrl!)")
+            print("bundleVideoURL: \(bundleVideoUrl!)")
+            
             let playerItem = AVPlayerItem(asset: videoAsset)
             
             let player = AVPlayer(playerItem: playerItem)
