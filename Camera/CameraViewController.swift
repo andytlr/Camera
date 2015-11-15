@@ -179,65 +179,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         videoOutput.stopRecording()
         
-        let movieFrame: CGRect = self.view.bounds
-        let movieView: UIView = UIView(frame: movieFrame)
-        movieView.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
-        self.view.addSubview(movieView)
-        
-        // Two lines below return the documents directory as a file: url
-        let paths = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        let documentsURL = paths[0] as NSURL
-        
-        // Line below returns the documents directory as a path without the file:
-//        let documentsURL = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        
-        // This should be the most recently recorded file...
-        let videoPath = NSURL(string: "\(documentsURL)\(currentTimeStamp()).mov")!
-        
-        // This is the example recording added to the app bundle.
-//        let videoPath = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")!
-        
-        print(videoPath)
-        
-        let playerLayer = AVPlayerLayer()
-        playerLayer.frame = view.bounds
-        
-        let videoAsset = AVAsset(URL: videoPath)
-        let playerItem = AVPlayerItem(asset: videoAsset)
-
-        let player = AVPlayer(playerItem: playerItem)
-        
-        player.actionAtItemEnd = .None
-        playerLayer.player = player
-        playerLayer.backgroundColor = UIColor.purpleColor().CGColor
-        playerLayer.videoGravity = AVLayerVideoGravityResize
-        movieView.layer.addSublayer(playerLayer)
-        player.play()
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
-        
-        // give it a couple secs before deleting
-//        let fileManager = NSFileManager.defaultManager()
-//        
-//        if fileManager.fileExistsAtPath("\(documentsPath)/\(self.randomVideoFileName).mov") {
-//            print("it exists to delete")
-//            do {
-//                try fileManager.removeItemAtPath("\(documentsPath)/\(self.randomVideoFileName).mov")
-//                listContentsOfDocumentsDirectory()
-//            } catch {
-//                
-//            }
-//        }
-        
-    }
-    
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
-    }
-    
-    func playerDidReachEndNotificationHandler(notification: NSNotification) {
-        let playerItem = notification.object as! AVPlayerItem
-        playerItem.seekToTime(kCMTimeZero)
+        self.previewViewController.willMoveToParentViewController(self)
+        self.view.addSubview(self.previewViewController.view)
+        self.previewViewController.didMoveToParentViewController(self)
     }
     
     func takeStillImage() {
