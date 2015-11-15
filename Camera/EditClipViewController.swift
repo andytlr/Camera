@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditClipViewController: UIViewController {
+class EditClipViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var clipView: UIView!
     @IBOutlet weak var textInputTextField: UITextField!
@@ -17,6 +17,8 @@ class EditClipViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        textInputTextField.delegate = self
         
         // Register for keyboard events
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillChangeFrameNotification, object: nil)
@@ -62,7 +64,11 @@ class EditClipViewController: UIViewController {
         print(textInputTextField.hidden)
         textInputTextField.hidden ? beginTextInput() : endTextInput()
     }
+    
+    // MARK: UITextFieldDelegate
+    
+    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }
-
-
-
