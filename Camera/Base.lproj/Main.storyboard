@@ -135,9 +135,13 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type something…" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H4j-rC-jmg">
                                         <rect key="frame" x="30" y="601" width="315" height="30"/>
                                         <animations/>
+                                        <gestureRecognizers/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="Osy-gJ-f6f" appends="YES" id="ds3-PD-6J4"/>
+                                        </connections>
                                     </textField>
                                 </subviews>
                                 <animations/>
@@ -154,6 +158,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="clipView" destination="SDA-dQ-wYt" id="MSN-4w-DXr"/>
+                        <outlet property="textFieldPanGestureRecognizer" destination="Osy-gJ-f6f" id="CAQ-Qr-fy5"/>
                         <outlet property="textInputTextField" destination="H4j-rC-jmg" id="zro-w3-PCW"/>
                     </connections>
                 </viewController>
@@ -163,6 +168,11 @@
                         <action selector="toggleTextInput:" destination="96O-5S-Syf" id="c2c-jJ-nXI"/>
                     </connections>
                 </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="Osy-gJ-f6f" userLabel="Text Field Pan Gesture">
+                    <connections>
+                        <action selector="panText:" destination="96O-5S-Syf" id="HvB-Dx-Aqq"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1850.5" y="995.5"/>
         </scene>

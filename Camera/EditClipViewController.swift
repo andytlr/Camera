@@ -12,8 +12,10 @@ class EditClipViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var clipView: UIView!
     @IBOutlet weak var textInputTextField: UITextField!
+    @IBOutlet var textFieldPanGestureRecognizer: UIPanGestureRecognizer!
     
     var textFieldOrigin = CGPoint(x: 30, y: 385)
+    var textFieldOriginalCenter: CGPoint!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -64,6 +66,22 @@ class EditClipViewController: UIViewController, UITextFieldDelegate {
         print(textInputTextField.hidden)
         textInputTextField.hidden ? beginTextInput() : endTextInput()
     }
+    
+    @IBAction func panText(sender: AnyObject) {
+        let translation = sender.translationInView(view)
+        
+        if sender.state == .Began {
+            textFieldOriginalCenter = textInputTextField.center
+        } else if sender.state == .Changed {
+            textInputTextField.center = CGPoint(
+                x: textFieldOriginalCenter.x + translation.x,
+                y: textFieldOriginalCenter.y + translation.y
+            )
+        } else if sender.state == .Ended {
+        }
+    }
+    
+    
     
     // MARK: UITextFieldDelegate
     
