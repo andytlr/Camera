@@ -8,7 +8,7 @@
 
 import UIKit
 
-class EditClipViewController: UIViewController, UITextFieldDelegate {
+class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var clipView: UIView!
     @IBOutlet weak var textInputTextField: UITextField!
@@ -21,6 +21,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         textInputTextField.delegate = self
+        textFieldPanGestureRecognizer.delegate = self
         
         // Register for keyboard events
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillChangeFrameNotification, object: nil)
@@ -81,12 +82,22 @@ class EditClipViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    
+    @IBAction func rotateText(sender: AnyObject) {
+        if sender.state == .Changed {
+            textInputTextField.transform = CGAffineTransformMakeRotation(sender.rotation)
+        }
+    }
     
     // MARK: UITextFieldDelegate
     
     func textFieldShouldReturn(textField: UITextField!) -> Bool {
         textField.resignFirstResponder()
+        return true
+    }
+    
+    // MARK: UIGestureRecognizerDelegate
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
 }
