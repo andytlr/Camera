@@ -24,6 +24,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var backCamera: AVCaptureDevice?
     var frontCamera: AVCaptureDevice?
     var randomVideoFileName: String = ""
+    var randomPhotoFileName: String = ""
     
     let stillImageOutput = AVCaptureStillImageOutput()
     let videoOutput = AVCaptureMovieFileOutput()
@@ -243,8 +244,19 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
             stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
                 (imageDataSampleBuffer, error) -> Void in
+                
+                self.randomPhotoFileName = randomStringWithLength(12) as String
+                
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
-                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
+                
+                let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+                let outputPath = "\(documentsPath)/\(self.randomPhotoFileName).jpg"
+                
+                print("\(outputPath)")
+                
+                imageData.writeToFile(outputPath, atomically: true)
+                
+//                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
             }
         }
     }
