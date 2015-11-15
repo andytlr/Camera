@@ -255,12 +255,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
                 let outputPath = "\(documentsPath)/\(currentTimeStamp()).jpg"
                 
-                print("\(outputPath)")
+                print("URL when saved: \(outputPath)")
                 
                 imageData.writeToFile(outputPath, atomically: true)
                 
-//                previewViewController.view.frame.size = view.bounds
+                self.previewViewController.willMoveToParentViewController(self)
                 self.view.addSubview(self.previewViewController.view)
+                self.previewViewController.didMoveToParentViewController(self)
                 self.previewViewController.view.backgroundColor = UIColor.greenColor()
                 
 //                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)

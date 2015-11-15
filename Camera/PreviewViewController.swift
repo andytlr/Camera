@@ -16,14 +16,18 @@ class PreviewViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
         let cameraRoll = returnContentsOfDocumentsDirectory()
         
-        let latestItemInCameraRoll = String(cameraRoll.last!).stringByReplacingOccurrencesOfString("file:///private", withString: "")
+        let latestItemInCameraRoll = String(cameraRoll.last!)
         
-        print(latestItemInCameraRoll)
+        let uiImageFriendlyUrl = latestItemInCameraRoll.stringByReplacingOccurrencesOfString("file:///private", withString: "")
         
-        let image = UIImage(contentsOfFile: latestItemInCameraRoll)
+        print("Image shown in view: \(latestItemInCameraRoll)")
+        
+        let image = UIImage(contentsOfFile: uiImageFriendlyUrl)
         let imageView = UIImageView(image: image!)
         imageView.frame = self.view.bounds
         previewView.addSubview(imageView)
