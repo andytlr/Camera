@@ -127,35 +127,53 @@
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IrB-lN-gWw" userLabel="Scene1">
                                         <rect key="frame" x="0.0" y="0.0" width="380" height="88"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R0H-Td-bqw" userLabel="ClipPreview">
-                                                <rect key="frame" x="0.0" y="0.0" width="88" height="88"/>
+                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xWJ-bZ-1a8" userLabel="DeleteView">
+                                                <rect key="frame" x="-6" y="0.0" width="386" height="88"/>
                                                 <subviews>
-                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="spin" translatesAutoresizingMaskIntoConstraints="NO" id="cWq-Gi-xYJ">
-                                                        <rect key="frame" x="-9" y="-14" width="107" height="116"/>
+                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="trash" translatesAutoresizingMaskIntoConstraints="NO" id="m5E-WU-IIb" userLabel="trash_icon">
+                                                        <rect key="frame" x="332" y="29" width="19" height="24"/>
                                                         <animations/>
                                                     </imageView>
                                                 </subviews>
                                                 <animations/>
-                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="backgroundColor" red="0.75294117647058822" green="0.22352941176470587" blue="0.16862745098039217" alpha="1" colorSpace="calibratedRGB"/>
                                             </view>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SCENE #" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AgZ-EF-xu7">
-                                                <rect key="frame" x="109" y="27" width="60" height="21"/>
+                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SzM-KS-PcT" userLabel="SceneView">
+                                                <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
+                                                <subviews>
+                                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R0H-Td-bqw" userLabel="ClipPreview">
+                                                        <rect key="frame" x="0.0" y="0.0" width="88" height="88"/>
+                                                        <subviews>
+                                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="spin" translatesAutoresizingMaskIntoConstraints="NO" id="cWq-Gi-xYJ" userLabel="ClipImageView">
+                                                                <rect key="frame" x="-9" y="-14" width="107" height="116"/>
+                                                                <animations/>
+                                                            </imageView>
+                                                        </subviews>
+                                                        <animations/>
+                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </view>
+                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="movebars" translatesAutoresizingMaskIntoConstraints="NO" id="vZP-mn-bKQ">
+                                                        <rect key="frame" x="322" y="41" width="22" height="5"/>
+                                                        <animations/>
+                                                    </imageView>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SCENE #" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AgZ-EF-xu7">
+                                                        <rect key="frame" x="109" y="24" width="60" height="21"/>
+                                                        <animations/>
+                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzs-jy-M55">
+                                                        <rect key="frame" x="109" y="43" width="60" height="21"/>
+                                                        <animations/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
                                                 <animations/>
-                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzs-jy-M55">
-                                                <rect key="frame" x="109" y="45" width="60" height="21"/>
-                                                <animations/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="movebars" translatesAutoresizingMaskIntoConstraints="NO" id="vZP-mn-bKQ">
-                                                <rect key="frame" x="325" y="42" width="22" height="5"/>
-                                                <animations/>
-                                            </imageView>
+                                                <color key="backgroundColor" red="0.050980392156862744" green="0.086274509803921567" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
+                                            </view>
                                         </subviews>
                                         <animations/>
                                         <gestureRecognizers/>
@@ -176,6 +194,7 @@
                     <connections>
                         <outlet property="ListView" destination="9xq-x4-zzY" id="wGz-Nf-Ota"/>
                         <outlet property="SceneOne" destination="IrB-lN-gWw" id="5AS-0Y-DhN"/>
+                        <outlet property="SceneView" destination="SzM-KS-PcT" id="93G-Xa-IxM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XRo-ij-n4Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -193,5 +212,6 @@
         <image name="salad" width="375" height="291"/>
         <image name="share" width="94" height="31"/>
         <image name="spin" width="88" height="88"/>
+        <image name="trash" width="19" height="24"/>
     </resources>
 </document>

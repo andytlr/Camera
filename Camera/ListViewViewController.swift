@@ -12,6 +12,7 @@ class ListViewViewController: UIViewController, UIScrollViewDelegate {
     
     @IBOutlet weak var ListView: UIView!
     @IBOutlet weak var SceneOne: UIView!
+    @IBOutlet weak var SceneView: UIView!
     
     
     //set the centers
@@ -22,7 +23,7 @@ class ListViewViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SceneOriginalCenter = SceneOne.frame.origin
+        SceneOriginalCenter = SceneView.frame.origin
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,28 +35,26 @@ class ListViewViewController: UIViewController, UIScrollViewDelegate {
         
         let translation = sender.translationInView(view)
         
+        
+        // start to scroll
         if sender.state == UIGestureRecognizerState.Began {
             
             print("began")
             
-            SceneOriginalCenter = SceneOne.center
+            SceneOriginalCenter = SceneView.center
+        
             
-            }else if sender.state == UIGestureRecognizerState.Changed {
+        // start to scroll
+        }else if sender.state == UIGestureRecognizerState.Changed {
             
                 print(translation.x)
             
-                SceneOne.center = CGPoint(x: SceneOriginalCenter.x + translation.x, y: SceneOriginalCenter.y)
+                SceneView.center = CGPoint(x: SceneOriginalCenter.x + translation.x, y: SceneOriginalCenter.y)
             
-            
-            
-                } else if translation.x < -1  && translation.x > -160{
-            
-                    SceneOne.backgroundColor = UIColor(red: 192/255.0, green: 57/255.0, blue: 43/255.0, alpha: 1.0)
-
-            }else if sender.state == UIGestureRecognizerState.Ended {
+        // end scroll
+        }else if sender.state == UIGestureRecognizerState.Ended {
     
-    print("ended")
-    
+            print("ended")
     }
 }
 
