@@ -156,7 +156,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         let outputFileUrl = NSURL(fileURLWithPath: outputPath)
         videoOutput.startRecordingToOutputFileURL(outputFileUrl, recordingDelegate: self)
         
-        print("file name at start \(randomVideoFileName)")
+//        print("path \(outputFileUrl)")
     }
     
     func stopRecording() {
@@ -172,14 +172,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         
         videoOutput.stopRecording()
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-//        UISaveVideoAtPathToSavedPhotosAlbum("\(documentsPath)/\(randomVideoFileName).mov", nil, nil, nil)
         
+        let paths = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+        let documentsURL = paths[0] as NSURL
         
-//        let videoPath = NSURL(string: "\(documentsPath)/\(randomVideoFileName).mov")!
-        let videoPath = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")!
+//        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         
-        print("path: \(videoPath)")
+        let videoPath = NSURL(string: "\(documentsURL)\(randomVideoFileName).mov")!
+//        let videoPath = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")!
+        
+        print(videoPath)
         
         let movieFrame: CGRect = self.view.bounds
         let movieView: UIView = UIView(frame: movieFrame)
@@ -190,7 +192,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         playerLayer.frame = view.bounds
 
         let player = AVPlayer(URL: videoPath)
-
+        
         player.actionAtItemEnd = .None
         playerLayer.player = player
         playerLayer.backgroundColor = UIColor.purpleColor().CGColor
