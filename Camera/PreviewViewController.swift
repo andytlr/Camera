@@ -26,6 +26,13 @@ class PreviewViewController: UIViewController {
         
         let latestItemInCameraRoll = String(cameraRoll.last!)
         
+        let latestFileName = cameraRoll.last!.lastPathComponent!
+        
+        let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        let filePath = documentsDir.stringByAppendingPathComponent(latestFileName)
+        let filePathWithFileProtocol = "file://" + filePath
+        print("file path: \(filePathWithFileProtocol)")
+        
         let uiImageFriendlyUrl = latestItemInCameraRoll.stringByReplacingOccurrencesOfString("file:///private", withString: "")
         
         let avPlayerLayerFriendlyString = latestItemInCameraRoll.stringByReplacingOccurrencesOfString("/private", withString: "")
@@ -56,12 +63,11 @@ class PreviewViewController: UIViewController {
             let playerLayer = AVPlayerLayer()
             playerLayer.frame = view.bounds
             
-//            let videoAsset = AVAsset(URL: avPlayerLayerFriendlyUrl!)
-            let videoAsset = AVAsset(URL: bundleVideoUrl!)
+            let URL = NSURL(fileURLWithPath: filePath)
             
-            // These follow the same patter WTF
-            print("avPlayerLayerURL: \(avPlayerLayerFriendlyUrl!)")
-            print("bundleVideoURL: \(bundleVideoUrl!)")
+            let videoAsset = AVAsset(URL: URL)
+//            let videoAsset = AVAsset(URL: avPlayerLayerFriendlyUrl!)
+//            let videoAsset = AVAsset(URL: bundleVideoUrl!)
             
             let playerItem = AVPlayerItem(asset: videoAsset)
             
