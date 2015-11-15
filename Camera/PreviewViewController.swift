@@ -99,7 +99,8 @@ class PreviewViewController: UIViewController {
 //        let velocity = sender.velocityInView(view)
         
         if sender.state == .Began {
-            view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
+            view.backgroundColor = UIColor.clearColor()
+            previewView.backgroundColor = UIColor.clearColor()
             discardButton.alpha = 0
             acceptButton.alpha = 0
             
@@ -113,9 +114,9 @@ class PreviewViewController: UIViewController {
             previewView.frame.origin.x = translation.x
             previewView.frame.origin.y = translation.y
             
-//            let rotation = convertValue(abs(translation.y), r1Min: 0, r1Max: view.frame.height, r2Min: 0, r2Max: 5)
-//            
-//            previewView.transform = CGAffineTransformMakeRotation(rotation)
+            let rotation = convertValue(translation.x, r1Min: 0, r1Max: view.frame.width, r2Min: 0, r2Max: 10)
+//
+            previewView.transform = CGAffineTransformMakeDegreeRotation(rotation)
             
             let makeTransparentOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 2), r2Min: 0.8, r2Max: 0)
             
@@ -136,14 +137,15 @@ class PreviewViewController: UIViewController {
             } else {
                 UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
                     
+                    self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
                     self.previewView.frame.origin.x = 0
                     self.previewView.frame.origin.y = 0
                     
                     }, completion: { (Bool) -> Void in
                         
                         self.blackView.removeFromSuperview()
-                        self.discardButton.alpha = 1
-                        self.acceptButton.alpha = 1
+//                        self.discardButton.alpha = 1
+//                        self.acceptButton.alpha = 1
                 })
             }
         }
