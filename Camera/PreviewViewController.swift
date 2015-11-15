@@ -113,6 +113,10 @@ class PreviewViewController: UIViewController {
             previewView.frame.origin.x = translation.x
             previewView.frame.origin.y = translation.y
             
+//            let rotation = convertValue(abs(translation.y), r1Min: 0, r1Max: view.frame.height, r2Min: 0, r2Max: 5)
+//            
+//            previewView.transform = CGAffineTransformMakeRotation(rotation)
+            
             let makeTransparentOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 2), r2Min: 0.8, r2Max: 0)
             
             let makeOpaqueOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 2), r2Min: 0, r2Max: 1)
