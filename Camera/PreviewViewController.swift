@@ -120,8 +120,11 @@ class PreviewViewController: UIViewController {
             let moveX = CGFloat(Double(convertValue(velocity.x, r1Min: 0, r1Max: 5000, r2Min: 0, r2Max: view.frame.width * 3 )))
             
             if velocity.y > 2000 || translation.y > (view.frame.height / 2) {
-                print(velocity.y)
                 print("Delete Yo")
+                
+                let cameraRoll = returnContentsOfDocumentsDirectory()
+                let latestFileName = cameraRoll.last!.lastPathComponent!
+                removeItemFromDocumentsDirectory(latestFileName)
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
@@ -134,13 +137,12 @@ class PreviewViewController: UIViewController {
                         // Need to delete the latest file here
                         self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
                         
-                        delay(0.2) {
+                        delay(0.1) {
                             self.view.removeFromSuperview()
                         }
                 })
                 
             } else if velocity.y < -2000 || translation.y < (view.frame.height / 2) * -1 {
-                print(velocity.y)
                 print("Keep Yo")
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
@@ -153,7 +155,7 @@ class PreviewViewController: UIViewController {
                         
                         self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
                         
-                        delay(0.2) {
+                        delay(0.1) {
                             self.view.removeFromSuperview()
                         }
                 })

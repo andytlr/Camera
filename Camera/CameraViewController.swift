@@ -164,8 +164,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         let outputPath = "\(documentsPath)/\(currentTimeStamp()).mov"
         let outputFileUrl = NSURL(fileURLWithPath: outputPath)
         videoOutput.startRecordingToOutputFileURL(outputFileUrl, recordingDelegate: self)
-        
-//        print("path \(outputFileUrl)")
     }
     
     func stopRecording() {
@@ -199,8 +197,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
                 
                 let outputPath = "\(documentsPath)/\(currentTimeStamp()).jpg"
-                
-                print("URL when saved: \(outputPath)")
                 
                 imageData.writeToFile(outputPath, atomically: true)
                 
@@ -252,7 +248,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     // MARK: AVCaptureFileOutputRecordingDelegate
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
-        print("finished recording")
         
         self.previewViewController.willMoveToParentViewController(self)
         self.view.addSubview(self.previewViewController.view)
