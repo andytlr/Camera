@@ -15,7 +15,6 @@
 		C21477C91BEE9FE7001474A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C21477C71BEE9FE7001474A4 /* LaunchScreen.storyboard */; };
 		C21477D11BEFE7BB001474A4 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21477D01BEFE7BB001474A4 /* Common.swift */; };
 		C278C95F1BF846C800285CDF /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278C95E1BF846C800285CDF /* PreviewViewController.swift */; };
-		C293CA991BF7EF2900969740 /* example_recording.mov in Resources */ = {isa = PBXBuildFile; fileRef = C293CA981BF7EF2900969740 /* example_recording.mov */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +28,6 @@
 		C21477CA1BEE9FE7001474A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C21477D01BEFE7BB001474A4 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		C278C95E1BF846C800285CDF /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
-		C293CA981BF7EF2900969740 /* example_recording.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = example_recording.mov; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -67,7 +65,6 @@
 				C21477C21BEE9FE7001474A4 /* Main.storyboard */,
 				C278C95E1BF846C800285CDF /* PreviewViewController.swift */,
 				616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */,
-				C293CA981BF7EF2900969740 /* example_recording.mov */,
 				C21477D01BEFE7BB001474A4 /* Common.swift */,
 				C21477C51BEE9FE7001474A4 /* Assets.xcassets */,
 				C21477C71BEE9FE7001474A4 /* LaunchScreen.storyboard */,
@@ -136,7 +133,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				C21477C91BEE9FE7001474A4 /* LaunchScreen.storyboard in Resources */,
-				C293CA991BF7EF2900969740 /* example_recording.mov in Resources */,
 				C21477C61BEE9FE7001474A4 /* Assets.xcassets in Resources */,
 				C21477C41BEE9FE7001474A4 /* Main.storyboard in Resources */,
 			);
