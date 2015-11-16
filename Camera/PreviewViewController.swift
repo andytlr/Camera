@@ -12,7 +12,7 @@ import AVFoundation
 
 class PreviewViewController: UIViewController {
     
-    let newPreviewView = UIView()
+    let previewView = UIView()
     let blackView = UIView()
 
     let player = AVPlayer()
@@ -27,12 +27,12 @@ class PreviewViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         
         self.view.backgroundColor = UIColor.clearColor()
-        newPreviewView.frame = self.view.bounds
-        view.insertSubview(newPreviewView, atIndex: 1)
-        newPreviewView.backgroundColor = UIColor.clearColor()
+        previewView.frame = self.view.bounds
+        view.insertSubview(previewView, atIndex: 1)
+        previewView.backgroundColor = UIColor.clearColor()
         
         panPreview = UIPanGestureRecognizer(target: self, action: "onPanPreview:")
-        newPreviewView.addGestureRecognizer(panPreview)
+        previewView.addGestureRecognizer(panPreview)
         
         let cameraRoll = returnContentsOfDocumentsDirectory()
         let latestItemInCameraRoll = String(cameraRoll.last!)
@@ -56,7 +56,7 @@ class PreviewViewController: UIViewController {
 //            let imageView = UIImageView(image: mirrorImage)
             
             imageView.frame = self.view.bounds
-            newPreviewView.addSubview(imageView)
+            previewView.addSubview(imageView)
             
         } else if latestFileFileExtension == ".mov" {
             
@@ -71,7 +71,7 @@ class PreviewViewController: UIViewController {
             playerLayer.player = player
             playerLayer.backgroundColor = UIColor.clearColor().CGColor
             playerLayer.videoGravity = AVLayerVideoGravityResize
-            newPreviewView.layer.addSublayer(playerLayer)
+            previewView.layer.addSublayer(playerLayer)
             player.play()
             
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
@@ -99,19 +99,19 @@ class PreviewViewController: UIViewController {
         
         if sender.state == .Began {
             view.backgroundColor = UIColor.clearColor()
-            newPreviewView.backgroundColor = UIColor.clearColor()
+            previewView.backgroundColor = UIColor.clearColor()
             
             blackView.frame = self.view.bounds
             view.insertSubview(blackView, atIndex: 0)
         }
         if sender.state == .Changed {
             
-            newPreviewView.frame.origin.x = translation.x
-            newPreviewView.frame.origin.y = translation.y
+            previewView.frame.origin.x = translation.x
+            previewView.frame.origin.y = translation.y
             
             let rotation = convertValue(translation.x, r1Min: 0, r1Max: view.frame.width, r2Min: 0, r2Max: 10)
 
-            newPreviewView.transform = CGAffineTransformMakeDegreeRotation(rotation)
+            previewView.transform = CGAffineTransformMakeDegreeRotation(rotation)
             
             let makeTransparentOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 2), r2Min: 0.8, r2Max: 0)
             
@@ -136,8 +136,8 @@ class PreviewViewController: UIViewController {
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
-                    self.newPreviewView.frame.origin.y = self.view.frame.height * 1.3
-                    self.newPreviewView.frame.origin.x += moveX
+                    self.previewView.frame.origin.y = self.view.frame.height * 1.3
+                    self.previewView.frame.origin.x += moveX
                     self.view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
                     
                     }, completion: { (Bool) -> Void in
@@ -150,9 +150,9 @@ class PreviewViewController: UIViewController {
                         delay(0.1) {
                             self.player.pause()
                             self.playerLayer.removeFromSuperlayer()
-                            self.newPreviewView.transform = CGAffineTransformMakeDegreeRotation(0)
-                            self.newPreviewView.subviews.forEach({ $0.removeFromSuperview() })
-                            self.newPreviewView.removeFromSuperview()
+                            self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+                            self.previewView.subviews.forEach({ $0.removeFromSuperview() })
+                            self.previewView.removeFromSuperview()
                             self.blackView.removeFromSuperview()
                             self.view.backgroundColor = UIColor.clearColor()
                             self.view.removeFromSuperview()
@@ -164,8 +164,8 @@ class PreviewViewController: UIViewController {
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
-                    self.newPreviewView.frame.origin.y = (self.view.frame.height * 1.3) * -1
-                    self.newPreviewView.frame.origin.x += moveX
+                    self.previewView.frame.origin.y = (self.view.frame.height * 1.3) * -1
+                    self.previewView.frame.origin.x += moveX
                     self.view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 1)
                     
                     }, completion: { (Bool) -> Void in
@@ -173,9 +173,9 @@ class PreviewViewController: UIViewController {
                         delay(0.1) {
                             self.player.pause()
                             self.playerLayer.removeFromSuperlayer()
-                            self.newPreviewView.transform = CGAffineTransformMakeDegreeRotation(0)
-                            self.newPreviewView.subviews.forEach({ $0.removeFromSuperview() })
-                            self.newPreviewView.removeFromSuperview()
+                            self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+                            self.previewView.subviews.forEach({ $0.removeFromSuperview() })
+                            self.previewView.removeFromSuperview()
                             self.blackView.removeFromSuperview()
                             self.view.backgroundColor = UIColor.clearColor()
                             self.view.removeFromSuperview()
@@ -185,9 +185,9 @@ class PreviewViewController: UIViewController {
             } else {
                 UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
                     
-                    self.newPreviewView.transform = CGAffineTransformMakeDegreeRotation(0)
-                    self.newPreviewView.frame.origin.x = 0
-                    self.newPreviewView.frame.origin.y = 0
+                    self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+                    self.previewView.frame.origin.x = 0
+                    self.previewView.frame.origin.y = 0
                     
                     }, completion: { (Bool) -> Void in
                         
