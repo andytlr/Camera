@@ -59,3 +59,16 @@ func currentTimeStamp() -> String {
     
     return formatter.stringFromDate(date)
 }
+
+func removeItemFromDocumentsDirectory(fileName: String) {
+    let fileManager:NSFileManager = NSFileManager.defaultManager()
+    
+    let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+    let filePath = documentsDir.stringByAppendingPathComponent(fileName)
+
+    do {
+        try fileManager.removeItemAtPath(filePath)
+    } catch {
+        
+    }
+}
