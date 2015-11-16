@@ -27,25 +27,12 @@ func convertValue(value: CGFloat, r1Min: CGFloat, r1Max: CGFloat, r2Min: CGFloat
     return value * ratio + r2Min - r1Min * ratio
 }
 
-func randomStringWithLength(len: Int) -> NSString {
-    
-    let letters: NSString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    
-    let randomString: NSMutableString = NSMutableString(capacity: len)
-    
-    for (var i=0; i < len; i++){
-        let length = UInt32 (letters.length)
-        let rand = arc4random_uniform(length)
-        randomString.appendFormat("%C", letters.characterAtIndex(Int(rand)))
-    }
-    
-    return randomString
-}
-
 func returnContentsOfDocumentsDirectory() -> [NSURL] {
-    let documentsUrl =  NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
+    let paths = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
+    let documentsURL = paths[0] as NSURL
+    
     do {
-        let directoryContents = try NSFileManager.defaultManager().contentsOfDirectoryAtURL(documentsUrl, includingPropertiesForKeys: nil, options: NSDirectoryEnumerationOptions())
+        let directoryContents = try NSFileManager.defaultManager().contentsOfDirectoryAtURL(documentsURL, includingPropertiesForKeys: nil, options: [])
         return directoryContents
         
     } catch let error as NSError {
@@ -63,4 +50,12 @@ func listContentsOfDocumentsDirectory() {
     } catch let error as NSError {
         print(error.localizedDescription)
     }
+}
+
+func currentTimeStamp() -> String {
+    let date = NSDate()
+    let formatter = NSDateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd-HH-mm-ss"
+    
+    return formatter.stringFromDate(date)
 }
