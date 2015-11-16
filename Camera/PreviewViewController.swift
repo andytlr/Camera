@@ -11,16 +11,28 @@ import AVKit
 import AVFoundation
 
 class PreviewViewController: UIViewController {
-
-    @IBOutlet weak var previewView: UIView!
     
+    let previewView = UIView()
     let blackView = UIView()
+
+    let player = AVPlayer()
+    let playerLayer = AVPlayerLayer()
+    
+    var panPreview: UIPanGestureRecognizer!
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewWillAppear(animated: Bool) {
+        
+        self.view.backgroundColor = UIColor.clearColor()
+        previewView.frame = self.view.bounds
+        view.insertSubview(previewView, atIndex: 1)
+        previewView.backgroundColor = UIColor.clearColor()
+        
+        panPreview = UIPanGestureRecognizer(target: self, action: "onPanPreview:")
+        previewView.addGestureRecognizer(panPreview)
         
         let cameraRoll = returnContentsOfDocumentsDirectory()
         let latestItemInCameraRoll = String(cameraRoll.last!)
@@ -48,7 +60,6 @@ class PreviewViewController: UIViewController {
             
         } else if latestFileFileExtension == ".mov" {
             
-            let playerLayer = AVPlayerLayer()
             playerLayer.frame = view.bounds
             
             let URL = NSURL(fileURLWithPath: filePath)
@@ -80,7 +91,8 @@ class PreviewViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    @IBAction func panPreviewView(sender: UIPanGestureRecognizer) {
+    
+    func onPanPreview(sender: UIScreenEdgePanGestureRecognizer) {
         
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
@@ -103,7 +115,7 @@ class PreviewViewController: UIViewController {
             
             let makeTransparentOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 2), r2Min: 0.8, r2Max: 0)
             
-            let makeOpaqueOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 2), r2Min: 0, r2Max: 1)
+            let makeOpaqueOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 3) * 2, r2Min: 0, r2Max: 1)
             
             blackView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: makeTransparentOnPan)
             
@@ -122,10 +134,6 @@ class PreviewViewController: UIViewController {
             if velocity.y > 2000 || translation.y > (view.frame.height / 2) {
                 print("Delete Yo")
                 
-                let cameraRoll = returnContentsOfDocumentsDirectory()
-                let latestFileName = cameraRoll.last!.lastPathComponent!
-                removeItemFromDocumentsDirectory(latestFileName)
-                
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
                     self.previewView.frame.origin.y = self.view.frame.height * 1.3
@@ -134,10 +142,19 @@ class PreviewViewController: UIViewController {
                     
                     }, completion: { (Bool) -> Void in
                         
-                        // Need to delete the latest file here
-                        self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+                        // Delete latest file.
+                        let cameraRoll = returnContentsOfDocumentsDirectory()
+                        let latestFileName = cameraRoll.last!.lastPathComponent!
+                        removeItemFromDocumentsDirectory(latestFileName)
                         
                         delay(0.1) {
+                            self.player.pause()
+                            self.playerLayer.removeFromSuperlayer()
+                            self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+                            self.previewView.subviews.forEach({ $0.removeFromSuperview() })
+                            self.previewView.removeFromSuperview()
+                            self.blackView.removeFromSuperview()
+                            self.view.backgroundColor = UIColor.clearColor()
                             self.view.removeFromSuperview()
                         }
                 })
@@ -153,9 +170,14 @@ class PreviewViewController: UIViewController {
                     
                     }, completion: { (Bool) -> Void in
                         
-                        self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
-                        
                         delay(0.1) {
+                            self.player.pause()
+                            self.playerLayer.removeFromSuperlayer()
+                            self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+                            self.previewView.subviews.forEach({ $0.removeFromSuperview() })
+                            self.previewView.removeFromSuperview()
+                            self.blackView.removeFromSuperview()
+                            self.view.backgroundColor = UIColor.clearColor()
                             self.view.removeFromSuperview()
                         }
                 })
