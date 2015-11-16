@@ -156,5 +156,76 @@
             </objects>
             <point key="canvasLocation" x="1393.5" y="995.5"/>
         </scene>
+        <!--Edit Clip View Controller-->
+        <scene sceneID="z4y-l7-3Et">
+            <objects>
+                <viewController id="Aw4-yg-6oe" customClass="EditClipViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="w0f-c0-GT6"/>
+                        <viewControllerLayoutGuide type="bottom" id="3fu-WW-tpm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="LLH-go-LlR">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0ga-EK-aQ8">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type something…" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Gx1-gM-5lv">
+                                        <rect key="frame" x="30" y="601" width="315" height="30"/>
+                                        <animations/>
+                                        <gestureRecognizers/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="8PK-vF-hn6" appends="YES" id="aJo-fB-azf"/>
+                                            <outletCollection property="gestureRecognizers" destination="eWJ-2A-hUB" appends="YES" id="Y4Q-EZ-HoF"/>
+                                            <outletCollection property="gestureRecognizers" destination="8Zo-5j-vqS" appends="YES" id="5gg-Vh-CfG"/>
+                                        </connections>
+                                    </textField>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="8mT-vy-yjR" appends="YES" id="odM-dU-K10"/>
+                                </connections>
+                            </view>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="clipView" destination="0ga-EK-aQ8" id="Gww-OZ-dEZ"/>
+                        <outlet property="textFieldPanGestureRecognizer" destination="8PK-vF-hn6" id="oCc-2q-DOO"/>
+                        <outlet property="textInputTextField" destination="Gx1-gM-5lv" id="VUf-l4-6QG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="n8l-x2-tSh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="8mT-vy-yjR" userLabel="Tap to Add Text">
+                    <connections>
+                        <action selector="toggleTextInput:" destination="Aw4-yg-6oe" id="a2O-Tq-oF2"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="8PK-vF-hn6" userLabel="Text Field Pan Gesture">
+                    <connections>
+                        <action selector="panText:" destination="Aw4-yg-6oe" id="ebk-Ei-4rb"/>
+                    </connections>
+                </panGestureRecognizer>
+                <rotationGestureRecognizer id="eWJ-2A-hUB" userLabel="Text Field Rotate Gesture">
+                    <connections>
+                        <action selector="rotateText:" destination="Aw4-yg-6oe" id="qMV-rl-NUg"/>
+                    </connections>
+                </rotationGestureRecognizer>
+                <pinchGestureRecognizer id="8Zo-5j-vqS" userLabel="Text Field Pinch Gesture">
+                    <connections>
+                        <action selector="pinchText:" destination="Aw4-yg-6oe" id="guo-cd-ZXp"/>
+                    </connections>
+                </pinchGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1850.5" y="995.5"/>
+        </scene>
     </scenes>
 </document>
