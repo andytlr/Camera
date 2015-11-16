@@ -14,8 +14,10 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     @IBOutlet weak var textInputTextField: UITextField!
     @IBOutlet var textFieldPanGestureRecognizer: UIPanGestureRecognizer!
     
-    var textFieldOrigin = CGPoint(x: 30, y: 385)
+    var textFieldOrigin = CGPoint(x: 30, y: 390)
+    
     var textFieldOriginalCenter: CGPoint!
+    var textFieldScaleTransform: CGAffineTransform!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,10 +45,15 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     func beginTextInput() {
-        print("showing text input")
-        textInputTextField.frame.origin = textFieldOrigin
         textInputTextField.hidden = false
+        textInputTextField.alpha = 0
         textInputTextField.becomeFirstResponder()
+        textInputTextField.frame.origin = CGPoint(x: textFieldOrigin.x, y: textFieldOrigin.y + 250)
+        
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
+            self.textInputTextField.frame.origin = self.textFieldOrigin
+            self.textInputTextField.alpha = 1
+        }, completion: nil)
     }
     
     func endTextInput() {
@@ -59,8 +66,14 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     func cancelTextInput() {
-        textInputTextField.hidden = true
-        textInputTextField.endEditing(true)
+        self.textInputTextField.endEditing(true)
+        
+        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: {
+            self.textInputTextField.frame.origin = CGPoint(x: self.textFieldOrigin.x, y: self.textFieldOrigin.y + 250)
+            self.textInputTextField.alpha = 0
+        }, completion: { (finished: Bool) -> Void in
+            self.textInputTextField.hidden = true
+        })
     }
     
     @IBAction func toggleTextInput(sender: AnyObject) {
@@ -82,9 +95,18 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         }
     }
     
+    @IBAction func pinchText(sender: AnyObject) {
+        let scale = sender.scale as CGFloat
+        
+        if sender.state == .Changed {
+            textFieldScaleTransform = CGAffineTransformMakeScale(scale, scale)
+            textInputTextField.transform = textFieldScaleTransform
+        }
+    }
+    
     @IBAction func rotateText(sender: AnyObject) {
         if sender.state == .Changed {
-            textInputTextField.transform = CGAffineTransformMakeRotation(sender.rotation)
+            textInputTextField.transform = CGAffineTransformRotate(textFieldScaleTransform, sender.rotation)
         }
     }
     
