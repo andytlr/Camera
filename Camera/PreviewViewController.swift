@@ -23,31 +23,19 @@ class PreviewViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         
         let cameraRoll = returnContentsOfDocumentsDirectory()
-        
         let latestItemInCameraRoll = String(cameraRoll.last!)
-        
         let latestFileName = cameraRoll.last!.lastPathComponent!
         
         let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
         let filePath = documentsDir.stringByAppendingPathComponent(latestFileName)
-        let filePathWithFileProtocol = "file://" + filePath
-        print("file path: \(filePathWithFileProtocol)")
         
-        let uiImageFriendlyUrl = latestItemInCameraRoll.stringByReplacingOccurrencesOfString("file:///private", withString: "")
-        
-        let avPlayerLayerFriendlyString = latestItemInCameraRoll.stringByReplacingOccurrencesOfString("/private", withString: "")
-        
-        let avPlayerLayerFriendlyUrl = NSURL(string: avPlayerLayerFriendlyString)
-        
-        let bundleVideoUrl = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")
-        
+        // Dis string bullshit to get file type
         let latestFileFileExtensionIndex = latestItemInCameraRoll.endIndex.advancedBy(-4)
-        
         let latestFileFileExtension = latestItemInCameraRoll[Range(start: latestFileFileExtensionIndex, end: latestItemInCameraRoll.endIndex)]
         
         if latestFileFileExtension == ".jpg" {
             
-            let image = UIImage(contentsOfFile: uiImageFriendlyUrl)!
+            let image = UIImage(contentsOfFile: filePath)!
             let imageView = UIImageView(image: image)
             
             // Conditionally use lines below to mirror preview a selfie.
@@ -64,13 +52,8 @@ class PreviewViewController: UIViewController {
             playerLayer.frame = view.bounds
             
             let URL = NSURL(fileURLWithPath: filePath)
-            
             let videoAsset = AVAsset(URL: URL)
-//            let videoAsset = AVAsset(URL: avPlayerLayerFriendlyUrl!)
-//            let videoAsset = AVAsset(URL: bundleVideoUrl!)
-            
             let playerItem = AVPlayerItem(asset: videoAsset)
-            
             let player = AVPlayer(playerItem: playerItem)
             
             player.actionAtItemEnd = .None
