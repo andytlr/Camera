@@ -187,9 +187,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         videoOutput.stopRecording()
         
-        self.previewViewController.willMoveToParentViewController(self)
-        self.view.addSubview(self.previewViewController.view)
-        self.previewViewController.didMoveToParentViewController(self)
+        delay(0.1) {
+            self.previewViewController.willMoveToParentViewController(self)
+            self.view.addSubview(self.previewViewController.view)
+            self.previewViewController.didMoveToParentViewController(self)
+        }
     }
     
     func takeStillImage() {
