@@ -34,10 +34,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-    
-    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
-        
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -186,12 +182,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         
         videoOutput.stopRecording()
-        
-        delay(0.1) {
-            self.previewViewController.willMoveToParentViewController(self)
-            self.view.addSubview(self.previewViewController.view)
-            self.previewViewController.didMoveToParentViewController(self)
-        }
     }
     
     func takeStillImage() {
@@ -257,6 +247,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     @IBAction func tapButton(sender: AnyObject) {
         takeStillImage()
+    }
+    
+    // MARK: AVCaptureFileOutputRecordingDelegate
+    
+    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
+        print("finished recording")
+        
+        self.previewViewController.willMoveToParentViewController(self)
+        self.view.addSubview(self.previewViewController.view)
+        self.previewViewController.didMoveToParentViewController(self)
     }
 
 }
