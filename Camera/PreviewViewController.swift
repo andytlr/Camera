@@ -16,11 +16,17 @@ class PreviewViewController: UIViewController {
     
     let blackView = UIView()
     
+    let player = AVPlayer()
+    let playerLayer = AVPlayerLayer()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewWillAppear(animated: Bool) {
+        
+        view.backgroundColor = UIColor.clearColor()
+        previewView.backgroundColor = UIColor.clearColor()
         
         let cameraRoll = returnContentsOfDocumentsDirectory()
         let latestItemInCameraRoll = String(cameraRoll.last!)
@@ -48,7 +54,6 @@ class PreviewViewController: UIViewController {
             
         } else if latestFileFileExtension == ".mov" {
             
-            let playerLayer = AVPlayerLayer()
             playerLayer.frame = view.bounds
             
             let URL = NSURL(fileURLWithPath: filePath)
@@ -122,10 +127,6 @@ class PreviewViewController: UIViewController {
             if velocity.y > 2000 || translation.y > (view.frame.height / 2) {
                 print("Delete Yo")
                 
-                let cameraRoll = returnContentsOfDocumentsDirectory()
-                let latestFileName = cameraRoll.last!.lastPathComponent!
-                removeItemFromDocumentsDirectory(latestFileName)
-                
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
                     self.previewView.frame.origin.y = self.view.frame.height * 1.3
@@ -134,10 +135,16 @@ class PreviewViewController: UIViewController {
                     
                     }, completion: { (Bool) -> Void in
                         
-                        // Need to delete the latest file here
-                        self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+                        let cameraRoll = returnContentsOfDocumentsDirectory()
+                        let latestFileName = cameraRoll.last!.lastPathComponent!
+                        removeItemFromDocumentsDirectory(latestFileName)
                         
                         delay(0.1) {
+                            self.player.pause()
+                            self.playerLayer.removeFromSuperlayer()
+                            self.previewView.subviews.forEach({ $0.removeFromSuperview() })
+                            self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+                            self.blackView.removeFromSuperview()
                             self.view.removeFromSuperview()
                         }
                 })
@@ -153,9 +160,12 @@ class PreviewViewController: UIViewController {
                     
                     }, completion: { (Bool) -> Void in
                         
-                        self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
-                        
                         delay(0.1) {
+                            self.player.pause()
+                            self.playerLayer.removeFromSuperlayer()
+                            self.previewView.subviews.forEach({ $0.removeFromSuperview() })
+                            self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+                            self.blackView.removeFromSuperview()
                             self.view.removeFromSuperview()
                         }
                 })
