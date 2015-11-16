@@ -58,7 +58,7 @@ class PreviewViewController: UIViewController {
             
             player.actionAtItemEnd = .None
             playerLayer.player = player
-            playerLayer.backgroundColor = UIColor.purpleColor().CGColor
+            playerLayer.backgroundColor = UIColor.clearColor().CGColor
             playerLayer.videoGravity = AVLayerVideoGravityResize
             previewView.layer.addSublayer(playerLayer)
             player.play()
