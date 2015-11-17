@@ -54,28 +54,30 @@ class ListViewViewController: UIViewController, UIScrollViewDelegate {
             
                 SceneView.center = CGPoint(x: SceneOriginalCenter.x + translation.x, y: SceneOriginalCenter.y)
             
-            if translation.x < -1 && translation.x < -100{
-                print("bye felicia")
+            if translation.x < -290{
+                print("should snap")
+
                 
-                UIView.animateWithDuration(0.3, animations: { () -> Void in
-                    self.SceneView.alpha = 0
-                    self.DeleteView.alpha = 0
+                
+                UIView.animateWithDuration(1.0, animations: { () -> Void in
+                    self.SceneView.frame.origin.x = -100
                 })
+                
+                
             }
+
             
             
         // end swipe
         }else if sender.state == UIGestureRecognizerState.Ended {
     
-            print("endedpan")
+            print("endPan")
             
             UIView.animateWithDuration(0.3, animations: { () -> Void in
                 self.SceneView.frame.origin.x = 0
             })
+        
             
-            if velocity.x > 0 && translation.x > -64{
-                //print("bye felicia")
-            }
      
     }
 }
