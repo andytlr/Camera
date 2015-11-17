@@ -39,8 +39,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        recordButton.alpha = 0
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController")
