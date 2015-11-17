@@ -13,6 +13,7 @@ class ListViewViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var ListView: UIView!
     @IBOutlet weak var SceneOne: UIView!
     @IBOutlet weak var SceneView: UIView!
+    @IBOutlet weak var DeleteView: UIView!
     
     
     //set the centers
@@ -34,9 +35,10 @@ class ListViewViewController: UIViewController, UIScrollViewDelegate {
     @IBAction func ScenePan(sender: UIPanGestureRecognizer) {
         
         let translation = sender.translationInView(view)
+        let velocity = sender.velocityInView(view)
         
         
-        // start to scroll
+        // start to swipe
         if sender.state == UIGestureRecognizerState.Began {
             
             print("began")
@@ -44,17 +46,37 @@ class ListViewViewController: UIViewController, UIScrollViewDelegate {
             SceneOriginalCenter = SceneView.center
         
             
-        // start to scroll
+        // swipping
         }else if sender.state == UIGestureRecognizerState.Changed {
             
                 print(translation.x)
+                //print(velocity.x)
             
                 SceneView.center = CGPoint(x: SceneOriginalCenter.x + translation.x, y: SceneOriginalCenter.y)
             
-        // end scroll
+            if translation.x < -1 && translation.x < -100{
+                print("bye felicia")
+                
+                UIView.animateWithDuration(0.3, animations: { () -> Void in
+                    self.SceneView.alpha = 0
+                    self.DeleteView.alpha = 0
+                })
+            }
+            
+            
+        // end swipe
         }else if sender.state == UIGestureRecognizerState.Ended {
     
-            print("ended")
+            print("endedpan")
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.SceneView.frame.origin.x = 0
+            })
+            
+            if velocity.x > 0 && translation.x > -64{
+                //print("bye felicia")
+            }
+     
     }
 }
 

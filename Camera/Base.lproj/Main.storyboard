@@ -192,6 +192,7 @@
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
+                        <outlet property="DeleteView" destination="xWJ-bZ-1a8" id="MmW-zq-Zf2"/>
                         <outlet property="ListView" destination="9xq-x4-zzY" id="wGz-Nf-Ota"/>
                         <outlet property="SceneOne" destination="IrB-lN-gWw" id="5AS-0Y-DhN"/>
                         <outlet property="SceneView" destination="SzM-KS-PcT" id="93G-Xa-IxM"/>
