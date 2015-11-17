@@ -20,6 +20,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="fi7-FT-psy" appends="YES" id="wC0-RW-yl8"/>
+                                    <outletCollection property="gestureRecognizers" destination="a6g-gA-HGj" appends="YES" id="MwZ-dF-csi"/>
+                                    <outletCollection property="gestureRecognizers" destination="Ock-s3-pv7" appends="YES" id="6d2-6A-8dY"/>
+                                    <outletCollection property="gestureRecognizers" destination="wir-N4-Xbu" appends="YES" id="D5Q-QO-ePJ"/>
+                                </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C5M-M4-Sak">
                                 <rect key="frame" x="147" y="544" width="80" height="80"/>
@@ -58,35 +65,67 @@
                         <action selector="longPressButton:" destination="BYZ-38-t0r" id="6OW-RO-Frd"/>
                     </connections>
                 </pongPressGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="fi7-FT-psy" userLabel="Long Press Whole View">
+                    <connections>
+                        <action selector="longPressWholeView:" destination="BYZ-38-t0r" id="IEM-v1-i5C"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+                <tapGestureRecognizer id="a6g-gA-HGj" userLabel="Tap Whole View">
+                    <connections>
+                        <action selector="tapWholeView:" destination="BYZ-38-t0r" id="hUI-nv-l4L"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <swipeGestureRecognizer direction="right" id="Ock-s3-pv7" userLabel="Swipe Right">
+                    <connections>
+                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="6XP-0M-yHL"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="left" id="wir-N4-Xbu" userLabel="Swipe Left">
+                    <connections>
+                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="YJC-4t-OEp"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="511.5" y="995.5"/>
         </scene>
         <!--Preview View Controller-->
-        <scene sceneID="XsK-vB-FpF">
+        <scene sceneID="emP-RQ-0jc">
             <objects>
-                <viewController id="BFv-2p-XNT" customClass="PreviewViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PreviewViewController" id="utw-gT-5h1" customClass="PreviewViewController" customModule="Camera" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="IfS-fH-N8k"/>
-                        <viewControllerLayoutGuide type="bottom" id="NBj-T3-oNg"/>
+                        <viewControllerLayoutGuide type="top" id="hJi-7f-EI2"/>
+                        <viewControllerLayoutGuide type="bottom" id="ykY-V4-PB3"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="9Qh-n5-46G">
+                    <view key="view" contentMode="scaleToFill" id="wIb-Vp-0L8">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="csh-PL-dRW">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wfF-60-exu">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="bVy-eS-xBu" appends="YES" id="PJB-w9-Qna"/>
+                                </connections>
                             </view>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="previewView" destination="wfF-60-exu" id="MMB-jK-R4f"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NTo-5E-bJE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zy6-hr-ood" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="bVy-eS-xBu" userLabel="Preivew View Pan Gesture Recognizer">
+                    <connections>
+                        <action selector="panPreviewView:" destination="utw-gT-5h1" id="Vh9-E8-sUC"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="948.5" y="995.5"/>
+            <point key="canvasLocation" x="974.5" y="995.5"/>
         </scene>
         <!--List Review -->
         <scene sceneID="1ie-Mf-JnA">

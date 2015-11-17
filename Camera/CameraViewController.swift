@@ -8,9 +8,12 @@
 
 //import Foundation
 import UIKit
+import AVKit
 import AVFoundation
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
+    
+    var previewViewController: UIViewController!
     
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var recordButton: UIButton!
@@ -22,7 +25,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var captureDevice: AVCaptureDevice?
     var backCamera: AVCaptureDevice?
     var frontCamera: AVCaptureDevice?
-    var randomVideoFileName: String = ""
     
     let stillImageOutput = AVCaptureStillImageOutput()
     let videoOutput = AVCaptureMovieFileOutput()
@@ -32,13 +34,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
-    
-    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
-        
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+//        recordButton.alpha = 0
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController")
+        
         setupCamera()
         setButtonLabel()
         
@@ -123,7 +128,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
     }
     
-    @IBAction func tapSwitchButton(sender: AnyObject) {
+    func switchCameras() {
         if usingbackCamera == true {
             endSession()
             beginSession(frontCamera!)
@@ -137,9 +142,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
+    @IBAction func tapSwitchButton(sender: AnyObject) {
+        switchCameras()
+    }
+    
     func startRecording() {
         print("Start Recording")
-        randomVideoFileName = randomStringWithLength(56) as String
+        switchButton.alpha = 0
+        
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.5).CGColor
         recordButton.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.2)
         
@@ -151,45 +161,25 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        let outputPath = "\(documentsPath)/\(randomVideoFileName).mov"
+        let outputPath = "\(documentsPath)/\(currentTimeStamp()).mov"
         let outputFileUrl = NSURL(fileURLWithPath: outputPath)
         videoOutput.startRecordingToOutputFileURL(outputFileUrl, recordingDelegate: self)
-        
-        print("file name at start \(randomVideoFileName)")
     }
     
     func stopRecording() {
         print("Stop Recording")
+        switchButton.alpha = 1
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5).CGColor
         recordButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2)
         
         UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
+            
             self.recordButton.transform = CGAffineTransformMakeScale(1, 1)
+            
             }) { (Bool) -> Void in
         }
         
         videoOutput.stopRecording()
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        UISaveVideoAtPathToSavedPhotosAlbum("\(documentsPath)/\(randomVideoFileName).mov", nil, nil, nil)
-        
-        print("file name after save \(randomVideoFileName)")
-        
-        // give it a couple secs before deleting
-        delay(2) {
-            let fileManager = NSFileManager.defaultManager()
-
-            if fileManager.fileExistsAtPath("\(documentsPath)/\(self.randomVideoFileName).mov") {
-                print("it exists to delete")
-                do {
-                    try fileManager.removeItemAtPath("\(documentsPath)/\(self.randomVideoFileName).mov")
-                    listContentsOfDocumentsDirectory()
-                } catch {
-                    
-                }
-            }
-            
-        }
-        
     }
     
     func takeStillImage() {
@@ -201,10 +191,41 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
             stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
                 (imageDataSampleBuffer, error) -> Void in
+                
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
-                UIImageWriteToSavedPhotosAlbum(UIImage(data: imageData)!, nil, nil, nil)
+                
+                let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+                
+                let outputPath = "\(documentsPath)/\(currentTimeStamp()).jpg"
+                
+                imageData.writeToFile(outputPath, atomically: true)
+                
+                self.previewViewController.willMoveToParentViewController(self)
+                self.view.addSubview(self.previewViewController.view)
+                self.previewViewController.didMoveToParentViewController(self)
             }
         }
+    }
+    
+    @IBAction func longPressWholeView(sender: UILongPressGestureRecognizer) {
+        if sender.state == .Began {
+            startRecording()
+        }
+        if sender.state == .Changed {
+            
+        }
+        if sender.state == .Ended {
+            self.stopRecording()
+        }
+    }
+    
+    @IBAction func tapWholeView(sender: UITapGestureRecognizer) {
+        
+        takeStillImage()
+    }
+    
+    @IBAction func swipeRight(sender: UISwipeGestureRecognizer) {
+        switchCameras()
     }
     
     @IBAction func longPressButton(sender: UILongPressGestureRecognizer) {
@@ -222,6 +243,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     @IBAction func tapButton(sender: AnyObject) {
         takeStillImage()
+    }
+    
+    // MARK: AVCaptureFileOutputRecordingDelegate
+    
+    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
+        
+        self.previewViewController.willMoveToParentViewController(self)
+        self.view.addSubview(self.previewViewController.view)
+        self.previewViewController.didMoveToParentViewController(self)
     }
 
 }
