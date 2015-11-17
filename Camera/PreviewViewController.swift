@@ -16,7 +16,7 @@ class PreviewViewController: UIViewController {
     
     let blackView = UIView()
     
-    let player = AVPlayer()
+    var player = AVPlayer()
     let playerLayer = AVPlayerLayer()
     
     override func viewDidLoad() {
@@ -59,7 +59,7 @@ class PreviewViewController: UIViewController {
             let URL = NSURL(fileURLWithPath: filePath)
             let videoAsset = AVAsset(URL: URL)
             let playerItem = AVPlayerItem(asset: videoAsset)
-            let player = AVPlayer(playerItem: playerItem)
+            player = AVPlayer(playerItem: playerItem)
             
             player.actionAtItemEnd = .None
             playerLayer.player = player
@@ -130,6 +130,7 @@ class PreviewViewController: UIViewController {
             
             if velocity.y > 2000 || translation.y > (view.frame.height / 2) {
                 print("Delete Yo")
+                player.pause()
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
@@ -144,7 +145,6 @@ class PreviewViewController: UIViewController {
                         removeItemFromDocumentsDirectory(latestFileName)
                         
                         delay(0.1) {
-                            self.player.pause()
                             self.playerLayer.removeFromSuperlayer()
                             self.previewView.subviews.forEach({ $0.removeFromSuperview() })
                             self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
@@ -155,6 +155,7 @@ class PreviewViewController: UIViewController {
                 
             } else if velocity.y < -2000 || translation.y < (view.frame.height / 2) * -1 {
                 print("Keep Yo")
+                player.pause()
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
@@ -165,7 +166,6 @@ class PreviewViewController: UIViewController {
                     }, completion: { (Bool) -> Void in
                         
                         delay(0.1) {
-                            self.player.pause()
                             self.playerLayer.removeFromSuperlayer()
                             self.previewView.subviews.forEach({ $0.removeFromSuperview() })
                             self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
