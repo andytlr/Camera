@@ -22,9 +22,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var usingbackCamera: Bool = true
     var captureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
-    var captureDevice: AVCaptureDevice?
+    
     var backCamera: AVCaptureDevice?
     var frontCamera: AVCaptureDevice?
+    var microphone: AVCaptureDevice?
     
     let stillImageOutput = AVCaptureStillImageOutput()
     let videoOutput = AVCaptureMovieFileOutput()
@@ -47,15 +48,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         setupCamera()
         setButtonLabel()
         
-//        let backCamera = devices[0] as? AVCaptureDevice
-//        let frontCamera = devices[1] as? AVCaptureDevice
-//        let microphone = devices[2] as? AVCaptureDevice
-//        print(backCamera)
-//        print(frontCamera)
-//        print(microphone)
-        
         if backCamera != nil {
             beginSession(backCamera!)
+        }
+        
+        if microphone != nil {
+            beginSession(microphone!)
         }
         
         if frontCamera == nil {
@@ -93,7 +91,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 }
             }
             if device.hasMediaType(AVMediaTypeAudio) {
-                print(device)
+                microphone = device as? AVCaptureDevice
             }
         }
     }
