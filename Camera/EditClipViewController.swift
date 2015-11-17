@@ -15,6 +15,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     @IBOutlet var textFieldPanGestureRecognizer: UIPanGestureRecognizer!
     
     var textFieldOrigin = CGPoint(x: 30, y: 390)
+    var textFieldNewPositionOrigin = CGPoint(x: 30, y: 390)
     
     var textFieldOriginalCenter: CGPoint!
     var textFieldScaleTransform: CGAffineTransform!
@@ -92,6 +93,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
                 y: textFieldOriginalCenter.y + translation.y
             )
         } else if sender.state == .Ended {
+            // Save new position
+            textFieldNewPositionOrigin = textInputTextField.frame.origin
         }
     }
     
@@ -115,6 +118,24 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     func textFieldShouldReturn(textField: UITextField!) -> Bool {
         textField.resignFirstResponder()
         return true
+    }
+    
+    @IBAction func beginEditingText(sender: AnyObject) {
+        let characterCount = textInputTextField.text?.characters.count
+        
+        if characterCount > 0 {
+            // Return to original position above keyboard
+            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
+                    self.textInputTextField.frame.origin = self.textFieldOrigin
+            }, completion: nil)
+        }
+    }
+    
+    @IBAction func endEditingText(sender: AnyObject) {
+        // Return to new position
+        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
+            self.textInputTextField.frame.origin = self.textFieldNewPositionOrigin
+        }, completion: nil)
     }
     
     // MARK: UIGestureRecognizerDelegate
