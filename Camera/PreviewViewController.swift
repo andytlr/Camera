@@ -68,6 +68,8 @@ class PreviewViewController: UIViewController {
             previewView.layer.addSublayer(playerLayer)
             player.play()
             
+//            player.muted = true
+            
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
         }
     }
