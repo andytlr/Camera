@@ -171,21 +171,28 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SDA-dQ-wYt">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type something…" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H4j-rC-jmg">
-                                        <rect key="frame" x="30" y="601" width="315" height="30"/>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q0Y-g2-5N0">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type something…" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H4j-rC-jmg">
+                                                <rect key="frame" x="20" y="319" width="335" height="30"/>
+                                                <animations/>
+                                                <gestureRecognizers/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                <connections>
+                                                    <action selector="beginEditingText:" destination="96O-5S-Syf" eventType="editingDidBegin" id="vtF-OZ-ivs"/>
+                                                    <action selector="endEditingText:" destination="96O-5S-Syf" eventType="editingDidEnd" id="KzJ-MJ-DYm"/>
+                                                    <outletCollection property="gestureRecognizers" destination="QEu-Wp-VNZ" appends="YES" id="wG5-xL-9jl"/>
+                                                    <outletCollection property="gestureRecognizers" destination="Osy-gJ-f6f" appends="YES" id="ds3-PD-6J4"/>
+                                                    <outletCollection property="gestureRecognizers" destination="7ud-cU-hsP" appends="YES" id="gFV-z6-Qp5"/>
+                                                </connections>
+                                            </textField>
+                                        </subviews>
                                         <animations/>
-                                        <gestureRecognizers/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
-                                        <connections>
-                                            <action selector="beginEditingText:" destination="96O-5S-Syf" eventType="editingDidBegin" id="vtF-OZ-ivs"/>
-                                            <action selector="endEditingText:" destination="96O-5S-Syf" eventType="editingDidEnd" id="KzJ-MJ-DYm"/>
-                                            <outletCollection property="gestureRecognizers" destination="Osy-gJ-f6f" appends="YES" id="ds3-PD-6J4"/>
-                                            <outletCollection property="gestureRecognizers" destination="7ud-cU-hsP" appends="YES" id="gFV-z6-Qp5"/>
-                                            <outletCollection property="gestureRecognizers" destination="QEu-Wp-VNZ" appends="YES" id="wG5-xL-9jl"/>
-                                        </connections>
-                                    </textField>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -201,6 +208,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="clipView" destination="SDA-dQ-wYt" id="MSN-4w-DXr"/>
+                        <outlet property="overlayView" destination="Q0Y-g2-5N0" id="Bmg-fc-uAq"/>
                         <outlet property="textFieldPanGestureRecognizer" destination="Osy-gJ-f6f" id="CAQ-Qr-fy5"/>
                         <outlet property="textInputTextField" destination="H4j-rC-jmg" id="zro-w3-PCW"/>
                     </connections>

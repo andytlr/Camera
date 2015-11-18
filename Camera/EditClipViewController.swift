@@ -7,15 +7,21 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var clipView: UIView!
+    @IBOutlet weak var overlayView: UIView!
     @IBOutlet weak var textInputTextField: UITextField!
     @IBOutlet var textFieldPanGestureRecognizer: UIPanGestureRecognizer!
     
-    var textFieldOrigin = CGPoint(x: 30, y: 390)
-    var textFieldNewPositionOrigin = CGPoint(x: 30, y: 390)
+    var player = AVPlayer()
+    var playerLayer = AVPlayerLayer()
+    
+    var textFieldOrigin = CGPoint(x: 20, y: 401)
+    var textFieldNewPositionOrigin = CGPoint(x: 20, y: 401)
     
     var textFieldOriginalCenter: CGPoint!
     var textFieldScaleTransform: CGAffineTransform!
@@ -30,7 +36,39 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillChangeFrameNotification, object: nil)
         
         // Set up UI
+        overlayView.backgroundColor = UIColor.clearColor()
         setUpTextInput()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        // Handle video
+        // TODO: Handle photos
+        let exampleVideoURL = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")
+        let videoAsset = AVAsset(URL: exampleVideoURL!)
+        let playerItem = AVPlayerItem(asset: videoAsset)
+        
+        player = AVPlayer(playerItem: playerItem)
+        
+        player.actionAtItemEnd = .None
+        playerLayer.player = player
+        playerLayer.frame = view.bounds
+        playerLayer.backgroundColor = UIColor.clearColor().CGColor
+        playerLayer.videoGravity = AVLayerVideoGravityResize
+        
+        clipView.layer.insertSublayer(playerLayer, below: overlayView.layer)
+        
+        player.play()
+        
+        // Notify when we reach the end so we can loop
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
+    }
+    
+    func playerDidReachEndNotificationHandler(notification: NSNotification) {
+        // Loop video
+        let playerItem = notification.object as! AVPlayerItem
+        playerItem.seekToTime(kCMTimeZero)
     }
 
     override func didReceiveMemoryWarning() {
@@ -132,7 +170,6 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     @IBAction func endEditingText(sender: AnyObject) {
-        // Return to new position
         UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
             self.textInputTextField.frame.origin = self.textFieldNewPositionOrigin
         }, completion: nil)
