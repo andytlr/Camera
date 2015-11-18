@@ -7,12 +7,17 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
 class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var clipView: UIView!
     @IBOutlet weak var textInputTextField: UITextField!
     @IBOutlet var textFieldPanGestureRecognizer: UIPanGestureRecognizer!
+    
+    var player = AVPlayer()
+    var playerLayer = AVPlayerLayer()
     
     var textFieldOrigin = CGPoint(x: 30, y: 390)
     var textFieldNewPositionOrigin = CGPoint(x: 30, y: 390)
@@ -31,6 +36,33 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         
         // Set up UI
         setUpTextInput()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        // Handle video
+        let exampleVideoURL = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")
+        let videoAsset = AVAsset(URL: exampleVideoURL!)
+        let playerItem = AVPlayerItem(asset: videoAsset)
+        player = AVPlayer(playerItem: playerItem)
+        
+        
+        playerLayer.frame = view.bounds
+        
+        player.actionAtItemEnd = .None
+        playerLayer.player = player
+        playerLayer.backgroundColor = UIColor.clearColor().CGColor
+        playerLayer.videoGravity = AVLayerVideoGravityResize
+        view.layer.addSublayer(playerLayer)
+        player.play()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
+    }
+    
+    func playerDidReachEndNotificationHandler(notification: NSNotification) {
+        let playerItem = notification.object as! AVPlayerItem
+        playerItem.seekToTime(kCMTimeZero)
     }
 
     override func didReceiveMemoryWarning() {
