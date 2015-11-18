@@ -52,9 +52,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if microphone != nil {
             do {
                 captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
-            } catch {
-                
-            }
+            } catch { }
         }
         
         if frontCamera == nil {
@@ -131,17 +129,21 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if usingbackCamera == true {
             endSession()
             beginSession(frontCamera!)
-            do {
-                captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
-            } catch { }
+            if microphone != nil {
+                do {
+                    captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
+                } catch { }
+            }
             usingbackCamera = false
             setButtonLabel()
         } else {
             endSession()
             beginSession(backCamera!)
-            do {
-                captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
-            } catch { }
+            if microphone != nil {
+                do {
+                    captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
+                } catch { }
+            }
             usingbackCamera = true
             setButtonLabel()
         }
