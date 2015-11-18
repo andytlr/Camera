@@ -13,20 +13,24 @@ import AVFoundation
 class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var clipView: UIView!
+    @IBOutlet weak var overlayView: UIView!
+    
     @IBOutlet weak var textInputTextField: UITextField!
     @IBOutlet var textFieldPanGestureRecognizer: UIPanGestureRecognizer!
     
     var player = AVPlayer()
     var playerLayer = AVPlayerLayer()
     
-    var textFieldOrigin = CGPoint(x: 30, y: 390)
-    var textFieldNewPositionOrigin = CGPoint(x: 30, y: 390)
+    var textFieldOrigin = CGPoint(x: 20, y: 401)
+    var textFieldNewPositionOrigin = CGPoint(x: 20, y: 401)
     
     var textFieldOriginalCenter: CGPoint!
     var textFieldScaleTransform: CGAffineTransform!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        overlayView.backgroundColor = UIColor.clearColor()
         
         textInputTextField.delegate = self
         textFieldPanGestureRecognizer.delegate = self
@@ -54,7 +58,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         playerLayer.player = player
         playerLayer.backgroundColor = UIColor.clearColor().CGColor
         playerLayer.videoGravity = AVLayerVideoGravityResize
-        view.layer.addSublayer(playerLayer)
+//        clipView.layer.addSublayer(playerLayer)
+        clipView.layer.insertSublayer(playerLayer, below: overlayView.layer)
         player.play()
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
@@ -164,7 +169,6 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     @IBAction func endEditingText(sender: AnyObject) {
-        // Return to new position
         UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
             self.textInputTextField.frame.origin = self.textFieldNewPositionOrigin
         }, completion: nil)
