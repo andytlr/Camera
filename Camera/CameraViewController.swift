@@ -29,7 +29,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     let stillImageOutput = AVCaptureStillImageOutput()
     let videoOutput = AVCaptureMovieFileOutput()
-//    let audioOutput = AVCaptureAudioDataOutput()
     let devices = AVCaptureDevice.devices()
     
     override func prefersStatusBarHidden() -> Bool {
@@ -51,7 +50,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         
         if microphone != nil {
-            beginSession(microphone!)
+            do {
+                captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
+            } catch { }
         }
         
         if frontCamera == nil {
@@ -128,11 +129,21 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if usingbackCamera == true {
             endSession()
             beginSession(frontCamera!)
+            if microphone != nil {
+                do {
+                    captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
+                } catch { }
+            }
             usingbackCamera = false
             setButtonLabel()
         } else {
             endSession()
             beginSession(backCamera!)
+            if microphone != nil {
+                do {
+                    captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
+                } catch { }
+            }
             usingbackCamera = true
             setButtonLabel()
         }
@@ -143,6 +154,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     func startRecording() {
+        
         print("Start Recording")
         switchButton.alpha = 0
         
