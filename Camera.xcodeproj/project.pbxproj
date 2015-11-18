@@ -15,6 +15,7 @@
 		C21477C91BEE9FE7001474A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C21477C71BEE9FE7001474A4 /* LaunchScreen.storyboard */; };
 		C21477D11BEFE7BB001474A4 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21477D01BEFE7BB001474A4 /* Common.swift */; };
 		C278C95F1BF846C800285CDF /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278C95E1BF846C800285CDF /* PreviewViewController.swift */; };
+		CA2E6EBD1BFAD034007AA957 /* example_recording.mov in Resources */ = {isa = PBXBuildFile; fileRef = CA2E6EBC1BFAD034007AA957 /* example_recording.mov */; };
 		CAF6569F1BF7C02A00B0E42F /* EditClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF6569E1BF7C02A00B0E42F /* EditClipViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +30,7 @@
 		C21477CA1BEE9FE7001474A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C21477D01BEFE7BB001474A4 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		C278C95E1BF846C800285CDF /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		CA2E6EBC1BFAD034007AA957 /* example_recording.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = example_recording.mov; sourceTree = "<group>"; };
 		CAF6569E1BF7C02A00B0E42F /* EditClipViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditClipViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,6 +71,7 @@
 				C278C95E1BF846C800285CDF /* PreviewViewController.swift */,
 				616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */,
 				C21477D01BEFE7BB001474A4 /* Common.swift */,
+				CA2E6EBC1BFAD034007AA957 /* example_recording.mov */,
 				C21477C51BEE9FE7001474A4 /* Assets.xcassets */,
 				C21477C71BEE9FE7001474A4 /* LaunchScreen.storyboard */,
 				C21477CA1BEE9FE7001474A4 /* Info.plist */,
@@ -136,6 +139,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C21477C91BEE9FE7001474A4 /* LaunchScreen.storyboard in Resources */,
+				CA2E6EBD1BFAD034007AA957 /* example_recording.mov in Resources */,
 				C21477C61BEE9FE7001474A4 /* Assets.xcassets in Resources */,
 				C21477C41BEE9FE7001474A4 /* Main.storyboard in Resources */,
 			);
