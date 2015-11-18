@@ -29,7 +29,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     let stillImageOutput = AVCaptureStillImageOutput()
     let videoOutput = AVCaptureMovieFileOutput()
-//    let audioOutput = AVCaptureAudioDataOutput()
     let devices = AVCaptureDevice.devices()
     
     override func prefersStatusBarHidden() -> Bool {
@@ -50,9 +49,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             beginSession(backCamera!)
         }
         
-        // doing this here is causing the app to take forever to load.
+//         doing this here is causing the app to take forever to load.
         if microphone != nil {
-            beginSession(microphone!)
+            do {
+                captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
+            } catch {
+                
+            }
         }
         
         if frontCamera == nil {
@@ -144,6 +147,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     func startRecording() {
+        
         print("Start Recording")
         switchButton.alpha = 0
         
