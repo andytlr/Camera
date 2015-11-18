@@ -49,7 +49,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             beginSession(backCamera!)
         }
         
-//         doing this here is causing the app to take forever to load.
         if microphone != nil {
             do {
                 captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
@@ -132,11 +131,17 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if usingbackCamera == true {
             endSession()
             beginSession(frontCamera!)
+            do {
+                captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
+            } catch { }
             usingbackCamera = false
             setButtonLabel()
         } else {
             endSession()
             beginSession(backCamera!)
+            do {
+                captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
+            } catch { }
             usingbackCamera = true
             setButtonLabel()
         }
