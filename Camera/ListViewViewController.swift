@@ -8,12 +8,23 @@
 
 import UIKit
 
-class ListViewViewController: UIViewController {
+class ListViewViewController: UIViewController, UIScrollViewDelegate {
+    
+    @IBOutlet weak var ListView: UIView!
+    @IBOutlet weak var SceneOne: UIView!
+    @IBOutlet weak var SceneView: UIView!
+    @IBOutlet weak var DeleteView: UIView!
+    
+    
+    //set the centers
+    
+    var SceneOriginalCenter: CGPoint!
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        
+        SceneOriginalCenter = SceneView.frame.origin
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,6 +32,55 @@ class ListViewViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func ScenePan(sender: UIPanGestureRecognizer) {
+        
+        let translation = sender.translationInView(view)
+        let velocity = sender.velocityInView(view)
+        
+        
+        // start to swipe
+        if sender.state == UIGestureRecognizerState.Began {
+            
+            print("began")
+            
+            SceneOriginalCenter = SceneView.center
+        
+            
+        // swipping
+        }else if sender.state == UIGestureRecognizerState.Changed {
+            
+                print(translation.x)
+                //print(velocity.x)
+            
+                SceneView.center = CGPoint(x: SceneOriginalCenter.x + translation.x, y: SceneOriginalCenter.y)
+            
+            if translation.x < -290{
+                print("should snap")
+
+                
+                
+                UIView.animateWithDuration(1.0, animations: { () -> Void in
+                    self.SceneView.frame.origin.x = -100
+                })
+                
+                
+            }
+
+            
+            
+        // end swipe
+        }else if sender.state == UIGestureRecognizerState.Ended {
+    
+            print("endPan")
+            
+            UIView.animateWithDuration(0.3, animations: { () -> Void in
+                self.SceneView.frame.origin.x = 0
+            })
+        
+            
+     
+    }
+}
 
     /*
     // MARK: - Navigation
