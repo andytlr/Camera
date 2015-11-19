@@ -169,15 +169,15 @@ class PreviewViewController: UIViewController {
                     
                     }, completion: { (Bool) -> Void in
                         
-                        self.cameraViewController.restartMicAfterDismissingPreview()
-                        
                         delay(0.1) {
                             self.playerLayer.removeFromSuperlayer()
                             self.previewView.subviews.forEach({ $0.removeFromSuperview() })
                             self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
                             self.blackView.removeFromSuperview()
+                            self.cameraViewController.restartMicAfterDismissingPreview()
                             self.view.removeFromSuperview()
                         }
+                        
                 })
                 
             } else {
