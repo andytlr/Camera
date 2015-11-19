@@ -14,6 +14,8 @@ class PreviewViewController: UIViewController {
 
     @IBOutlet weak var previewView: UIView!
     
+    var cameraViewController: CameraViewController!
+    
     let blackView = UIView()
     
     var player = AVPlayer()
@@ -166,6 +168,8 @@ class PreviewViewController: UIViewController {
                     self.view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 1)
                     
                     }, completion: { (Bool) -> Void in
+                        
+                        self.cameraViewController.restartMicAfterDismissingPreview()
                         
                         delay(0.1) {
                             self.playerLayer.removeFromSuperlayer()

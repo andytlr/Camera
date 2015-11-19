@@ -13,7 +13,7 @@ import AVFoundation
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
-    var previewViewController: UIViewController!
+    var previewViewController: PreviewViewController!
     
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var recordButton: UIButton!
@@ -34,13 +34,26 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
+    
+    func restartMicAfterDismissingPreview() {
+//        endSession()
+//        beginSession(backCamera!)
+
+//        if microphone != nil {
+//            do {
+//                captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
+//                captureSession.usesApplicationAudioSession = true
+//            } catch { }
+//        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController")
+        previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController") as! PreviewViewController
+        previewViewController.cameraViewController = self
         
         setupCamera()
         setButtonLabel()
@@ -214,8 +227,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 let outputPath = "\(documentsPath)/\(currentTimeStamp()).jpg"
                 
                 imageData.writeToFile(outputPath, atomically: true)
-                
-                self.previewViewController.willMoveToParentViewController(self)
+
+                self.addChildViewController(self.previewViewController)
                 self.view.addSubview(self.previewViewController.view)
                 self.previewViewController.didMoveToParentViewController(self)
             }
@@ -264,7 +277,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
         
-        self.previewViewController.willMoveToParentViewController(self)
+        addChildViewController(previewViewController)
         self.view.addSubview(self.previewViewController.view)
         self.previewViewController.didMoveToParentViewController(self)
     }
