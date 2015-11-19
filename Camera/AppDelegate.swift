@@ -18,12 +18,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "routeChanged", name: AVAudioSessionRouteChangeNotification, object: nil)
+        
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
             try AVAudioSession.sharedInstance().setActive(true)
         } catch let error as NSError { print(error) }
         
         return true
+    }
+    
+    func routeChanged() {
+        print(AVAudioSession.sharedInstance().category)
     }
     
     func applicationWillResignActive(application: UIApplication) {

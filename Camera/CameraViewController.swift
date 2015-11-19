@@ -27,6 +27,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var frontCamera: AVCaptureDevice?
     var microphone: AVCaptureDevice?
     
+    var micInput: AVCaptureDeviceInput?
+    
     let stillImageOutput = AVCaptureStillImageOutput()
     let videoOutput = AVCaptureMovieFileOutput()
     let devices = AVCaptureDevice.devices()
@@ -39,15 +41,32 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 //        endSession()
 //        beginSession(backCamera!)
 
-        print(captureSession.inputs)
-        print(AVAudioSession.sharedInstance().category)
-        captureSession.automaticallyConfiguresApplicationAudioSession = false
-        
+        print("Mic input \(micInput!)")
         
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
             try AVAudioSession.sharedInstance().setActive(true)
         } catch let error as NSError { print(error) }
+        
+        captureSession.automaticallyConfiguresApplicationAudioSession = false
+        captureSession.addInput(micInput!)
+
+        print("Inputs \(captureSession.inputs)")
+        
+//        do {
+//            micInput = try AVCaptureDeviceInput(device: microphone)
+//            captureSession.addInput(micInput)
+//        } catch {}
+
+//        print(captureSession.inputs)
+//        print(AVAudioSession.sharedInstance().category)
+//        captureSession.automaticallyConfiguresApplicationAudioSession = false
+//        captureSession.usesApplicationAudioSession = true
+        
+//        do {
+//            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
+//            try AVAudioSession.sharedInstance().setActive(true)
+//        } catch let error as NSError { print(error) }
         
         print(AVAudioSession.sharedInstance().category)
         
@@ -76,7 +95,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         if microphone != nil {
             do {
-                captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
+                micInput = try AVCaptureDeviceInput(device: microphone)
+                captureSession.addInput(micInput)
                 captureSession.usesApplicationAudioSession = true
             } catch { }
         }
@@ -212,14 +232,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         
         videoOutput.stopRecording()
-        
-        if microphone != nil {
-            do {
-                captureSession.removeInput(try AVCaptureDeviceInput(device: microphone))
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
-                try AVAudioSession.sharedInstance().setActive(true)
-            } catch let error as NSError { print(error) }
-        }
     }
     
     func takeStillImage() {
@@ -247,6 +259,18 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
+    func removeMic() {
+        if microphone != nil {
+            do {
+                captureSession.removeInput(micInput)
+                print("is it here? \(captureSession.inputs)")
+                
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch let error as NSError { print(error) }
+        }
+    }
+    
     @IBAction func longPressWholeView(sender: UILongPressGestureRecognizer) {
         if sender.state == .Began {
             startRecording()
@@ -255,7 +279,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             
         }
         if sender.state == .Ended {
-            self.stopRecording()
+            stopRecording()
+            removeMic()
         }
     }
     
@@ -277,7 +302,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
         }
         if sender.state == .Ended {
-            self.stopRecording()
+            stopRecording()
+            removeMic()
         }
     }
     
