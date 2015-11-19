@@ -99,6 +99,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         previewLayer?.removeFromSuperlayer()
         captureSession.stopRunning()
         captureSession = AVCaptureSession()
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch let error as NSError { print(error) }
     }
     
     func beginSession(device: AVCaptureDevice) {
@@ -106,6 +110,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         do {
             captureSession.addInput(try AVCaptureDeviceInput(device: device))
             captureSession.automaticallyConfiguresApplicationAudioSession = false
+            
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
+            try AVAudioSession.sharedInstance().setActive(true)
             
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             self.cameraView.layer.addSublayer(previewLayer!)
@@ -187,6 +194,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             
             }) { (Bool) -> Void in
         }
+        
+        endSession()
         
         videoOutput.stopRecording()
     }
