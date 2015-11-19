@@ -32,6 +32,10 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         ClipReviewList.dataSource = self
         
         
+        //getting contents of docs dir
+        
+        listContentsOfDocumentsDirectory()
+        
        
     }
 
@@ -53,7 +57,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         return cell
     }
-    
     
     
     
