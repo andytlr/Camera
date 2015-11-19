@@ -105,6 +105,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         do {
             captureSession.addInput(try AVCaptureDeviceInput(device: device))
+            captureSession.automaticallyConfiguresApplicationAudioSession = false
             
             previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
             self.cameraView.layer.addSublayer(previewLayer!)
