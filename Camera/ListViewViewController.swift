@@ -8,79 +8,62 @@
 
 import UIKit
 
-class ListViewViewController: UIViewController, UIScrollViewDelegate {
+class ListViewViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var ListView: UIView!
-    @IBOutlet weak var SceneOne: UIView!
-    @IBOutlet weak var SceneView: UIView!
-    @IBOutlet weak var DeleteView: UIView!
+    @IBOutlet weak var ClipReviewList: UITableView!
     
     
-    //set the centers
-    
-    var SceneOriginalCenter: CGPoint!
+    var scenes: [String]!
+    var scenetime: [String]!
     
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SceneOriginalCenter = SceneView.frame.origin
+        
+        //scene data
+        
+        scenes = ["Scene 1", "Scene 2", "Scene 3", "Scene 4", "Scene 5", "Scene 6", "Scene 7"]
+        scenetime = ["00:01", "00:02", "00:03", "00:04", "00:05", "00:06", "00:07"]
+        
+        //table delegates
+        
+        ClipReviewList.delegate = self
+        ClipReviewList.dataSource = self
+        
+        
+       
     }
 
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return scenes.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCellWithIdentifier("SceneTableViewCell") as! SceneTableViewCell
+        
+        let scenesname = scenes[indexPath.row]
+        let scenetimeduration = scenetime[indexPath.row]
+        
+        cell.SceneNumber.text = scenesname
+        cell.SceneDuration.text = scenetimeduration
+
+        
+        return cell
+    }
+    
+    
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @IBAction func ScenePan(sender: UIPanGestureRecognizer) {
-        
-        let translation = sender.translationInView(view)
-        let velocity = sender.velocityInView(view)
-        
-        
-        // start to swipe
-        if sender.state == UIGestureRecognizerState.Began {
-            
-            print("began")
-            
-            SceneOriginalCenter = SceneView.center
-        
-            
-        // swipping
-        }else if sender.state == UIGestureRecognizerState.Changed {
-            
-                print(translation.x)
-                //print(velocity.x)
-            
-                SceneView.center = CGPoint(x: SceneOriginalCenter.x + translation.x, y: SceneOriginalCenter.y)
-            
-            if translation.x < -290{
-                print("should snap")
 
-                
-                
-                UIView.animateWithDuration(1.0, animations: { () -> Void in
-                    self.SceneView.frame.origin.x = -100
-                })
-                
-                
-            }
-
-            
-            
-        // end swipe
-        }else if sender.state == UIGestureRecognizerState.Ended {
     
-            print("endPan")
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.SceneView.frame.origin.x = 0
-            })
-        
-            
-     
-    }
-}
+} // end curly
 
     /*
     // MARK: - Navigation
@@ -92,4 +75,4 @@ class ListViewViewController: UIViewController, UIScrollViewDelegate {
     }
     */
 
-}
+
