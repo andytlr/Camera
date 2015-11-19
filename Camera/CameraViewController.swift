@@ -52,6 +52,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if microphone != nil {
             do {
                 captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
+                captureSession.usesApplicationAudioSession = true
             } catch { }
         }
         
