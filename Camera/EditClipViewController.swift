@@ -45,8 +45,25 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         
         // Handle video
         // TODO: Handle photos
-        let exampleVideoURL = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")
-        let videoAsset = AVAsset(URL: exampleVideoURL!)
+        let exampleVideoURL = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")!
+        print(exampleVideoURL)
+        
+        // Our actual file path once everything's working
+        let filePath = String(exampleVideoURL)
+        
+        // Get file extension
+        let fileExtensionIndex = filePath.endIndex.advancedBy(-4)
+        let fileExtension = filePath[Range(start: fileExtensionIndex, end: filePath.endIndex)]
+        print("file extension: \(fileExtension)")
+        
+        if fileExtension == ".mov" {
+            print("handling video")
+        } else if fileExtension == ".jpg" {
+            print("handling photo")
+        }
+        
+        // Set up player
+        let videoAsset = AVAsset(URL: exampleVideoURL)
         let playerItem = AVPlayerItem(asset: videoAsset)
         
         player = AVPlayer(playerItem: playerItem)
