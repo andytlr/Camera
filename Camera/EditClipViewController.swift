@@ -43,26 +43,49 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        // Handle video
-        // TODO: Handle photos
-        let exampleVideoURL = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")
-        let videoAsset = AVAsset(URL: exampleVideoURL!)
-        let playerItem = AVPlayerItem(asset: videoAsset)
+        let exampleVideoURL = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")!
+        let examplePhotoURL = NSBundle.mainBundle().pathForResource("example_photo", ofType: ".jpg")!
         
-        player = AVPlayer(playerItem: playerItem)
+        // Our actual file path once everything's working
+        let filePath = String(exampleVideoURL)
         
-        player.actionAtItemEnd = .None
-        playerLayer.player = player
-        playerLayer.frame = view.bounds
-        playerLayer.backgroundColor = UIColor.clearColor().CGColor
-        playerLayer.videoGravity = AVLayerVideoGravityResize
+        // Get file extension
+        let fileExtensionIndex = filePath.endIndex.advancedBy(-4)
+        let fileExtension = filePath[Range(start: fileExtensionIndex, end: filePath.endIndex)]
         
-        clipView.layer.insertSublayer(playerLayer, below: overlayView.layer)
-        
-        player.play()
-        
-        // Notify when we reach the end so we can loop
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
+        if fileExtension == ".jpg" || fileExtension == ".png" {
+            print("handling photo")
+            
+            let image = UIImage(contentsOfFile: filePath)
+            let imageView = UIImageView(image: image)
+            print(image)
+            
+            imageView.frame = self.view.bounds
+            imageView.backgroundColor = UIColor.blueColor()
+            clipView.addSubview(imageView)
+            
+        } else if fileExtension == ".mov" {
+            print("handling video")
+            
+            // Set up player
+            let videoAsset = AVAsset(URL: exampleVideoURL)
+            let playerItem = AVPlayerItem(asset: videoAsset)
+            
+            player = AVPlayer(playerItem: playerItem)
+            
+            player.actionAtItemEnd = .None
+            playerLayer.player = player
+            playerLayer.frame = view.bounds
+            playerLayer.backgroundColor = UIColor.clearColor().CGColor
+            playerLayer.videoGravity = AVLayerVideoGravityResize
+            
+            clipView.layer.insertSublayer(playerLayer, below: overlayView.layer)
+            
+            player.play()
+            
+            // Notify when we reach the end so we can loop
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
+        }
     }
     
     func playerDidReachEndNotificationHandler(notification: NSNotification) {
