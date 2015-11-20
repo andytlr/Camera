@@ -19,6 +19,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var switchButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var timer: UIButton!
+    @IBOutlet weak var soundButton: UIButton!
     
     var usingbackCamera: Bool = true
     var captureSession = AVCaptureSession()
@@ -289,6 +291,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBAction func done(sender: AnyObject) {
         
     }
+    
+    @IBAction func tapSoundButton(sender: AnyObject) {
+        removeMic()
+    }
+    
+    
     
     // MARK: AVCaptureFileOutputRecordingDelegate
     
