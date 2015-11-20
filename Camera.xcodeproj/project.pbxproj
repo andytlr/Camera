@@ -68,12 +68,12 @@
 		C21477BD1BEE9FE7001474A4 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
-				CAF6569E1BF7C02A00B0E42F /* EditClipViewController.swift */,
 				C21477BE1BEE9FE7001474A4 /* AppDelegate.swift */,
 				C21477C01BEE9FE7001474A4 /* CameraViewController.swift */,
-				C21477C21BEE9FE7001474A4 /* Main.storyboard */,
-				61CFADB01BFE3FFB0029E4EC /* SceneTableViewCell.swift */,
 				C278C95E1BF846C800285CDF /* PreviewViewController.swift */,
+				C21477C21BEE9FE7001474A4 /* Main.storyboard */,
+				CAF6569E1BF7C02A00B0E42F /* EditClipViewController.swift */,
+				61CFADB01BFE3FFB0029E4EC /* SceneTableViewCell.swift */,
 				616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */,
 				C21477D01BEFE7BB001474A4 /* Common.swift */,
 				CA2E6EBC1BFAD034007AA957 /* example_recording.mov */,
@@ -117,7 +117,7 @@
 				TargetAttributes = {
 					C21477BA1BEE9FE7001474A4 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = FG8F72SY67;
+						DevelopmentTeam = 7JJG8MJLCH;
 					};
 				};
 			};
@@ -281,7 +281,7 @@
 				INFOPLIST_FILE = Camera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = benashman.Camera;
+				PRODUCT_BUNDLE_IDENTIFIER = andytaylor.Camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -296,7 +296,7 @@
 				INFOPLIST_FILE = Camera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = benashman.Camera;
+				PRODUCT_BUNDLE_IDENTIFIER = andytaylor.Camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

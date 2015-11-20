@@ -27,7 +27,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var backCamera: AVCaptureDevice?
     var frontCamera: AVCaptureDevice?
     var microphone: AVCaptureDevice?
-    
     var micInput: AVCaptureDeviceInput?
     
     let stillImageOutput = AVCaptureStillImageOutput()
@@ -155,9 +154,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             endSession()
             beginSession(frontCamera!)
             if microphone != nil {
-                do {
-                    captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
-                } catch { }
+                captureSession.addInput(micInput)
             }
             usingbackCamera = false
             setButtonLabel()
@@ -165,9 +162,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             endSession()
             beginSession(backCamera!)
             if microphone != nil {
-                do {
-                    captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
-                } catch { }
+                captureSession.addInput(micInput)
             }
             usingbackCamera = true
             setButtonLabel()
