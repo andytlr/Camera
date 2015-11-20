@@ -23,6 +23,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBOutlet weak var soundButton: UIButton!
     
     var usingbackCamera: Bool = true
+    var usingSound: Bool = true
+    
     var captureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
     
@@ -39,7 +41,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         return true
     }
     
-    func restartMicAfterDismissingPreview() {
+    func restartMic() {
 
 //        print("Mic input \(micInput!)")
         
@@ -65,7 +67,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         previewViewController.cameraViewController = self
         
         setupCamera()
-        setButtonLabel()
+        setCameraOrientationButtonLabel()
+        setSoundButtonLabel()
         
         if backCamera != nil {
             beginSession(backCamera!)
@@ -85,7 +88,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
-    func setButtonLabel() {
+    func setSoundButtonLabel() {
+        if usingSound == true {
+            soundButton.setTitle("🎤", forState: UIControlState.Normal)
+        } else {
+            soundButton.setTitle("🚫", forState: UIControlState.Normal)
+        }
+    }
+    
+    func setCameraOrientationButtonLabel() {
         if usingbackCamera == true {
             switchButton.setTitle("🙎", forState: UIControlState.Normal)
         } else {
@@ -156,7 +167,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 captureSession.addInput(micInput)
             }
             usingbackCamera = false
-            setButtonLabel()
+            setCameraOrientationButtonLabel()
         } else {
             endSession()
             beginSession(backCamera!)
@@ -164,7 +175,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 captureSession.addInput(micInput)
             }
             usingbackCamera = true
-            setButtonLabel()
+            setCameraOrientationButtonLabel()
         }
     }
     
@@ -293,10 +304,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     @IBAction func tapSoundButton(sender: AnyObject) {
-        removeMic()
+        if usingSound == true {
+            usingSound = false
+            removeMic()
+            setSoundButtonLabel()
+        } else {
+            usingSound = true
+            restartMic()
+            setSoundButtonLabel()
+        }
     }
-    
-    
     
     // MARK: AVCaptureFileOutputRecordingDelegate
     
