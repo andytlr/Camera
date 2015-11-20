@@ -19,7 +19,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var switchButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
-    @IBOutlet weak var timer: UIButton!
+    @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var soundButton: UIButton!
     
     var usingbackCamera: Bool = true
@@ -33,12 +33,41 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var microphone: AVCaptureDevice?
     var micInput: AVCaptureDeviceInput?
     
+    var startTime = NSTimeInterval()
+    var timer = NSTimer()
+    
     let stillImageOutput = AVCaptureStillImageOutput()
     let videoOutput = AVCaptureMovieFileOutput()
     let devices = AVCaptureDevice.devices()
     
     override func prefersStatusBarHidden() -> Bool {
         return true
+    }
+    
+    func updateTime() {
+        
+        let currentTime = NSDate.timeIntervalSinceReferenceDate()
+        var elapsedTime: NSTimeInterval = currentTime - startTime
+        
+        //calculate the minutes in elapsed time.
+        let minutes = UInt8(elapsedTime / 60.0)
+        elapsedTime -= (NSTimeInterval(minutes) * 60)
+        
+        //calculate the seconds in elapsed time.
+        let seconds = UInt8(elapsedTime)
+        elapsedTime -= NSTimeInterval(seconds)
+        
+        //find out the fraction of milliseconds to be displayed.
+        let fraction = UInt8(elapsedTime * 100)
+        
+        //add the leading zero for minutes, seconds and millseconds and store them as string constants
+        let strMinutes = String(format: "%02d", minutes)
+        let strSeconds = String(format: "%02d", seconds)
+        let strFraction = String(format: "%02d", fraction)
+        
+        //concatenate minuets, seconds and milliseconds as assign it to the UILabel
+        timerLabel.text = "\(strMinutes):\(strSeconds):\(strFraction)"
+        
     }
     
     func restartMic() {
@@ -65,6 +94,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController") as! PreviewViewController
         previewViewController.cameraViewController = self
+        
+        timerLabel.alpha = 0
         
         setupCamera()
         setCameraOrientationButtonLabel()
@@ -186,6 +217,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func startRecording() {
         
         print("Start Recording")
+        
+        // Start timer
+        timerLabel.alpha = 1
+        let aSelector: Selector = "updateTime"
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
+        startTime = NSDate.timeIntervalSinceReferenceDate()
+        
         switchButton.alpha = 0
         doneButton.alpha = 0
         
@@ -207,6 +245,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func stopRecording() {
         print("Stop Recording")
+        
+        // Stop Timer
+        timerLabel.alpha = 0
+        timer.invalidate()
+//        timer = NSTimer()
+        
         switchButton.alpha = 1
         doneButton.alpha = 1
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5).CGColor
