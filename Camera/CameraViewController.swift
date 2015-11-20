@@ -40,14 +40,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func restartMicAfterDismissingPreview() {
 
 //        print("Mic input \(micInput!)")
-        
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch let error as NSError { print(error) }
-        
-        captureSession.automaticallyConfiguresApplicationAudioSession = false
-        captureSession.addInput(micInput!)
+        if microphone != nil {
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch let error as NSError { print(error) }
+            
+            captureSession.automaticallyConfiguresApplicationAudioSession = false
+            captureSession.addInput(micInput!)
+        }
 
 //        print("Inputs \(captureSession.inputs)")
     }
