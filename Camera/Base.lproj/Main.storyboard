@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4ct-Ky-8pw">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
     </dependencies>
     <scenes>
         <!--Camera View Controller-->
@@ -48,13 +49,26 @@
                                     <action selector="tapSwitchButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fhL-N1-ApB"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lx0-SS-lNg">
+                                <rect key="frame" x="280" y="567" width="37" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="done:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Hy0-DJ-19L"/>
+                                    <segue destination="nhD-o7-srJ" kind="show" id="gwI-fi-e7N"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <navigationItem key="navigationItem" id="8t5-IC-AcB"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="cameraView" destination="OOk-t2-LFN" id="Qle-nc-yK1"/>
+                        <outlet property="doneButton" destination="lx0-SS-lNg" id="7jh-gT-QEX"/>
                         <outlet property="recordButton" destination="C5M-M4-Sak" id="XrD-qD-V43"/>
                         <outlet property="switchButton" destination="Ox4-w2-oTz" id="v08-ys-5xA"/>
                     </connections>
@@ -86,7 +100,7 @@
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="511.5" y="995.5"/>
+            <point key="canvasLocation" x="1323.5" y="995.5"/>
         </scene>
         <!--Preview View Controller-->
         <scene sceneID="emP-RQ-0jc">
@@ -125,7 +139,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="974.5" y="995.5"/>
+            <point key="canvasLocation" x="506.5" y="1763.5"/>
         </scene>
         <!--List Review -->
         <scene sceneID="1ie-Mf-JnA">
@@ -147,7 +161,7 @@
                                         <animations/>
                                     </imageView>
                                     <view alpha="0.25" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nKH-vc-1ZR" userLabel="AlphaOverlay">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="290"/>
+                                        <rect key="frame" x="0.0" y="4" width="375" height="290"/>
                                         <animations/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
@@ -159,81 +173,62 @@
                                 <animations/>
                                 <state key="normal" image="share"/>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9xq-x4-zzY" userLabel="ListView">
-                                <rect key="frame" x="0.0" y="290" width="375" height="377"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IrB-lN-gWw" userLabel="Scene1">
-                                        <rect key="frame" x="0.0" y="0.0" width="380" height="88"/>
-                                        <subviews>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xWJ-bZ-1a8" userLabel="DeleteView">
-                                                <rect key="frame" x="-6" y="0.0" width="386" height="88"/>
-                                                <subviews>
-                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="trash" translatesAutoresizingMaskIntoConstraints="NO" id="m5E-WU-IIb" userLabel="trash_icon">
-                                                        <rect key="frame" x="332" y="29" width="19" height="24"/>
-                                                        <animations/>
-                                                    </imageView>
-                                                </subviews>
-                                                <animations/>
-                                                <color key="backgroundColor" red="0.75294117647058822" green="0.22352941176470587" blue="0.16862745098039217" alpha="1" colorSpace="calibratedRGB"/>
-                                            </view>
-                                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SzM-KS-PcT" userLabel="SceneView">
-                                                <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
-                                                <subviews>
-                                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R0H-Td-bqw" userLabel="ClipPreview">
-                                                        <rect key="frame" x="0.0" y="0.0" width="88" height="88"/>
-                                                        <subviews>
-                                                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="spin" translatesAutoresizingMaskIntoConstraints="NO" id="cWq-Gi-xYJ" userLabel="ClipImageView">
-                                                                <rect key="frame" x="-9" y="-14" width="107" height="116"/>
-                                                                <animations/>
-                                                            </imageView>
-                                                        </subviews>
-                                                        <animations/>
-                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </view>
-                                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" fixedFrame="YES" image="movebars" translatesAutoresizingMaskIntoConstraints="NO" id="vZP-mn-bKQ">
-                                                        <rect key="frame" x="322" y="41" width="22" height="5"/>
-                                                        <animations/>
-                                                    </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SCENE #" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AgZ-EF-xu7">
-                                                        <rect key="frame" x="109" y="24" width="60" height="21"/>
-                                                        <animations/>
-                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hzs-jy-M55">
-                                                        <rect key="frame" x="109" y="43" width="60" height="21"/>
-                                                        <animations/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <animations/>
-                                                <color key="backgroundColor" red="0.050980392156862744" green="0.086274509803921567" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
-                                            </view>
-                                        </subviews>
-                                        <animations/>
-                                        <gestureRecognizers/>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="1Qz-GR-Yxu" appends="YES" id="wgw-Jw-Gtz"/>
-                                        </connections>
-                                    </view>
-                                </subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="77" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XlR-IY-3a3">
+                                <rect key="frame" x="0.0" y="289" width="375" height="378"/>
                                 <animations/>
-                                <color key="backgroundColor" red="0.050980392156862744" green="0.086274509803921567" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" red="0.050980392156862744" green="0.086274509803921567" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SceneTableViewCell" rowHeight="88" id="mMT-IG-lwV" customClass="SceneTableViewCell" customModule="Camera" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="88"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mMT-IG-lwV" id="PD9-Fq-uJI">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="87.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SCENE #" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmA-8b-rkA">
+                                                    <rect key="frame" x="111" y="22" width="281" height="21"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asA-dI-qEo">
+                                                    <rect key="frame" x="111" y="43" width="281" height="21"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HQA-JI-22e">
+                                                    <rect key="frame" x="0.0" y="0.0" width="88" height="88"/>
+                                                    <animations/>
+                                                </imageView>
+                                            </subviews>
+                                            <animations/>
+                                            <color key="backgroundColor" red="0.050980392159999999" green="0.086274509799999996" blue="0.12549019610000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <connections>
+                                            <outlet property="SceneClip" destination="HQA-JI-22e" id="oRV-N4-MW7"/>
+                                            <outlet property="SceneDuration" destination="asA-dI-qEo" id="FQ9-3j-Vlp"/>
+                                            <outlet property="SceneNumber" destination="DmA-8b-rkA" id="i7d-nG-m1R"/>
+                                            <segue destination="96O-5S-Syf" kind="show" identifier="editClipSegue" id="AJD-mB-gbY">
+                                                <segue key="commit" inheritsFrom="parent" id="BeT-LG-eqe"/>
+                                                <segue key="preview" inheritsFrom="commit" id="fWp-er-n6J"/>
+                                            </segue>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.050980392156862744" green="0.086274509803921567" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
-                        <outlet property="DeleteView" destination="xWJ-bZ-1a8" id="MmW-zq-Zf2"/>
-                        <outlet property="ListView" destination="9xq-x4-zzY" id="wGz-Nf-Ota"/>
-                        <outlet property="SceneOne" destination="IrB-lN-gWw" id="5AS-0Y-DhN"/>
-                        <outlet property="SceneView" destination="SzM-KS-PcT" id="93G-Xa-IxM"/>
+                        <outlet property="ClipReviewList" destination="XlR-IY-3a3" id="8vQ-Bu-mma"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XRo-ij-n4Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -243,7 +238,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1399.5" y="995.5"/>
+            <point key="canvasLocation" x="1773.5" y="995.5"/>
         </scene>
         <!--Edit Clip View Controller-->
         <scene sceneID="fuB-Kn-2tf">
@@ -281,6 +276,16 @@
                                             <outletCollection property="gestureRecognizers" destination="7ud-cU-hsP" appends="YES" id="gFV-z6-Qp5"/>
                                         </connections>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9y3-Nd-A3A">
+                                        <rect key="frame" x="38" y="33" width="37" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="doneEditing:" destination="96O-5S-Syf" eventType="touchUpInside" id="D0D-yO-aQB"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -296,6 +301,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="clipView" destination="SDA-dQ-wYt" id="MSN-4w-DXr"/>
+                        <outlet property="doneButton" destination="9y3-Nd-A3A" id="aAv-un-ZKa"/>
                         <outlet property="overlayView" destination="Q0Y-g2-5N0" id="Bmg-fc-uAq"/>
                         <outlet property="textFieldPanGestureRecognizer" destination="Osy-gJ-f6f" id="CAQ-Qr-fy5"/>
                         <outlet property="textInputTextField" destination="H4j-rC-jmg" id="zro-w3-PCW"/>
@@ -323,14 +329,35 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1850.5" y="995.5"/>
+            <point key="canvasLocation" x="2240.5" y="995.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="bNv-Sn-qVm">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="4ct-Ky-8pw" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="WbP-gg-6Dp">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <animations/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="NwC-0h-mMv"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xsv-hU-Gfh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="802.5" y="995.5"/>
         </scene>
     </scenes>
     <resources>
-        <image name="movebars" width="22" height="5"/>
         <image name="salad" width="375" height="291"/>
         <image name="share" width="94" height="31"/>
-        <image name="spin" width="88" height="88"/>
-        <image name="trash" width="19" height="24"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="AJD-mB-gbY"/>
+    </inferredMetricsTieBreakers>
 </document>

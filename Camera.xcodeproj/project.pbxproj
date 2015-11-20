@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		616937DF1BF64AEA00B47C38 /* ListViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */; };
+		61CFADB11BFE3FFB0029E4EC /* SceneTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CFADB01BFE3FFB0029E4EC /* SceneTableViewCell.swift */; };
 		C21477BF1BEE9FE7001474A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21477BE1BEE9FE7001474A4 /* AppDelegate.swift */; };
 		C21477C11BEE9FE7001474A4 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21477C01BEE9FE7001474A4 /* CameraViewController.swift */; };
 		C21477C41BEE9FE7001474A4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C21477C21BEE9FE7001474A4 /* Main.storyboard */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewViewController.swift; sourceTree = "<group>"; };
+		61CFADB01BFE3FFB0029E4EC /* SceneTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTableViewCell.swift; sourceTree = "<group>"; };
 		C21477BB1BEE9FE7001474A4 /* Camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C21477BE1BEE9FE7001474A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C21477C01BEE9FE7001474A4 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				C21477BE1BEE9FE7001474A4 /* AppDelegate.swift */,
 				C21477C01BEE9FE7001474A4 /* CameraViewController.swift */,
 				C21477C21BEE9FE7001474A4 /* Main.storyboard */,
+				61CFADB01BFE3FFB0029E4EC /* SceneTableViewCell.swift */,
 				C278C95E1BF846C800285CDF /* PreviewViewController.swift */,
 				616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */,
 				C21477D01BEFE7BB001474A4 /* Common.swift */,
@@ -114,7 +117,7 @@
 				TargetAttributes = {
 					C21477BA1BEE9FE7001474A4 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = 7JJG8MJLCH;
+						DevelopmentTeam = FG8F72SY67;
 					};
 				};
 			};
@@ -156,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				61CFADB11BFE3FFB0029E4EC /* SceneTableViewCell.swift in Sources */,
 				C21477C11BEE9FE7001474A4 /* CameraViewController.swift in Sources */,
 				C21477D11BEFE7BB001474A4 /* Common.swift in Sources */,
 				C21477BF1BEE9FE7001474A4 /* AppDelegate.swift in Sources */,
@@ -277,7 +281,7 @@
 				INFOPLIST_FILE = Camera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = andytaylor.Camera;
+				PRODUCT_BUNDLE_IDENTIFIER = benashman.Camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -292,7 +296,7 @@
 				INFOPLIST_FILE = Camera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = andytaylor.Camera;
+				PRODUCT_BUNDLE_IDENTIFIER = benashman.Camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

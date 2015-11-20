@@ -7,89 +7,94 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 
-class ListViewViewController: UIViewController, UIScrollViewDelegate {
+class ListViewViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var ListView: UIView!
-    @IBOutlet weak var SceneOne: UIView!
-    @IBOutlet weak var SceneView: UIView!
-    @IBOutlet weak var DeleteView: UIView!
+    @IBOutlet weak var ClipReviewList: UITableView!
     
     
-    //set the centers
+    var scenes: [String]!
+    var scenetime: [String]!
     
-    var SceneOriginalCenter: CGPoint!
-    
+    var clips: [NSURL]!
+    var clipCount: Int = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SceneOriginalCenter = SceneView.frame.origin
+//        scenes = ["Scene 1", "Scene 2", "Scene 3", "Scene 4", "Scene 5", "Scene 6", "Scene 7"]
+//        scenetime = ["00:01", "00:02", "00:03", "00:04", "00:05", "00:06", "00:07"]
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        ClipReviewList.dataSource = self
+        ClipReviewList.delegate = self
+        
+        clips = returnContentsOfDocumentsDirectory()
+        clipCount = clips.count
+        print("Number of clips: \(clipCount)")
+        
+        ClipReviewList.reloadData()
     }
 
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print(clipCount)
+        return clipCount
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("SceneTableViewCell") as! SceneTableViewCell
+        
+//        let scenesname = scenes[indexPath.row]
+//        let scenetimeduration = scenetime[indexPath.row]
+//        
+//        cell.SceneNumber.text = scenesname
+//        cell.SceneDuration.text = scenetimeduration
+
+        let clip = clips[indexPath.row]
+        let clipAsset = AVURLAsset(URL: clip)
+        let clipDuration = clipAsset.duration
+        let clipDurationInSeconds = Int(round(CMTimeGetSeconds(clipDuration)))
+        let clipDurationSuffix: String!
+        if clipDurationInSeconds == 1 {
+            clipDurationSuffix = "Second"
+        } else {
+            clipDurationSuffix = "Seconds"
+        }
+        
+        print(clipDuration)
+        
+        cell.SceneNumber.text = String(clip.absoluteString)
+        cell.SceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
+        
+        return cell
+    }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func ScenePan(sender: UIPanGestureRecognizer) {
-        
-        let translation = sender.translationInView(view)
-        let velocity = sender.velocityInView(view)
-        
-        
-        // start to swipe
-        if sender.state == UIGestureRecognizerState.Began {
-            
-            print("began")
-            
-            SceneOriginalCenter = SceneView.center
-        
-            
-        // swipping
-        }else if sender.state == UIGestureRecognizerState.Changed {
-            
-                print(translation.x)
-                //print(velocity.x)
-            
-                SceneView.center = CGPoint(x: SceneOriginalCenter.x + translation.x, y: SceneOriginalCenter.y)
-            
-            if translation.x < -290{
-                print("should snap")
-
-                
-                
-                UIView.animateWithDuration(1.0, animations: { () -> Void in
-                    self.SceneView.frame.origin.x = -100
-                })
-                
-                
-            }
-
-            
-            
-        // end swipe
-        }else if sender.state == UIGestureRecognizerState.Ended {
-    
-            print("endPan")
-            
-            UIView.animateWithDuration(0.3, animations: { () -> Void in
-                self.SceneView.frame.origin.x = 0
-            })
-        
-            
-     
-    }
-}
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "editClipSegue" {
+            let editViewController = segue.destinationViewController as! EditClipViewController
+            let selectedClipIndex = self.ClipReviewList.indexPathForCell(sender as! UITableViewCell)?.row
+            
+            editViewController.clip = clips[selectedClipIndex!]
+        }
     }
-    */
 
-}
+    
+} // end curly
+
+

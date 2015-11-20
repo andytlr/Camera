@@ -16,6 +16,9 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     @IBOutlet weak var overlayView: UIView!
     @IBOutlet weak var textInputTextField: UITextField!
     @IBOutlet var textFieldPanGestureRecognizer: UIPanGestureRecognizer!
+    @IBOutlet weak var doneButton: UIButton!
+    
+    var clipURL: NSURL!
     
     var player = AVPlayer()
     var playerLayer = AVPlayerLayer()
@@ -47,7 +50,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         let examplePhotoURL = NSBundle.mainBundle().pathForResource("example_photo", ofType: ".jpg")!
         
         // Our actual file path once everything's working
-        let filePath = String(exampleVideoURL)
+        let filePath = String(clipURL)
         
         // Get file extension
         let fileExtensionIndex = filePath.endIndex.advancedBy(-4)
@@ -68,7 +71,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             print("handling video")
             
             // Set up player
-            let videoAsset = AVAsset(URL: exampleVideoURL)
+            let videoAsset = AVAsset(URL: clipURL)
             let playerItem = AVPlayerItem(asset: videoAsset)
             
             player = AVPlayer(playerItem: playerItem)
@@ -197,6 +200,11 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             self.textInputTextField.frame.origin = self.textFieldNewPositionOrigin
         }, completion: nil)
     }
+    
+    @IBAction func doneEditing(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
     
     // MARK: UIGestureRecognizerDelegate
     
