@@ -78,6 +78,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         if frontCamera == nil {
             switchButton.alpha = 0
+            doneButton.alpha = 0
         }
     }
     
@@ -172,6 +173,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         print("Start Recording")
         switchButton.alpha = 0
+        doneButton.alpha = 0
         
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.5).CGColor
         recordButton.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.2)
@@ -192,6 +194,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func stopRecording() {
         print("Stop Recording")
         switchButton.alpha = 1
+        doneButton.alpha = 1
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5).CGColor
         recordButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2)
         

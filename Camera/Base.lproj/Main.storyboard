@@ -52,7 +52,7 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lx0-SS-lNg">
                                 <rect key="frame" x="227" y="544" width="147" height="80"/>
                                 <animations/>
-                                <state key="normal" title="Done">
+                                <state key="normal" title="Clips">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
