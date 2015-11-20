@@ -14,6 +14,10 @@ class PreviewViewController: UIViewController {
 
     @IBOutlet weak var previewView: UIView!
     
+    var latestFileFileExtension: String!
+    
+    var cameraViewController: CameraViewController!
+    
     let blackView = UIView()
     
     var player = AVPlayer()
@@ -37,7 +41,7 @@ class PreviewViewController: UIViewController {
         
         // Dis string bullshit to get file type
         let latestFileFileExtensionIndex = latestItemInCameraRoll.endIndex.advancedBy(-4)
-        let latestFileFileExtension = latestItemInCameraRoll[Range(start: latestFileFileExtensionIndex, end: latestItemInCameraRoll.endIndex)]
+        latestFileFileExtension = latestItemInCameraRoll[Range(start: latestFileFileExtensionIndex, end: latestItemInCameraRoll.endIndex)]
         
         if latestFileFileExtension == ".jpg" {
             
@@ -146,13 +150,14 @@ class PreviewViewController: UIViewController {
                         let latestFileName = cameraRoll.last!.lastPathComponent!
                         removeItemFromDocumentsDirectory(latestFileName)
                         
-                        delay(0.1) {
-                            self.playerLayer.removeFromSuperlayer()
-                            self.previewView.subviews.forEach({ $0.removeFromSuperview() })
-                            self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
-                            self.blackView.removeFromSuperview()
-                            self.view.removeFromSuperview()
+                        self.playerLayer.removeFromSuperlayer()
+                        self.previewView.subviews.forEach({ $0.removeFromSuperview() })
+                        self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+                        self.blackView.removeFromSuperview()
+                        if self.latestFileFileExtension == ".mov" {
+                            self.cameraViewController.restartMicAfterDismissingPreview()
                         }
+                        self.view.removeFromSuperview()
                 })
                 
             } else if velocity.y < -2000 || translation.y < (view.frame.height / 2) * -1 {
@@ -167,13 +172,14 @@ class PreviewViewController: UIViewController {
                     
                     }, completion: { (Bool) -> Void in
                         
-                        delay(0.1) {
-                            self.playerLayer.removeFromSuperlayer()
-                            self.previewView.subviews.forEach({ $0.removeFromSuperview() })
-                            self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
-                            self.blackView.removeFromSuperview()
-                            self.view.removeFromSuperview()
+                        self.playerLayer.removeFromSuperlayer()
+                        self.previewView.subviews.forEach({ $0.removeFromSuperview() })
+                        self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+                        self.blackView.removeFromSuperview()
+                        if self.latestFileFileExtension == ".mov" {
+                            self.cameraViewController.restartMicAfterDismissingPreview()
                         }
+                        self.view.removeFromSuperview()
                 })
                 
             } else {

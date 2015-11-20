@@ -13,7 +13,7 @@ import AVFoundation
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
-    var previewViewController: UIViewController!
+    var previewViewController: PreviewViewController!
     
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var recordButton: UIButton!
@@ -27,6 +27,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var backCamera: AVCaptureDevice?
     var frontCamera: AVCaptureDevice?
     var microphone: AVCaptureDevice?
+    var micInput: AVCaptureDeviceInput?
     
     let stillImageOutput = AVCaptureStillImageOutput()
     let videoOutput = AVCaptureMovieFileOutput()
@@ -35,13 +36,30 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
+    
+    func restartMicAfterDismissingPreview() {
+
+//        print("Mic input \(micInput!)")
+        if microphone != nil {
+            do {
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch let error as NSError { print(error) }
+            
+            captureSession.automaticallyConfiguresApplicationAudioSession = false
+            captureSession.addInput(micInput!)
+        }
+
+//        print("Inputs \(captureSession.inputs)")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
-        previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController")
+        previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController") as! PreviewViewController
+        previewViewController.cameraViewController = self
         
         setupCamera()
         setButtonLabel()
@@ -52,7 +70,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         if microphone != nil {
             do {
-                captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
+                micInput = try AVCaptureDeviceInput(device: microphone)
+                captureSession.addInput(micInput)
+                captureSession.usesApplicationAudioSession = true
             } catch { }
         }
         
@@ -121,10 +141,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 captureSession.addOutput(videoOutput)
             }
             
-        } catch let err as NSError {
-            print(err)
-        }
-        
+        } catch let err as NSError { print(err) }
     }
     
     func switchCameras() {
@@ -132,9 +149,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             endSession()
             beginSession(frontCamera!)
             if microphone != nil {
-                do {
-                    captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
-                } catch { }
+                captureSession.addInput(micInput)
             }
             usingbackCamera = false
             setButtonLabel()
@@ -142,9 +157,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             endSession()
             beginSession(backCamera!)
             if microphone != nil {
-                do {
-                    captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
-                } catch { }
+                captureSession.addInput(micInput)
             }
             usingbackCamera = true
             setButtonLabel()
@@ -209,11 +222,23 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 let outputPath = "\(documentsPath)/\(currentTimeStamp()).jpg"
                 
                 imageData.writeToFile(outputPath, atomically: true)
-                
-                self.previewViewController.willMoveToParentViewController(self)
+
+                self.addChildViewController(self.previewViewController)
                 self.view.addSubview(self.previewViewController.view)
                 self.previewViewController.didMoveToParentViewController(self)
             }
+        }
+    }
+    
+    func removeMic() {
+        if microphone != nil {
+            do {
+                captureSession.removeInput(micInput)
+                print("is it here? \(captureSession.inputs)")
+                
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch let error as NSError { print(error) }
         }
     }
     
@@ -225,7 +250,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             
         }
         if sender.state == .Ended {
-            self.stopRecording()
+            stopRecording()
+            removeMic()
         }
     }
     
@@ -247,7 +273,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
         }
         if sender.state == .Ended {
-            self.stopRecording()
+            stopRecording()
+            removeMic()
         }
     }
     
@@ -264,7 +291,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
         
-        self.previewViewController.willMoveToParentViewController(self)
+        addChildViewController(previewViewController)
         self.view.addSubview(self.previewViewController.view)
         self.previewViewController.didMoveToParentViewController(self)
     }
