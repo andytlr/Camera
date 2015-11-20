@@ -53,29 +53,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
         print("Inputs \(captureSession.inputs)")
         
-//        do {
-//            micInput = try AVCaptureDeviceInput(device: microphone)
-//            captureSession.addInput(micInput)
-//        } catch {}
-
-//        print(captureSession.inputs)
 //        print(AVAudioSession.sharedInstance().category)
-//        captureSession.automaticallyConfiguresApplicationAudioSession = false
 //        captureSession.usesApplicationAudioSession = true
         
-//        do {
-//            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
-//            try AVAudioSession.sharedInstance().setActive(true)
-//        } catch let error as NSError { print(error) }
-        
-        print(AVAudioSession.sharedInstance().category)
-        
-//        if microphone != nil {
-//            do {
-//                captureSession.addInput(try AVCaptureDeviceInput(device: microphone))
-//                captureSession.usesApplicationAudioSession = true
-//            } catch { }
-//        }
     }
 
     override func viewDidLoad() {
