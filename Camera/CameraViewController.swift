@@ -19,8 +19,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var switchButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
-    @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var soundButton: UIButton!
+    @IBOutlet weak var progressBar: UIProgressView!
     
     var usingbackCamera: Bool = true
     var usingSound: Bool = true
@@ -52,12 +52,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         let seconds = UInt8(elapsedTime)
         elapsedTime -= NSTimeInterval(seconds)
         
-        if seconds == 0 {
-            timerLabel.text = "🕑"
-        } else if seconds >= 1 {
-            timerLabel.text = "\(seconds)"
-        }
+        let timerProgress = convertValue(CGFloat(seconds), r1Min: 0, r1Max: 20, r2Min: 0, r2Max: 1)
         
+        progressBar.progress = Float(timerProgress)
     }
     
     func restartMic() {
@@ -85,7 +82,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController") as! PreviewViewController
         previewViewController.cameraViewController = self
         
-        timerLabel.alpha = 0
+        progressBar.alpha = 0
         
         setupCamera()
         setCameraOrientationButtonLabel()
@@ -209,10 +206,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         print("Start Recording")
         
         // Start timer
-        timerLabel.alpha = 1
         let aSelector: Selector = "updateTime"
         timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
         startTime = NSDate.timeIntervalSinceReferenceDate()
+        progressBar.alpha = 1
         
         switchButton.alpha = 0
         doneButton.alpha = 0
@@ -237,7 +234,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         print("Stop Recording")
         
         // Stop Timer
-        timerLabel.alpha = 0
+        progressBar.alpha = 0
         timer.invalidate()
 //        timer = NSTimer()
         
