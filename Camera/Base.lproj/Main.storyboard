@@ -212,6 +212,7 @@
                                             <outlet property="SceneClip" destination="HQA-JI-22e" id="oRV-N4-MW7"/>
                                             <outlet property="SceneDuration" destination="asA-dI-qEo" id="FQ9-3j-Vlp"/>
                                             <outlet property="SceneNumber" destination="DmA-8b-rkA" id="i7d-nG-m1R"/>
+                                            <segue destination="96O-5S-Syf" kind="show" identifier="editClipSegue" id="AJD-mB-gbY"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -271,6 +272,16 @@
                                             <outletCollection property="gestureRecognizers" destination="7ud-cU-hsP" appends="YES" id="gFV-z6-Qp5"/>
                                         </connections>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9y3-Nd-A3A">
+                                        <rect key="frame" x="38" y="33" width="37" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="doneEditing:" destination="96O-5S-Syf" eventType="touchUpInside" id="D0D-yO-aQB"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -286,6 +297,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="clipView" destination="SDA-dQ-wYt" id="MSN-4w-DXr"/>
+                        <outlet property="doneButton" destination="9y3-Nd-A3A" id="aAv-un-ZKa"/>
                         <outlet property="overlayView" destination="Q0Y-g2-5N0" id="Bmg-fc-uAq"/>
                         <outlet property="textFieldPanGestureRecognizer" destination="Osy-gJ-f6f" id="CAQ-Qr-fy5"/>
                         <outlet property="textInputTextField" destination="H4j-rC-jmg" id="zro-w3-PCW"/>
