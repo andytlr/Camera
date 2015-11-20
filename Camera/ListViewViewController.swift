@@ -21,11 +21,10 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     var clips: [NSURL]!
     var clipCount: Int = 0
 
+    var thumbnail: UIImage!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        scenes = ["Scene 1", "Scene 2", "Scene 3", "Scene 4", "Scene 5", "Scene 6", "Scene 7"]
-//        scenetime = ["00:01", "00:02", "00:03", "00:04", "00:05", "00:06", "00:07"]
         
     }
     
@@ -51,14 +50,28 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SceneTableViewCell") as! SceneTableViewCell
         
-//        let scenesname = scenes[indexPath.row]
-//        let scenetimeduration = scenetime[indexPath.row]
-//        
-//        cell.SceneNumber.text = scenesname
-//        cell.SceneDuration.text = scenetimeduration
 
         let clip = clips[indexPath.row]
         let clipAsset = AVURLAsset(URL: clip)
+        
+        
+        //getthumb
+        
+        let generator = AVAssetImageGenerator(asset: clipAsset)
+        
+        let timestamp = CMTime(seconds: 1, preferredTimescale: 60)
+
+        do {
+            let imageRef = try generator.copyCGImageAtTime(timestamp, actualTime: nil)
+            thumbnail = UIImage(CGImage: imageRef)
+        }
+        catch let error as NSError
+        {
+            print("Image generation failed with error \(error)")
+        }
+    
+        print(thumbnail)
+        
         let clipDuration = clipAsset.duration
         let clipDurationInSeconds = Int(round(CMTimeGetSeconds(clipDuration)))
         let clipDurationSuffix: String!
@@ -69,7 +82,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         print(clipDuration)
-        
+        cell.SceneClip.image = thumbnail
         cell.SceneNumber.text = String(clip.absoluteString)
         cell.SceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
         
