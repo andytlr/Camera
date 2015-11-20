@@ -40,6 +40,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func restartMicAfterDismissingPreview() {
 
 //        print("Mic input \(micInput!)")
+        
         if microphone != nil {
             do {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
@@ -284,9 +285,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBAction func tapButton(sender: AnyObject) {
         takeStillImage()
     }
+    
     @IBAction func done(sender: AnyObject) {
-        
-        
         
     }
     
