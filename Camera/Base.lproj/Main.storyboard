@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4ct-Ky-8pw">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
     </dependencies>
     <scenes>
         <!--Camera View Controller-->
@@ -212,7 +213,10 @@
                                             <outlet property="SceneClip" destination="HQA-JI-22e" id="oRV-N4-MW7"/>
                                             <outlet property="SceneDuration" destination="asA-dI-qEo" id="FQ9-3j-Vlp"/>
                                             <outlet property="SceneNumber" destination="DmA-8b-rkA" id="i7d-nG-m1R"/>
-                                            <segue destination="96O-5S-Syf" kind="show" identifier="editClipSegue" id="AJD-mB-gbY"/>
+                                            <segue destination="96O-5S-Syf" kind="show" identifier="editClipSegue" id="AJD-mB-gbY">
+                                                <segue key="commit" inheritsFrom="parent" id="BeT-LG-eqe"/>
+                                                <segue key="preview" inheritsFrom="commit" id="fWp-er-n6J"/>
+                                            </segue>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -353,4 +357,7 @@
         <image name="salad" width="375" height="291"/>
         <image name="share" width="94" height="31"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="AJD-mB-gbY"/>
+    </inferredMetricsTieBreakers>
 </document>
