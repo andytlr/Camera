@@ -84,9 +84,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func setButtonLabel() {
         if usingbackCamera == true {
-            switchButton.setTitle("Selfie", forState: UIControlState.Normal)
+            switchButton.setTitle("🙎", forState: UIControlState.Normal)
         } else {
-            switchButton.setTitle("Backie", forState: UIControlState.Normal)
+            switchButton.setTitle("🌴", forState: UIControlState.Normal)
         }
     }
     
