@@ -90,7 +90,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
             let editViewController = segue.destinationViewController as! EditClipViewController
             let selectedClipIndex = self.ClipReviewList.indexPathForCell(sender as! UITableViewCell)?.row
             
-            editViewController.clip = clips[selectedClipIndex!]
+            editViewController.clipURL = clips[selectedClipIndex!]
         }
     }
 
