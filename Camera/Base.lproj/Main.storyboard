@@ -163,7 +163,7 @@
                                         <rect key="frame" x="0.0" y="4" width="375" height="290"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Qd-bP-XIN" userLabel="ShareButton">
-                                                <rect key="frame" x="140" y="30" width="94" height="31"/>
+                                                <rect key="frame" x="140" y="120" width="94" height="31"/>
                                                 <animations/>
                                                 <state key="normal" image="share"/>
                                             </button>
