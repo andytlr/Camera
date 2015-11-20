@@ -107,6 +107,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         }
     }
 
+    @IBAction func backToCamera(sender: AnyObject) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
     
 } // end curly
 
