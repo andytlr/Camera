@@ -163,7 +163,7 @@ class PreviewViewController: UIViewController {
                     
                     self.previewView.frame.origin.y = self.view.frame.height * 1.3
                     self.previewView.frame.origin.x += moveX
-//                    self.deleteLabel.transform = CGAffineTransformMakeTranslation(0, 80)
+                    self.deleteLabel.transform = CGAffineTransformMakeTranslation(0, 80)
                     
                     }, completion: { (Bool) -> Void in
                         
@@ -197,7 +197,7 @@ class PreviewViewController: UIViewController {
                     
                     self.previewView.frame.origin.y = (self.view.frame.height * 1.3) * -1
                     self.previewView.frame.origin.x += moveX
-//                    self.keepLabel.transform = CGAffineTransformMakeTranslation(0, -80)
+                    self.keepLabel.transform = CGAffineTransformMakeTranslation(0, -80)
                     
                     }, completion: { (Bool) -> Void in
                         
