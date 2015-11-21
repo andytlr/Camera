@@ -25,6 +25,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var usingbackCamera: Bool = true
     var usingSound: Bool = true
     
+    var timerProgress: CGFloat!
+    let recordingTimeLimit = 5
+    
     var captureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
     
@@ -60,11 +63,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
         var elapsedTime: NSTimeInterval = currentTime - startTime
+        let immutibleElapsedTime: NSTimeInterval = currentTime - startTime
         
         let seconds = UInt8(elapsedTime)
         elapsedTime -= NSTimeInterval(seconds)
         
-        let timerProgress = convertValue(CGFloat(seconds), r1Min: 0, r1Max: 20, r2Min: 0, r2Max: 1)
+        let hundredthOfASecond = immutibleElapsedTime * 100
+        
+        timerProgress = convertValue(CGFloat(hundredthOfASecond), r1Min: 0, r1Max: (CGFloat(recordingTimeLimit) * 100), r2Min: 0, r2Max: 1)
         
         progressBar.progress = Float(timerProgress)
     }
@@ -250,7 +256,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         // Stop Timer
         progressBar.alpha = 0
         timer.invalidate()
-//        timer = NSTimer()
         
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5).CGColor
         recordButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2)
