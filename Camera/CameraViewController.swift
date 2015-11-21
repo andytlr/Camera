@@ -86,13 +86,22 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 //        print("Mic input \(micInput!)")
         
         if microphone != nil {
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
-                try AVAudioSession.sharedInstance().setActive(true)
-            } catch let error as NSError { print(error) }
             
-            captureSession.automaticallyConfiguresApplicationAudioSession = false
-            captureSession.addInput(micInput!)
+            let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+            dispatch_async(dispatch_get_global_queue(priority, 0)) {
+                
+                do {
+                    try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
+                    try AVAudioSession.sharedInstance().setActive(true)
+                } catch let error as NSError { print(error) }
+                
+                self.captureSession.automaticallyConfiguresApplicationAudioSession = false
+                self.captureSession.addInput(self.micInput!)
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    // update some UI
+                }
+            }
         }
 
 //        print("Inputs \(captureSession.inputs)")

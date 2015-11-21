@@ -98,19 +98,21 @@ class PreviewViewController: UIViewController {
     }
     
     func killPreviewAndRestartCamera() {
-        self.playerLayer.removeFromSuperlayer()
-        self.previewView.subviews.forEach({ $0.removeFromSuperview() })
-        self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
-        self.blackView.removeFromSuperview()
         if self.cameraViewController.usingSound == true {
             if self.latestFileFileExtension == ".mov" {
                 self.cameraViewController.restartMic()
             }
         }
-        self.cameraViewController.showIcons()
-        self.cameraViewController.recordButton.alpha = 1
-        self.cameraViewController.progressBar.progress = 0
-        self.view.removeFromSuperview()
+        delay(0.2) {
+            self.previewView.subviews.forEach({ $0.removeFromSuperview() })
+            self.playerLayer.removeFromSuperlayer()
+            self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+            self.blackView.removeFromSuperview()
+            self.cameraViewController.showIcons()
+            self.cameraViewController.recordButton.alpha = 1
+            self.cameraViewController.progressBar.progress = 0
+            self.view.removeFromSuperview()
+        }
     }
     
     @IBAction func panPreviewView(sender: UIPanGestureRecognizer) {
