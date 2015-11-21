@@ -321,6 +321,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if microphone != nil {
             do {
                 captureSession.removeInput(micInput)
+                try AVAudioSession.sharedInstance().setActive(false)
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
                 try AVAudioSession.sharedInstance().setActive(true)
             } catch let error as NSError { print(error) }
