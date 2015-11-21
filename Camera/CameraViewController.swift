@@ -44,6 +44,18 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         return true
     }
     
+    func hideIcons() {
+        switchButton.alpha = 0
+        doneButton.alpha = 0
+        soundButton.alpha = 0
+    }
+    
+    func showIcons() {
+        switchButton.alpha = 1
+        doneButton.alpha = 1
+        soundButton.alpha = 1
+    }
+    
     func updateTime() {
         
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
@@ -102,7 +114,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         if frontCamera == nil {
             switchButton.alpha = 0
-            doneButton.alpha = 0
         }
     }
     
@@ -215,8 +226,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         startTime = NSDate.timeIntervalSinceReferenceDate()
         progressBar.alpha = 1
         
-        switchButton.alpha = 0
-        doneButton.alpha = 0
+        hideIcons()
         
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.5).CGColor
         recordButton.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.2)
@@ -242,8 +252,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         timer.invalidate()
 //        timer = NSTimer()
         
-        switchButton.alpha = 1
-        doneButton.alpha = 1
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5).CGColor
         recordButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2)
         
@@ -255,11 +263,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         
         videoOutput.stopRecording()
+        recordButton.alpha = 0
     }
     
     func takeStillImage() {
         print("Take Photo")
         cameraView.alpha = 0
+        hideIcons()
+        recordButton.alpha = 0
         delay(0.085) {
             self.cameraView.alpha = 1
         }

@@ -159,6 +159,8 @@ class PreviewViewController: UIViewController {
                                 self.cameraViewController.restartMic()
                             }
                         }
+                        self.cameraViewController.showIcons()
+                        self.cameraViewController.recordButton.alpha = 1
                         self.view.removeFromSuperview()
                 })
                 
@@ -183,6 +185,8 @@ class PreviewViewController: UIViewController {
                                 self.cameraViewController.restartMic()
                             }
                         }
+                        self.cameraViewController.showIcons()
+                        self.cameraViewController.recordButton.alpha = 1
                         self.view.removeFromSuperview()
                 })
                 
