@@ -12,7 +12,7 @@ import AVFoundation
 
 class ListViewViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var ClipReviewList: UITableView!
+    @IBOutlet weak var clipReviewList: UITableView!
     
     var scenes: [String]!
     var scenetime: [String]!
@@ -29,16 +29,15 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        ClipReviewList.dataSource = self
-        ClipReviewList.delegate = self
+        clipReviewList.dataSource = self
+        clipReviewList.delegate = self
         
         clips = returnContentsOfDocumentsDirectory()
         clipCount = clips.count
         print("Number of clips: \(clipCount)")
         
-        ClipReviewList.reloadData()
+        clipReviewList.reloadData()
     }
-
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(clipCount)
@@ -97,7 +96,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "editClipSegue" {
             let editViewController = segue.destinationViewController as! EditClipViewController
-            let selectedClipIndex = self.ClipReviewList.indexPathForCell(sender as! UITableViewCell)?.row
+            let selectedClipIndex = self.clipReviewList.indexPathForCell(sender as! UITableViewCell)?.row
             
             editViewController.clipURL = clips[selectedClipIndex!]
         }
@@ -116,7 +115,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let destroyAction = UIAlertAction(title: "Yep, delete them.", style: .Destructive) { (action) in
             deleteAllFilesInDocumentsDirectory()
-            // Need to reload the list here
         }
         alertController.addAction(destroyAction)
         
