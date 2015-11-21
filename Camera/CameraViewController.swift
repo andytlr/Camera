@@ -134,7 +134,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if usingSound == true {
             soundButton.setTitle("🎤", forState: UIControlState.Normal)
         } else {
-            soundButton.setTitle("🚫", forState: UIControlState.Normal)
+            soundButton.setTitle("🎤🚫", forState: UIControlState.Normal)
         }
     }
     
