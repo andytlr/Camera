@@ -154,9 +154,13 @@ class PreviewViewController: UIViewController {
                         self.previewView.subviews.forEach({ $0.removeFromSuperview() })
                         self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
                         self.blackView.removeFromSuperview()
-                        if self.latestFileFileExtension == ".mov" {
-                            self.cameraViewController.restartMicAfterDismissingPreview()
+                        if self.cameraViewController.usingSound == true {
+                            if self.latestFileFileExtension == ".mov" {
+                                self.cameraViewController.restartMic()
+                            }
                         }
+                        self.cameraViewController.showIcons()
+                        self.cameraViewController.recordButton.alpha = 1
                         self.view.removeFromSuperview()
                 })
                 
@@ -176,9 +180,13 @@ class PreviewViewController: UIViewController {
                         self.previewView.subviews.forEach({ $0.removeFromSuperview() })
                         self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
                         self.blackView.removeFromSuperview()
-                        if self.latestFileFileExtension == ".mov" {
-                            self.cameraViewController.restartMicAfterDismissingPreview()
+                        if self.cameraViewController.usingSound == true {
+                            if self.latestFileFileExtension == ".mov" {
+                                self.cameraViewController.restartMic()
+                            }
                         }
+                        self.cameraViewController.showIcons()
+                        self.cameraViewController.recordButton.alpha = 1
                         self.view.removeFromSuperview()
                 })
                 

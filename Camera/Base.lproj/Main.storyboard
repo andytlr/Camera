@@ -29,6 +29,23 @@
                                     <outletCollection property="gestureRecognizers" destination="wir-N4-Xbu" appends="YES" id="D5Q-QO-ePJ"/>
                                 </connections>
                             </view>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" fixedFrame="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="MDb-DT-yf2">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
+                                <animations/>
+                                <color key="tintColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="trackTintColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                            </progressView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-u4-SQB">
+                                <rect key="frame" x="0.0" y="20" width="147" height="80"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="🎤">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapSoundButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kDw-QF-aFl"/>
+                                </connections>
+                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C5M-M4-Sak">
                                 <rect key="frame" x="147" y="544" width="80" height="80"/>
                                 <animations/>
@@ -42,7 +59,8 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ox4-w2-oTz">
                                 <rect key="frame" x="0.0" y="544" width="147" height="80"/>
                                 <animations/>
-                                <state key="normal" title="Switch">
+                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                <state key="normal" title="🙎">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -52,7 +70,8 @@
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lx0-SS-lNg">
                                 <rect key="frame" x="227" y="544" width="147" height="80"/>
                                 <animations/>
-                                <state key="normal" title="Done">
+                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                <state key="normal" title="👉">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
@@ -69,7 +88,9 @@
                     <connections>
                         <outlet property="cameraView" destination="OOk-t2-LFN" id="Qle-nc-yK1"/>
                         <outlet property="doneButton" destination="lx0-SS-lNg" id="7jh-gT-QEX"/>
+                        <outlet property="progressBar" destination="MDb-DT-yf2" id="28G-PP-BXB"/>
                         <outlet property="recordButton" destination="C5M-M4-Sak" id="XrD-qD-V43"/>
+                        <outlet property="soundButton" destination="kwg-u4-SQB" id="rcl-0i-fFM"/>
                         <outlet property="switchButton" destination="Ox4-w2-oTz" id="v08-ys-5xA"/>
                     </connections>
                 </viewController>
@@ -161,27 +182,28 @@
                                         <animations/>
                                     </imageView>
                                     <view alpha="0.25" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nKH-vc-1ZR" userLabel="AlphaOverlay">
-                                        <rect key="frame" x="0.0" y="4" width="375" height="290"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="290"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Qd-bP-XIN" userLabel="ShareButton">
                                                 <rect key="frame" x="140" y="120" width="94" height="31"/>
                                                 <animations/>
                                                 <state key="normal" image="share"/>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi">
-                                                <rect key="frame" x="24" y="18" width="34" height="30"/>
-                                                <animations/>
-                                                <state key="normal" title="Back">
-                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="backToCamera:" destination="nhD-o7-srJ" eventType="touchUpInside" id="W2f-dO-SVH"/>
-                                                </connections>
-                                            </button>
                                         </subviews>
                                         <animations/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi">
+                                        <rect key="frame" x="0.0" y="15" width="103" height="75"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                        <state key="normal" title="👈">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backToCamera:" destination="nhD-o7-srJ" eventType="touchUpInside" id="W2f-dO-SVH"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                             </view>
@@ -195,7 +217,7 @@
                                         <rect key="frame" x="0.0" y="28" width="375" height="88"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mMT-IG-lwV" id="PD9-Fq-uJI">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="87.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="88"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SCENE #" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmA-8b-rkA">

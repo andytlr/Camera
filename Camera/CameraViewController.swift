@@ -19,8 +19,21 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var switchButton: UIButton!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var soundButton: UIButton!
+    @IBOutlet weak var progressBar: UIProgressView!
     
     var usingbackCamera: Bool = true
+    var usingSound: Bool = true
+    
+    var timerProgress: CGFloat! {
+        didSet {
+            if timerProgress >= 1.0 {
+                stopRecording()
+            }
+        }
+    }
+    let recordingTimeLimit = 15
+    
     var captureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
     
@@ -28,6 +41,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var frontCamera: AVCaptureDevice?
     var microphone: AVCaptureDevice?
     var micInput: AVCaptureDeviceInput?
+    
+    var startTime = NSTimeInterval()
+    var timer = NSTimer()
     
     let stillImageOutput = AVCaptureStillImageOutput()
     let videoOutput = AVCaptureMovieFileOutput()
@@ -37,9 +53,38 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         return true
     }
     
-    func restartMicAfterDismissingPreview() {
+    func hideIcons() {
+        switchButton.alpha = 0
+        doneButton.alpha = 0
+        soundButton.alpha = 0
+    }
+    
+    func showIcons() {
+        switchButton.alpha = 1
+        doneButton.alpha = 1
+        soundButton.alpha = 1
+    }
+    
+    func updateTime() {
+        
+        let currentTime = NSDate.timeIntervalSinceReferenceDate()
+        var elapsedTime: NSTimeInterval = currentTime - startTime
+        let immutibleElapsedTime: NSTimeInterval = currentTime - startTime
+        
+        let seconds = UInt8(elapsedTime)
+        elapsedTime -= NSTimeInterval(seconds)
+        
+        let hundredthOfASecond = immutibleElapsedTime * 100
+        
+        timerProgress = convertValue(CGFloat(hundredthOfASecond), r1Min: 0, r1Max: (CGFloat(recordingTimeLimit) * 100), r2Min: 0, r2Max: 1)
+        
+        progressBar.progress = Float(timerProgress)
+    }
+    
+    func restartMic() {
 
 //        print("Mic input \(micInput!)")
+        
         if microphone != nil {
             do {
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
@@ -61,8 +106,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController") as! PreviewViewController
         previewViewController.cameraViewController = self
         
+        progressBar.alpha = 0
+        
         setupCamera()
-        setButtonLabel()
+        setCameraOrientationButtonLabel()
+        setSoundButtonLabel()
         
         if backCamera != nil {
             beginSession(backCamera!)
@@ -81,11 +129,19 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
-    func setButtonLabel() {
-        if usingbackCamera == true {
-            switchButton.setTitle("Selfie", forState: UIControlState.Normal)
+    func setSoundButtonLabel() {
+        if usingSound == true {
+            soundButton.setTitle("🎤", forState: UIControlState.Normal)
         } else {
-            switchButton.setTitle("Backie", forState: UIControlState.Normal)
+            soundButton.setTitle("🚫", forState: UIControlState.Normal)
+        }
+    }
+    
+    func setCameraOrientationButtonLabel() {
+        if usingbackCamera == true {
+            switchButton.setTitle("🙎", forState: UIControlState.Normal)
+        } else {
+            switchButton.setTitle("🌴", forState: UIControlState.Normal)
         }
     }
     
@@ -148,19 +204,23 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if usingbackCamera == true {
             endSession()
             beginSession(frontCamera!)
-            if microphone != nil {
-                captureSession.addInput(micInput)
+            if usingSound == true {
+                if microphone != nil {
+                    captureSession.addInput(micInput)
+                }
             }
             usingbackCamera = false
-            setButtonLabel()
+            setCameraOrientationButtonLabel()
         } else {
             endSession()
             beginSession(backCamera!)
-            if microphone != nil {
-                captureSession.addInput(micInput)
+            if usingSound == true {
+                if microphone != nil {
+                    captureSession.addInput(micInput)
+                }
             }
             usingbackCamera = true
-            setButtonLabel()
+            setCameraOrientationButtonLabel()
         }
     }
     
@@ -171,7 +231,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func startRecording() {
         
         print("Start Recording")
-        switchButton.alpha = 0
+        
+        // Start timer
+        let aSelector: Selector = "updateTime"
+        timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
+        startTime = NSDate.timeIntervalSinceReferenceDate()
+        
+        progressBar.alpha = 1
+        
+        hideIcons()
         
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.5).CGColor
         recordButton.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.2)
@@ -191,7 +259,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func stopRecording() {
         print("Stop Recording")
-        switchButton.alpha = 1
+        
+        // Stop Timer
+        progressBar.alpha = 0
+        timer.invalidate()
+        
         recordButton.layer.borderColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5).CGColor
         recordButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2)
         
@@ -203,11 +275,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         
         videoOutput.stopRecording()
+        removeMic()
+        recordButton.alpha = 0
     }
     
     func takeStillImage() {
         print("Take Photo")
         cameraView.alpha = 0
+        hideIcons()
+        recordButton.alpha = 0
         delay(0.085) {
             self.cameraView.alpha = 1
         }
@@ -234,8 +310,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if microphone != nil {
             do {
                 captureSession.removeInput(micInput)
-                print("is it here? \(captureSession.inputs)")
-                
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
                 try AVAudioSession.sharedInstance().setActive(true)
             } catch let error as NSError { print(error) }
@@ -251,7 +325,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         if sender.state == .Ended {
             stopRecording()
-            removeMic()
         }
     }
     
@@ -274,17 +347,27 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         if sender.state == .Ended {
             stopRecording()
-            removeMic()
         }
     }
     
     @IBAction func tapButton(sender: AnyObject) {
         takeStillImage()
     }
+    
     @IBAction func done(sender: AnyObject) {
         
-        
-        
+    }
+    
+    @IBAction func tapSoundButton(sender: AnyObject) {
+        if usingSound == true {
+            usingSound = false
+            removeMic()
+            setSoundButtonLabel()
+        } else {
+            usingSound = true
+            restartMic()
+            setSoundButtonLabel()
+        }
     }
     
     // MARK: AVCaptureFileOutputRecordingDelegate
