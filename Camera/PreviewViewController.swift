@@ -182,6 +182,7 @@ class PreviewViewController: UIViewController {
                         }
                         self.cameraViewController.showIcons()
                         self.cameraViewController.recordButton.alpha = 1
+                        self.cameraViewController.progressBar.progress = 0
                         self.view.removeFromSuperview()
                 })
                 
@@ -212,6 +213,7 @@ class PreviewViewController: UIViewController {
                         }
                         self.cameraViewController.showIcons()
                         self.cameraViewController.recordButton.alpha = 1
+                        self.cameraViewController.progressBar.progress = 0
                         self.view.removeFromSuperview()
                 })
                 

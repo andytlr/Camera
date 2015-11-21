@@ -107,6 +107,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         previewViewController.cameraViewController = self
         
         progressBar.alpha = 0
+        progressBar.progress = 0
         
         setupCamera()
         setCameraOrientationButtonLabel()
