@@ -96,6 +96,23 @@ class PreviewViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func killPreviewAndRestartCamera() {
+        self.playerLayer.removeFromSuperlayer()
+        self.previewView.subviews.forEach({ $0.removeFromSuperview() })
+        self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+        self.blackView.removeFromSuperview()
+        if self.cameraViewController.usingSound == true {
+            if self.latestFileFileExtension == ".mov" {
+                self.cameraViewController.restartMic()
+            }
+        }
+        self.cameraViewController.showIcons()
+        self.cameraViewController.recordButton.alpha = 1
+        self.cameraViewController.progressBar.progress = 0
+        self.view.removeFromSuperview()
+    }
+    
     @IBAction func panPreviewView(sender: UIPanGestureRecognizer) {
         
         let translation = sender.translationInView(view)
@@ -171,19 +188,7 @@ class PreviewViewController: UIViewController {
                         let latestFileName = cameraRoll.last!.lastPathComponent!
                         removeItemFromDocumentsDirectory(latestFileName)
                         
-                        self.playerLayer.removeFromSuperlayer()
-                        self.previewView.subviews.forEach({ $0.removeFromSuperview() })
-                        self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
-                        self.blackView.removeFromSuperview()
-                        if self.cameraViewController.usingSound == true {
-                            if self.latestFileFileExtension == ".mov" {
-                                self.cameraViewController.restartMic()
-                            }
-                        }
-                        self.cameraViewController.showIcons()
-                        self.cameraViewController.recordButton.alpha = 1
-                        self.cameraViewController.progressBar.progress = 0
-                        self.view.removeFromSuperview()
+                        self.killPreviewAndRestartCamera()
                 })
                 
             } else if velocity.y < -2000 || translation.y < (view.frame.height / 2) * -1 {
@@ -202,19 +207,7 @@ class PreviewViewController: UIViewController {
                     
                     }, completion: { (Bool) -> Void in
                         
-                        self.playerLayer.removeFromSuperlayer()
-                        self.previewView.subviews.forEach({ $0.removeFromSuperview() })
-                        self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
-                        self.blackView.removeFromSuperview()
-                        if self.cameraViewController.usingSound == true {
-                            if self.latestFileFileExtension == ".mov" {
-                                self.cameraViewController.restartMic()
-                            }
-                        }
-                        self.cameraViewController.showIcons()
-                        self.cameraViewController.recordButton.alpha = 1
-                        self.cameraViewController.progressBar.progress = 0
-                        self.view.removeFromSuperview()
+                        self.killPreviewAndRestartCamera()
                 })
                 
             } else {
