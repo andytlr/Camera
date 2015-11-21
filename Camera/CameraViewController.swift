@@ -91,6 +91,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             dispatch_async(dispatch_get_global_queue(priority, 0)) {
                 
                 do {
+                    try AVAudioSession.sharedInstance().setActive(false)
                     try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
                     try AVAudioSession.sharedInstance().setActive(true)
                 } catch let error as NSError { print(error) }
