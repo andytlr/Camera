@@ -181,16 +181,20 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if usingbackCamera == true {
             endSession()
             beginSession(frontCamera!)
-            if microphone != nil {
-                captureSession.addInput(micInput)
+            if usingSound == true {
+                if microphone != nil {
+                    captureSession.addInput(micInput)
+                }
             }
             usingbackCamera = false
             setCameraOrientationButtonLabel()
         } else {
             endSession()
             beginSession(backCamera!)
-            if microphone != nil {
-                captureSession.addInput(micInput)
+            if usingSound == true {
+                if microphone != nil {
+                    captureSession.addInput(micInput)
+                }
             }
             usingbackCamera = true
             setCameraOrientationButtonLabel()
