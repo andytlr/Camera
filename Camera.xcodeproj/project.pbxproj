@@ -18,6 +18,7 @@
 		C21477D11BEFE7BB001474A4 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21477D01BEFE7BB001474A4 /* Common.swift */; };
 		C278C95F1BF846C800285CDF /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278C95E1BF846C800285CDF /* PreviewViewController.swift */; };
 		CA2E6EBD1BFAD034007AA957 /* example_recording.mov in Resources */ = {isa = PBXBuildFile; fileRef = CA2E6EBC1BFAD034007AA957 /* example_recording.mov */; };
+		CA498DC01C00F21A007A8FCF /* Clip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA498DBF1C00F21A007A8FCF /* Clip.swift */; };
 		CAE10EA11BFD6180004F8B7A /* example_photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CAE10EA01BFD6180004F8B7A /* example_photo.jpg */; };
 		CAF6569F1BF7C02A00B0E42F /* EditClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF6569E1BF7C02A00B0E42F /* EditClipViewController.swift */; };
 /* End PBXBuildFile section */
@@ -37,6 +38,7 @@
 		C21477D01BEFE7BB001474A4 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		C278C95E1BF846C800285CDF /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		CA2E6EBC1BFAD034007AA957 /* example_recording.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = example_recording.mov; sourceTree = "<group>"; };
+		CA498DBF1C00F21A007A8FCF /* Clip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clip.swift; sourceTree = "<group>"; };
 		CAE10EA01BFD6180004F8B7A /* example_photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = example_photo.jpg; sourceTree = "<group>"; };
 		CAF6569E1BF7C02A00B0E42F /* EditClipViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditClipViewController.swift; sourceTree = "<group>"; };
 		DE55F46E3D6EAA675996537F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -88,6 +90,7 @@
 				C278C95E1BF846C800285CDF /* PreviewViewController.swift */,
 				C21477C21BEE9FE7001474A4 /* Main.storyboard */,
 				CAF6569E1BF7C02A00B0E42F /* EditClipViewController.swift */,
+				CA498DBF1C00F21A007A8FCF /* Clip.swift */,
 				61CFADB01BFE3FFB0029E4EC /* SceneTableViewCell.swift */,
 				616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */,
 				C21477D01BEFE7BB001474A4 /* Common.swift */,
@@ -239,6 +242,7 @@
 				C21477D11BEFE7BB001474A4 /* Common.swift in Sources */,
 				C21477BF1BEE9FE7001474A4 /* AppDelegate.swift in Sources */,
 				CAF6569F1BF7C02A00B0E42F /* EditClipViewController.swift in Sources */,
+				CA498DC01C00F21A007A8FCF /* Clip.swift in Sources */,
 				C278C95F1BF846C800285CDF /* PreviewViewController.swift in Sources */,
 				616937DF1BF64AEA00B47C38 /* ListViewViewController.swift in Sources */,
 			);
