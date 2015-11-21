@@ -14,7 +14,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var ClipReviewList: UITableView!
     
-    
     var scenes: [String]!
     var scenetime: [String]!
     
@@ -25,7 +24,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -49,11 +47,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SceneTableViewCell") as! SceneTableViewCell
-        
 
         let clip = clips[indexPath.row]
         let clipAsset = AVURLAsset(URL: clip)
-        
         
         //getthumb
         
@@ -112,7 +108,19 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func tapDeleteButton(sender: AnyObject) {
-        deleteAllFilesInDocumentsDirectory()
+        
+        let alertController = UIAlertController(title: nil, message: "This will delete all your clips. Are you sure?", preferredStyle: .ActionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Nope, save them.", style: .Cancel) { (action) in }
+        alertController.addAction(cancelAction)
+        
+        let destroyAction = UIAlertAction(title: "Yep, delete them.", style: .Destructive) { (action) in
+            deleteAllFilesInDocumentsDirectory()
+            // Need to reload the list here
+        }
+        alertController.addAction(destroyAction)
+        
+        self.presentViewController(alertController, animated: true) { }
     }
     
 }
