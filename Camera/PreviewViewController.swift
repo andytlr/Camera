@@ -13,6 +13,8 @@ import AVFoundation
 class PreviewViewController: UIViewController {
 
     @IBOutlet weak var previewView: UIView!
+    @IBOutlet weak var deleteLabel: UILabel!
+    @IBOutlet weak var keepLabel: UILabel!
     
     var latestFileFileExtension: String!
     
@@ -31,6 +33,9 @@ class PreviewViewController: UIViewController {
         
         view.backgroundColor = UIColor.clearColor()
         previewView.backgroundColor = UIColor.clearColor()
+        
+        deleteLabel.alpha = 0
+        keepLabel.alpha = 0
         
         let cameraRoll = returnContentsOfDocumentsDirectory()
         let latestItemInCameraRoll = String(cameraRoll.last!)
@@ -91,6 +96,25 @@ class PreviewViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+    func killPreviewAndRestartCamera() {
+        if self.cameraViewController.usingSound == true {
+            if self.latestFileFileExtension == ".mov" {
+                self.cameraViewController.restartMic()
+            }
+        }
+        delay(0.2) {
+            self.previewView.subviews.forEach({ $0.removeFromSuperview() })
+            self.playerLayer.removeFromSuperlayer()
+            self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
+            self.blackView.removeFromSuperview()
+            self.cameraViewController.showIcons()
+            self.cameraViewController.recordButton.alpha = 1
+            self.cameraViewController.progressBar.progress = 0
+            self.view.removeFromSuperview()
+        }
+    }
+    
     @IBAction func panPreviewView(sender: UIPanGestureRecognizer) {
         
         let translation = sender.translationInView(view)
@@ -116,8 +140,20 @@ class PreviewViewController: UIViewController {
             
             var makeOpaqueOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 5) * 3, r2Min: 0, r2Max: 0.95)
             
+            let moveOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 5) * 3, r2Min: 0, r2Max: 80)
+            
             if makeOpaqueOnPan > 0.95 {
                 makeOpaqueOnPan = 0.95
+            }
+            
+            if translation.y < 0 {
+                keepLabel.alpha = makeOpaqueOnPan
+                deleteLabel.alpha = makeTransparentOnPan
+                keepLabel.transform = CGAffineTransformMakeTranslation(0, moveOnPan * -1)
+            } else {
+                deleteLabel.alpha = makeOpaqueOnPan
+                keepLabel.alpha = makeTransparentOnPan
+                deleteLabel.transform = CGAffineTransformMakeTranslation(0, moveOnPan)
             }
             
             blackView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: makeTransparentOnPan)
@@ -137,12 +173,17 @@ class PreviewViewController: UIViewController {
             if velocity.y > 2000 || translation.y > (view.frame.height / 2) {
                 print("Delete Yo")
                 player.pause()
+                keepLabel.alpha = 0
+                deleteLabel.alpha = 1
+                view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.95)
+                blackView.alpha = 0
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
                     self.previewView.frame.origin.y = self.view.frame.height * 1.3
                     self.previewView.frame.origin.x += moveX
-                    self.view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+                    self.deleteLabel.transform = CGAffineTransformTranslate(self.deleteLabel.transform, 0, 0)
+                    self.deleteLabel.frame.origin.y = (self.view.frame.height / 2) - (self.deleteLabel.frame.height / 2)
                     
                     }, completion: { (Bool) -> Void in
                         
@@ -150,44 +191,27 @@ class PreviewViewController: UIViewController {
                         let latestFileName = cameraRoll.last!.lastPathComponent!
                         removeItemFromDocumentsDirectory(latestFileName)
                         
-                        self.playerLayer.removeFromSuperlayer()
-                        self.previewView.subviews.forEach({ $0.removeFromSuperview() })
-                        self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
-                        self.blackView.removeFromSuperview()
-                        if self.cameraViewController.usingSound == true {
-                            if self.latestFileFileExtension == ".mov" {
-                                self.cameraViewController.restartMic()
-                            }
-                        }
-                        self.cameraViewController.showIcons()
-                        self.cameraViewController.recordButton.alpha = 1
-                        self.view.removeFromSuperview()
+                        self.killPreviewAndRestartCamera()
                 })
                 
             } else if velocity.y < -2000 || translation.y < (view.frame.height / 2) * -1 {
                 print("Keep Yo")
                 player.pause()
+                keepLabel.alpha = 1
+                deleteLabel.alpha = 0
+                view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 0.95)
+                blackView.alpha = 0
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
                     self.previewView.frame.origin.y = (self.view.frame.height * 1.3) * -1
                     self.previewView.frame.origin.x += moveX
-                    self.view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 1)
+                    self.keepLabel.transform = CGAffineTransformTranslate(self.keepLabel.transform, 0, 0)
+                    self.keepLabel.frame.origin.y = (self.view.frame.height / 2) - (self.keepLabel.frame.height / 2)
                     
                     }, completion: { (Bool) -> Void in
                         
-                        self.playerLayer.removeFromSuperlayer()
-                        self.previewView.subviews.forEach({ $0.removeFromSuperview() })
-                        self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
-                        self.blackView.removeFromSuperview()
-                        if self.cameraViewController.usingSound == true {
-                            if self.latestFileFileExtension == ".mov" {
-                                self.cameraViewController.restartMic()
-                            }
-                        }
-                        self.cameraViewController.showIcons()
-                        self.cameraViewController.recordButton.alpha = 1
-                        self.view.removeFromSuperview()
+                        self.killPreviewAndRestartCamera()
                 })
                 
             } else {
