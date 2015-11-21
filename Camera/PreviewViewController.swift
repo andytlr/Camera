@@ -13,6 +13,8 @@ import AVFoundation
 class PreviewViewController: UIViewController {
 
     @IBOutlet weak var previewView: UIView!
+    @IBOutlet weak var deleteLabel: UILabel!
+    @IBOutlet weak var keepLabel: UILabel!
     
     var latestFileFileExtension: String!
     
@@ -31,6 +33,9 @@ class PreviewViewController: UIViewController {
         
         view.backgroundColor = UIColor.clearColor()
         previewView.backgroundColor = UIColor.clearColor()
+        
+        deleteLabel.alpha = 0
+        keepLabel.alpha = 0
         
         let cameraRoll = returnContentsOfDocumentsDirectory()
         let latestItemInCameraRoll = String(cameraRoll.last!)
@@ -116,8 +121,22 @@ class PreviewViewController: UIViewController {
             
             var makeOpaqueOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 5) * 3, r2Min: 0, r2Max: 0.95)
             
+            let moveOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 5) * 3, r2Min: 0, r2Max: 80)
+            
             if makeOpaqueOnPan > 0.95 {
                 makeOpaqueOnPan = 0.95
+            }
+            
+            print(translation.y)
+            
+            if translation.y < 0 {
+                keepLabel.alpha = makeOpaqueOnPan
+                deleteLabel.alpha = makeTransparentOnPan
+                keepLabel.transform = CGAffineTransformMakeTranslation(0, moveOnPan * -1)
+            } else {
+                deleteLabel.alpha = makeOpaqueOnPan
+                keepLabel.alpha = makeTransparentOnPan
+                deleteLabel.transform = CGAffineTransformMakeTranslation(0, moveOnPan)
             }
             
             blackView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: makeTransparentOnPan)
