@@ -25,8 +25,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var usingbackCamera: Bool = true
     var usingSound: Bool = true
     
-    var timerProgress: CGFloat!
-    let recordingTimeLimit = 5
+    var timerProgress: CGFloat! {
+        didSet {
+            if timerProgress >= 1.0 {
+                stopRecording()
+            }
+        }
+    }
+    let recordingTimeLimit = 15
     
     var captureSession = AVCaptureSession()
     var previewLayer: AVCaptureVideoPreviewLayer?
@@ -230,6 +236,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         let aSelector: Selector = "updateTime"
         timer = NSTimer.scheduledTimerWithTimeInterval(0.01, target: self, selector: aSelector, userInfo: nil, repeats: true)
         startTime = NSDate.timeIntervalSinceReferenceDate()
+        
         progressBar.alpha = 1
         
         hideIcons()
@@ -268,6 +275,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         
         videoOutput.stopRecording()
+        removeMic()
         recordButton.alpha = 0
     }
     
@@ -302,8 +310,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if microphone != nil {
             do {
                 captureSession.removeInput(micInput)
-                print("is it here? \(captureSession.inputs)")
-                
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
                 try AVAudioSession.sharedInstance().setActive(true)
             } catch let error as NSError { print(error) }
@@ -319,7 +325,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         if sender.state == .Ended {
             stopRecording()
-            removeMic()
         }
     }
     
@@ -342,7 +347,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         if sender.state == .Ended {
             stopRecording()
-            removeMic()
         }
     }
     
