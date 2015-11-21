@@ -26,17 +26,19 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
     }
     
+    func updateTableView() {
+        clips = returnContentsOfDocumentsDirectory()
+        clipCount = clips.count
+        clipReviewList.reloadData()
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
         clipReviewList.dataSource = self
         clipReviewList.delegate = self
         
-        clips = returnContentsOfDocumentsDirectory()
-        clipCount = clips.count
-        print("Number of clips: \(clipCount)")
-        
-        clipReviewList.reloadData()
+        updateTableView()
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -116,9 +118,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         let destroyAction = UIAlertAction(title: "Yep, delete them.", style: .Destructive) { (action) in
             
             deleteAllFilesInDocumentsDirectory()
-            self.clips = returnContentsOfDocumentsDirectory()
-            self.clipCount = self.clips.count
-            self.clipReviewList.reloadData()
+            self.updateTableView()
         }
         alertController.addAction(destroyAction)
         
