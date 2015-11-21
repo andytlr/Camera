@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4ct-Ky-8pw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4ct-Ky-8pw">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
@@ -225,7 +225,7 @@
                                             <outlet property="SceneClip" destination="HQA-JI-22e" id="oRV-N4-MW7"/>
                                             <outlet property="SceneDuration" destination="asA-dI-qEo" id="FQ9-3j-Vlp"/>
                                             <outlet property="SceneNumber" destination="DmA-8b-rkA" id="i7d-nG-m1R"/>
-                                            <segue destination="96O-5S-Syf" kind="show" identifier="editClipSegue" id="AJD-mB-gbY">
+                                            <segue destination="96O-5S-Syf" kind="presentation" identifier="editClipSegue" animates="NO" modalTransitionStyle="crossDissolve" id="AJD-mB-gbY">
                                                 <segue key="commit" inheritsFrom="parent" id="BeT-LG-eqe"/>
                                                 <segue key="preview" inheritsFrom="commit" id="fWp-er-n6J"/>
                                             </segue>
@@ -266,45 +266,47 @@
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SDA-dQ-wYt">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q0Y-g2-5N0">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type something…" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H4j-rC-jmg">
+                                                <rect key="frame" x="20" y="319" width="335" height="30"/>
+                                                <animations/>
+                                                <gestureRecognizers/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
+                                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                <connections>
+                                                    <action selector="beginEditingText:" destination="96O-5S-Syf" eventType="editingDidBegin" id="vtF-OZ-ivs"/>
+                                                    <action selector="endEditingText:" destination="96O-5S-Syf" eventType="editingDidEnd" id="KzJ-MJ-DYm"/>
+                                                    <outletCollection property="gestureRecognizers" destination="Osy-gJ-f6f" appends="YES" id="ds3-PD-6J4"/>
+                                                    <outletCollection property="gestureRecognizers" destination="QEu-Wp-VNZ" appends="YES" id="wG5-xL-9jl"/>
+                                                    <outletCollection property="gestureRecognizers" destination="7ud-cU-hsP" appends="YES" id="gFV-z6-Qp5"/>
+                                                </connections>
+                                            </textField>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9y3-Nd-A3A">
+                                                <rect key="frame" x="38" y="33" width="37" height="30"/>
+                                                <animations/>
+                                                <state key="normal" title="Done">
+                                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="doneEditing:" destination="96O-5S-Syf" eventType="touchUpInside" id="D0D-yO-aQB"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <animations/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="nsz-p9-p38" appends="YES" id="H4I-UK-mZ6"/>
+                                        </connections>
+                                    </view>
+                                </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.50196081400000003" green="0.0" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
-                            </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q0Y-g2-5N0">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type something…" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H4j-rC-jmg">
-                                        <rect key="frame" x="20" y="319" width="335" height="30"/>
-                                        <animations/>
-                                        <gestureRecognizers/>
-                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="24"/>
-                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
-                                        <connections>
-                                            <action selector="beginEditingText:" destination="96O-5S-Syf" eventType="editingDidBegin" id="vtF-OZ-ivs"/>
-                                            <action selector="endEditingText:" destination="96O-5S-Syf" eventType="editingDidEnd" id="KzJ-MJ-DYm"/>
-                                            <outletCollection property="gestureRecognizers" destination="QEu-Wp-VNZ" appends="YES" id="wG5-xL-9jl"/>
-                                            <outletCollection property="gestureRecognizers" destination="Osy-gJ-f6f" appends="YES" id="ds3-PD-6J4"/>
-                                            <outletCollection property="gestureRecognizers" destination="7ud-cU-hsP" appends="YES" id="gFV-z6-Qp5"/>
-                                        </connections>
-                                    </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9y3-Nd-A3A">
-                                        <rect key="frame" x="38" y="33" width="37" height="30"/>
-                                        <animations/>
-                                        <state key="normal" title="Done">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="doneEditing:" destination="96O-5S-Syf" eventType="touchUpInside" id="D0D-yO-aQB"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="nsz-p9-p38" appends="YES" id="H4I-UK-mZ6"/>
-                                </connections>
                             </view>
                         </subviews>
                         <animations/>

@@ -202,7 +202,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     @IBAction func doneEditing(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+        dismissViewControllerAnimated(false, completion: nil)
     }
     
     
