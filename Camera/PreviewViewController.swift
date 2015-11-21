@@ -127,8 +127,6 @@ class PreviewViewController: UIViewController {
                 makeOpaqueOnPan = 0.95
             }
             
-            print(translation.y)
-            
             if translation.y < 0 {
                 keepLabel.alpha = makeOpaqueOnPan
                 deleteLabel.alpha = makeTransparentOnPan
