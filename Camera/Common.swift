@@ -72,3 +72,11 @@ func removeItemFromDocumentsDirectory(fileName: String) {
         
     }
 }
+
+func deleteAllFilesInDocumentsDirectory() {
+    let files = returnContentsOfDocumentsDirectory()
+    
+    for file in files {
+        removeItemFromDocumentsDirectory(file.lastPathComponent!)
+    }
+}

@@ -111,6 +111,8 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-} // end curly
-
-
+    @IBAction func tapDeleteButton(sender: AnyObject) {
+        deleteAllFilesInDocumentsDirectory()
+    }
+    
+}
