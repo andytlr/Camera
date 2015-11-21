@@ -154,12 +154,16 @@ class PreviewViewController: UIViewController {
             if velocity.y > 2000 || translation.y > (view.frame.height / 2) {
                 print("Delete Yo")
                 player.pause()
+                keepLabel.alpha = 0
+                deleteLabel.alpha = 1
+                view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.95)
+                blackView.alpha = 0
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
                     self.previewView.frame.origin.y = self.view.frame.height * 1.3
                     self.previewView.frame.origin.x += moveX
-                    self.view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+//                    self.deleteLabel.transform = CGAffineTransformMakeTranslation(0, 80)
                     
                     }, completion: { (Bool) -> Void in
                         
@@ -184,12 +188,16 @@ class PreviewViewController: UIViewController {
             } else if velocity.y < -2000 || translation.y < (view.frame.height / 2) * -1 {
                 print("Keep Yo")
                 player.pause()
+                keepLabel.alpha = 1
+                deleteLabel.alpha = 0
+                view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 0.95)
+                blackView.alpha = 0
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
                     self.previewView.frame.origin.y = (self.view.frame.height * 1.3) * -1
                     self.previewView.frame.origin.x += moveX
-                    self.view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 1)
+//                    self.keepLabel.transform = CGAffineTransformMakeTranslation(0, -80)
                     
                     }, completion: { (Bool) -> Void in
                         
