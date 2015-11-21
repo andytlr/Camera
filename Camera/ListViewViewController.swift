@@ -114,7 +114,11 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         alertController.addAction(cancelAction)
         
         let destroyAction = UIAlertAction(title: "Yep, delete them.", style: .Destructive) { (action) in
+            
             deleteAllFilesInDocumentsDirectory()
+            self.clips = returnContentsOfDocumentsDirectory()
+            self.clipCount = self.clips.count
+            self.clipReviewList.reloadData()
         }
         alertController.addAction(destroyAction)
         
