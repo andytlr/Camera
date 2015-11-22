@@ -16,6 +16,8 @@ func exportVideo() {
     let composition = AVMutableComposition()
     let trackVideo:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeVideo, preferredTrackID: CMPersistentTrackID())
     
+    trackVideo.preferredTransform = CGAffineTransformMakeDegreeRotation(90)
+    
     let trackAudio:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
     var insertTime = kCMTimeZero
     
