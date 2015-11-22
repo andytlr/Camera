@@ -9,7 +9,7 @@
 import Foundation
 import AVKit
 import AVFoundation
-import AssetsLibrary
+import Photos
 
 func exportVideo() {
     let composition = AVMutableComposition()
@@ -44,15 +44,15 @@ func exportVideo() {
     exporter.outputURL = completeMovieUrl
     exporter.outputFileType = AVFileTypeMPEG4
     exporter.exportAsynchronouslyWithCompletionHandler({
-        let library = ALAssetsLibrary()
-        library.writeVideoAtPathToSavedPhotosAlbum(completeMovieUrl, completionBlock: { (assetURL:NSURL!, error:NSError?) -> Void in })
-        switch exporter.status{
-        case  AVAssetExportSessionStatus.Failed:
+        
+        switch exporter.status {
+        case AVAssetExportSessionStatus.Failed:
             print("failed \(exporter.error)")
         case AVAssetExportSessionStatus.Cancelled:
             print("cancelled \(exporter.error)")
         default:
             print("complete")
+            CustomPhotoAlbum.sharedInstance.saveMovieWithUrl(completeMovieUrl)
         }
     })
 }
