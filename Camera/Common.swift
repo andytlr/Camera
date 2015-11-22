@@ -27,7 +27,7 @@ func convertValue(value: CGFloat, r1Min: CGFloat, r1Max: CGFloat, r2Min: CGFloat
     return value * ratio + r2Min - r1Min * ratio
 }
 
-func returnContentsOfTemporaryDocumentsDirectory() -> [NSURL] {
+func returnContentsOfClipsDirectory() -> [NSURL] {
     let paths = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
     let documentsRootPath = paths[0]
     let temporaryDocumentsURL = NSURL(string: "\(documentsRootPath)/clips/")!
@@ -61,7 +61,7 @@ func currentTimeStamp() -> String {
     return formatter.stringFromDate(date)
 }
 
-func removeItemFromDocumentsDirectory(fileName: String) {
+func deleteClip(fileName: String) {
     let fileManager:NSFileManager = NSFileManager.defaultManager()
     
     let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
@@ -74,11 +74,11 @@ func removeItemFromDocumentsDirectory(fileName: String) {
     }
 }
 
-func deleteAllFilesInDocumentsDirectory() {
-    let files = returnContentsOfTemporaryDocumentsDirectory()
+func deleteAllClips() {
+    let clips = returnContentsOfClipsDirectory()
     
-    for file in files {
-        removeItemFromDocumentsDirectory(file.lastPathComponent!)
+    for clip in clips {
+        deleteClip(clip.lastPathComponent!)
     }
 }
 
