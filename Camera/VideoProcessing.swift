@@ -22,7 +22,7 @@ func exportVideo() {
     var insertTime = kCMTimeZero
     
     let realm = try! Realm()
-    let clips = realm.objects(Clip).sorted("filename", ascending: false)
+    let clips = realm.objects(Clip).sorted("filename", ascending: true)
     
     for clip in clips {
         let sourceUrl = NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename))
