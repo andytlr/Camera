@@ -9,14 +9,13 @@
 import UIKit
 import AVKit
 import AVFoundation
+import RealmSwift
 
 class PreviewViewController: UIViewController {
-
+    
     @IBOutlet weak var previewView: UIView!
     @IBOutlet weak var deleteLabel: UILabel!
     @IBOutlet weak var keepLabel: UILabel!
-    
-    var latestFileFileExtension: String!
     
     var cameraViewController: CameraViewController!
     
@@ -25,31 +24,27 @@ class PreviewViewController: UIViewController {
     var player = AVPlayer()
     let playerLayer = AVPlayerLayer()
     
+    var clip: Clip!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
     override func viewWillAppear(animated: Bool) {
         
+        let realm = try! Realm()
+        clip = realm.objects(Clip).last!
+        
         view.backgroundColor = UIColor.clearColor()
         previewView.backgroundColor = UIColor.clearColor()
-        
-        let cameraRoll = returnContentsOfTemporaryDocumentsDirectory()
         
         deleteLabel.alpha = 0
         keepLabel.alpha = 0
         
-        let latestItemInCameraRoll = String(cameraRoll.last!)
-        let latestFileName = cameraRoll.last!.lastPathComponent!
-        
         let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        let filePath = documentsDir.stringByAppendingPathComponent("/tmp/\(latestFileName)")
+        let filePath = documentsDir.stringByAppendingPathComponent("/tmp/\(clip.filename)")
         
-        // Dis string bullshit to get file type
-        let latestFileFileExtensionIndex = latestItemInCameraRoll.endIndex.advancedBy(-4)
-        latestFileFileExtension = latestItemInCameraRoll[Range(start: latestFileFileExtensionIndex, end: latestItemInCameraRoll.endIndex)]
-        
-        if latestFileFileExtension == ".jpg" {
+        if clip.type == "photo" {
             
             let image = UIImage(contentsOfFile: filePath)!
             let imageView = UIImageView(image: image)
@@ -62,7 +57,7 @@ class PreviewViewController: UIViewController {
             imageView.frame = self.view.bounds
             previewView.addSubview(imageView)
             
-        } else if latestFileFileExtension == ".mov" {
+        } else if clip.type == "video" {
             
             playerLayer.frame = view.bounds
             
@@ -100,7 +95,7 @@ class PreviewViewController: UIViewController {
     
     func killPreviewAndRestartCamera() {
         if self.cameraViewController.usingSound == true {
-            if self.latestFileFileExtension == ".mov" {
+            if self.clip.type == "video" {
                 self.cameraViewController.restartMic()
             }
         }
@@ -188,11 +183,12 @@ class PreviewViewController: UIViewController {
                     
                     }, completion: { (Bool) -> Void in
                         
-                        let cameraRoll = returnContentsOfTemporaryDocumentsDirectory()
-                        let latestFileName = cameraRoll.last!.lastPathComponent!
-                        removeItemFromDocumentsDirectory(latestFileName)
-                        
                         self.killPreviewAndRestartCamera()
+                        
+                        let realm = try! Realm()
+                        try! realm.write {
+                            realm.delete(self.clip)
+                        }
                 })
                 
             } else if velocity.y < -2000 || translation.y < (view.frame.height / 2) * -1 {
