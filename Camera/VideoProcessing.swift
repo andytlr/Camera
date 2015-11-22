@@ -52,8 +52,6 @@ func exportVideo() {
     exporter.outputFileType = AVFileTypeMPEG4
     exporter.exportAsynchronouslyWithCompletionHandler({
         
-        // Probably start a spinner or sumfin here.
-        
         switch exporter.status {
         case AVAssetExportSessionStatus.Failed:
             print("Failed \(exporter.error)")
