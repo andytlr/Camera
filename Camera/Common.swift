@@ -30,7 +30,7 @@ func convertValue(value: CGFloat, r1Min: CGFloat, r1Max: CGFloat, r2Min: CGFloat
 func returnContentsOfTemporaryDocumentsDirectory() -> [NSURL] {
     let paths = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
     let documentsRootPath = paths[0]
-    let temporaryDocumentsURL = NSURL(string: "\(documentsRootPath)/tmp/")!
+    let temporaryDocumentsURL = NSURL(string: "\(documentsRootPath)/clips/")!
     
     do {
         let directoryContents = try NSFileManager.defaultManager().contentsOfDirectoryAtURL(temporaryDocumentsURL, includingPropertiesForKeys: nil, options: [])
@@ -65,7 +65,7 @@ func removeItemFromDocumentsDirectory(fileName: String) {
     let fileManager:NSFileManager = NSFileManager.defaultManager()
     
     let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-    let filePath = documentsDir.stringByAppendingPathComponent("/tmp/\(fileName)")
+    let filePath = documentsDir.stringByAppendingPathComponent("/clips/\(fileName)")
 
     do {
         try fileManager.removeItemAtPath(filePath)
@@ -84,7 +84,7 @@ func deleteAllFilesInDocumentsDirectory() {
 
 func getAbsolutePathForFile(filename: String) -> String {
     let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-    let path = documentsDir.stringByAppendingPathComponent("/tmp/\(filename)")
+    let path = documentsDir.stringByAppendingPathComponent("/clips/\(filename)")
     
     return path
 }
