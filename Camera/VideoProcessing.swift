@@ -51,17 +51,7 @@ func exportVideo() {
         case AVAssetExportSessionStatus.Cancelled:
             print("Cancelled \(exporter.error)")
         default:
-            print("Finished Exporting to Temp Dir")
-            
-            CustomPhotoAlbum.sharedInstance.saveMovieWithUrl(completeMovieUrl)
-            
-            // This is super shit.
-            delay(3) {
-                do {
-                    try NSFileManager.defaultManager().removeItemAtPath(exportPath)
-                    print("Deleted")
-                } catch { print("Couldn't Delete") }
-            }
+            CustomPhotoAlbum.sharedInstance.saveMovieWithUrl(completeMovieUrl, fileToDelete: exportPath)
         }
     })
 }

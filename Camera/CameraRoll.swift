@@ -45,7 +45,7 @@ class CustomPhotoAlbum {
         }
     }
     
-    func saveMovieWithUrl(url: NSURL) {
+    func saveMovieWithUrl(url: NSURL, fileToDelete: String) {
         
         if assetCollection == nil {
             return   // If there was an error upstream, skip the save.
@@ -56,7 +56,17 @@ class CustomPhotoAlbum {
             let assetPlaceholder = assetChangeRequest!.placeholderForCreatedAsset
             let albumChangeRequest = PHAssetCollectionChangeRequest(forAssetCollection: self.assetCollection)
             albumChangeRequest!.addAssets([assetPlaceholder!])
-            }, completionHandler: nil)
+            }, completionHandler: { (success: Bool, error: NSError?) in
+                
+                if (success) {
+                    print("Finished saving to camera roll, ready to delete from temp.")
+                    do {
+                        try NSFileManager.defaultManager().removeItemAtPath(fileToDelete)
+                        print("Deleted")
+                    } catch { print("Couldn't Delete") }
+                }
+        
+        })
     }
     
     
