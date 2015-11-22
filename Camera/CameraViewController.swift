@@ -309,8 +309,18 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
                 
                 let outputPath = documentsPath.stringByAppendingPathComponent("/tmp/\(currentTimeStamp()).jpg")
+                let outputPathURL = NSURL(fileURLWithPath: outputPath)
                 
                 imageData.writeToFile(outputPath, atomically: true)
+                
+                let clip = Clip()
+                clip.filename = outputPathURL.lastPathComponent!
+                clip.type = "photo"
+                
+                let realm = try! Realm()
+                try! realm.write {
+                    realm.add(clip)
+                }
 
                 self.addChildViewController(self.previewViewController)
                 self.view.addSubview(self.previewViewController.view)
@@ -388,14 +398,26 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         exportVideo()
     }
     
-    // MARK: AVCaptureFileOutputRecordingDelegate
-    
-    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
-        
+    func showVideoPreview() {
         addChildViewController(previewViewController)
         self.view.addSubview(self.previewViewController.view)
         self.previewViewController.didMoveToParentViewController(self)
     }
-
+    
+    // MARK: AVCaptureFileOutputRecordingDelegate
+    
+    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
+        
+        let clip = Clip()
+        clip.filename = outputFileURL.lastPathComponent!
+        clip.type = "video"
+        
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(clip)
+        }
+        
+        showVideoPreview()
+    }
 }
 

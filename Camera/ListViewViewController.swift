@@ -9,17 +9,15 @@
 import UIKit
 import AVKit
 import AVFoundation
+import RealmSwift
 
 class ListViewViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var clipReviewList: UITableView!
-    
-    var scenes: [String]!
-    var scenetime: [String]!
-    
-    var clips: [NSURL]!
-    var clipCount: Int = 0
 
+    var clips: Results<Clip>!
+    var clipCount: Int = 0
+    
     var thumbnail: UIImage!
     
     override func viewDidLoad() {
@@ -27,8 +25,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func updateTableView() {
-        clips = returnContentsOfTemporaryDocumentsDirectory()
-        clipCount = clips.count
+        let realm = try! Realm()
+        clips = realm.objects(Clip).sorted("filename", ascending: false)
+        
         clipReviewList.reloadData()
     }
     
@@ -42,32 +41,29 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print(clipCount)
-        return clipCount
+        return clips.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SceneTableViewCell") as! SceneTableViewCell
 
         let clip = clips[indexPath.row]
-        let clipAsset = AVURLAsset(URL: clip)
         
-        //getthumb
+        print("clip: \(clip)")
+        
+        let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
+        print(clipAsset)
+        // Get thumbnail
         
         let generator = AVAssetImageGenerator(asset: clipAsset)
-        
         let timestamp = CMTime(seconds: 1, preferredTimescale: 60)
-
+        
         do {
             let imageRef = try generator.copyCGImageAtTime(timestamp, actualTime: nil)
-            thumbnail = UIImage(CGImage: imageRef)
+            let thumbnail = UIImage(CGImage: imageRef)
+        } catch {
+            print("Thumbanil generation failed with error \(error)")
         }
-        catch let error as NSError
-        {
-            print("Image generation failed with error \(error)")
-        }
-    
-        print(thumbnail)
         
         let clipDuration = clipAsset.duration
         let clipDurationInSeconds = Int(round(CMTimeGetSeconds(clipDuration)))
@@ -78,16 +74,11 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
             clipDurationSuffix = "Seconds"
         }
         
-        print(clipDuration)
         cell.SceneClip.image = thumbnail
-        cell.SceneNumber.text = String(clip.absoluteString)
+        cell.SceneNumber.text = "\(clip.type): \(clip.filename)"
         cell.SceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
         
         return cell
-    }
-    
-    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
     }
     
     override func didReceiveMemoryWarning() {
@@ -99,8 +90,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         if segue.identifier == "editClipSegue" {
             let editViewController = segue.destinationViewController as! EditClipViewController
             let selectedClipIndex = self.clipReviewList.indexPathForCell(sender as! UITableViewCell)?.row
-            
-            editViewController.clipURL = clips[selectedClipIndex!]
+    
+            let selectedClip = clips[selectedClipIndex!]
+            editViewController.clip = selectedClip
         }
     }
 
@@ -117,12 +109,19 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let destroyAction = UIAlertAction(title: "Yep, delete them.", style: .Destructive) { (action) in
             
+            // Delete reference from DB
+            let realm = try! Realm()
+            try! realm.write {
+                realm.deleteAll()
+            }
+            
+            // Delete from documents directory
             deleteAllFilesInDocumentsDirectory()
+            
             self.updateTableView()
         }
-        alertController.addAction(destroyAction)
         
+        alertController.addAction(destroyAction)
         self.presentViewController(alertController, animated: true) { }
     }
-    
 }
