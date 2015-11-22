@@ -37,11 +37,11 @@ func exportVideo() {
     }
     
     let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-    
     let completeMovieUrl = documentsDirectory.URLByAppendingPathComponent("movie.mov")
+    
     let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality)!
     exporter.outputURL = completeMovieUrl
-    exporter.outputFileType = AVFileTypeMPEG4 // AVFileTypeQuickTimeMovie
+    exporter.outputFileType = AVFileTypeMPEG4
     exporter.exportAsynchronouslyWithCompletionHandler({
         switch exporter.status{
         case  AVAssetExportSessionStatus.Failed:
