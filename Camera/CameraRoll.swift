@@ -6,7 +6,6 @@
 //  Copyright © 2015 Andy Taylor. All rights reserved.
 //
 
-
 import Photos
 
 class CustomPhotoAlbum {
@@ -60,7 +59,11 @@ class CustomPhotoAlbum {
                 
                 if (success) {
                     print("Finished saving to camera roll, ready to delete from temp.")
-                    // Success toast here
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        NSNotificationCenter.defaultCenter().postNotificationName("Finished Saving To Camera Roll", object: nil)
+                    }
+                    
                     do {
                         try NSFileManager.defaultManager().removeItemAtPath(fileToDelete)
                         print("Deleted")
