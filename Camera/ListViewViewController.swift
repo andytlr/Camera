@@ -116,7 +116,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
             }
             
             // Delete from documents directory
-            deleteAllFilesInDocumentsDirectory()
+            deleteAllClips()
             
             self.updateTableView()
         }

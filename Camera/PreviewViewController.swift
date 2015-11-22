@@ -185,7 +185,7 @@ class PreviewViewController: UIViewController {
                         self.killPreviewAndRestartCamera()
                         
                         // Delete from documents directory
-                        removeItemFromDocumentsDirectory(getAbsolutePathForFile(self.clip.filename))
+                        deleteClip(getAbsolutePathForFile(self.clip.filename))
                             
                         // Delete reference from DB
                         let realm = try! Realm()
