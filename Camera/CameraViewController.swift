@@ -308,7 +308,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 
                 let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
                 
-                let outputPath = documentsPath.stringByAppendingPathComponent("/tmp/\(currentTimeStamp()).mov")
+                let outputPath = documentsPath.stringByAppendingPathComponent("/tmp/\(currentTimeStamp()).jpg")
                 
                 imageData.writeToFile(outputPath, atomically: true)
 
