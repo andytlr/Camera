@@ -29,14 +29,6 @@
                                     <outletCollection property="gestureRecognizers" destination="wir-N4-Xbu" appends="YES" id="D5Q-QO-ePJ"/>
                                 </connections>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="r3K-Xg-XE1">
-                                <rect key="frame" x="96" y="319" width="183" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Export the shit"/>
-                                <connections>
-                                    <action selector="tapExportButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="vCG-WE-w4R"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keeeeeep" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goi-cw-hF3">
                                 <rect key="frame" x="149" y="323" width="77" height="21"/>
                                 <animations/>
@@ -219,16 +211,20 @@
                                     </imageView>
                                     <view alpha="0.25" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nKH-vc-1ZR" userLabel="AlphaOverlay">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="290"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Qd-bP-XIN" userLabel="ShareButton">
-                                                <rect key="frame" x="140" y="120" width="94" height="31"/>
-                                                <animations/>
-                                                <state key="normal" image="share"/>
-                                            </button>
-                                        </subviews>
                                         <animations/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qp-v4-9Sv">
+                                        <rect key="frame" x="135" y="15" width="104" height="75"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                        <state key="normal" title="💾">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tapExport:" destination="nhD-o7-srJ" eventType="touchUpInside" id="dDS-d7-lRw"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi">
                                         <rect key="frame" x="0.0" y="15" width="103" height="75"/>
                                         <animations/>
@@ -438,7 +434,6 @@
     </scenes>
     <resources>
         <image name="salad" width="375" height="291"/>
-        <image name="share" width="94" height="31"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="AJD-mB-gbY"/>

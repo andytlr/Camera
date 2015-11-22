@@ -393,17 +393,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
-    @IBAction func tapExportButton(sender: AnyObject) {
-        exportVideo()
-        // This isn't the right place to put this because I don't KNOW that the file has saved.
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenFinishedSavingToCameraRoll", name: "Finished Saving To Camera Roll", object: nil)
-    }
-    
-    func runWhenFinishedSavingToCameraRoll() {
-        createToastWithMessage("Saved!", appendTo: view)
-    }
-    
     func showVideoPreview() {
         addChildViewController(previewViewController)
         self.view.addSubview(self.previewViewController.view)

@@ -100,6 +100,15 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationController?.popViewControllerAnimated(true)
     }
     
+    @IBAction func tapExport(sender: AnyObject) {
+        exportVideo()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenFinishedSavingToCameraRoll", name: "Finished Saving To Camera Roll", object: nil)
+    }
+    
+    func runWhenFinishedSavingToCameraRoll() {
+        createToastWithMessage("Saved!", appendTo: view)
+    }
+    
     @IBAction func tapDeleteButton(sender: AnyObject) {
         
         let alertController = UIAlertController(title: nil, message: "This will delete all your clips. Are you sure?", preferredStyle: .ActionSheet)
