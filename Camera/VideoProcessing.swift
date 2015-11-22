@@ -45,6 +45,8 @@ func exportVideo() {
     exporter.outputFileType = AVFileTypeMPEG4
     exporter.exportAsynchronouslyWithCompletionHandler({
         
+        // Probably start a spinner or sumfin here.
+        
         switch exporter.status {
         case AVAssetExportSessionStatus.Failed:
             print("Failed \(exporter.error)")
@@ -52,6 +54,7 @@ func exportVideo() {
             print("Cancelled \(exporter.error)")
         default:
             CustomPhotoAlbum.sharedInstance.saveMovieWithUrl(completeMovieUrl, fileToDelete: exportPath)
+            // Tell the user it saved.
         }
     })
 }
