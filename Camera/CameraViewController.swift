@@ -396,6 +396,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     @IBAction func tapExportButton(sender: AnyObject) {
         exportVideo()
+        // This isn't the right place to put this because I don't KNOW that the file has saved.
+        createToastWithMessage("Saved!", appendTo: view)
     }
     
     func showVideoPreview() {
