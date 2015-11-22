@@ -35,7 +35,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
 //        clipCount = clips.count
         
         let realm = try! Realm()
-        clips = realm.objects(Clip)
+        clips = realm.objects(Clip).sorted("filename", ascending: false)
         
         clipReviewList.reloadData()
     }
