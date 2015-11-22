@@ -65,7 +65,7 @@ func removeItemFromDocumentsDirectory(fileName: String) {
     let fileManager:NSFileManager = NSFileManager.defaultManager()
     
     let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-    let filePath = documentsDir.stringByAppendingPathComponent(fileName)
+    let filePath = documentsDir.stringByAppendingPathComponent("/tmp/\(fileName)")
 
     do {
         try fileManager.removeItemAtPath(filePath)
