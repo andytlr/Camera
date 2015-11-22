@@ -14,12 +14,6 @@ import RealmSwift
 class ListViewViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var clipReviewList: UITableView!
-    
-//    var scenes: [String]!
-//    var scenetime: [String]!
-    
-//    var clips: [NSURL]!
-//    var clipCount: Int = 0
 
     var clips: Results<Clip>!
     var clipCount: Int = 0
@@ -31,9 +25,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func updateTableView() {
-//        clips = returnContentsOfTemporaryDocumentsDirectory()
-//        clipCount = clips.count
-        
         let realm = try! Realm()
         clips = realm.objects(Clip).sorted("filename", ascending: false)
         

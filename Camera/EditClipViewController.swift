@@ -21,8 +21,6 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     var clip: Clip!
     
-//    var clipURL: NSURL!
-    
     var player = AVPlayer()
     var playerLayer = AVPlayerLayer()
     
@@ -48,19 +46,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        
-//        let realm = try! Realm()
-//        clip = realm.objects(Clip).last!
-        
-//        let exampleVideoURL = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")!
-//        let examplePhotoURL = NSBundle.mainBundle().pathForResource("example_photo", ofType: ".jpg")!
-        
-        // Our actual file path once everything's working
+
         let filePath = getAbsolutePathForFile(clip.filename)
-        
-        // Get file extension
-//        let fileExtensionIndex = filePath.endIndex.advancedBy(-4)
-//        let fileExtension = filePath[Range(start: fileExtensionIndex, end: filePath.endIndex)]
         
         if clip.type == "photo" {
             print("handling photo")
