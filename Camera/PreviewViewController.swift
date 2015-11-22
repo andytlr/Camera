@@ -34,15 +34,16 @@ class PreviewViewController: UIViewController {
         view.backgroundColor = UIColor.clearColor()
         previewView.backgroundColor = UIColor.clearColor()
         
+        let cameraRoll = returnContentsOfTemporaryDocumentsDirectory()
+        
         deleteLabel.alpha = 0
         keepLabel.alpha = 0
         
-        let cameraRoll = returnContentsOfDocumentsDirectory()
         let latestItemInCameraRoll = String(cameraRoll.last!)
         let latestFileName = cameraRoll.last!.lastPathComponent!
         
         let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        let filePath = documentsDir.stringByAppendingPathComponent(latestFileName)
+        let filePath = documentsDir.stringByAppendingPathComponent("/tmp/\(latestFileName)")
         
         // Dis string bullshit to get file type
         let latestFileFileExtensionIndex = latestItemInCameraRoll.endIndex.advancedBy(-4)
@@ -187,7 +188,7 @@ class PreviewViewController: UIViewController {
                     
                     }, completion: { (Bool) -> Void in
                         
-                        let cameraRoll = returnContentsOfDocumentsDirectory()
+                        let cameraRoll = returnContentsOfTemporaryDocumentsDirectory()
                         let latestFileName = cameraRoll.last!.lastPathComponent!
                         removeItemFromDocumentsDirectory(latestFileName)
                         

@@ -10,6 +10,7 @@
 import UIKit
 import AVKit
 import AVFoundation
+import RealmSwift
 
 class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelegate {
     
@@ -263,7 +264,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        let outputPath = "\(documentsPath)/\(currentTimeStamp()).mov"
+        //let outputPath = "\(documentsPath)/tmp/\(currentTimeStamp()).mov"
+        let outputPath = documentsPath.stringByAppendingPathComponent("/tmp/\(currentTimeStamp()).mov")
         let outputFileUrl = NSURL(fileURLWithPath: outputPath)
         videoOutput.startRecordingToOutputFileURL(outputFileUrl, recordingDelegate: self)
     }
@@ -306,7 +308,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 
                 let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
                 
-                let outputPath = "\(documentsPath)/\(currentTimeStamp()).jpg"
+                let outputPath = documentsPath.stringByAppendingPathComponent("/tmp/\(currentTimeStamp()).jpg")
                 
                 imageData.writeToFile(outputPath, atomically: true)
 

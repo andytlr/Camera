@@ -27,7 +27,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func updateTableView() {
-        clips = returnContentsOfDocumentsDirectory()
+        clips = returnContentsOfTemporaryDocumentsDirectory()
         clipCount = clips.count
         clipReviewList.reloadData()
     }
