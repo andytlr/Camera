@@ -24,7 +24,7 @@ class CustomPhotoAlbum {
             fetchOptions.predicate = NSPredicate(format: "title = %@", CustomPhotoAlbum.albumName)
             let collection = PHAssetCollection.fetchAssetCollectionsWithType(.Album, subtype: .Any, options: fetchOptions)
             
-            if let firstObject: AnyObject = collection.firstObject {
+            if let _: AnyObject = collection.firstObject {
                 return collection.firstObject as! PHAssetCollection
             }
             
