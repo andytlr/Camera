@@ -84,7 +84,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         cell.SceneClip.image = thumbnail
-        cell.SceneNumber.text = clip.filename
+        cell.SceneNumber.text = "\(clip.type): \(clip.filename)"
         cell.SceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
         
         return cell
