@@ -264,8 +264,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        //let outputPath = "\(documentsPath)/tmp/\(currentTimeStamp()).mov"
-        let outputPath = documentsPath.stringByAppendingPathComponent("/tmp/\(currentTimeStamp()).mov")
+        let outputPath = documentsPath.stringByAppendingPathComponent("/clips/\(currentTimeStamp()).mov")
         let outputFileUrl = NSURL(fileURLWithPath: outputPath)
         videoOutput.startRecordingToOutputFileURL(outputFileUrl, recordingDelegate: self)
     }
@@ -308,7 +307,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 
                 let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
                 
-                let outputPath = documentsPath.stringByAppendingPathComponent("/tmp/\(currentTimeStamp()).jpg")
+                let outputPath = documentsPath.stringByAppendingPathComponent("/clips/\(currentTimeStamp()).jpg")
                 let outputPathURL = NSURL(fileURLWithPath: outputPath)
                 
                 imageData.writeToFile(outputPath, atomically: true)
