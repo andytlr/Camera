@@ -9,6 +9,7 @@
 import Foundation
 import AVKit
 import AVFoundation
+import AssetsLibrary
 
 func exportVideo() {
     let composition = AVMutableComposition()
@@ -36,13 +37,15 @@ func exportVideo() {
         }
     }
     
-    let documentsDirectory = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)[0]
-    let completeMovieUrl = documentsDirectory.URLByAppendingPathComponent("movie.mov")
+    let exportPath = NSTemporaryDirectory().stringByAppendingFormat("/\(currentTimeStamp()).mov")
+    let completeMovieUrl: NSURL = NSURL.fileURLWithPath(exportPath)
     
     let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality)!
     exporter.outputURL = completeMovieUrl
     exporter.outputFileType = AVFileTypeMPEG4
     exporter.exportAsynchronouslyWithCompletionHandler({
+        let library = ALAssetsLibrary()
+        library.writeVideoAtPathToSavedPhotosAlbum(completeMovieUrl, completionBlock: { (assetURL:NSURL!, error:NSError?) -> Void in })
         switch exporter.status{
         case  AVAssetExportSessionStatus.Failed:
             print("failed \(exporter.error)")
