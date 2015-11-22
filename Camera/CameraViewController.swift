@@ -384,14 +384,26 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
-    // MARK: AVCaptureFileOutputRecordingDelegate
-    
-    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
-        
+    func showPreview() {
         addChildViewController(previewViewController)
         self.view.addSubview(self.previewViewController.view)
         self.previewViewController.didMoveToParentViewController(self)
     }
+    
+    // MARK: AVCaptureFileOutputRecordingDelegate
+    
+    func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
 
+        let clip = Clip()
+        clip.filename = outputFileURL.lastPathComponent!
+        clip.type = "video"
+        
+        let realm = try! Realm()
+        try! realm.write {
+            realm.add(clip)
+        }
+    
+        showPreview()
+    }
 }
 
