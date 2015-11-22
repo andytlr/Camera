@@ -10,6 +10,7 @@ import Foundation
 import AVKit
 import AVFoundation
 import Photos
+import RealmSwift
 
 func exportVideo() {
     let composition = AVMutableComposition()
@@ -17,10 +18,13 @@ func exportVideo() {
     let trackAudio:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
     var insertTime = kCMTimeZero
     
-    let movies = returnContentsOfTemporaryDocumentsDirectory()
+    let realm = try! Realm()
+    let clips = realm.objects(Clip).sorted("filename", ascending: false)
     
-    for movie in movies {
-        let sourceAsset = AVURLAsset(URL: movie, options: nil)
+    for clip in clips {
+        let sourceUrl = NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename))
+        
+        let sourceAsset = AVURLAsset(URL: sourceUrl, options: nil)
         
         let tracks = sourceAsset.tracksWithMediaType(AVMediaTypeVideo)
         let audios = sourceAsset.tracksWithMediaType(AVMediaTypeAudio)
