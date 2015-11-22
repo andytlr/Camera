@@ -99,9 +99,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         if segue.identifier == "editClipSegue" {
             let editViewController = segue.destinationViewController as! EditClipViewController
             let selectedClipIndex = self.clipReviewList.indexPathForCell(sender as! UITableViewCell)?.row
-            
-            let url = NSURL(string: getAbsolutePathForFile(clips[selectedClipIndex!].filename))
-            editViewController.clipURL = url
+    
+            let selectedClip = clips[selectedClipIndex!]
+            editViewController.clip = selectedClip
         }
     }
 

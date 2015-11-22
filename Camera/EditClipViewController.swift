@@ -9,6 +9,7 @@
 import UIKit
 import AVKit
 import AVFoundation
+import RealmSwift
 
 class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
 
@@ -18,7 +19,9 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     @IBOutlet var textFieldPanGestureRecognizer: UIPanGestureRecognizer!
     @IBOutlet weak var doneButton: UIButton!
     
-    var clipURL: NSURL!
+    var clip: Clip!
+    
+//    var clipURL: NSURL!
     
     var player = AVPlayer()
     var playerLayer = AVPlayerLayer()
@@ -46,32 +49,33 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        let exampleVideoURL = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")!
-        let examplePhotoURL = NSBundle.mainBundle().pathForResource("example_photo", ofType: ".jpg")!
+//        let realm = try! Realm()
+//        clip = realm.objects(Clip).last!
+        
+//        let exampleVideoURL = NSBundle.mainBundle().URLForResource("example_recording", withExtension: "mov")!
+//        let examplePhotoURL = NSBundle.mainBundle().pathForResource("example_photo", ofType: ".jpg")!
         
         // Our actual file path once everything's working
-        let filePath = String(clipURL)
+        let filePath = getAbsolutePathForFile(clip.filename)
         
         // Get file extension
-        let fileExtensionIndex = filePath.endIndex.advancedBy(-4)
-        let fileExtension = filePath[Range(start: fileExtensionIndex, end: filePath.endIndex)]
+//        let fileExtensionIndex = filePath.endIndex.advancedBy(-4)
+//        let fileExtension = filePath[Range(start: fileExtensionIndex, end: filePath.endIndex)]
         
-        if fileExtension == ".jpg" || fileExtension == ".png" {
+        if clip.type == "photo" {
             print("handling photo")
             
             let image = UIImage(contentsOfFile: filePath)
             let imageView = UIImageView(image: image)
-            print(image)
             
             imageView.frame = self.view.bounds
-            imageView.backgroundColor = UIColor.blueColor()
             clipView.addSubview(imageView)
             
-        } else if fileExtension == ".mov" {
+        } else if clip.type == "video" {
             print("handling video")
             
             // Set up player
-            let videoAsset = AVAsset(URL: clipURL)
+            let videoAsset = AVAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
             let playerItem = AVPlayerItem(asset: videoAsset)
             
             player = AVPlayer(playerItem: playerItem)
