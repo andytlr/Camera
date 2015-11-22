@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4ct-Ky-8pw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4ct-Ky-8pw">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
@@ -211,16 +211,20 @@
                                     </imageView>
                                     <view alpha="0.25" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nKH-vc-1ZR" userLabel="AlphaOverlay">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="290"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Qd-bP-XIN" userLabel="ShareButton">
-                                                <rect key="frame" x="140" y="120" width="94" height="31"/>
-                                                <animations/>
-                                                <state key="normal" image="share"/>
-                                            </button>
-                                        </subviews>
                                         <animations/>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qp-v4-9Sv">
+                                        <rect key="frame" x="135" y="15" width="104" height="75"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                        <state key="normal" title="💾">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tapExport:" destination="nhD-o7-srJ" eventType="touchUpInside" id="dDS-d7-lRw"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi">
                                         <rect key="frame" x="0.0" y="15" width="103" height="75"/>
                                         <animations/>
@@ -430,7 +434,6 @@
     </scenes>
     <resources>
         <image name="salad" width="375" height="291"/>
-        <image name="share" width="94" height="31"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="AJD-mB-gbY"/>

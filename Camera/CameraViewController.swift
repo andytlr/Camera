@@ -402,7 +402,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     // MARK: AVCaptureFileOutputRecordingDelegate
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
-
+        
         let clip = Clip()
         clip.filename = outputFileURL.lastPathComponent!
         clip.type = "video"
@@ -411,7 +411,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         try! realm.write {
             realm.add(clip)
         }
-    
+        
         showVideoPreview()
     }
 }
