@@ -81,3 +81,10 @@ func deleteAllFilesInDocumentsDirectory() {
         removeItemFromDocumentsDirectory(file.lastPathComponent!)
     }
 }
+
+func getAbsolutePathForFile(filename: String) -> String {
+    let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+    let path = documentsDir.stringByAppendingPathComponent("/tmp/\(filename)")
+    
+    return path
+}
