@@ -41,8 +41,7 @@ class PreviewViewController: UIViewController {
         deleteLabel.alpha = 0
         keepLabel.alpha = 0
         
-        let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-        let filePath = documentsDir.stringByAppendingPathComponent("/tmp/\(clip.filename)")
+        let filePath = getAbsolutePathForFile(clip.filename)
         
         if clip.type == "photo" {
             
