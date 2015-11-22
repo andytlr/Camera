@@ -34,7 +34,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         ClipReviewList.dataSource = self
         ClipReviewList.delegate = self
         
-        clips = returnContentsOfDocumentsDirectory()
+        clips = returnContentsOfTemporaryDocumentsDirectory()
         clipCount = clips.count
         print("Number of clips: \(clipCount)")
         

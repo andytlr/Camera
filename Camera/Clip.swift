@@ -11,6 +11,4 @@ import RealmSwift
 
 class Clip: Object {
     dynamic var type: String! = ""
-    dynamic var file: NSData! = nil
-    dynamic var thumbnail: UIImage! = nil
 }
