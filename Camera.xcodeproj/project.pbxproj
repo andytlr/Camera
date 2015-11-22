@@ -16,6 +16,7 @@
 		C21477C61BEE9FE7001474A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C21477C51BEE9FE7001474A4 /* Assets.xcassets */; };
 		C21477C91BEE9FE7001474A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C21477C71BEE9FE7001474A4 /* LaunchScreen.storyboard */; };
 		C21477D11BEFE7BB001474A4 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21477D01BEFE7BB001474A4 /* Common.swift */; };
+		C24E087F1C016A0500891902 /* VideoProcessingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E087E1C016A0500891902 /* VideoProcessingModel.swift */; };
 		C278C95F1BF846C800285CDF /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278C95E1BF846C800285CDF /* PreviewViewController.swift */; };
 		CA2E6EBD1BFAD034007AA957 /* example_recording.mov in Resources */ = {isa = PBXBuildFile; fileRef = CA2E6EBC1BFAD034007AA957 /* example_recording.mov */; };
 		CA498DC01C00F21A007A8FCF /* Clip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA498DBF1C00F21A007A8FCF /* Clip.swift */; };
@@ -36,6 +37,7 @@
 		C21477C81BEE9FE7001474A4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C21477CA1BEE9FE7001474A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C21477D01BEFE7BB001474A4 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		C24E087E1C016A0500891902 /* VideoProcessingModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoProcessingModel.swift; sourceTree = "<group>"; };
 		C278C95E1BF846C800285CDF /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		CA2E6EBC1BFAD034007AA957 /* example_recording.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = example_recording.mov; sourceTree = "<group>"; };
 		CA498DBF1C00F21A007A8FCF /* Clip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clip.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				CA498DBF1C00F21A007A8FCF /* Clip.swift */,
 				61CFADB01BFE3FFB0029E4EC /* SceneTableViewCell.swift */,
 				616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */,
+				C24E087E1C016A0500891902 /* VideoProcessingModel.swift */,
 				C21477D01BEFE7BB001474A4 /* Common.swift */,
 				CA2E6EBC1BFAD034007AA957 /* example_recording.mov */,
 				CAE10EA01BFD6180004F8B7A /* example_photo.jpg */,
@@ -147,7 +150,7 @@
 				TargetAttributes = {
 					C21477BA1BEE9FE7001474A4 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = FG8F72SY67;
+						DevelopmentTeam = 7JJG8MJLCH;
 					};
 				};
 			};
@@ -245,6 +248,7 @@
 				CA498DC01C00F21A007A8FCF /* Clip.swift in Sources */,
 				C278C95F1BF846C800285CDF /* PreviewViewController.swift in Sources */,
 				616937DF1BF64AEA00B47C38 /* ListViewViewController.swift in Sources */,
+				C24E087F1C016A0500891902 /* VideoProcessingModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,7 +365,7 @@
 				INFOPLIST_FILE = Camera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = benashman.Camera;
+				PRODUCT_BUNDLE_IDENTIFIER = andytaylor.Camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -377,7 +381,7 @@
 				INFOPLIST_FILE = Camera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = benashman.Camera;
+				PRODUCT_BUNDLE_IDENTIFIER = andytaylor.Camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};

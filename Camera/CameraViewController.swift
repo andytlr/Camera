@@ -384,6 +384,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
+    @IBAction func tapExportButton(sender: AnyObject) {
+        exportVideo()
+    }
+    
     // MARK: AVCaptureFileOutputRecordingDelegate
     
     func captureOutput(captureOutput: AVCaptureFileOutput!, didFinishRecordingToOutputFileAtURL outputFileURL: NSURL!, fromConnections connections: [AnyObject]!, error: NSError!) {
