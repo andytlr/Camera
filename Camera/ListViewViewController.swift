@@ -12,8 +12,7 @@ import AVFoundation
 
 class ListViewViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
-    @IBOutlet weak var ClipReviewList: UITableView!
-    
+    @IBOutlet weak var clipReviewList: UITableView!
     
     var scenes: [String]!
     var scenetime: [String]!
@@ -25,22 +24,22 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    func updateTableView() {
+        clips = returnContentsOfTemporaryDocumentsDirectory()
+        clipCount = clips.count
+        clipReviewList.reloadData()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        ClipReviewList.dataSource = self
-        ClipReviewList.delegate = self
+        clipReviewList.dataSource = self
+        clipReviewList.delegate = self
         
-        clips = returnContentsOfTemporaryDocumentsDirectory()
-        clipCount = clips.count
-        print("Number of clips: \(clipCount)")
-        
-        ClipReviewList.reloadData()
+        updateTableView()
     }
-
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         print(clipCount)
@@ -49,11 +48,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SceneTableViewCell") as! SceneTableViewCell
-        
 
         let clip = clips[indexPath.row]
         let clipAsset = AVURLAsset(URL: clip)
-        
         
         //getthumb
         
@@ -101,7 +98,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "editClipSegue" {
             let editViewController = segue.destinationViewController as! EditClipViewController
-            let selectedClipIndex = self.ClipReviewList.indexPathForCell(sender as! UITableViewCell)?.row
+            let selectedClipIndex = self.clipReviewList.indexPathForCell(sender as! UITableViewCell)?.row
             
             editViewController.clipURL = clips[selectedClipIndex!]
         }
@@ -111,6 +108,21 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         self.navigationController?.popViewControllerAnimated(true)
     }
     
-} // end curly
-
-
+    @IBAction func tapDeleteButton(sender: AnyObject) {
+        
+        let alertController = UIAlertController(title: nil, message: "This will delete all your clips. Are you sure?", preferredStyle: .ActionSheet)
+        
+        let cancelAction = UIAlertAction(title: "Nope, save them.", style: .Cancel) { (action) in }
+        alertController.addAction(cancelAction)
+        
+        let destroyAction = UIAlertAction(title: "Yep, delete them.", style: .Destructive) { (action) in
+            
+            deleteAllFilesInDocumentsDirectory()
+            self.updateTableView()
+        }
+        alertController.addAction(destroyAction)
+        
+        self.presentViewController(alertController, animated: true) { }
+    }
+    
+}

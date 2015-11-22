@@ -87,13 +87,23 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 //        print("Mic input \(micInput!)")
         
         if microphone != nil {
-            do {
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
-                try AVAudioSession.sharedInstance().setActive(true)
-            } catch let error as NSError { print(error) }
             
-            captureSession.automaticallyConfiguresApplicationAudioSession = false
-            captureSession.addInput(micInput!)
+            let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
+            dispatch_async(dispatch_get_global_queue(priority, 0)) {
+                
+                do {
+                    try AVAudioSession.sharedInstance().setActive(false)
+                    try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
+                    try AVAudioSession.sharedInstance().setActive(true)
+                } catch let error as NSError { print(error) }
+                
+                self.captureSession.automaticallyConfiguresApplicationAudioSession = false
+                self.captureSession.addInput(self.micInput!)
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    // update some UI
+                }
+            }
         }
 
 //        print("Inputs \(captureSession.inputs)")
@@ -108,6 +118,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         previewViewController.cameraViewController = self
         
         progressBar.alpha = 0
+        progressBar.progress = 0
         
         setupCamera()
         setCameraOrientationButtonLabel()
@@ -134,7 +145,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if usingSound == true {
             soundButton.setTitle("🎤", forState: UIControlState.Normal)
         } else {
-            soundButton.setTitle("🚫", forState: UIControlState.Normal)
+            soundButton.setTitle("🎤🚫", forState: UIControlState.Normal)
         }
     }
     
@@ -312,6 +323,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if microphone != nil {
             do {
                 captureSession.removeInput(micInput)
+                try AVAudioSession.sharedInstance().setActive(false)
                 try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
                 try AVAudioSession.sharedInstance().setActive(true)
             } catch let error as NSError { print(error) }
