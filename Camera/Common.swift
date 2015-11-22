@@ -27,12 +27,13 @@ func convertValue(value: CGFloat, r1Min: CGFloat, r1Max: CGFloat, r2Min: CGFloat
     return value * ratio + r2Min - r1Min * ratio
 }
 
-func returnContentsOfDocumentsDirectory() -> [NSURL] {
+func returnContentsOfTemporaryDocumentsDirectory() -> [NSURL] {
     let paths = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-    let documentsURL = paths[0] as NSURL
+    let documentsRootPath = paths[0]
+    let temporaryDocumentsURL = NSURL(string: "\(documentsRootPath)/tmp/")!
     
     do {
-        let directoryContents = try NSFileManager.defaultManager().contentsOfDirectoryAtURL(documentsURL, includingPropertiesForKeys: nil, options: [])
+        let directoryContents = try NSFileManager.defaultManager().contentsOfDirectoryAtURL(temporaryDocumentsURL, includingPropertiesForKeys: nil, options: [])
         return directoryContents
         
     } catch let error as NSError {
@@ -74,7 +75,7 @@ func removeItemFromDocumentsDirectory(fileName: String) {
 }
 
 func deleteAllFilesInDocumentsDirectory() {
-    let files = returnContentsOfDocumentsDirectory()
+    let files = returnContentsOfTemporaryDocumentsDirectory()
     
     for file in files {
         removeItemFromDocumentsDirectory(file.lastPathComponent!)

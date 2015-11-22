@@ -25,6 +25,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             try AVAudioSession.sharedInstance().setActive(true)
         } catch let error as NSError { print(error) }
         
+        // Create tmp documents directory for future use
+        
+        let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
+        let tmpDirectoryPath = documentsPath.stringByAppendingPathComponent("/tmp")
+        
+        if !NSFileManager.defaultManager().fileExistsAtPath(tmpDirectoryPath) {
+            try! NSFileManager.defaultManager().createDirectoryAtPath(tmpDirectoryPath, withIntermediateDirectories: false, attributes: nil)
+        }
+        
         return true
     }
     
