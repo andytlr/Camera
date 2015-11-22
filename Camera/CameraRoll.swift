@@ -60,6 +60,7 @@ class CustomPhotoAlbum {
                 
                 if (success) {
                     print("Finished saving to camera roll, ready to delete from temp.")
+                    // Success toast here
                     do {
                         try NSFileManager.defaultManager().removeItemAtPath(fileToDelete)
                         print("Deleted")

@@ -15,6 +15,7 @@ import RealmSwift
 func exportVideo() {
     let composition = AVMutableComposition()
     let trackVideo:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeVideo, preferredTrackID: CMPersistentTrackID())
+    
     let trackAudio:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
     var insertTime = kCMTimeZero
     
@@ -54,11 +55,12 @@ func exportVideo() {
         switch exporter.status {
         case AVAssetExportSessionStatus.Failed:
             print("Failed \(exporter.error)")
+            // Error Toast here.
         case AVAssetExportSessionStatus.Cancelled:
             print("Cancelled \(exporter.error)")
+            // Error Toast here.
         default:
             CustomPhotoAlbum.sharedInstance.saveMovieWithUrl(completeMovieUrl, fileToDelete: exportPath)
-            // Tell the user it saved.
         }
     })
 }
