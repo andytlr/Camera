@@ -108,10 +108,15 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         alertController.addAction(cancelAction)
         
         let destroyAction = UIAlertAction(title: "Yep, delete them.", style: .Destructive) { (action) in
+            
+            // Delete reference from DB
             let realm = try! Realm()
             try! realm.write {
                 realm.deleteAll()
             }
+            
+            // Delete from documents directory
+            deleteAllFilesInDocumentsDirectory()
             
             self.updateTableView()
         }
