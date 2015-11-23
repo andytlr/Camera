@@ -9,23 +9,21 @@
 import Foundation
 import UIKit
 
-func toastWithMessage(message: String, negative: Bool = false, appendTo: UIView, accomodateStatusBar: Bool = false) {
+func toastWithMessage(message: String, destructive: Bool = false, accomodateStatusBar: Bool = false, appendTo: UIView) {
     print(message)
     
     let padding: CGFloat = 15
     let fontSize: CGFloat = 18
     let lineHeight: CGFloat = 1.4
-    let statusBarHeight: CGFloat = 10
-    
-    var toastHeight = ((fontSize * lineHeight) + (padding * 2))
+    var statusBarHeight: CGFloat = 0
     
     if accomodateStatusBar == true {
-        toastHeight += statusBarHeight
-//        statusBarHeight += 10
+        statusBarHeight = 10
     }
     
-    let toastView = UIView(frame: CGRectMake(0, 0, appendTo.frame.width, toastHeight))
-    if negative == false {
+    let toastHeight = ((fontSize * lineHeight) + (padding * 2))
+    let toastView = UIView(frame: CGRectMake(0, 0, appendTo.frame.width, toastHeight + statusBarHeight))
+    if destructive == false {
         toastView.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 1)
     } else {
         toastView.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
