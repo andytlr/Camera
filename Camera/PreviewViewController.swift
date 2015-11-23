@@ -192,9 +192,9 @@ class PreviewViewController: UIViewController {
                         try! realm.write {
                             realm.delete(self.clip)
                         }
-                        delay(0.25) {
-                            self.cameraViewController.updateButtonCount()
-                        }
+//                        delay(0.25) {
+//                            self.cameraViewController.updateButtonCount()
+//                        }
                 })
                 
             } else if velocity.y < -2000 || translation.y < (view.frame.height / 2) * -1 {
