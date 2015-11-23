@@ -39,6 +39,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     var lastPoint: CGPoint!
     var strokeWidth: CGFloat!
+    var strokeColor = UIColor.whiteColor()
     var strokeOpacity: CGFloat!
     var didSwipe: Bool!
     
@@ -57,7 +58,9 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         
         // Set up drawing shit
         
-        strokeWidth = 10.0
+//        drawingView.hidden = true
+        
+        strokeWidth = 8.0
         strokeOpacity = 1.0
     }
     
@@ -220,15 +223,25 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         return true
     }
     
-    
     // Drawing shit
     
     @IBAction func selectedColor(sender: AnyObject) {
         print("selected color: \(sender.tag)")
+        
+        switch sender.tag {
+        case 0:
+            strokeColor = UIColor.redColor()
+        case 1:
+            strokeColor = UIColor.greenColor()
+        case 2:
+            strokeColor = UIColor.blueColor()
+        default:
+            strokeColor = UIColor.whiteColor()
+        }
     }
     
     @IBAction func clearDrawing(sender: AnyObject) {
-        print("cleared drawing")
+        self.drawingImageView.image = nil
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -258,7 +271,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y)
             CGContextSetLineCap(UIGraphicsGetCurrentContext(), CGLineCap.Round)
             CGContextSetLineWidth(UIGraphicsGetCurrentContext(), strokeWidth)
-            CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), UIColor.redColor().CGColor)
+            CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), strokeColor.CGColor)
             CGContextSetBlendMode(UIGraphicsGetCurrentContext(), CGBlendMode.Normal)
             
             CGContextStrokePath(UIGraphicsGetCurrentContext())
@@ -279,7 +292,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             
             CGContextSetLineCap(UIGraphicsGetCurrentContext(), CGLineCap.Round)
             CGContextSetLineWidth(UIGraphicsGetCurrentContext(), strokeWidth)
-            CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), UIColor.redColor().CGColor)
+            CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), strokeColor.CGColor)
             CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
             CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
             
