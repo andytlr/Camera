@@ -143,8 +143,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     @IBAction func toggleTextInput(sender: AnyObject) {
-        print(textInputTextField.hidden)
-        textInputTextField.hidden ? beginTextInput() : endTextInput()
+//        print(textInputTextField.hidden)
+//        textInputTextField.hidden ? beginTextInput() : endTextInput()
     }
     
     @IBAction func panText(sender: AnyObject) {
@@ -221,8 +221,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     func showDrawingView() {
         addChildViewController(drawingViewController)
-        self.view.addSubview(drawingViewController.view)
-        self.drawingViewController.didMoveToParentViewController(self)
+        view.insertSubview(drawingViewController.view, belowSubview: overlayView)
+        drawingViewController.didMoveToParentViewController(self)
     }
 }
 
