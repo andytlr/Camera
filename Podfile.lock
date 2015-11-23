@@ -4,12 +4,15 @@ PODS:
   - Realm/Headers (0.96.2)
   - RealmSwift (0.96.2):
     - Realm (= 0.96.2)
+  - RKColorSlider (0.1.0)
 
 DEPENDENCIES:
   - RealmSwift
+  - RKColorSlider
 
 SPEC CHECKSUMS:
   Realm: 3ce8448151c571e90b85002d984d7f93f54fc8a3
   RealmSwift: 485599fe54e35461c4a0daa7d01d8fbf11424873
+  RKColorSlider: 84fe855c263db43fca2f70618b01cbe3bb80f478
 
 COCOAPODS: 0.39.0

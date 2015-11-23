@@ -7,10 +7,14 @@
 //
 
 import UIKit
+import RKColorSlider
 
 class DrawingViewController: UIViewController {
     
     var editClipViewController: EditClipViewController!
+    
+    @IBOutlet weak var colorBar: RKColorSlider!
+    @IBOutlet weak var clearButton: UIButton!
     
     var lastPoint: CGPoint!
     var strokeWidth: CGFloat!
@@ -24,29 +28,38 @@ class DrawingViewController: UIViewController {
         strokeWidth = 8.0
         strokeOpacity = 1.0
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        colorBar.frame.origin.x = UIScreen.mainScreen().bounds.size.width
+        showColorBar()
+        
+        clearButton.alpha = 0
+        clearButton.transform = CGAffineTransformMakeScale(0, 0)
+        showClearButton()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func hideDrawingView(sender: AnyObject) {
-        self.view.removeFromSuperview()
+    func showColorBar() {
+        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseOut, animations: {
+            self.colorBar.frame.origin.x = UIScreen.mainScreen().bounds.size.width - 10
+        }, completion: nil)
     }
     
-    @IBAction func selectedColor(sender: AnyObject) {
-        print("selected color: \(sender.tag)")
-        
-        switch sender.tag {
-        case 0:
-            strokeColor = UIColor.redColor()
-        case 1:
-            strokeColor = UIColor.greenColor()
-        case 2:
-            strokeColor = UIColor.blueColor()
-        default:
-            strokeColor = UIColor.whiteColor()
-        }
+    func showClearButton() {
+        UIView.animateWithDuration(0.2, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: [], animations: {
+                self.clearButton.alpha = 1
+                self.clearButton.transform = CGAffineTransformMakeScale(1, 1)
+        }, completion: nil)
+    }
+    
+    @IBAction func colorChanged(sender: RKColorSlider) {
+        strokeColor = sender.selectedColor
     }
     
     @IBAction func clearDrawing(sender: AnyObject) {
