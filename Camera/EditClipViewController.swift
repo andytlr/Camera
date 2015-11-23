@@ -15,6 +15,11 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
 
     @IBOutlet weak var clipView: UIView!
     @IBOutlet weak var overlayView: UIView!
+    
+    @IBOutlet weak var drawingView: UIView!
+    @IBOutlet weak var drawingImageView: UIImageView!
+    @IBOutlet weak var temporaryDrawingImageView: UIImageView!
+    
     @IBOutlet weak var textInputTextField: UITextField!
     @IBOutlet var textFieldPanGestureRecognizer: UIPanGestureRecognizer!
     @IBOutlet weak var doneButton: UIButton!
@@ -30,6 +35,13 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     var textFieldOriginalCenter: CGPoint!
     var textFieldScaleTransform: CGAffineTransform!
     
+    // Drawing shit
+    
+    var lastPoint: CGPoint!
+    var strokeWidth: CGFloat!
+    var strokeOpacity: CGFloat!
+    var didSwipe: Bool!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +54,11 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         // Set up UI
         overlayView.backgroundColor = UIColor.clearColor()
         setUpTextInput()
+        
+        // Set up drawing shit
+        
+        strokeWidth = 10.0
+        strokeOpacity = 1.0
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -202,4 +219,93 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+    
+    
+    // Drawing shit
+    
+    @IBAction func selectedColor(sender: AnyObject) {
+        print("selected color: \(sender.tag)")
+    }
+    
+    @IBAction func clearDrawing(sender: AnyObject) {
+        print("cleared drawing")
+    }
+    
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        didSwipe = false
+        
+        if let touch = touches.first {
+            print("touches began")
+            lastPoint = touch.locationInView(self.view)
+        }
+        
+        super.touchesBegan(touches, withEvent: event)
+    }
+    
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        didSwipe = true
+        
+        if let touch = touches.first {
+            print("touches moved")
+            
+            let currentPoint = touch.locationInView(self.view)
+            
+            UIGraphicsBeginImageContext(self.view.frame.size)
+            
+            self.temporaryDrawingImageView.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+            
+            CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
+            CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y)
+            CGContextSetLineCap(UIGraphicsGetCurrentContext(), CGLineCap.Round)
+            CGContextSetLineWidth(UIGraphicsGetCurrentContext(), strokeWidth)
+            CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), UIColor.redColor().CGColor)
+            CGContextSetBlendMode(UIGraphicsGetCurrentContext(), CGBlendMode.Normal)
+            
+            CGContextStrokePath(UIGraphicsGetCurrentContext())
+            self.temporaryDrawingImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+            self.temporaryDrawingImageView.alpha = strokeOpacity
+            
+            UIGraphicsEndImageContext()
+            
+            lastPoint = currentPoint
+        }
+    }
+    
+    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        if !didSwipe {
+            UIGraphicsBeginImageContext(self.view.frame.size)
+            
+            self.temporaryDrawingImageView.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+            
+            CGContextSetLineCap(UIGraphicsGetCurrentContext(), CGLineCap.Round)
+            CGContextSetLineWidth(UIGraphicsGetCurrentContext(), strokeWidth)
+            CGContextSetStrokeColorWithColor(UIGraphicsGetCurrentContext(), UIColor.redColor().CGColor)
+            CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
+            CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
+            
+            CGContextStrokePath(UIGraphicsGetCurrentContext())
+            self.temporaryDrawingImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+            
+            UIGraphicsEndImageContext()
+        }
+        
+        UIGraphicsBeginImageContext(self.drawingImageView.frame.size)
+        self.drawingImageView.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+        self.temporaryDrawingImageView.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+        self.temporaryDrawingImageView.alpha = strokeOpacity
+        
+        self.drawingImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        self.temporaryDrawingImageView.image = nil
+        
+        UIGraphicsEndImageContext()
+    }
 }
+
+
+
+
+
+
+
+
+
