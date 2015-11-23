@@ -120,6 +120,7 @@ class PreviewViewController: UIViewController {
             previewView.backgroundColor = UIColor.clearColor()
             
             blackView.frame = self.view.bounds
+            blackView.alpha = 1
             view.insertSubview(blackView, atIndex: 0)
         }
         if sender.state == .Changed {
