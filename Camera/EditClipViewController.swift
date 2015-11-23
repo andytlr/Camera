@@ -229,6 +229,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             }
         }
         
+        player.pause()
         dismissViewControllerAnimated(false, completion: nil)
     }
     
