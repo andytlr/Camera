@@ -110,17 +110,17 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func runWhenFinishedSavingToCameraRoll() {
-        createToastWithMessage("Saved!", appendTo: view)
+        toastWithMessage("Saved!", accomodateStatusBar: true, appendTo: self.view)
     }
     
     @IBAction func tapDeleteButton(sender: AnyObject) {
         
         let alertController = UIAlertController(title: nil, message: "This will delete all your clips. Are you sure?", preferredStyle: .ActionSheet)
         
-        let cancelAction = UIAlertAction(title: "Nope, save them.", style: .Cancel) { (action) in }
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in }
         alertController.addAction(cancelAction)
         
-        let destroyAction = UIAlertAction(title: "Yep, delete them.", style: .Destructive) { (action) in
+        let destroyAction = UIAlertAction(title: "Delete Them All", style: .Destructive) { (action) in
             
             // Delete reference from DB
             let realm = try! Realm()
@@ -131,7 +131,12 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
             // Delete from documents directory
             deleteAllClips()
             
+            dispatch_async(dispatch_get_main_queue()) {
+                NSNotificationCenter.defaultCenter().postNotificationName("All Clips Deleted", object: nil)
+            }
+            
             self.updateTableView()
+            self.navigationController!.popViewControllerAnimated(true)
         }
         
         alertController.addAction(destroyAction)

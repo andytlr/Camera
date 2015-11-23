@@ -50,6 +50,18 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     let videoOutput = AVCaptureMovieFileOutput()
     let devices = AVCaptureDevice.devices()
     
+    var clipCount: Int! {
+        didSet {
+            if clipCount == 0 {
+                doneButton.alpha = 0
+                doneButton.setTitle("", forState: UIControlState.Normal)
+            } else {
+                doneButton.setTitle("\(clipCount)", forState: UIControlState.Normal)
+                doneButton.alpha = 1
+            }
+        }
+    }
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -108,6 +120,17 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
 //        print("Inputs \(captureSession.inputs)")
     }
+    
+    func updateButtonCount() {
+        let realm = try! Realm()
+        clipCount = realm.objects(Clip).count
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        updateButtonCount()
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -116,6 +139,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController") as! PreviewViewController
         previewViewController.cameraViewController = self
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenDeletedAllClips", name: "All Clips Deleted", object: nil)
         
         progressBar.alpha = 0
         progressBar.progress = 0
@@ -339,6 +364,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
+    func runWhenDeletedAllClips() {
+        delay(0.3) { // delay waits for segue to happen before showing toast.
+            toastWithMessage("Trashed em!", destructive: true, appendTo: self.view)
+        }
+    }
+    
     @IBAction func longPressWholeView(sender: UILongPressGestureRecognizer) {
         if sender.state == .Began {
             startRecording()
@@ -352,7 +383,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     @IBAction func tapWholeView(sender: UITapGestureRecognizer) {
-        
         takeStillImage()
     }
     
