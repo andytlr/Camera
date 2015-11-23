@@ -135,6 +135,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
             toastWithMessage("Trashed em!", destructive: true, accomodateStatusBar: true, appendTo: self.view)
             
             self.updateTableView()
+            self.navigationController!.popViewControllerAnimated(true)
         }
         
         alertController.addAction(destroyAction)

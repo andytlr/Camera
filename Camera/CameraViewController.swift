@@ -52,7 +52,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     var clipCount: Int! {
         didSet {
-            doneButton.setTitle("\(clipCount)", forState: UIControlState.Normal)
+            if clipCount == 0 {
+                doneButton.alpha = 0
+            } else {
+                doneButton.setTitle("\(clipCount)", forState: UIControlState.Normal)
+                doneButton.alpha = 1
+            }
         }
     }
     

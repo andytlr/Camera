@@ -191,8 +191,9 @@ class PreviewViewController: UIViewController {
                         let realm = try! Realm()
                         try! realm.write {
                             realm.delete(self.clip)
-                            // Update count for button on camera
-                            self.cameraViewController.clipCount = realm.objects(Clip).count
+                        }
+                        delay(0.25) {
+                            self.cameraViewController.updateButtonCount()
                         }
                 })
                 
@@ -215,8 +216,7 @@ class PreviewViewController: UIViewController {
                         
                         self.killPreviewAndRestartCamera()
 
-                        let realm = try! Realm()
-                        self.cameraViewController.clipCount = realm.objects(Clip).count
+                        self.cameraViewController.updateButtonCount()
                 })
                 
             } else {
