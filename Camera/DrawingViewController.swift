@@ -33,6 +33,10 @@ class DrawingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func hideDrawingView(sender: AnyObject) {
+        self.view.removeFromSuperview()
+    }
+    
     @IBAction func selectedColor(sender: AnyObject) {
         switch sender.tag {
         case 0:

@@ -350,22 +350,24 @@
                                                     <outletCollection property="gestureRecognizers" destination="7ud-cU-hsP" appends="YES" id="gFV-z6-Qp5"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9y3-Nd-A3A">
-                                                <rect key="frame" x="38" y="33" width="37" height="30"/>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONU-M2-ip9">
+                                                <rect key="frame" x="305" y="33" width="50" height="50"/>
                                                 <animations/>
-                                                <state key="normal" title="Done">
+                                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                                <state key="normal" title="✏"/>
+                                                <connections>
+                                                    <action selector="tappedDrawButton:" destination="96O-5S-Syf" eventType="touchUpInside" id="Sui-Qw-GUY"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9y3-Nd-A3A">
+                                                <rect key="frame" x="20" y="33" width="50" height="50"/>
+                                                <animations/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                                <state key="normal" title="👌">
                                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="doneEditing:" destination="96O-5S-Syf" eventType="touchUpInside" id="D0D-yO-aQB"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONU-M2-ip9">
-                                                <rect key="frame" x="169" y="57" width="36" height="30"/>
-                                                <animations/>
-                                                <state key="normal" title="Draw"/>
-                                                <connections>
-                                                    <action selector="tappedDrawButton:" destination="96O-5S-Syf" eventType="touchUpInside" id="Sui-Qw-GUY"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -438,18 +440,31 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <animations/>
                             </imageView>
-                            <view tag="2" contentMode="scaleToFill" horizontalHuggingPriority="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IxT-tC-Crm">
-                                <rect key="frame" x="154" y="460" width="50" height="50"/>
-                                <animations/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
                             <view tag="1" contentMode="scaleToFill" horizontalHuggingPriority="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7ug-Is-apR">
-                                <rect key="frame" x="65" y="432" width="50" height="50"/>
+                                <rect key="frame" x="247" y="597" width="50" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kux-LN-X34">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <animations/>
+                                        <connections>
+                                            <action selector="selectedColor:" destination="96O-5S-Syf" eventType="touchUpInside" id="Y4q-Hu-Bat"/>
+                                            <action selector="selectedColor:" destination="Hcq-c3-RIz" eventType="touchUpInside" id="rTz-bt-sS8"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6l1-8x-81J">
+                                <rect key="frame" x="38" y="607" width="32" height="30"/>
+                                <animations/>
+                                <state key="normal" title="Hide"/>
+                                <connections>
+                                    <action selector="hideDrawingView:" destination="Hcq-c3-RIz" eventType="touchUpInside" id="akf-dB-4o9"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cl6-Nt-RMz">
-                                <rect key="frame" x="261" y="498" width="50" height="50"/>
+                                <rect key="frame" x="189" y="597" width="50" height="50"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rmG-qB-zYo">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
@@ -463,29 +478,23 @@
                                 <animations/>
                                 <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kux-LN-X34">
-                                <rect key="frame" x="65" y="432" width="50" height="50"/>
+                            <view tag="2" contentMode="scaleToFill" horizontalHuggingPriority="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IxT-tC-Crm">
+                                <rect key="frame" x="305" y="597" width="50" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UaW-V0-hew">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <animations/>
+                                        <connections>
+                                            <action selector="selectedColor:" destination="96O-5S-Syf" eventType="touchUpInside" id="ffs-24-Fpv"/>
+                                            <action selector="selectedColor:" destination="Hcq-c3-RIz" eventType="touchUpInside" id="xJC-3X-GDr"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <animations/>
-                                <connections>
-                                    <action selector="selectedColor:" destination="96O-5S-Syf" eventType="touchUpInside" id="Y4q-Hu-Bat"/>
-                                    <action selector="selectedColor:" destination="Hcq-c3-RIz" eventType="touchUpInside" id="rTz-bt-sS8"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UaW-V0-hew">
-                                <rect key="frame" x="154" y="460" width="50" height="50"/>
-                                <animations/>
-                                <connections>
-                                    <action selector="selectedColor:" destination="96O-5S-Syf" eventType="touchUpInside" id="ffs-24-Fpv"/>
-                                    <action selector="selectedColor:" destination="Hcq-c3-RIz" eventType="touchUpInside" id="xJC-3X-GDr"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6l1-8x-81J">
-                                <rect key="frame" x="171" y="49" width="32" height="30"/>
-                                <animations/>
-                                <state key="normal" title="Hide"/>
-                            </button>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XrJ-aO-DHM">
-                                <rect key="frame" x="44" y="586" width="36" height="30"/>
+                                <rect key="frame" x="105" y="607" width="36" height="30"/>
                                 <animations/>
                                 <state key="normal" title="Clear"/>
                                 <connections>
@@ -495,7 +504,6 @@
                             </button>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
