@@ -208,6 +208,14 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     @IBAction func doneEditing(sender: AnyObject) {
         dismissViewControllerAnimated(false, completion: nil)
+        
+        // Save overlay
+        let overlayData = UIImagePNGRepresentation(drawingImageView.image!)
+        
+        let realm = try! Realm()
+        try! realm.write {
+            self.clip.overlay = overlayData
+        }
     }
     
     
