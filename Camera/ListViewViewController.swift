@@ -110,7 +110,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func runWhenFinishedSavingToCameraRoll() {
-        createToastWithMessage("Saved!", appendTo: view)
+        toastWithMessage("Saved!", appendTo: self.view)
     }
     
     @IBAction func tapDeleteButton(sender: AnyObject) {
@@ -130,6 +130,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
             
             // Delete from documents directory
             deleteAllClips()
+            
+            // fake toast
+            toastWithMessage("Trashed em!", negative: true, appendTo: self.view, accomodateStatusBar: true)
             
             self.updateTableView()
         }

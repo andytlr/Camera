@@ -9,20 +9,35 @@
 import Foundation
 import UIKit
 
-func createToastWithMessage(message: String, appendTo: UIView) {
+func toastWithMessage(message: String, negative: Bool = false, appendTo: UIView, accomodateStatusBar: Bool = false) {
     print(message)
     
-    let padding = CGFloat(15)
+    let padding = 15
     let fontSize = 18
     let lineHeight = 1.4
+    var statusBarHeight = 10
     
-    let toastHeight = ((CGFloat(fontSize) * CGFloat(lineHeight)) + (padding * 2))
+    var toastHeight = ((CGFloat(fontSize) * CGFloat(lineHeight)) + (CGFloat(padding) * 2))
+    
+    if accomodateStatusBar == true {
+        toastHeight += CGFloat(statusBarHeight)
+//        statusBarHeight += 10
+    }
     
     let toastView = UIView(frame: CGRectMake(0, 0, appendTo.frame.width, toastHeight))
-    toastView.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 1)
+    if negative == false {
+        toastView.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 1)
+    } else {
+        toastView.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+    }
     appendTo.addSubview(toastView)
     
-    let toastMessage = UILabel(frame: CGRectMake(padding, padding, (appendTo.frame.width) - (padding * 2), (CGFloat(fontSize) * CGFloat(lineHeight))))
+    let toastMessage = UILabel(frame: CGRectMake(
+        CGFloat(padding),
+        CGFloat(padding) + CGFloat(statusBarHeight),
+        (appendTo.frame.width) - (CGFloat(padding) * 2),
+        (CGFloat(fontSize) * CGFloat(lineHeight))
+    ))
     toastMessage.font = UIFont.systemFontOfSize(CGFloat(fontSize))
     toastMessage.textColor = UIColor.whiteColor()
     toastMessage.text = message
