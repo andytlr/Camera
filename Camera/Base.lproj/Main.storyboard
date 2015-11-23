@@ -464,6 +464,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="clearButton" destination="XrJ-aO-DHM" id="ujA-fD-hFD"/>
                         <outlet property="colorBar" destination="EVE-wc-3Rh" id="yhf-7e-BZc"/>
                     </connections>
                 </viewController>

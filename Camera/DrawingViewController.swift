@@ -14,6 +14,7 @@ class DrawingViewController: UIViewController {
     var editClipViewController: EditClipViewController!
     
     @IBOutlet weak var colorBar: RKColorSlider!
+    @IBOutlet weak var clearButton: UIButton!
     
     var lastPoint: CGPoint!
     var strokeWidth: CGFloat!
@@ -33,6 +34,10 @@ class DrawingViewController: UIViewController {
         
         colorBar.frame.origin.x = UIScreen.mainScreen().bounds.size.width
         showColorBar()
+        
+        clearButton.alpha = 0
+        clearButton.transform = CGAffineTransformMakeScale(0, 0)
+        showClearButton()
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,6 +48,13 @@ class DrawingViewController: UIViewController {
     func showColorBar() {
         UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseOut, animations: {
             self.colorBar.frame.origin.x = UIScreen.mainScreen().bounds.size.width - 10
+        }, completion: nil)
+    }
+    
+    func showClearButton() {
+        UIView.animateWithDuration(0.2, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0.5, options: [], animations: {
+                self.clearButton.alpha = 1
+                self.clearButton.transform = CGAffineTransformMakeScale(1, 1)
         }, completion: nil)
     }
     
