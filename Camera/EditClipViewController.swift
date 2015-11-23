@@ -15,6 +15,11 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
 
     @IBOutlet weak var clipView: UIView!
     @IBOutlet weak var overlayView: UIView!
+    
+    @IBOutlet weak var drawingView: UIView!
+    @IBOutlet weak var temporaryDrawingImageView: UIImageView!
+    @IBOutlet weak var drawingImageView: UIImageView!
+    
     @IBOutlet weak var textInputTextField: UITextField!
     @IBOutlet var textFieldPanGestureRecognizer: UIPanGestureRecognizer!
     @IBOutlet weak var doneButton: UIButton!
@@ -30,6 +35,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     var textFieldOriginalCenter: CGPoint!
     var textFieldScaleTransform: CGAffineTransform!
     
+    var drawingViewController: DrawingViewController!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,6 +49,13 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         // Set up UI
         overlayView.backgroundColor = UIColor.clearColor()
         setUpTextInput()
+        
+        // Set up drawing shit
+        
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        drawingViewController = storyboard.instantiateViewControllerWithIdentifier("DrawingViewController") as! DrawingViewController
+        drawingViewController.editClipViewController = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -133,8 +147,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     @IBAction func toggleTextInput(sender: AnyObject) {
-        print(textInputTextField.hidden)
-        textInputTextField.hidden ? beginTextInput() : endTextInput()
+//        print(textInputTextField.hidden)
+//        textInputTextField.hidden ? beginTextInput() : endTextInput()
     }
     
     @IBAction func panText(sender: AnyObject) {
@@ -202,4 +216,33 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
         return true
     }
+    
+    // Drawing shit
+    
+    @IBAction func tappedDrawButton(sender: AnyObject) {
+        if drawingViewController.view.superview == self.view {
+            hideDrawingView()
+        } else {
+            showDrawingView()
+        }
+    }
+    
+    func showDrawingView() {
+        addChildViewController(drawingViewController)
+        view.insertSubview(drawingViewController.view, belowSubview: overlayView)
+        drawingViewController.didMoveToParentViewController(self)
+    }
+    
+    func hideDrawingView() {
+        drawingViewController.view.removeFromSuperview()
+    }
 }
+
+
+
+
+
+
+
+
+
