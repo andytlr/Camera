@@ -110,7 +110,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func runWhenFinishedSavingToCameraRoll() {
-        toastWithMessage("Saved!", accomodateStatusBar: true, appendTo: self.view)
+        toastWithMessage("Saved!", appendTo: self.view, accomodateStatusBar: true)
     }
     
     @IBAction func tapDeleteButton(sender: AnyObject) {
