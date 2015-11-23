@@ -16,6 +16,10 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     @IBOutlet weak var clipView: UIView!
     @IBOutlet weak var overlayView: UIView!
     
+    @IBOutlet weak var drawingView: UIView!
+    @IBOutlet weak var temporaryDrawingImageView: UIImageView!
+    @IBOutlet weak var drawingImageView: UIImageView!
+    
     @IBOutlet weak var textInputTextField: UITextField!
     @IBOutlet var textFieldPanGestureRecognizer: UIPanGestureRecognizer!
     @IBOutlet weak var doneButton: UIButton!

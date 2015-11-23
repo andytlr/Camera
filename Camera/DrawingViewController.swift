@@ -12,9 +12,6 @@ class DrawingViewController: UIViewController {
     
     var editClipViewController: EditClipViewController!
     
-    @IBOutlet weak var temporaryDrawingImageView: UIImageView!
-    @IBOutlet weak var drawingImageView: UIImageView!
-    
     var lastPoint: CGPoint!
     var strokeWidth: CGFloat!
     var strokeColor = UIColor.whiteColor()
@@ -38,6 +35,8 @@ class DrawingViewController: UIViewController {
     }
     
     @IBAction func selectedColor(sender: AnyObject) {
+        print("selected color: \(sender.tag)")
+        
         switch sender.tag {
         case 0:
             strokeColor = UIColor.redColor()
@@ -51,7 +50,7 @@ class DrawingViewController: UIViewController {
     }
     
     @IBAction func clearDrawing(sender: AnyObject) {
-        self.drawingImageView.image = nil
+        editClipViewController.drawingImageView.image = nil
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -75,7 +74,7 @@ class DrawingViewController: UIViewController {
             
             UIGraphicsBeginImageContext(self.view.frame.size)
             
-            self.temporaryDrawingImageView.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+            editClipViewController.temporaryDrawingImageView.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
             
             CGContextMoveToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
             CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), currentPoint.x, currentPoint.y)
@@ -85,8 +84,8 @@ class DrawingViewController: UIViewController {
             CGContextSetBlendMode(UIGraphicsGetCurrentContext(), CGBlendMode.Normal)
             
             CGContextStrokePath(UIGraphicsGetCurrentContext())
-            self.temporaryDrawingImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-            self.temporaryDrawingImageView.alpha = strokeOpacity
+            editClipViewController.temporaryDrawingImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+            editClipViewController.temporaryDrawingImageView.alpha = strokeOpacity
             
             UIGraphicsEndImageContext()
             
@@ -98,7 +97,7 @@ class DrawingViewController: UIViewController {
         if !didSwipe {
             UIGraphicsBeginImageContext(self.view.frame.size)
             
-            self.temporaryDrawingImageView.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+            editClipViewController.temporaryDrawingImageView.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
             
             CGContextSetLineCap(UIGraphicsGetCurrentContext(), CGLineCap.Round)
             CGContextSetLineWidth(UIGraphicsGetCurrentContext(), strokeWidth)
@@ -107,18 +106,18 @@ class DrawingViewController: UIViewController {
             CGContextAddLineToPoint(UIGraphicsGetCurrentContext(), lastPoint.x, lastPoint.y)
             
             CGContextStrokePath(UIGraphicsGetCurrentContext())
-            self.temporaryDrawingImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+            editClipViewController.temporaryDrawingImageView.image = UIGraphicsGetImageFromCurrentImageContext()
             
             UIGraphicsEndImageContext()
         }
         
-        UIGraphicsBeginImageContext(self.drawingImageView.frame.size)
-        self.drawingImageView.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
-        self.temporaryDrawingImageView.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
-        self.temporaryDrawingImageView.alpha = strokeOpacity
+        UIGraphicsBeginImageContext(editClipViewController.drawingImageView.frame.size)
+        editClipViewController.drawingImageView.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+        editClipViewController.temporaryDrawingImageView.image?.drawInRect(CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height))
+        editClipViewController.temporaryDrawingImageView.alpha = strokeOpacity
         
-        self.drawingImageView.image = UIGraphicsGetImageFromCurrentImageContext()
-        self.temporaryDrawingImageView.image = nil
+        editClipViewController.drawingImageView.image = UIGraphicsGetImageFromCurrentImageContext()
+        editClipViewController.temporaryDrawingImageView.image = nil
         
         UIGraphicsEndImageContext()
     }

@@ -335,8 +335,22 @@
                                 <color key="backgroundColor" red="0.0" green="1" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                             </view>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q0Y-g2-5N0" userLabel="Overlay View – Chrome only">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e1L-wb-xNc" userLabel="Drawing View">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="quY-6r-Zhn">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <animations/>
+                                    </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="twH-qh-qmU">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <animations/>
+                                    </imageView>
+                                </subviews>
+                                <animations/>
+                            </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q0Y-g2-5N0" userLabel="Overlay View – Chrome only">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="103"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Type something…" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="H4j-rC-jmg">
                                         <rect key="frame" x="20" y="319" width="335" height="30"/>
@@ -375,6 +389,7 @@
                                     </button>
                                 </subviews>
                                 <animations/>
+                                <color key="backgroundColor" red="1" green="0.43529412150000002" blue="0.81176471709999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="nsz-p9-p38" appends="YES" id="H4I-UK-mZ6"/>
@@ -388,7 +403,10 @@
                     <connections>
                         <outlet property="clipView" destination="SDA-dQ-wYt" id="MSN-4w-DXr"/>
                         <outlet property="doneButton" destination="9y3-Nd-A3A" id="aAv-un-ZKa"/>
+                        <outlet property="drawingImageView" destination="twH-qh-qmU" id="fkZ-mi-RKB"/>
+                        <outlet property="drawingView" destination="e1L-wb-xNc" id="H2p-cL-eib"/>
                         <outlet property="overlayView" destination="Q0Y-g2-5N0" id="Bmg-fc-uAq"/>
+                        <outlet property="temporaryDrawingImageView" destination="quY-6r-Zhn" id="UfK-xj-cN1"/>
                         <outlet property="textFieldPanGestureRecognizer" destination="Osy-gJ-f6f" id="CAQ-Qr-fy5"/>
                         <outlet property="textInputTextField" destination="H4j-rC-jmg" id="zro-w3-PCW"/>
                     </connections>
@@ -429,14 +447,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pbi-Pl-wN1">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <animations/>
-                            </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CZU-7a-U6A">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <animations/>
-                            </imageView>
                             <view tag="1" contentMode="scaleToFill" horizontalHuggingPriority="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7ug-Is-apR">
                                 <rect key="frame" x="247" y="597" width="50" height="50"/>
                                 <subviews>
@@ -503,10 +513,6 @@
                         <animations/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
-                    <connections>
-                        <outlet property="drawingImageView" destination="CZU-7a-U6A" id="Uh1-pl-tUz"/>
-                        <outlet property="temporaryDrawingImageView" destination="Pbi-Pl-wN1" id="fqP-xL-cUy"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="REf-H9-ohb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
