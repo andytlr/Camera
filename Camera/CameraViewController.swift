@@ -108,6 +108,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
 //        print("Inputs \(captureSession.inputs)")
     }
+    
+    func updateButtonCount() {
+        let realm = try! Realm()
+        let count = realm.objects(Clip).count
+        print("clip count: \(count)")
+        
+        doneButton.setTitle("\(count)", forState: UIControlState.Normal)
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -123,6 +131,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         setupCamera()
         setCameraOrientationButtonLabel()
         setSoundButtonLabel()
+        updateButtonCount()
         
         if backCamera != nil {
             beginSession(backCamera!)
