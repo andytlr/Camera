@@ -91,6 +91,11 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             
             player.play()
             
+            // Show overlay if we have one
+            if clip.overlay != nil {
+                drawingImageView.image = UIImage(data: (clip.overlay)!)
+            }
+            
             // Notify when we reach the end so we can loop
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
         }
@@ -207,15 +212,20 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     @IBAction func doneEditing(sender: AnyObject) {
-        dismissViewControllerAnimated(false, completion: nil)
-        
-        // Save overlay
-        let overlayData = UIImagePNGRepresentation(drawingImageView.image!)
-        
         let realm = try! Realm()
-        try! realm.write {
-            self.clip.overlay = overlayData
+        
+        if drawingImageView.image != nil {
+            let overlayData = UIImagePNGRepresentation(drawingImageView.image!)
+            try! realm.write {
+                self.clip.overlay = overlayData
+            }
+        } else {
+            try! realm.write {
+                self.clip.overlay = nil
+            }
         }
+        
+        dismissViewControllerAnimated(false, completion: nil)
     }
     
     
