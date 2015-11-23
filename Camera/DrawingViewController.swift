@@ -35,21 +35,6 @@ class DrawingViewController: UIViewController {
         self.view.removeFromSuperview()
     }
     
-    @IBAction func selectedColor(sender: AnyObject) {
-        print("selected color: \(sender.tag)")
-        
-        switch sender.tag {
-        case 0:
-            strokeColor = UIColor.redColor()
-        case 1:
-            strokeColor = UIColor.greenColor()
-        case 2:
-            strokeColor = UIColor.blueColor()
-        default:
-            strokeColor = UIColor.whiteColor()
-        }
-    }
-    
     @IBAction func colorChanged(sender: RKColorSlider) {
         strokeColor = sender.selectedColor
     }

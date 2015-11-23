@@ -437,9 +437,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EVE-wc-3Rh" customClass="RKColorSlider">
-                                <rect key="frame" x="365" y="0.0" width="10" height="667"/>
+                                <rect key="frame" x="345" y="0.0" width="30" height="667"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="spectrum" translatesAutoresizingMaskIntoConstraints="NO" id="qxh-fj-Utf">
+                                        <rect key="frame" x="20" y="0.0" width="10" height="667"/>
+                                        <animations/>
+                                    </imageView>
+                                </subviews>
                                 <animations/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.19786398121387283" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="colorChanged:" destination="Hcq-c3-RIz" eventType="valueChanged" id="uCc-C6-A9m"/>
                                 </connections>
@@ -485,6 +490,9 @@
             <point key="canvasLocation" x="802.5" y="995.5"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="spectrum" width="5" height="333"/>
+    </resources>
     <inferredMetricsTieBreakers>
         <segue reference="AJD-mB-gbY"/>
     </inferredMetricsTieBreakers>
