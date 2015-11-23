@@ -220,13 +220,21 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     // Drawing shit
     
     @IBAction func tappedDrawButton(sender: AnyObject) {
-        showDrawingView()
+        if drawingViewController.view.superview == self.view {
+            hideDrawingView()
+        } else {
+            showDrawingView()
+        }
     }
     
     func showDrawingView() {
         addChildViewController(drawingViewController)
         view.insertSubview(drawingViewController.view, belowSubview: overlayView)
         drawingViewController.didMoveToParentViewController(self)
+    }
+    
+    func hideDrawingView() {
+        drawingViewController.view.removeFromSuperview()
     }
 }
 
