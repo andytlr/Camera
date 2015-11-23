@@ -12,15 +12,15 @@ import UIKit
 func toastWithMessage(message: String, negative: Bool = false, appendTo: UIView, accomodateStatusBar: Bool = false) {
     print(message)
     
-    let padding = 15
-    let fontSize = 18
-    let lineHeight = 1.4
-    var statusBarHeight = 10
+    let padding: CGFloat = 15
+    let fontSize: CGFloat = 18
+    let lineHeight: CGFloat = 1.4
+    let statusBarHeight: CGFloat = 10
     
-    var toastHeight = ((CGFloat(fontSize) * CGFloat(lineHeight)) + (CGFloat(padding) * 2))
+    var toastHeight = ((fontSize * lineHeight) + (padding * 2))
     
     if accomodateStatusBar == true {
-        toastHeight += CGFloat(statusBarHeight)
+        toastHeight += statusBarHeight
 //        statusBarHeight += 10
     }
     
@@ -33,12 +33,12 @@ func toastWithMessage(message: String, negative: Bool = false, appendTo: UIView,
     appendTo.addSubview(toastView)
     
     let toastMessage = UILabel(frame: CGRectMake(
-        CGFloat(padding),
-        CGFloat(padding) + CGFloat(statusBarHeight),
-        (appendTo.frame.width) - (CGFloat(padding) * 2),
-        (CGFloat(fontSize) * CGFloat(lineHeight))
+        padding,
+        padding + statusBarHeight,
+        appendTo.frame.width - (padding * 2),
+        fontSize * lineHeight
     ))
-    toastMessage.font = UIFont.systemFontOfSize(CGFloat(fontSize))
+    toastMessage.font = UIFont.systemFontOfSize(fontSize)
     toastMessage.textColor = UIColor.whiteColor()
     toastMessage.text = message
     toastMessage.textAlignment = NSTextAlignment.Center
