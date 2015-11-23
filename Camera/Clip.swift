@@ -12,4 +12,5 @@ import RealmSwift
 class Clip: Object {
     dynamic var filename: String! = ""
     dynamic var type: String! = ""
+    dynamic var overlay: NSData? = nil
 }
