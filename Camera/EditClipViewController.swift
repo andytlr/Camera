@@ -72,6 +72,10 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             imageView.frame = self.view.bounds
             clipView.addSubview(imageView)
             
+            if clip.overlay != nil {
+                drawingImageView.image = UIImage(data: clip.overlay!)
+            }
+            
         } else if clip.type == "video" {
             print("handling video")
             
@@ -93,7 +97,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             
             // Show overlay if we have one
             if clip.overlay != nil {
-                drawingImageView.image = UIImage(data: (clip.overlay)!)
+                drawingImageView.image = UIImage(data: clip.overlay!)
             }
             
             // Notify when we reach the end so we can loop
