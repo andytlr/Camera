@@ -50,6 +50,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     let videoOutput = AVCaptureMovieFileOutput()
     let devices = AVCaptureDevice.devices()
     
+    var clipCount: Int! {
+        didSet {
+            doneButton.setTitle("\(clipCount)", forState: UIControlState.Normal)
+        }
+    }
+    
     override func prefersStatusBarHidden() -> Bool {
         return true
     }
@@ -111,10 +117,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func updateButtonCount() {
         let realm = try! Realm()
-        let count = realm.objects(Clip).count
-        print("clip count: \(count)")
+        clipCount = realm.objects(Clip).count
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         
-        doneButton.setTitle("\(count)", forState: UIControlState.Normal)
+        updateButtonCount()
     }
 
     override func viewDidLoad() {
@@ -131,7 +140,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         setupCamera()
         setCameraOrientationButtonLabel()
         setSoundButtonLabel()
-        updateButtonCount()
         
         if backCamera != nil {
             beginSession(backCamera!)
