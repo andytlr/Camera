@@ -16,6 +16,7 @@ func toastWithMessage(message: String, destructive: Bool = false, accomodateStat
     let fontSize: CGFloat = 18
     let lineHeight: CGFloat = 1.4
     var statusBarHeight: CGFloat = 0
+    let delayInSeconds = 1.5
     
     if accomodateStatusBar == true {
         statusBarHeight = 10
@@ -45,7 +46,7 @@ func toastWithMessage(message: String, destructive: Bool = false, accomodateStat
         
         }) { (Bool) -> Void in
             
-            delay(2) {
+            delay(delayInSeconds) {
                 
                 UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
                     

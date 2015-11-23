@@ -139,6 +139,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController") as! PreviewViewController
         previewViewController.cameraViewController = self
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenDeletedAllClips", name: "All Clips Deleted", object: nil)
+        
         progressBar.alpha = 0
         progressBar.progress = 0
         
@@ -361,6 +363,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
+    func runWhenDeletedAllClips() {
+        delay(0.3) { // delay waits for segue to happen before showing toast.
+            toastWithMessage("Trashed em!", destructive: true, appendTo: self.view)
+        }
+    }
+    
     @IBAction func longPressWholeView(sender: UILongPressGestureRecognizer) {
         if sender.state == .Began {
             startRecording()
@@ -374,7 +382,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     @IBAction func tapWholeView(sender: UITapGestureRecognizer) {
-        
         takeStillImage()
     }
     
