@@ -32,12 +32,7 @@ func toastWithMessage(message: String, negative: Bool = false, appendTo: UIView,
     }
     appendTo.addSubview(toastView)
     
-    let toastMessage = UILabel(frame: CGRectMake(
-        padding,
-        padding + statusBarHeight,
-        appendTo.frame.width - (padding * 2),
-        fontSize * lineHeight
-    ))
+    let toastMessage = UILabel(frame: CGRectMake(padding, padding + statusBarHeight, appendTo.frame.width - (padding * 2), fontSize * lineHeight))
     toastMessage.font = UIFont.systemFontOfSize(fontSize)
     toastMessage.textColor = UIColor.whiteColor()
     toastMessage.text = message
