@@ -252,7 +252,12 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     func hideDrawingView() {
-        drawingViewController.view.removeFromSuperview()
+        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseIn, animations: {
+            self.drawingViewController.colorBar.frame.origin.x = UIScreen.mainScreen().bounds.size.width
+            }, completion: { Bool -> Void in
+                self.drawingViewController.view.removeFromSuperview()
+            }
+        )
     }
 }
 

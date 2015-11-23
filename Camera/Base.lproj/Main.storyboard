@@ -436,7 +436,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EVE-wc-3Rh" customClass="RKColorSlider">
+                            <view alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EVE-wc-3Rh" userLabel="Color Bar" customClass="RKColorSlider">
                                 <rect key="frame" x="345" y="0.0" width="30" height="667"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="spectrum" translatesAutoresizingMaskIntoConstraints="NO" id="qxh-fj-Utf">
@@ -463,6 +463,9 @@
                         <animations/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="colorBar" destination="EVE-wc-3Rh" id="yhf-7e-BZc"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="REf-H9-ohb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

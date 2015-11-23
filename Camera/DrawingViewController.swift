@@ -13,6 +13,8 @@ class DrawingViewController: UIViewController {
     
     var editClipViewController: EditClipViewController!
     
+    @IBOutlet weak var colorBar: RKColorSlider!
+    
     var lastPoint: CGPoint!
     var strokeWidth: CGFloat!
     var strokeColor = UIColor.whiteColor()
@@ -25,20 +27,28 @@ class DrawingViewController: UIViewController {
         strokeWidth = 8.0
         strokeOpacity = 1.0
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        colorBar.frame.origin.x = UIScreen.mainScreen().bounds.size.width
+        showColorBar()
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func hideDrawingView(sender: AnyObject) {
-        self.view.removeFromSuperview()
+    func showColorBar() {
+        UIView.animateWithDuration(0.2, delay: 0, options: .CurveEaseOut, animations: {
+            self.colorBar.frame.origin.x = UIScreen.mainScreen().bounds.size.width - 10
+        }, completion: nil)
     }
     
     @IBAction func colorChanged(sender: RKColorSlider) {
         strokeColor = sender.selectedColor
     }
-    
     
     @IBAction func clearDrawing(sender: AnyObject) {
         editClipViewController.drawingImageView.image = nil
