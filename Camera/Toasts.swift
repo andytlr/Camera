@@ -9,21 +9,30 @@
 import Foundation
 import UIKit
 
-func createToastWithMessage(message: String, appendTo: UIView) {
+func toastWithMessage(message: String, destructive: Bool = false, accomodateStatusBar: Bool = false, appendTo: UIView) {
     print(message)
     
-    let padding = CGFloat(15)
-    let fontSize = 18
-    let lineHeight = 1.4
+    let padding: CGFloat = 15
+    let fontSize: CGFloat = 18
+    let lineHeight: CGFloat = 1.4
+    var statusBarHeight: CGFloat = 0
+    let delayInSeconds = 1.5
     
-    let toastHeight = ((CGFloat(fontSize) * CGFloat(lineHeight)) + (padding * 2))
+    if accomodateStatusBar == true {
+        statusBarHeight = 10
+    }
     
-    let toastView = UIView(frame: CGRectMake(0, 0, appendTo.frame.width, toastHeight))
-    toastView.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 1)
+    let toastHeight = ((fontSize * lineHeight) + (padding * 2))
+    let toastView = UIView(frame: CGRectMake(0, 0, appendTo.frame.width, toastHeight + statusBarHeight))
+    if destructive == false {
+        toastView.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 1)
+    } else {
+        toastView.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+    }
     appendTo.addSubview(toastView)
     
-    let toastMessage = UILabel(frame: CGRectMake(padding, padding, (appendTo.frame.width) - (padding * 2), (CGFloat(fontSize) * CGFloat(lineHeight))))
-    toastMessage.font = UIFont.systemFontOfSize(CGFloat(fontSize))
+    let toastMessage = UILabel(frame: CGRectMake(padding, padding + statusBarHeight, appendTo.frame.width - (padding * 2), fontSize * lineHeight))
+    toastMessage.font = UIFont.systemFontOfSize(fontSize)
     toastMessage.textColor = UIColor.whiteColor()
     toastMessage.text = message
     toastMessage.textAlignment = NSTextAlignment.Center
@@ -37,7 +46,7 @@ func createToastWithMessage(message: String, appendTo: UIView) {
         
         }) { (Bool) -> Void in
             
-            delay(2) {
+            delay(delayInSeconds) {
                 
                 UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
                     
