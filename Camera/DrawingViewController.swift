@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RKColorSlider
 
 class DrawingViewController: UIViewController {
     
@@ -48,6 +49,11 @@ class DrawingViewController: UIViewController {
             strokeColor = UIColor.whiteColor()
         }
     }
+    
+    @IBAction func colorChanged(sender: RKColorSlider) {
+        strokeColor = sender.selectedColor
+    }
+    
     
     @IBAction func clearDrawing(sender: AnyObject) {
         editClipViewController.drawingImageView.image = nil

@@ -436,53 +436,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view tag="1" contentMode="scaleToFill" horizontalHuggingPriority="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7ug-Is-apR">
-                                <rect key="frame" x="247" y="597" width="50" height="50"/>
-                                <subviews>
-                                    <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kux-LN-X34">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <animations/>
-                                        <connections>
-                                            <action selector="selectedColor:" destination="96O-5S-Syf" eventType="touchUpInside" id="Y4q-Hu-Bat"/>
-                                            <action selector="selectedColor:" destination="Hcq-c3-RIz" eventType="touchUpInside" id="rTz-bt-sS8"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EVE-wc-3Rh" customClass="RKColorSlider">
+                                <rect key="frame" x="365" y="0.0" width="10" height="667"/>
                                 <animations/>
-                                <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view contentMode="scaleToFill" horizontalHuggingPriority="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cl6-Nt-RMz">
-                                <rect key="frame" x="189" y="597" width="50" height="50"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rmG-qB-zYo">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <animations/>
-                                        <connections>
-                                            <action selector="selectedColor:" destination="Hcq-c3-RIz" eventType="touchUpInside" id="Rfu-0U-Bjb"/>
-                                            <action selector="selectedColor:" destination="96O-5S-Syf" eventType="touchUpInside" id="YRb-Bw-3Yx"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <animations/>
-                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                            </view>
-                            <view tag="2" contentMode="scaleToFill" horizontalHuggingPriority="1" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IxT-tC-Crm">
-                                <rect key="frame" x="305" y="597" width="50" height="50"/>
-                                <subviews>
-                                    <button opaque="NO" tag="2" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UaW-V0-hew">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <animations/>
-                                        <connections>
-                                            <action selector="selectedColor:" destination="96O-5S-Syf" eventType="touchUpInside" id="ffs-24-Fpv"/>
-                                            <action selector="selectedColor:" destination="Hcq-c3-RIz" eventType="touchUpInside" id="xJC-3X-GDr"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <animations/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.19786398121387283" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="colorChanged:" destination="Hcq-c3-RIz" eventType="valueChanged" id="uCc-C6-A9m"/>
+                                </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XrJ-aO-DHM">
-                                <rect key="frame" x="139" y="607" width="30" height="30"/>
+                                <rect key="frame" x="35" y="607" width="30" height="30"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" type="system" pointSize="28"/>
                                 <state key="normal" title="✨"/>
