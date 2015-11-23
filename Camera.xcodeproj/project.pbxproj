@@ -22,6 +22,7 @@
 		C278C95F1BF846C800285CDF /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278C95E1BF846C800285CDF /* PreviewViewController.swift */; };
 		CA2E6EBD1BFAD034007AA957 /* example_recording.mov in Resources */ = {isa = PBXBuildFile; fileRef = CA2E6EBC1BFAD034007AA957 /* example_recording.mov */; };
 		CA498DC01C00F21A007A8FCF /* Clip.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA498DBF1C00F21A007A8FCF /* Clip.swift */; };
+		CACBFD071C029D5A00159D5F /* DrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACBFD061C029D5A00159D5F /* DrawingViewController.swift */; };
 		CAE10EA11BFD6180004F8B7A /* example_photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CAE10EA01BFD6180004F8B7A /* example_photo.jpg */; };
 		CAF6569F1BF7C02A00B0E42F /* EditClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF6569E1BF7C02A00B0E42F /* EditClipViewController.swift */; };
 /* End PBXBuildFile section */
@@ -45,6 +46,7 @@
 		C278C95E1BF846C800285CDF /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		CA2E6EBC1BFAD034007AA957 /* example_recording.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = example_recording.mov; sourceTree = "<group>"; };
 		CA498DBF1C00F21A007A8FCF /* Clip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Clip.swift; sourceTree = "<group>"; };
+		CACBFD061C029D5A00159D5F /* DrawingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingViewController.swift; sourceTree = "<group>"; };
 		CAE10EA01BFD6180004F8B7A /* example_photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = example_photo.jpg; sourceTree = "<group>"; };
 		CAF6569E1BF7C02A00B0E42F /* EditClipViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditClipViewController.swift; sourceTree = "<group>"; };
 		DE55F46E3D6EAA675996537F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				C278C95E1BF846C800285CDF /* PreviewViewController.swift */,
 				C21477C21BEE9FE7001474A4 /* Main.storyboard */,
 				CAF6569E1BF7C02A00B0E42F /* EditClipViewController.swift */,
+				CACBFD061C029D5A00159D5F /* DrawingViewController.swift */,
 				CA498DBF1C00F21A007A8FCF /* Clip.swift */,
 				C21A4FD31C0192FE00B62989 /* CameraRoll.swift */,
 				C228843A1C02515A000549EB /* Toasts.swift */,
@@ -247,6 +250,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C228843B1C02515A000549EB /* Toasts.swift in Sources */,
+				CACBFD071C029D5A00159D5F /* DrawingViewController.swift in Sources */,
 				61CFADB11BFE3FFB0029E4EC /* SceneTableViewCell.swift in Sources */,
 				C21477C11BEE9FE7001474A4 /* CameraViewController.swift in Sources */,
 				C21477D11BEFE7BB001474A4 /* Common.swift in Sources */,
