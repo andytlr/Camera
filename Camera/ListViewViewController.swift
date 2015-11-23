@@ -20,6 +20,10 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var thumbnail: UIImage!
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
