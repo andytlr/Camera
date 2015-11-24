@@ -137,10 +137,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         updateButtonCount()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-    }
-    
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
         
