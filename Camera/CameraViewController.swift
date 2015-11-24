@@ -124,8 +124,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        
-//        cameraView.alpha = 0
+    }
+    
+    func appWillEnterBackground() {
+        cameraView.alpha = 0
+    }
+    
+    func appDidEnterForeground() {
+        cameraView.alpha = 1
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -137,8 +143,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
-//        cameraView.alpha = 1
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -157,12 +161,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appDidEnterForeground", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenDeletedAllClips", name: "All Clips Deleted", object: nil)
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController") as! PreviewViewController
         previewViewController.cameraViewController = self
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenDeletedAllClips", name: "All Clips Deleted", object: nil)
         
         progressBar.alpha = 0
         progressBar.progress = 0
@@ -178,7 +186,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if microphone != nil {
             do {
                 micInput = try AVCaptureDeviceInput(device: microphone)
-//                captureSession.usesApplicationAudioSession = true
             } catch { }
         }
         
