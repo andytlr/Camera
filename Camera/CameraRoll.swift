@@ -44,7 +44,7 @@ class CustomPhotoAlbum {
         }
     }
     
-    func saveMovieWithUrl(url: NSURL, fileToDelete: String) {
+    func saveMovieWithUrl(url: NSURL, tempFileToDeleteOnCompletion: String) {
         
         if assetCollection == nil {
             return   // If there was an error upstream, skip the save.
@@ -65,7 +65,7 @@ class CustomPhotoAlbum {
                     }
                     
                     do {
-                        try NSFileManager.defaultManager().removeItemAtPath(fileToDelete)
+                        try NSFileManager.defaultManager().removeItemAtPath(tempFileToDeleteOnCompletion)
                         print("Deleted")
                     } catch { print("Couldn't Delete") }
                 }

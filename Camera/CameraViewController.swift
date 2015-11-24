@@ -94,10 +94,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         progressBar.progress = Float(timerProgress)
     }
     
-    func restartMic() {
+    func startMic() {
 
-//        print("Mic input \(micInput!)")
-        
         if microphone != nil {
             
             let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
@@ -117,8 +115,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 }
             }
         }
-
-//        print("Inputs \(captureSession.inputs)")
     }
     
     func updateButtonCount() {
@@ -129,7 +125,21 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        startMic()
         updateButtonCount()
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        
+        if microphone != nil {
+            do {
+                captureSession.removeInput(micInput)
+                try AVAudioSession.sharedInstance().setActive(false)
+                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+                try AVAudioSession.sharedInstance().setActive(true)
+            } catch let error as NSError { print(error) }
+        }
     }
 
     override func viewDidLoad() {
@@ -156,7 +166,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if microphone != nil {
             do {
                 micInput = try AVCaptureDeviceInput(device: microphone)
-                captureSession.addInput(micInput)
                 captureSession.usesApplicationAudioSession = true
             } catch { }
         }
@@ -418,7 +427,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             setSoundButtonLabel()
         } else {
             usingSound = true
-            restartMic()
+            startMic()
             setSoundButtonLabel()
         }
     }

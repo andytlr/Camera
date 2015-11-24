@@ -60,7 +60,7 @@ func exportVideo() {
             print("Cancelled \(exporter.error)")
             // Error Toast here.
         default:
-            CustomPhotoAlbum.sharedInstance.saveMovieWithUrl(completeMovieUrl, fileToDelete: exportPath)
+            CustomPhotoAlbum.sharedInstance.saveMovieWithUrl(completeMovieUrl, tempFileToDeleteOnCompletion: exportPath)
         }
     })
 }

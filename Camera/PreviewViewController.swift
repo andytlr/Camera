@@ -95,7 +95,7 @@ class PreviewViewController: UIViewController {
     func killPreviewAndRestartCamera() {
         if self.cameraViewController.usingSound == true {
             if self.clip.type == "video" {
-                self.cameraViewController.restartMic()
+                self.cameraViewController.startMic()
             }
         }
         delay(0.2) {
