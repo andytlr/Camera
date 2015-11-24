@@ -26,7 +26,11 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.view.backgroundColor = UIColor.blackColor()
     }
+
+
     
     func updateTableView() {
         let realm = try! Realm()
@@ -57,17 +61,22 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
         print(clipAsset)
+        
+        
         // Get thumbnail
         
-        let generator = AVAssetImageGenerator(asset: clipAsset)
-        let timestamp = CMTime(seconds: 1, preferredTimescale: 60)
+        //let generator = AVAssetImageGenerator(asset: clipAsset)
+        //let timestamp = CMTime(seconds: 1, preferredTimescale: 60)
         
-        do {
-            let imageRef = try generator.copyCGImageAtTime(timestamp, actualTime: nil)
-            let thumbnail = UIImage(CGImage: imageRef)
-        } catch {
-            print("Thumbanil generation failed with error \(error)")
-        }
+        //do {
+            //let imageRef = try generator.copyCGImageAtTime(timestamp, actualTime: nil)
+            //let thumbnail = UIImage(CGImage: imageRef)
+        //} catch {
+            //print("Thumbanil generation failed with error \(error)")
+        //}
+        
+        
+        
         
         let clipDuration = clipAsset.duration
         let clipDurationInSeconds = Int(round(CMTimeGetSeconds(clipDuration)))
@@ -77,6 +86,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         } else {
             clipDurationSuffix = "Seconds"
         }
+        
         
         cell.SceneClip.image = thumbnail
         cell.SceneNumber.text = "\(clip.type): \(clip.filename)"
