@@ -14,6 +14,7 @@ import RealmSwift
 class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var clipView: UIView!
+    @IBOutlet weak var textView: UIView!
     @IBOutlet weak var overlayView: UIView!
     
     @IBOutlet weak var drawingView: UIView!
@@ -168,8 +169,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     @IBAction func toggleTextInput(sender: AnyObject) {
-//        print(textInputTextField.hidden)
-//        textInputTextField.hidden ? beginTextInput() : endTextInput()
+        print(textInputTextField.hidden)
+        textInputTextField.hidden ? beginTextInput() : endTextInput()
     }
     
     @IBAction func panText(sender: AnyObject) {
