@@ -20,11 +20,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "routeChanged", name: AVAudioSessionRouteChangeNotification, object: nil)
         
-        do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
-            try AVAudioSession.sharedInstance().setActive(true)
-        } catch let error as NSError { print(error) }
-        
         // Create clips directory for future use
         
         let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
