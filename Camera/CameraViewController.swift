@@ -122,10 +122,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         clipCount = realm.objects(Clip).count
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-    }
-    
     func appWillEnterBackground() {
         cameraView.alpha = 0
     }
