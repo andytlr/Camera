@@ -12,6 +12,22 @@ import AVFoundation
 import Photos
 import RealmSwift
 
+var totalTimeInSeconds: String = ""
+
+func updateTotalTime() {
+    let realm = try! Realm()
+    let clips = realm.objects(Clip).sorted("filename", ascending: true)
+
+    var totesTimeDub: Double = 0
+    
+    for clip in clips {
+        let duration = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename))).duration
+        totesTimeDub += round(CMTimeGetSeconds(duration))
+        
+        totalTimeInSeconds = String(Int(totesTimeDub)) + "s"
+    }
+}
+
 func exportVideo() {
     let composition = AVMutableComposition()
     let trackVideo:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeVideo, preferredTrackID: CMPersistentTrackID())

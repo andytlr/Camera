@@ -56,7 +56,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 doneButton.alpha = 0
                 doneButton.setTitle("", forState: UIControlState.Normal)
             } else {
-                doneButton.setTitle("\(clipCount)", forState: UIControlState.Normal)
+                doneButton.setTitle(totalTimeInSeconds, forState: UIControlState.Normal)
                 doneButton.alpha = 1
             }
         }
@@ -118,6 +118,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     func updateButtonCount() {
+        updateTotalTime()
+        
         let realm = try! Realm()
         clipCount = realm.objects(Clip).count
     }
@@ -170,6 +172,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         setupCamera()
         setCameraOrientationButtonLabel()
         setSoundButtonLabel()
+        updateButtonCount()
         
         if backCamera != nil {
             beginSession(backCamera!)
