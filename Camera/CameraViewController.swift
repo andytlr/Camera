@@ -56,7 +56,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 doneButton.alpha = 0
                 doneButton.setTitle("", forState: UIControlState.Normal)
             } else {
-                doneButton.setTitle("\(clipCount)", forState: UIControlState.Normal)
+                doneButton.setTitle(totalTimeInSeconds, forState: UIControlState.Normal)
                 doneButton.alpha = 1
             }
         }
@@ -101,11 +101,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
             dispatch_async(dispatch_get_global_queue(priority, 0)) {
                 
-                do {
-                    try AVAudioSession.sharedInstance().setActive(false)
-                    try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
-                    try AVAudioSession.sharedInstance().setActive(true)
-                } catch let error as NSError { print(error) }
+                if AVAudioSession.sharedInstance().category != AVAudioSessionCategoryPlayAndRecord {
+                    do {
+                        try AVAudioSession.sharedInstance().setActive(false)
+                        try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
+                        try AVAudioSession.sharedInstance().setActive(true)
+                    } catch let error as NSError { print(error) }
+                }
                 
                 self.captureSession.automaticallyConfiguresApplicationAudioSession = false
                 self.captureSession.addInput(self.micInput!)
@@ -118,8 +120,18 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     func updateButtonCount() {
+        updateTotalTime()
+        
         let realm = try! Realm()
         clipCount = realm.objects(Clip).count
+    }
+    
+    func appWillEnterBackground() {
+        cameraView.alpha = 0
+    }
+    
+    func appDidEnterForeground() {
+        cameraView.alpha = 1
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -145,12 +157,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appDidEnterForeground", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenDeletedAllClips", name: "All Clips Deleted", object: nil)
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         previewViewController = storyboard.instantiateViewControllerWithIdentifier("PreviewViewController") as! PreviewViewController
         previewViewController.cameraViewController = self
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenDeletedAllClips", name: "All Clips Deleted", object: nil)
         
         progressBar.alpha = 0
         progressBar.progress = 0
@@ -158,6 +174,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         setupCamera()
         setCameraOrientationButtonLabel()
         setSoundButtonLabel()
+        updateButtonCount()
         
         if backCamera != nil {
             beginSession(backCamera!)
@@ -166,7 +183,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if microphone != nil {
             do {
                 micInput = try AVCaptureDeviceInput(device: microphone)
-                captureSession.usesApplicationAudioSession = true
             } catch { }
         }
         
