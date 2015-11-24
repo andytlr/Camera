@@ -122,11 +122,19 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         clipCount = realm.objects(Clip).count
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+//        cameraView.alpha = 0
+    }
+    
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
         startMic()
         updateButtonCount()
+        
+//        cameraView.alpha = 1
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -166,7 +174,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if microphone != nil {
             do {
                 micInput = try AVCaptureDeviceInput(device: microphone)
-                captureSession.usesApplicationAudioSession = true
+//                captureSession.usesApplicationAudioSession = true
             } catch { }
         }
         
