@@ -46,6 +46,10 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         // Register for keyboard events
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillChangeFrameNotification, object: nil)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appDidEnterForeground", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
         // Set up UI
         overlayView.backgroundColor = UIColor.clearColor()
         setUpTextInput()
@@ -56,6 +60,14 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         
         drawingViewController = storyboard.instantiateViewControllerWithIdentifier("DrawingViewController") as! DrawingViewController
         drawingViewController.editClipViewController = self
+    }
+    
+    func appWillEnterBackground() {
+        player.pause()
+    }
+    
+    func appDidEnterForeground() {
+        player.play()
     }
     
     override func viewWillAppear(animated: Bool) {

@@ -32,6 +32,10 @@ class PreviewViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "appDidEnterForeground", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
         let realm = try! Realm()
         clip = realm.objects(Clip).last!
         
@@ -85,6 +89,14 @@ class PreviewViewController: UIViewController {
     func playerDidReachEndNotificationHandler(notification: NSNotification) {
         let playerItem = notification.object as! AVPlayerItem
         playerItem.seekToTime(kCMTimeZero)
+    }
+    
+    func appWillEnterBackground() {
+        player.pause()
+    }
+    
+    func appDidEnterForeground() {
+        player.play()
     }
 
     override func didReceiveMemoryWarning() {
