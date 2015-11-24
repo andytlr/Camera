@@ -133,6 +133,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         startMic()
         updateButtonCount()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         
 //        cameraView.alpha = 1
     }
