@@ -26,8 +26,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    
         self.view.backgroundColor = UIColor.blackColor()
+        clipReviewList.backgroundColor = UIColor.blackColor()
     }
 
 
