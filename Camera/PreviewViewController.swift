@@ -140,7 +140,7 @@ class PreviewViewController: UIViewController {
             previewView.frame.origin.x = translation.x
             previewView.frame.origin.y = translation.y
             
-            let rotation = convertValue(translation.y, r1Min: 0, r1Max: view.frame.height, r2Min: 0, r2Max: 3)
+            let rotation = convertValue(translation.x, r1Min: 0, r1Max: view.frame.height, r2Min: 0, r2Max: 10)
 
             previewView.transform = CGAffineTransformMakeDegreeRotation(rotation)
             
