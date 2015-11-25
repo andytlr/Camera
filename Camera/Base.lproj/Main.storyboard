@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15A282b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4ct-Ky-8pw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4ct-Ky-8pw">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -25,9 +25,7 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="fi7-FT-psy" appends="YES" id="wC0-RW-yl8"/>
-                                    <outletCollection property="gestureRecognizers" destination="a6g-gA-HGj" appends="YES" id="MwZ-dF-csi"/>
                                     <outletCollection property="gestureRecognizers" destination="Ock-s3-pv7" appends="YES" id="6d2-6A-8dY"/>
-                                    <outletCollection property="gestureRecognizers" destination="wir-N4-Xbu" appends="YES" id="D5Q-QO-ePJ"/>
                                 </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-u4-SQB">
@@ -155,19 +153,9 @@
                         <action selector="longPressWholeView:" destination="BYZ-38-t0r" id="IEM-v1-i5C"/>
                     </connections>
                 </pongPressGestureRecognizer>
-                <tapGestureRecognizer id="a6g-gA-HGj" userLabel="Tap Whole View">
-                    <connections>
-                        <action selector="tapWholeView:" destination="BYZ-38-t0r" id="hUI-nv-l4L"/>
-                    </connections>
-                </tapGestureRecognizer>
                 <swipeGestureRecognizer direction="right" id="Ock-s3-pv7" userLabel="Swipe Right">
                     <connections>
                         <action selector="swipeRight:" destination="BYZ-38-t0r" id="6XP-0M-yHL"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="left" id="wir-N4-Xbu" userLabel="Swipe Left">
-                    <connections>
-                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="YJC-4t-OEp"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
@@ -185,28 +173,32 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete it!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pK-RU-ffq">
-                                <rect key="frame" x="0.0" y="50" width="375" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pK-RU-ffq">
+                                <rect key="frame" x="285" y="323" width="90" height="21"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="pNJ-5A-ftS"/>
+                                    <constraint firstAttribute="height" constant="21" id="NMd-3H-O3H"/>
+                                    <constraint firstAttribute="width" constant="90" id="pz8-nN-n9u"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keeeep it!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTF-Cx-nyU">
-                                <rect key="frame" x="0.0" y="596" width="375" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTF-Cx-nyU">
+                                <rect key="frame" x="0.0" y="323" width="90" height="21"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Pd0-Nr-dm4"/>
                                     <constraint firstAttribute="height" constant="21" id="bHM-NA-uAS"/>
+                                    <constraint firstAttribute="height" constant="21" id="jSk-ei-i3o"/>
+                                    <constraint firstAttribute="width" constant="90" id="vZw-LF-ugV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="Pd0-Nr-dm4"/>
                                         <exclude reference="bHM-NA-uAS"/>
                                     </mask>
                                 </variation>
@@ -214,7 +206,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfF-60-exu">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="bVy-eS-xBu" appends="YES" id="PJB-w9-Qna"/>
@@ -222,27 +214,20 @@
                             </view>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="wfF-60-exu" secondAttribute="trailing" id="1n8-Mc-1Xl"/>
+                            <constraint firstAttribute="trailing" secondItem="4pK-RU-ffq" secondAttribute="trailing" id="2Z8-ii-J7M"/>
+                            <constraint firstItem="4pK-RU-ffq" firstAttribute="centerY" secondItem="wIb-Vp-0L8" secondAttribute="centerY" id="6ZS-yt-2hW"/>
                             <constraint firstItem="wfF-60-exu" firstAttribute="top" secondItem="wIb-Vp-0L8" secondAttribute="top" id="AaP-qf-NCJ"/>
-                            <constraint firstAttribute="trailing" secondItem="vTF-Cx-nyU" secondAttribute="trailing" id="ElZ-Pu-pYL"/>
-                            <constraint firstItem="vTF-Cx-nyU" firstAttribute="leading" secondItem="wIb-Vp-0L8" secondAttribute="leading" id="HIb-rI-RaK"/>
                             <constraint firstItem="ykY-V4-PB3" firstAttribute="top" secondItem="wfF-60-exu" secondAttribute="bottom" id="Lot-K8-FVW"/>
-                            <constraint firstItem="4pK-RU-ffq" firstAttribute="leading" secondItem="wIb-Vp-0L8" secondAttribute="leading" id="Y6G-Yc-qzy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4pK-RU-ffq" secondAttribute="trailing" constant="-20" id="Xsj-Ek-XyP"/>
                             <constraint firstItem="wfF-60-exu" firstAttribute="leading" secondItem="wIb-Vp-0L8" secondAttribute="leading" id="ZAk-Z1-lcL"/>
-                            <constraint firstAttribute="trailing" secondItem="4pK-RU-ffq" secondAttribute="trailing" id="bbJ-vw-up0"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="vTF-Cx-nyU" secondAttribute="trailing" constant="-20" id="eY9-X5-5uR"/>
-                            <constraint firstItem="ykY-V4-PB3" firstAttribute="top" secondItem="vTF-Cx-nyU" secondAttribute="bottom" constant="50" id="frv-8E-l5R"/>
-                            <constraint firstItem="4pK-RU-ffq" firstAttribute="top" secondItem="hJi-7f-EI2" secondAttribute="bottom" constant="30" id="n9t-OO-fR6"/>
-                            <constraint firstItem="vTF-Cx-nyU" firstAttribute="leading" secondItem="wIb-Vp-0L8" secondAttribute="leadingMargin" constant="-20" id="oV3-EQ-ygy"/>
-                            <constraint firstItem="ykY-V4-PB3" firstAttribute="top" secondItem="vTF-Cx-nyU" secondAttribute="bottom" constant="50" id="sIS-co-lME"/>
+                            <constraint firstItem="vTF-Cx-nyU" firstAttribute="leading" secondItem="wIb-Vp-0L8" secondAttribute="leading" id="ZoS-ZE-FP9"/>
+                            <constraint firstItem="vTF-Cx-nyU" firstAttribute="centerY" secondItem="wIb-Vp-0L8" secondAttribute="centerY" id="rhj-uR-xHP"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="eY9-X5-5uR"/>
-                                <exclude reference="oV3-EQ-ygy"/>
-                                <exclude reference="frv-8E-l5R"/>
+                                <exclude reference="Xsj-Ek-XyP"/>
                             </mask>
                         </variation>
                     </view>
