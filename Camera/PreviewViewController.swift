@@ -154,14 +154,14 @@ class PreviewViewController: UIViewController {
                 makeOpaqueOnPan = 0.95
             }
             
-            if translation.x < 0 {
+            if translation.x > 0 {
                 keepLabel.alpha = makeOpaqueOnPan
                 deleteLabel.alpha = makeTransparentOnPan
-                keepLabel.transform = CGAffineTransformMakeTranslation(moveOnPan * -1, 0)
+                keepLabel.transform = CGAffineTransformMakeTranslation(moveOnPan, 0)
             } else {
                 deleteLabel.alpha = makeOpaqueOnPan
                 keepLabel.alpha = makeTransparentOnPan
-                deleteLabel.transform = CGAffineTransformMakeTranslation(moveOnPan, 0)
+                deleteLabel.transform = CGAffineTransformMakeTranslation(moveOnPan * -1, 0)
             }
             
             blackView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: makeTransparentOnPan)
