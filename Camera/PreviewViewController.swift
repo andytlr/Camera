@@ -138,13 +138,13 @@ class PreviewViewController: UIViewController {
         if sender.state == .Changed {
             
             previewView.frame.origin.x = translation.x
-            previewView.frame.origin.y = translation.y
+            previewView.frame.origin.y = translation.y / 4
             
-            let rotation = convertValue(translation.y, r1Min: 0, r1Max: view.frame.height, r2Min: 0, r2Max: 10) // maybe height
+            let rotation = convertValue(translation.y, r1Min: 0, r1Max: view.frame.height, r2Min: 0, r2Max: 3)
 
             previewView.transform = CGAffineTransformMakeDegreeRotation(rotation)
             
-            let makeTransparentOnPan = convertValue(abs(translation.x), r1Min: (view.frame.width / 8), r1Max: (view.frame.height / 2), r2Min: 0.85, r2Max: 0)
+            let makeTransparentOnPan = convertValue(abs(translation.x), r1Min: (view.frame.width / 8), r1Max: (view.frame.height / 2), r2Min: 0.8, r2Max: 0)
             
             var makeOpaqueOnPan = convertValue(abs(translation.x), r1Min: (view.frame.width / 8), r1Max: (view.frame.width / 5) * 3, r2Min: 0, r2Max: 0.95)
             
@@ -178,8 +178,6 @@ class PreviewViewController: UIViewController {
             
             let dismissDuration = Double(convertValue(abs(velocity.y), r1Min: 0, r1Max: 5000, r2Min: 0.2, r2Max: 0.05))
             
-            let moveY = CGFloat(Double(convertValue(velocity.y, r1Min: 0, r1Max: 5000, r2Min: 0, r2Max: view.frame.width * 3 )))
-            
             if velocity.x > 1500 || translation.x > (view.frame.width / 3) * 2 {
                 
                 print("Keep Yo")
@@ -192,7 +190,6 @@ class PreviewViewController: UIViewController {
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
                     self.previewView.frame.origin.x = self.view.frame.width * 1.3
-                    self.previewView.frame.origin.y += moveY
                     self.keepLabel.transform = CGAffineTransformTranslate(self.keepLabel.transform, 0, 0)
                     self.keepLabel.frame.origin.x = (self.view.frame.width / 2) - (self.keepLabel.frame.width / 2)
                     
@@ -214,7 +211,6 @@ class PreviewViewController: UIViewController {
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
                     self.previewView.frame.origin.x = (self.view.frame.width * 1.3) * -1
-                    self.previewView.frame.origin.y += moveY
                     self.deleteLabel.transform = CGAffineTransformTranslate(self.deleteLabel.transform, 0, 0)
                     self.deleteLabel.frame.origin.x = (self.view.frame.width / 2) - (self.deleteLabel.frame.width / 2)
                     

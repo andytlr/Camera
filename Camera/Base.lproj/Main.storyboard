@@ -186,24 +186,24 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pK-RU-ffq">
-                                <rect key="frame" x="255" y="323" width="120" height="21"/>
+                                <rect key="frame" x="285" y="323" width="90" height="21"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="NMd-3H-O3H"/>
-                                    <constraint firstAttribute="width" constant="120" id="pz8-nN-n9u"/>
+                                    <constraint firstAttribute="width" constant="90" id="pz8-nN-n9u"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTF-Cx-nyU">
-                                <rect key="frame" x="0.0" y="323" width="120" height="21"/>
+                                <rect key="frame" x="0.0" y="323" width="90" height="21"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="Pd0-Nr-dm4"/>
                                     <constraint firstAttribute="height" constant="21" id="bHM-NA-uAS"/>
                                     <constraint firstAttribute="height" constant="21" id="jSk-ei-i3o"/>
-                                    <constraint firstAttribute="width" constant="120" id="vZw-LF-ugV"/>
+                                    <constraint firstAttribute="width" constant="90" id="vZw-LF-ugV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
