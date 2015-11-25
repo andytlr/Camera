@@ -294,12 +294,3 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         )
     }
 }
-
-
-
-
-
-
-
-
-
