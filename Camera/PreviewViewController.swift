@@ -186,7 +186,7 @@ class PreviewViewController: UIViewController {
             
             let dismissDuration = Double(convertValue(abs(velocity.y), r1Min: 0, r1Max: 150, r2Min: 0.3, r2Max: 0.1))
             
-            if velocity.x > 1500 || translation.x > (view.frame.width / 3) * 2 {
+            if velocity.x > 500 || translation.x > (view.frame.width / 3) * 2 {
                 
                 print("Keep Yo")
                 player.pause()
@@ -209,7 +209,7 @@ class PreviewViewController: UIViewController {
                         self.cameraViewController.updateButtonCount()
                 })
                 
-            } else if velocity.x < -1500 || translation.x < ((view.frame.width / 3) * 2) * -1 {
+            } else if velocity.x < -500 || translation.x < ((view.frame.width / 3) * 2) * -1 {
                 print("Delete Yo")
                 player.pause()
                 keepLabel.alpha = 0
