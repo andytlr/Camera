@@ -25,6 +25,7 @@
 		CACBFD071C029D5A00159D5F /* DrawingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CACBFD061C029D5A00159D5F /* DrawingViewController.swift */; };
 		CAE10EA11BFD6180004F8B7A /* example_photo.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CAE10EA01BFD6180004F8B7A /* example_photo.jpg */; };
 		CAF6569F1BF7C02A00B0E42F /* EditClipViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF6569E1BF7C02A00B0E42F /* EditClipViewController.swift */; };
+		CAF6CB211C0510E0004FFF3B /* PassThroughView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAF6CB201C0510E0004FFF3B /* PassThroughView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		CACBFD061C029D5A00159D5F /* DrawingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingViewController.swift; sourceTree = "<group>"; };
 		CAE10EA01BFD6180004F8B7A /* example_photo.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = example_photo.jpg; sourceTree = "<group>"; };
 		CAF6569E1BF7C02A00B0E42F /* EditClipViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditClipViewController.swift; sourceTree = "<group>"; };
+		CAF6CB201C0510E0004FFF3B /* PassThroughView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PassThroughView.swift; sourceTree = "<group>"; };
 		DE55F46E3D6EAA675996537F /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -111,6 +113,7 @@
 				C21477C51BEE9FE7001474A4 /* Assets.xcassets */,
 				C21477C71BEE9FE7001474A4 /* LaunchScreen.storyboard */,
 				C21477CA1BEE9FE7001474A4 /* Info.plist */,
+				CAF6CB201C0510E0004FFF3B /* PassThroughView.swift */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -254,6 +257,7 @@
 				61CFADB11BFE3FFB0029E4EC /* SceneTableViewCell.swift in Sources */,
 				C21477C11BEE9FE7001474A4 /* CameraViewController.swift in Sources */,
 				C21477D11BEFE7BB001474A4 /* Common.swift in Sources */,
+				CAF6CB211C0510E0004FFF3B /* PassThroughView.swift in Sources */,
 				C21477BF1BEE9FE7001474A4 /* AppDelegate.swift in Sources */,
 				CAF6569F1BF7C02A00B0E42F /* EditClipViewController.swift in Sources */,
 				C21A4FD41C0192FE00B62989 /* CameraRoll.swift in Sources */,

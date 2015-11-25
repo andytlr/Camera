@@ -92,11 +92,11 @@ class PreviewViewController: UIViewController {
     }
     
     func appWillEnterBackground() {
-        player.pause()
+//        player.pause()
     }
     
     func appDidEnterForeground() {
-        player.play()
+//        player.play()
     }
 
     override func didReceiveMemoryWarning() {
@@ -110,7 +110,7 @@ class PreviewViewController: UIViewController {
                 self.cameraViewController.startMic()
             }
         }
-        delay(0.2) {
+        delay(0.1) {
             self.previewView.subviews.forEach({ $0.removeFromSuperview() })
             self.playerLayer.removeFromSuperlayer()
             self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
@@ -132,7 +132,7 @@ class PreviewViewController: UIViewController {
             previewView.backgroundColor = UIColor.clearColor()
             
             blackView.frame = self.view.bounds
-            blackView.alpha = 1
+            blackView.alpha = 0.85
             view.insertSubview(blackView, atIndex: 0)
         }
         if sender.state == .Changed {
@@ -140,33 +140,43 @@ class PreviewViewController: UIViewController {
             previewView.frame.origin.x = translation.x
             previewView.frame.origin.y = translation.y
             
-            let rotation = convertValue(translation.x, r1Min: 0, r1Max: view.frame.width, r2Min: 0, r2Max: 10)
+            let rotation = convertValue(translation.x, r1Min: 0, r1Max: view.frame.height, r2Min: 0, r2Max: 10)
 
             previewView.transform = CGAffineTransformMakeDegreeRotation(rotation)
             
-            let makeTransparentOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 2), r2Min: 0.85, r2Max: 0)
+            let makeTransparentOnPan = convertValue(abs(translation.x), r1Min: (view.frame.width / 8), r1Max: (view.frame.height / 2), r2Min: 0.85, r2Max: 0)
             
-            var makeOpaqueOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 5) * 3, r2Min: 0, r2Max: 0.95)
+            var makeOpaqueOnPan = convertValue(abs(translation.x), r1Min: (view.frame.width / 8), r1Max: (view.frame.width / 5) * 3, r2Min: 0, r2Max: 0.95)
             
-            let moveOnPan = convertValue(abs(translation.y), r1Min: (view.frame.height / 8), r1Max: (view.frame.height / 5) * 3, r2Min: 0, r2Max: 80)
+            let moveOnPan = convertValue(abs(translation.x), r1Min: (view.frame.width / 8), r1Max: (view.frame.width / 5) * 3, r2Min: 0, r2Max: 80)
             
             if makeOpaqueOnPan > 0.95 {
                 makeOpaqueOnPan = 0.95
             }
             
-            if translation.y < 0 {
+            if translation.x > 0 {
                 keepLabel.alpha = makeOpaqueOnPan
                 deleteLabel.alpha = makeTransparentOnPan
-                keepLabel.transform = CGAffineTransformMakeTranslation(0, moveOnPan * -1)
+                deleteLabel.transform = CGAffineTransformMakeTranslation(0, 0)
+                keepLabel.transform = CGAffineTransformMakeTranslation(moveOnPan, 0)
             } else {
                 deleteLabel.alpha = makeOpaqueOnPan
                 keepLabel.alpha = makeTransparentOnPan
-                deleteLabel.transform = CGAffineTransformMakeTranslation(0, moveOnPan)
+                keepLabel.transform = CGAffineTransformMakeTranslation(0, 0)
+                deleteLabel.transform = CGAffineTransformMakeTranslation(moveOnPan * -1, 0)
+            }
+            
+            if translation.x < 0 {
+                keepLabel.alpha = 0
+            }
+            
+            if translation.x > 0 {
+                deleteLabel.alpha = 0
             }
             
             blackView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: makeTransparentOnPan)
             
-            if translation.y > 0 {
+            if translation.x < 0 {
                 view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: makeOpaqueOnPan)
             } else {
                 view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: makeOpaqueOnPan)
@@ -174,40 +184,10 @@ class PreviewViewController: UIViewController {
         }
         if sender.state == .Ended {
             
-            let dismissDuration = Double(convertValue(abs(velocity.y), r1Min: 0, r1Max: 5000, r2Min: 0.5, r2Max: 0.1))
+            let dismissDuration = Double(convertValue(abs(velocity.y), r1Min: 0, r1Max: 150, r2Min: 0.3, r2Max: 0.1))
             
-            let moveX = CGFloat(Double(convertValue(velocity.x, r1Min: 0, r1Max: 5000, r2Min: 0, r2Max: view.frame.width * 3 )))
-            
-            if velocity.y > 2000 || translation.y > (view.frame.height / 2) {
-                print("Delete Yo")
-                player.pause()
-                keepLabel.alpha = 0
-                deleteLabel.alpha = 1
-                view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.95)
-                blackView.alpha = 0
+            if velocity.x > 500 || translation.x > (view.frame.width / 3) * 2 {
                 
-                UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
-                    
-                    self.previewView.frame.origin.y = self.view.frame.height * 1.3
-                    self.previewView.frame.origin.x += moveX
-                    self.deleteLabel.transform = CGAffineTransformTranslate(self.deleteLabel.transform, 0, 0)
-                    self.deleteLabel.frame.origin.y = (self.view.frame.height / 2) - (self.deleteLabel.frame.height / 2)
-                    
-                    }, completion: { (Bool) -> Void in
-                        
-                        self.killPreviewAndRestartCamera()
-                        
-                        // Delete from documents directory
-                        deleteClip(getAbsolutePathForFile(self.clip.filename))
-                            
-                        // Delete reference from DB
-                        let realm = try! Realm()
-                        try! realm.write {
-                            realm.delete(self.clip)
-                        }
-                })
-                
-            } else if velocity.y < -2000 || translation.y < (view.frame.height / 2) * -1 {
                 print("Keep Yo")
                 player.pause()
                 keepLabel.alpha = 1
@@ -217,20 +197,49 @@ class PreviewViewController: UIViewController {
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
-                    self.previewView.frame.origin.y = (self.view.frame.height * 1.3) * -1
-                    self.previewView.frame.origin.x += moveX
+                    self.previewView.frame.origin.x = self.view.frame.width * 1.3
+                    self.previewView.frame.origin.y += translation.y
                     self.keepLabel.transform = CGAffineTransformTranslate(self.keepLabel.transform, 0, 0)
-                    self.keepLabel.frame.origin.y = (self.view.frame.height / 2) - (self.keepLabel.frame.height / 2)
+                    self.keepLabel.frame.origin.x = (self.view.frame.width / 2) - (self.keepLabel.frame.width / 2)
                     
                     }, completion: { (Bool) -> Void in
                         
                         self.killPreviewAndRestartCamera()
-
+                        
                         self.cameraViewController.updateButtonCount()
                 })
                 
+            } else if velocity.x < -500 || translation.x < ((view.frame.width / 3) * 2) * -1 {
+                print("Delete Yo")
+                player.pause()
+                keepLabel.alpha = 0
+                deleteLabel.alpha = 1
+                view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.95)
+                blackView.alpha = 0
+                
+                UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
+                    
+                    self.previewView.frame.origin.x = (self.view.frame.width * 1.3) * -1
+                    self.previewView.frame.origin.y += translation.y
+                    self.deleteLabel.transform = CGAffineTransformTranslate(self.deleteLabel.transform, 0, 0)
+                    self.deleteLabel.frame.origin.x = (self.view.frame.width / 2) - (self.deleteLabel.frame.width / 2)
+                    
+                    }, completion: { (Bool) -> Void in
+                        
+                        self.killPreviewAndRestartCamera()
+                        
+                        // Delete from documents directory
+                        deleteClip(getAbsolutePathForFile(self.clip.filename))
+                        
+                        // Delete reference from DB
+                        let realm = try! Realm()
+                        try! realm.write {
+                            realm.delete(self.clip)
+                        }
+                })
+                
             } else {
-                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
+                UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 5, options: [], animations: { () -> Void in
                     
                     self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
                     self.previewView.frame.origin.x = 0

@@ -14,6 +14,7 @@ import RealmSwift
 class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
 
     @IBOutlet weak var clipView: UIView!
+    @IBOutlet weak var textView: UIView!
     @IBOutlet weak var overlayView: UIView!
     
     @IBOutlet weak var drawingView: UIView!
@@ -60,14 +61,18 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         
         drawingViewController = storyboard.instantiateViewControllerWithIdentifier("DrawingViewController") as! DrawingViewController
         drawingViewController.editClipViewController = self
+        
+//        print(clip)
     }
     
+    // For some unknown reason, pausing when the video goes into background and starting it again when it comes into the foreground is causing multiple instances of the audio to continue playing. If you're muted this is inaudible but the app will crash when you go back to the camera. For the moment I've commented out the .pause() and .play().
+    
     func appWillEnterBackground() {
-        player.pause()
+//        player.pause()
     }
     
     func appDidEnterForeground() {
-        player.play()
+//        player.play()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -83,10 +88,6 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             
             imageView.frame = self.view.bounds
             clipView.addSubview(imageView)
-            
-            if clip.overlay != nil {
-                drawingImageView.image = UIImage(data: clip.overlay!)
-            }
             
         } else if clip.type == "video" {
             print("handling video")
@@ -107,13 +108,24 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             
             player.play()
             
-            // Show overlay if we have one
-            if clip.overlay != nil {
-                drawingImageView.image = UIImage(data: clip.overlay!)
-            }
-            
             // Notify when we reach the end so we can loop
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+
+        // Show overlay if we have one
+        if clip.overlay != nil {
+            drawingImageView.image = UIImage(data: clip.overlay!)
+        }
+        
+        // Show text overlay if we have one
+        if clip.textLayer != nil {
+            textInputTextField.text = clip.textLayer?.text
+            textInputTextField.frame = CGRectFromString((clip.textLayer?.frame)!)
+            textInputTextField.hidden = false
         }
     }
     
@@ -168,8 +180,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     @IBAction func toggleTextInput(sender: AnyObject) {
-//        print(textInputTextField.hidden)
-//        textInputTextField.hidden ? beginTextInput() : endTextInput()
+        print(textInputTextField.hidden)
+        textInputTextField.hidden ? beginTextInput() : endTextInput()
     }
     
     @IBAction func panText(sender: AnyObject) {
@@ -205,7 +217,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     // MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
@@ -230,21 +242,24 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     @IBAction func doneEditing(sender: AnyObject) {
         let realm = try! Realm()
         
-        if drawingImageView.image != nil {
-            let overlayData = UIImagePNGRepresentation(drawingImageView.image!)
-            try! realm.write {
-                self.clip.overlay = overlayData
+        try! realm.write {
+            if self.textInputTextField.text != "" {
+                let textLayer = TextLayer()
+                textLayer.text = self.textInputTextField.text
+                textLayer.frame = NSStringFromCGRect(self.textInputTextField.frame)
+                
+                self.clip.textLayer = textLayer
             }
-        } else {
-            try! realm.write {
-                self.clip.overlay = nil
+            
+            if self.drawingImageView.image != nil {
+                let overlayData = UIImagePNGRepresentation(self.drawingImageView.image!)
+                self.clip.overlay = overlayData
             }
         }
         
         player.pause()
         dismissViewControllerAnimated(false, completion: nil)
     }
-    
     
     // MARK: UIGestureRecognizerDelegate
     
@@ -279,12 +294,3 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         )
     }
 }
-
-
-
-
-
-
-
-
-
