@@ -61,6 +61,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         
         drawingViewController = storyboard.instantiateViewControllerWithIdentifier("DrawingViewController") as! DrawingViewController
         drawingViewController.editClipViewController = self
+        
+        print(clip)
     }
     
     func appWillEnterBackground() {
@@ -111,6 +113,11 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             // Show overlay if we have one
             if clip.overlay != nil {
                 drawingImageView.image = UIImage(data: clip.overlay!)
+            }
+            
+            // Show text overlay if we have one
+            if clip.textLayer?.text != nil {
+                print("========== CLIP TEXT: \(clip.textLayer)")
             }
             
             // Notify when we reach the end so we can loop
@@ -231,21 +238,24 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     @IBAction func doneEditing(sender: AnyObject) {
         let realm = try! Realm()
         
-        if drawingImageView.image != nil {
-            let overlayData = UIImagePNGRepresentation(drawingImageView.image!)
-            try! realm.write {
-                self.clip.overlay = overlayData
+        try! realm.write {
+            if self.textInputTextField.text != "" {
+                let textLayer = TextLayer()
+                textLayer.text = self.textInputTextField.text
+                textLayer.frame = NSStringFromCGRect(self.textInputTextField.frame)
+                
+                self.clip.textLayer = textLayer
             }
-        } else {
-            try! realm.write {
-                self.clip.overlay = nil
+            
+            if self.drawingImageView.image != nil {
+                let overlayData = UIImagePNGRepresentation(self.drawingImageView.image!)
+                self.clip.overlay = overlayData
             }
         }
         
         player.pause()
         dismissViewControllerAnimated(false, completion: nil)
     }
-    
     
     // MARK: UIGestureRecognizerDelegate
     
