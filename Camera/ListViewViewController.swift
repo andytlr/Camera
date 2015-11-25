@@ -115,12 +115,12 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBAction func tapDeleteButton(sender: AnyObject) {
         
-        let alertController = UIAlertController(title: nil, message: "This will delete all your clips. Are you sure?", preferredStyle: .ActionSheet)
+        let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel) { (action) in }
         alertController.addAction(cancelAction)
         
-        let destroyAction = UIAlertAction(title: "Delete Them All", style: .Destructive) { (action) in
+        let destroyAction = UIAlertAction(title: "Delete All", style: .Destructive) { (action) in
             
             // Delete reference from DB
             let realm = try! Realm()
