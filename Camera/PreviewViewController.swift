@@ -176,7 +176,9 @@ class PreviewViewController: UIViewController {
         }
         if sender.state == .Ended {
             
-            let dismissDuration = Double(convertValue(abs(velocity.y), r1Min: 0, r1Max: 5000, r2Min: 0.2, r2Max: 0.05))
+            let dismissDuration = Double(convertValue(abs(velocity.y), r1Min: 0, r1Max: 150, r2Min: 0.3, r2Max: 0.1))
+            
+            print(abs(velocity.y))
             
             if velocity.x > 1500 || translation.x > (view.frame.width / 3) * 2 {
                 
@@ -229,7 +231,7 @@ class PreviewViewController: UIViewController {
                 })
                 
             } else {
-                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 5, options: [], animations: { () -> Void in
+                UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 5, options: [], animations: { () -> Void in
                     
                     self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
                     self.previewView.frame.origin.x = 0
