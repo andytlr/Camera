@@ -87,10 +87,6 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             imageView.frame = self.view.bounds
             clipView.addSubview(imageView)
             
-            if clip.overlay != nil {
-                drawingImageView.image = UIImage(data: clip.overlay!)
-            }
-            
         } else if clip.type == "video" {
             print("handling video")
             
@@ -110,18 +106,24 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             
             player.play()
             
-            // Show overlay if we have one
-            if clip.overlay != nil {
-                drawingImageView.image = UIImage(data: clip.overlay!)
-            }
-            
-            // Show text overlay if we have one
-            if clip.textLayer?.text != nil {
-                print("========== CLIP TEXT: \(clip.textLayer)")
-            }
-            
             // Notify when we reach the end so we can loop
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
+        }
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+
+        // Show overlay if we have one
+        if clip.overlay != nil {
+            drawingImageView.image = UIImage(data: clip.overlay!)
+        }
+        
+        // Show text overlay if we have one
+        if clip.textLayer != nil {
+            textInputTextField.text = clip.textLayer?.text
+            textInputTextField.frame = CGRectFromString((clip.textLayer?.frame)!)
+            textInputTextField.hidden = false
         }
     }
     
@@ -213,7 +215,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     // MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
