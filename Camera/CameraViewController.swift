@@ -407,10 +407,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
-    @IBAction func tapWholeView(sender: UITapGestureRecognizer) {
-        takeStillImage()
-    }
-    
     @IBAction func swipeRight(sender: UISwipeGestureRecognizer) {
         switchCameras()
     }

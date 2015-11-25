@@ -25,9 +25,7 @@
                                 <gestureRecognizers/>
                                 <connections>
                                     <outletCollection property="gestureRecognizers" destination="fi7-FT-psy" appends="YES" id="wC0-RW-yl8"/>
-                                    <outletCollection property="gestureRecognizers" destination="a6g-gA-HGj" appends="YES" id="MwZ-dF-csi"/>
                                     <outletCollection property="gestureRecognizers" destination="Ock-s3-pv7" appends="YES" id="6d2-6A-8dY"/>
-                                    <outletCollection property="gestureRecognizers" destination="wir-N4-Xbu" appends="YES" id="D5Q-QO-ePJ"/>
                                 </connections>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kwg-u4-SQB">
@@ -155,19 +153,9 @@
                         <action selector="longPressWholeView:" destination="BYZ-38-t0r" id="IEM-v1-i5C"/>
                     </connections>
                 </pongPressGestureRecognizer>
-                <tapGestureRecognizer id="a6g-gA-HGj" userLabel="Tap Whole View">
-                    <connections>
-                        <action selector="tapWholeView:" destination="BYZ-38-t0r" id="hUI-nv-l4L"/>
-                    </connections>
-                </tapGestureRecognizer>
                 <swipeGestureRecognizer direction="right" id="Ock-s3-pv7" userLabel="Swipe Right">
                     <connections>
                         <action selector="swipeRight:" destination="BYZ-38-t0r" id="6XP-0M-yHL"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="left" id="wir-N4-Xbu" userLabel="Swipe Left">
-                    <connections>
-                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="YJC-4t-OEp"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>
