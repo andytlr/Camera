@@ -157,10 +157,12 @@ class PreviewViewController: UIViewController {
             if translation.x > 0 {
                 keepLabel.alpha = makeOpaqueOnPan
                 deleteLabel.alpha = makeTransparentOnPan
+                deleteLabel.transform = CGAffineTransformMakeTranslation(0, 0)
                 keepLabel.transform = CGAffineTransformMakeTranslation(moveOnPan, 0)
             } else {
                 deleteLabel.alpha = makeOpaqueOnPan
                 keepLabel.alpha = makeTransparentOnPan
+                keepLabel.transform = CGAffineTransformMakeTranslation(0, 0)
                 deleteLabel.transform = CGAffineTransformMakeTranslation(moveOnPan * -1, 0)
             }
             
@@ -174,11 +176,11 @@ class PreviewViewController: UIViewController {
         }
         if sender.state == .Ended {
             
-            let dismissDuration = Double(convertValue(abs(velocity.y), r1Min: 0, r1Max: 5000, r2Min: 0.3, r2Max: 0.1))
+            let dismissDuration = Double(convertValue(abs(velocity.y), r1Min: 0, r1Max: 5000, r2Min: 0.2, r2Max: 0.05))
             
             let moveY = CGFloat(Double(convertValue(velocity.y, r1Min: 0, r1Max: 5000, r2Min: 0, r2Max: view.frame.width * 3 )))
             
-            if velocity.x > 2000 || translation.x > (view.frame.width / 2) {
+            if velocity.x > 1500 || translation.x > (view.frame.width / 3) * 2 {
                 
                 print("Keep Yo")
                 player.pause()
@@ -201,7 +203,7 @@ class PreviewViewController: UIViewController {
                         self.cameraViewController.updateButtonCount()
                 })
                 
-            } else if velocity.x < -2000 || translation.x < (view.frame.width / 2) * -1 {
+            } else if velocity.x < -1500 || translation.x < ((view.frame.width / 3) * 2) * -1 {
                 print("Delete Yo")
                 player.pause()
                 keepLabel.alpha = 0
