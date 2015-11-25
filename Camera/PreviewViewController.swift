@@ -110,7 +110,7 @@ class PreviewViewController: UIViewController {
                 self.cameraViewController.startMic()
             }
         }
-        delay(0.2) {
+        delay(0.1) {
             self.previewView.subviews.forEach({ $0.removeFromSuperview() })
             self.playerLayer.removeFromSuperlayer()
             self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
