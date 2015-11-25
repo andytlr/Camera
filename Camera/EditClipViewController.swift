@@ -60,19 +60,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         
         drawingViewController = storyboard.instantiateViewControllerWithIdentifier("DrawingViewController") as! DrawingViewController
         drawingViewController.editClipViewController = self
-    }
-    
-    func appWillEnterBackground() {
-        player.pause()
-    }
-    
-    func appDidEnterForeground() {
-        player.play()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(true)
-
+        
         let filePath = getAbsolutePathForFile(clip.filename)
         
         if clip.type == "photo" {
@@ -115,6 +103,25 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             // Notify when we reach the end so we can loop
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
         }
+    }
+    
+    func appWillEnterBackground() {
+        player.pause()
+    }
+    
+    func appDidEnterForeground() {
+        player.play()
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
+        player.pause()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(true)
+        
+        print(player)
     }
     
     func playerDidReachEndNotificationHandler(notification: NSNotification) {
@@ -205,7 +212,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     // MARK: UITextFieldDelegate
     
-    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
@@ -228,6 +235,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     @IBAction func doneEditing(sender: AnyObject) {
+        
         let realm = try! Realm()
         
         if drawingImageView.image != nil {
@@ -241,10 +249,12 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             }
         }
         
+        // try killing all the things here.
         player.pause()
+        view.subviews.forEach({ $0.removeFromSuperview() })
+        playerLayer.removeFromSuperlayer()
         dismissViewControllerAnimated(false, completion: nil)
     }
-    
     
     // MARK: UIGestureRecognizerDelegate
     
@@ -279,12 +289,3 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         )
     }
 }
-
-
-
-
-
-
-
-
-
