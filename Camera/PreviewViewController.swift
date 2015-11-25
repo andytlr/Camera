@@ -132,7 +132,7 @@ class PreviewViewController: UIViewController {
             previewView.backgroundColor = UIColor.clearColor()
             
             blackView.frame = self.view.bounds
-            blackView.alpha = 1
+            blackView.alpha = 0.85
             view.insertSubview(blackView, atIndex: 0)
         }
         if sender.state == .Changed {
@@ -144,7 +144,7 @@ class PreviewViewController: UIViewController {
 
             previewView.transform = CGAffineTransformMakeDegreeRotation(rotation)
             
-            let makeTransparentOnPan = convertValue(abs(translation.x), r1Min: (view.frame.width / 8), r1Max: (view.frame.height / 2), r2Min: 0.8, r2Max: 0)
+            let makeTransparentOnPan = convertValue(abs(translation.x), r1Min: (view.frame.width / 8), r1Max: (view.frame.height / 2), r2Min: 0.85, r2Max: 0)
             
             var makeOpaqueOnPan = convertValue(abs(translation.x), r1Min: (view.frame.width / 8), r1Max: (view.frame.width / 5) * 3, r2Min: 0, r2Max: 0.95)
             
@@ -229,7 +229,7 @@ class PreviewViewController: UIViewController {
                 })
                 
             } else {
-                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
+                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.85, initialSpringVelocity: 5, options: [], animations: { () -> Void in
                     
                     self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
                     self.previewView.frame.origin.x = 0
