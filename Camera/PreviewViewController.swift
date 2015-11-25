@@ -166,7 +166,7 @@ class PreviewViewController: UIViewController {
             
             blackView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: makeTransparentOnPan)
             
-            if translation.x > 0 {
+            if translation.x < 0 {
                 view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: makeOpaqueOnPan)
             } else {
                 view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: makeOpaqueOnPan)
@@ -179,6 +179,29 @@ class PreviewViewController: UIViewController {
             let moveY = CGFloat(Double(convertValue(velocity.y, r1Min: 0, r1Max: 5000, r2Min: 0, r2Max: view.frame.width * 3 )))
             
             if velocity.x > 2000 || translation.x > (view.frame.width / 2) {
+                
+                print("Keep Yo")
+                player.pause()
+                keepLabel.alpha = 1
+                deleteLabel.alpha = 0
+                view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 0.95)
+                blackView.alpha = 0
+                
+                UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
+                    
+                    self.previewView.frame.origin.x = self.view.frame.width * 1.3
+                    self.previewView.frame.origin.y += moveY
+                    self.keepLabel.transform = CGAffineTransformTranslate(self.keepLabel.transform, 0, 0)
+                    self.keepLabel.frame.origin.x = (self.view.frame.width / 2) - (self.keepLabel.frame.width / 2)
+                    
+                    }, completion: { (Bool) -> Void in
+                        
+                        self.killPreviewAndRestartCamera()
+                        
+                        self.cameraViewController.updateButtonCount()
+                })
+                
+            } else if velocity.x < -2000 || translation.x < (view.frame.width / 2) * -1 {
                 print("Delete Yo")
                 player.pause()
                 keepLabel.alpha = 0
@@ -188,7 +211,7 @@ class PreviewViewController: UIViewController {
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
-                    self.previewView.frame.origin.x = self.view.frame.width * 1.3
+                    self.previewView.frame.origin.x = (self.view.frame.width * 1.3) * -1
                     self.previewView.frame.origin.y += moveY
                     self.deleteLabel.transform = CGAffineTransformTranslate(self.deleteLabel.transform, 0, 0)
                     self.deleteLabel.frame.origin.x = (self.view.frame.width / 2) - (self.deleteLabel.frame.width / 2)
@@ -199,34 +222,12 @@ class PreviewViewController: UIViewController {
                         
                         // Delete from documents directory
                         deleteClip(getAbsolutePathForFile(self.clip.filename))
-                            
+                        
                         // Delete reference from DB
                         let realm = try! Realm()
                         try! realm.write {
                             realm.delete(self.clip)
                         }
-                })
-                
-            } else if velocity.x < -2000 || translation.x < (view.frame.width / 2) * -1 {
-                print("Keep Yo")
-                player.pause()
-                keepLabel.alpha = 1
-                deleteLabel.alpha = 0
-                view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 0.95)
-                blackView.alpha = 0
-                
-                UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
-                    
-                    self.previewView.frame.origin.x = (self.view.frame.width * 1.3) * -1
-                    self.previewView.frame.origin.y += moveY
-                    self.keepLabel.transform = CGAffineTransformTranslate(self.keepLabel.transform, 0, 0)
-                    self.keepLabel.frame.origin.x = (self.view.frame.width / 2) - (self.keepLabel.frame.width / 2)
-                    
-                    }, completion: { (Bool) -> Void in
-                        
-                        self.killPreviewAndRestartCamera()
-
-                        self.cameraViewController.updateButtonCount()
                 })
                 
             } else {
