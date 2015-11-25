@@ -62,15 +62,17 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         drawingViewController = storyboard.instantiateViewControllerWithIdentifier("DrawingViewController") as! DrawingViewController
         drawingViewController.editClipViewController = self
         
-        print(clip)
+//        print(clip)
     }
     
+    // For some unknown reason, pausing when the video goes into background and starting it again when it comes into the foreground is causing multiple instances of the audio to continue playing. If you're muted this is inaudible but the app will crash when you go back to the camera. For the moment I've commented out the .pause() and .play().
+    
     func appWillEnterBackground() {
-        player.pause()
+//        player.pause()
     }
     
     func appDidEnterForeground() {
-        player.play()
+//        player.play()
     }
     
     override func viewWillAppear(animated: Bool) {
