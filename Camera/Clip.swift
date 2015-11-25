@@ -13,4 +13,10 @@ class Clip: Object {
     dynamic var filename: String! = ""
     dynamic var type: String! = ""
     dynamic var overlay: NSData? = nil
+    dynamic var textLayer: TextLayer?
+}
+
+class TextLayer: Object {
+    dynamic var text: String!
+    dynamic var frame: String!
 }
