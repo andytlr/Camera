@@ -61,13 +61,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
 //        print("clip: \(clip)")
         
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
-<<<<<<< HEAD
-        print(clipAsset)
-        
-        
-=======
+
 //        print(clipAsset)
->>>>>>> master
+
         // Get thumbnail
         
         //let generator = AVAssetImageGenerator(asset: clipAsset)
