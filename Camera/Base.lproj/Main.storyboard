@@ -293,6 +293,9 @@
                                                     <rect key="frame" x="15" y="46" width="45" height="30"/>
                                                     <animations/>
                                                     <state key="normal" title="Delete"/>
+                                                    <state key="disabled">
+                                                        <color key="titleColor" red="0.87464016675949097" green="0.87479060888290405" blue="0.87463068962097168" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </state>
                                                     <connections>
                                                         <action selector="tapDeleteButton:" destination="mMT-IG-lwV" eventType="touchUpInside" id="yoa-e9-sQD"/>
                                                     </connections>

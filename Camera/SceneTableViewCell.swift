@@ -24,6 +24,9 @@ class SceneTableViewCell: UITableViewCell {
     
     @IBAction func tapDeleteButton(sender: UIButton) {
         deleteSingleClip(clip)
+        
+        // This is temporary instead of removing the row.
+        sender.enabled = false
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
