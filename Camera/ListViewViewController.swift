@@ -64,6 +64,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
 
 //        print(clipAsset)
 
+
+//        print(clipAsset)
+
         // Get thumbnail
         
         //let generator = AVAssetImageGenerator(asset: clipAsset)
