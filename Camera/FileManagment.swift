@@ -18,9 +18,7 @@ func deleteClip(fileName: String) {
     
     do {
         try fileManager.removeItemAtPath(filePath)
-    } catch {
-        
-    }
+    } catch { }
 }
 
 func deleteSingleClip(clip: Clip) {
