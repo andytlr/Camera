@@ -123,13 +123,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let destroyAction = UIAlertAction(title: "Delete All", style: .Destructive) { (action) in
             
-            // Delete reference from DB
-            let realm = try! Realm()
-            try! realm.write {
-                realm.deleteAll()
-            }
-            
-            // Delete from documents directory
             deleteAllClips()
             
             dispatch_async(dispatch_get_main_queue()) {
