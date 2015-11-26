@@ -61,27 +61,6 @@ func currentTimeStamp() -> String {
     return formatter.stringFromDate(date)
 }
 
-func deleteClip(fileName: String) {
-    let fileManager:NSFileManager = NSFileManager.defaultManager()
-    
-    let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-    let filePath = documentsDir.stringByAppendingPathComponent("/clips/\(fileName)")
-
-    do {
-        try fileManager.removeItemAtPath(filePath)
-    } catch {
-        
-    }
-}
-
-func deleteAllClips() {
-    let clips = returnContentsOfClipsDirectory()
-    
-    for clip in clips {
-        deleteClip(clip.lastPathComponent!)
-    }
-}
-
 func getAbsolutePathForFile(filename: String) -> String {
     let documentsDir = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
     let path = documentsDir.stringByAppendingPathComponent("/clips/\(filename)")

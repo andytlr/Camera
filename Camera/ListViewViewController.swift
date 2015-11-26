@@ -64,7 +64,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         do {
             let imageRef = try generator.copyCGImageAtTime(timestamp, actualTime: nil)
-            let thumbnail = UIImage(CGImage: imageRef)
+            _ = UIImage(CGImage: imageRef)
         } catch {
             print("Thumbanil generation failed with error \(error)")
         }
@@ -80,6 +80,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell.SceneClip.image = thumbnail
         cell.SceneNumber.text = "\(clip.type): \(clip.filename)"
+        cell.clip = clip
         cell.SceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
         
         return cell
@@ -122,13 +123,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let destroyAction = UIAlertAction(title: "Delete All", style: .Destructive) { (action) in
             
-            // Delete reference from DB
-            let realm = try! Realm()
-            try! realm.write {
-                realm.deleteAll()
-            }
-            
-            // Delete from documents directory
             deleteAllClips()
             
             dispatch_async(dispatch_get_main_queue()) {
