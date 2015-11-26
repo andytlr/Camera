@@ -25,7 +25,7 @@ func deleteClip(fileName: String) {
 
 func deleteSingleClip(clip: Clip) {
     // Delete from documents directory
-    deleteClip(getAbsolutePathForFile(clip.filename))
+    deleteClip(clip.filename)
     
     // Delete reference from DB
     let realm = try! Realm()
