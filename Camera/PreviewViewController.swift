@@ -228,14 +228,7 @@ class PreviewViewController: UIViewController {
                         
                         self.killPreviewAndRestartCamera()
                         
-                        // Delete from documents directory
-                        deleteClip(getAbsolutePathForFile(self.clip.filename))
-                        
-                        // Delete reference from DB
-                        let realm = try! Realm()
-                        try! realm.write {
-                            realm.delete(self.clip)
-                        }
+                        deleteSingleClip(self.clip)
                 })
                 
             } else {

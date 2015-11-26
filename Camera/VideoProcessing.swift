@@ -28,6 +28,18 @@ func updateTotalTime() {
     }
 }
 
+func deleteSingleClip(clip: Clip) {
+    // Delete from documents directory
+    deleteClip(getAbsolutePathForFile(clip.filename))
+    
+    // Delete reference from DB
+    let realm = try! Realm()
+    try! realm.write {
+        print(clip)
+        realm.delete(clip)
+    }
+}
+
 func exportVideo() {
     let composition = AVMutableComposition()
     let trackVideo:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeVideo, preferredTrackID: CMPersistentTrackID())
