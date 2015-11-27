@@ -21,8 +21,8 @@ class PreviewViewController: UIViewController {
     
     let blackView = UIView()
     
-    var player = AVPlayer()
-    let playerLayer = AVPlayerLayer()
+    var player: AVPlayer?
+    var playerLayer: AVPlayerLayer?
     
     var clip: Clip!
     
@@ -62,23 +62,21 @@ class PreviewViewController: UIViewController {
             
         } else if clip.type == "video" {
             
-            playerLayer.frame = view.bounds
-            
             let URL = NSURL(fileURLWithPath: filePath)
             let videoAsset = AVAsset(URL: URL)
             let playerItem = AVPlayerItem(asset: videoAsset)
+            
+            playerLayer = AVPlayerLayer()
+            playerLayer!.frame = view.bounds
             player = AVPlayer(playerItem: playerItem)
+            player!.actionAtItemEnd = .None
+            playerLayer!.player = player
+            playerLayer!.backgroundColor = UIColor.clearColor().CGColor
+            playerLayer!.videoGravity = AVLayerVideoGravityResize
+            previewView.layer.addSublayer(playerLayer!)
+            player!.play()
             
-            player.actionAtItemEnd = .None
-            playerLayer.player = player
-            playerLayer.backgroundColor = UIColor.clearColor().CGColor
-            playerLayer.videoGravity = AVLayerVideoGravityResize
-            previewView.layer.addSublayer(playerLayer)
-            player.play()
-            
-//            player.muted = true
-            
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         }
     }
     
@@ -111,8 +109,9 @@ class PreviewViewController: UIViewController {
             }
         }
         delay(0.1) {
-            self.previewView.subviews.forEach({ $0.removeFromSuperview() })
-            self.playerLayer.removeFromSuperlayer()
+            self.playerLayer!.removeFromSuperlayer()
+            self.player = nil
+            self.playerLayer = nil
             self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
             self.blackView.removeFromSuperview()
             self.cameraViewController.showIcons()
@@ -189,7 +188,7 @@ class PreviewViewController: UIViewController {
             if velocity.x > 500 && translation.x > 0 || translation.x > (view.frame.width / 3) * 2 {
                 
                 print("Keep Yo")
-                player.pause()
+                player!.pause()
                 keepLabel.alpha = 1
                 deleteLabel.alpha = 0
                 view.backgroundColor = greenColor.colorWithAlphaComponent(0.95)
@@ -211,7 +210,7 @@ class PreviewViewController: UIViewController {
                 
             } else if velocity.x < -500 && translation.x < 0 || translation.x < ((view.frame.width / 3) * 2) * -1 {
                 print("Delete Yo")
-                player.pause()
+                player!.pause()
                 keepLabel.alpha = 0
                 deleteLabel.alpha = 1
                 view.backgroundColor = redColor.colorWithAlphaComponent(0.95)
