@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		616937DF1BF64AEA00B47C38 /* ListViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */; };
+		619808BC1C07AD9B00CD74D2 /* TestVideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 619808BB1C07AD9B00CD74D2 /* TestVideoViewController.swift */; };
 		61CFADB11BFE3FFB0029E4EC /* SceneTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61CFADB01BFE3FFB0029E4EC /* SceneTableViewCell.swift */; };
 		685DB96FDB2BFA9C0176E5F2 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 383E98220CF70740D04FF944 /* Pods.framework */; };
 		C21477BF1BEE9FE7001474A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21477BE1BEE9FE7001474A4 /* AppDelegate.swift */; };
@@ -31,6 +32,7 @@
 /* Begin PBXFileReference section */
 		383E98220CF70740D04FF944 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewViewController.swift; sourceTree = "<group>"; };
+		619808BB1C07AD9B00CD74D2 /* TestVideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestVideoViewController.swift; sourceTree = "<group>"; };
 		61CFADB01BFE3FFB0029E4EC /* SceneTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneTableViewCell.swift; sourceTree = "<group>"; };
 		8E8C3A7BF622F601E4AB4956 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		C21477BB1BEE9FE7001474A4 /* Camera.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Camera.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,6 +101,7 @@
 				C21477C01BEE9FE7001474A4 /* CameraViewController.swift */,
 				C278C95E1BF846C800285CDF /* PreviewViewController.swift */,
 				C21477C21BEE9FE7001474A4 /* Main.storyboard */,
+				619808BB1C07AD9B00CD74D2 /* TestVideoViewController.swift */,
 				CAF6569E1BF7C02A00B0E42F /* EditClipViewController.swift */,
 				CACBFD061C029D5A00159D5F /* DrawingViewController.swift */,
 				CA498DBF1C00F21A007A8FCF /* Clip.swift */,
@@ -260,6 +263,7 @@
 				CAF6CB211C0510E0004FFF3B /* PassThroughView.swift in Sources */,
 				C21477BF1BEE9FE7001474A4 /* AppDelegate.swift in Sources */,
 				CAF6569F1BF7C02A00B0E42F /* EditClipViewController.swift in Sources */,
+				619808BC1C07AD9B00CD74D2 /* TestVideoViewController.swift in Sources */,
 				C21A4FD41C0192FE00B62989 /* CameraRoll.swift in Sources */,
 				CA498DC01C00F21A007A8FCF /* Clip.swift in Sources */,
 				C278C95F1BF846C800285CDF /* PreviewViewController.swift in Sources */,

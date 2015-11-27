@@ -12,7 +12,7 @@ class SceneTableViewCell: UITableViewCell {
 
     @IBOutlet weak var SceneNumber: UILabel!
     @IBOutlet weak var SceneDuration: UILabel!
-    @IBOutlet weak var SceneClip: UIImageView!
+    @IBOutlet weak var clipView: UIView!
     
     
     override func awakeFromNib() {
