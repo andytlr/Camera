@@ -117,7 +117,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
         
-//        player!.pause()
+        player!.pause()
         playerLayer!.removeFromSuperlayer()
         player = nil
         playerLayer = nil
