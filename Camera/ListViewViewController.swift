@@ -116,8 +116,11 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func tapExport(sender: AnyObject) {
-        exportVideo()
         
+        savingToCameraRollBackgroundTask = UIApplication.sharedApplication().beginBackgroundTaskWithName("Exporting To Camera Roll") { () -> Void in
+            print("Background Task Expired")
+        }
+        exportVideo()
         
         loadingIndicator.startAnimating()
         view.addSubview(blackView)
