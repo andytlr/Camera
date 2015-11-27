@@ -21,7 +21,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     var thumbnail: UIImage!
     
     var loadingIndicator: UIActivityIndicatorView!
-    let blackView = UIView()
+    let colorView = UIView()
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
@@ -30,8 +30,8 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        blackView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.5)
-        blackView.frame = self.view.bounds
+        colorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
+        colorView.frame = self.view.bounds
         loadingIndicator = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
         loadingIndicator.center = self.view.center;
         loadingIndicator.hidesWhenStopped = true
@@ -123,7 +123,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         exportVideo()
         
         loadingIndicator.startAnimating()
-        view.addSubview(blackView)
+        view.addSubview(colorView)
         view.addSubview(loadingIndicator)
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenFinishedSavingToCameraRoll", name: "Finished Saving To Camera Roll", object: nil)
@@ -131,7 +131,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func runWhenFinishedSavingToCameraRoll() {
         loadingIndicator.stopAnimating()
-        blackView.removeFromSuperview()
+        colorView.removeFromSuperview()
         loadingIndicator.removeFromSuperview()
         
         toastWithMessage("Saved!", appendTo: self.view, accomodateStatusBar: true)

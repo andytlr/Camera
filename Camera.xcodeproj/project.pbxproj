@@ -99,6 +99,7 @@
 		C21477BD1BEE9FE7001474A4 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				C2EA1FA01C08D177002A51D3 /* GlobalVariables.swift */,
 				C21477BE1BEE9FE7001474A4 /* AppDelegate.swift */,
 				C21477C01BEE9FE7001474A4 /* CameraViewController.swift */,
 				C278C95E1BF846C800285CDF /* PreviewViewController.swift */,
@@ -113,7 +114,6 @@
 				C24E087E1C016A0500891902 /* VideoProcessing.swift */,
 				C2EA1F9E1C07A251002A51D3 /* FileManagment.swift */,
 				C21477D01BEFE7BB001474A4 /* Common.swift */,
-				C2EA1FA01C08D177002A51D3 /* GlobalVariables.swift */,
 				CA2E6EBC1BFAD034007AA957 /* example_recording.mov */,
 				CAE10EA01BFD6180004F8B7A /* example_photo.jpg */,
 				C21477C51BEE9FE7001474A4 /* Assets.xcassets */,

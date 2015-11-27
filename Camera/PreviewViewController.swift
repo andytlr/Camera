@@ -174,12 +174,12 @@ class PreviewViewController: UIViewController {
                 deleteLabel.alpha = 0
             }
             
-            blackView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: makeTransparentOnPan)
+            blackView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(makeTransparentOnPan)
             
             if translation.x < 0 {
-                view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: makeOpaqueOnPan)
+                view.backgroundColor = redColor.colorWithAlphaComponent(makeOpaqueOnPan)
             } else {
-                view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: makeOpaqueOnPan)
+                view.backgroundColor = greenColor.colorWithAlphaComponent(makeOpaqueOnPan)
             }
         }
         if sender.state == .Ended {
@@ -192,7 +192,7 @@ class PreviewViewController: UIViewController {
                 player.pause()
                 keepLabel.alpha = 1
                 deleteLabel.alpha = 0
-                view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 0.95)
+                view.backgroundColor = greenColor.colorWithAlphaComponent(0.95)
                 blackView.alpha = 0
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
@@ -214,7 +214,7 @@ class PreviewViewController: UIViewController {
                 player.pause()
                 keepLabel.alpha = 0
                 deleteLabel.alpha = 1
-                view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.95)
+                view.backgroundColor = redColor.colorWithAlphaComponent(0.95)
                 blackView.alpha = 0
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
