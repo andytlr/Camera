@@ -110,7 +110,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 }
                 
                 self.captureSession.automaticallyConfiguresApplicationAudioSession = false
-                self.captureSession.addInput(self.micInput!)
+                
+                if AVAudioSession.sharedInstance().category == AVAudioSessionCategoryPlayAndRecord {
+                    self.captureSession.addInput(self.micInput!)
+                }
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     // update some UI
