@@ -210,11 +210,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func setupCamera() {
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
         
-        recordButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2)
+        recordButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
         recordButton.layer.cornerRadius = 40;
         recordButton.clipsToBounds = true;
         recordButton.layer.borderWidth = 2;
-        recordButton.layer.borderColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5).CGColor
+        recordButton.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(0.5).CGColor
         
         // Loop through all the capture devices on this phone
         for device in devices {
@@ -303,8 +303,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         hideIcons()
         
-        recordButton.layer.borderColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.5).CGColor
-        recordButton.backgroundColor = UIColor(red: 255/255, green: 0/255, blue: 0/255, alpha: 0.2)
+        recordButton.layer.borderColor = redColor.colorWithAlphaComponent(0.5).CGColor
+        recordButton.backgroundColor = redColor.colorWithAlphaComponent(0.2)
         
         UIView.animateWithDuration(0.6, delay: 0, options: [.Repeat, .Autoreverse, .CurveEaseInOut], animations: { () -> Void in
             
@@ -326,8 +326,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         progressBar.alpha = 0
         timer.invalidate()
         
-        recordButton.layer.borderColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.5).CGColor
-        recordButton.backgroundColor = UIColor(red: 255/255, green: 255/255, blue: 255/255, alpha: 0.2)
+        recordButton.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(0.5).CGColor
+        recordButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
         
         UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
             

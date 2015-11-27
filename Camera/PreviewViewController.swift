@@ -174,25 +174,25 @@ class PreviewViewController: UIViewController {
                 deleteLabel.alpha = 0
             }
             
-            blackView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: makeTransparentOnPan)
+            blackView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(makeTransparentOnPan)
             
             if translation.x < 0 {
-                view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: makeOpaqueOnPan)
+                view.backgroundColor = redColor.colorWithAlphaComponent(makeOpaqueOnPan)
             } else {
-                view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: makeOpaqueOnPan)
+                view.backgroundColor = greenColor.colorWithAlphaComponent(makeOpaqueOnPan)
             }
         }
         if sender.state == .Ended {
             
             let dismissDuration = Double(convertValue(abs(velocity.y), r1Min: 0, r1Max: 150, r2Min: 0.3, r2Max: 0.1))
             
-            if velocity.x > 500 || translation.x > (view.frame.width / 3) * 2 {
+            if velocity.x > 500 && translation.x > 0 || translation.x > (view.frame.width / 3) * 2 {
                 
                 print("Keep Yo")
                 player.pause()
                 keepLabel.alpha = 1
                 deleteLabel.alpha = 0
-                view.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 0.95)
+                view.backgroundColor = greenColor.colorWithAlphaComponent(0.95)
                 blackView.alpha = 0
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
@@ -209,12 +209,12 @@ class PreviewViewController: UIViewController {
                         self.cameraViewController.updateButtonCount()
                 })
                 
-            } else if velocity.x < -500 || translation.x < ((view.frame.width / 3) * 2) * -1 {
+            } else if velocity.x < -500 && translation.x < 0 || translation.x < ((view.frame.width / 3) * 2) * -1 {
                 print("Delete Yo")
                 player.pause()
                 keepLabel.alpha = 0
                 deleteLabel.alpha = 1
-                view.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 0.95)
+                view.backgroundColor = redColor.colorWithAlphaComponent(0.95)
                 blackView.alpha = 0
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
@@ -228,14 +228,7 @@ class PreviewViewController: UIViewController {
                         
                         self.killPreviewAndRestartCamera()
                         
-                        // Delete from documents directory
-                        deleteClip(getAbsolutePathForFile(self.clip.filename))
-                        
-                        // Delete reference from DB
-                        let realm = try! Realm()
-                        try! realm.write {
-                            realm.delete(self.clip)
-                        }
+                        deleteSingleClip(self.clip)
                 })
                 
             } else {

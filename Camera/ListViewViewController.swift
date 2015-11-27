@@ -20,6 +20,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var thumbnail: UIImage!
     
+    var loadingIndicator: UIActivityIndicatorView!
+    let colorView = UIView()
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
@@ -29,6 +32,13 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
         self.view.backgroundColor = UIColor.blackColor()
         clipReviewList.backgroundColor = UIColor.blackColor()
+        
+        colorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
+        colorView.frame = self.view.bounds
+        loadingIndicator = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
+        loadingIndicator.center = self.view.center;
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
     }
 
 
@@ -80,8 +90,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         //}
         
         
-        
-        
         let clipDuration = clipAsset.duration
         let clipDurationInSeconds = Int(round(CMTimeGetSeconds(clipDuration)))
         let clipDurationSuffix: String!
@@ -94,6 +102,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
        // cell.SceneClip.image = thumbnail
         cell.SceneNumber.text = "\(clip.type): \(clip.filename)"
+        cell.clip = clip
         cell.SceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
         
         return cell
@@ -119,11 +128,24 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func tapExport(sender: AnyObject) {
+        
+        savingToCameraRollBackgroundTask = UIApplication.sharedApplication().beginBackgroundTaskWithName("Exporting To Camera Roll") { () -> Void in
+            print("Background Task Expired")
+        }
         exportVideo()
+        
+        loadingIndicator.startAnimating()
+        view.addSubview(colorView)
+        view.addSubview(loadingIndicator)
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenFinishedSavingToCameraRoll", name: "Finished Saving To Camera Roll", object: nil)
     }
     
     func runWhenFinishedSavingToCameraRoll() {
+        loadingIndicator.stopAnimating()
+        colorView.removeFromSuperview()
+        loadingIndicator.removeFromSuperview()
+        
         toastWithMessage("Saved!", appendTo: self.view, accomodateStatusBar: true)
     }
     
@@ -136,13 +158,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let destroyAction = UIAlertAction(title: "Delete All", style: .Destructive) { (action) in
             
-            // Delete reference from DB
-            let realm = try! Realm()
-            try! realm.write {
-                realm.deleteAll()
-            }
-            
-            // Delete from documents directory
             deleteAllClips()
             
             dispatch_async(dispatch_get_main_queue()) {

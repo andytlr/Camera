@@ -68,6 +68,8 @@ class CustomPhotoAlbum {
                         try NSFileManager.defaultManager().removeItemAtPath(tempFileToDeleteOnCompletion)
                         print("Deleted")
                     } catch { print("Couldn't Delete") }
+                    
+                    UIApplication.sharedApplication().endBackgroundTask(savingToCameraRollBackgroundTask)
                 }
         
         })

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 class SceneTableViewCell: UITableViewCell {
 
@@ -14,14 +15,20 @@ class SceneTableViewCell: UITableViewCell {
     @IBOutlet weak var SceneDuration: UILabel!
     @IBOutlet weak var clipView: UIView!
     
+    var clip: Clip!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
-        
     }
-
+    
+    @IBAction func tapDeleteButton(sender: UIButton) {
+        deleteSingleClip(clip)
+        
+        // This is temporary instead of removing the row.
+        sender.enabled = false
+    }
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
