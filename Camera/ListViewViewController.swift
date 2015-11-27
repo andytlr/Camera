@@ -20,12 +20,22 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     var thumbnail: UIImage!
     
+    var loadingIndicator: UIActivityIndicatorView!
+    let colorView = UIView()
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        colorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
+        colorView.frame = self.view.bounds
+        loadingIndicator = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
+        loadingIndicator.center = self.view.center;
+        loadingIndicator.hidesWhenStopped = true
+        loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
     }
     
     func updateTableView() {
@@ -106,11 +116,24 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     @IBAction func tapExport(sender: AnyObject) {
+        
+        savingToCameraRollBackgroundTask = UIApplication.sharedApplication().beginBackgroundTaskWithName("Exporting To Camera Roll") { () -> Void in
+            print("Background Task Expired")
+        }
         exportVideo()
+        
+        loadingIndicator.startAnimating()
+        view.addSubview(colorView)
+        view.addSubview(loadingIndicator)
+
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenFinishedSavingToCameraRoll", name: "Finished Saving To Camera Roll", object: nil)
     }
     
     func runWhenFinishedSavingToCameraRoll() {
+        loadingIndicator.stopAnimating()
+        colorView.removeFromSuperview()
+        loadingIndicator.removeFromSuperview()
+        
         toastWithMessage("Saved!", appendTo: self.view, accomodateStatusBar: true)
     }
     
