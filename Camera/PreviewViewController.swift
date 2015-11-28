@@ -116,6 +116,7 @@ class PreviewViewController: UIViewController {
             self.blackView.removeFromSuperview()
             self.cameraViewController.showIcons()
             self.cameraViewController.recordButton.alpha = 1
+            self.cameraViewController.totalTimeLabel.alpha = 1
             self.cameraViewController.progressBar.progress = 0
             self.view.removeFromSuperview()
         }
