@@ -15,3 +15,4 @@ var savingToCameraRollBackgroundTask: UIBackgroundTaskIdentifier!
 // Colours
 let greenColor = UIColor(red: 0, green: 180/255, blue: 60/255, alpha: 1)
 let redColor = UIColor(red: 255/255, green: 40/255, blue: 0, alpha: 1)
+let darkGreyColor = UIColor(red: 50/255, green: 50/255, blue: 50/255, alpha: 1)
