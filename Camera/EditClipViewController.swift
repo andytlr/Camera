@@ -327,6 +327,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         let realm = try! Realm()
         
         try! realm.write {
+            // Create new text layer
             if self.textInputTextField.text != "" {
                 let textLayer = TextLayer()
                 textLayer.text = self.textInputTextField.text
@@ -335,6 +336,12 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
                 self.clip.textLayer = textLayer
             }
             
+            // Clear existing text layer
+            if self.clip.textLayer != nil && self.textInputTextField.text == "" {
+                self.clip.textLayer = nil
+            }
+            
+            // Create and update drawing layer
             if self.drawingImageView.image != nil {
                 let overlayData = UIImagePNGRepresentation(self.drawingImageView.image!)
                 self.clip.overlay = overlayData
