@@ -12,19 +12,24 @@ import AVFoundation
 import Photos
 import RealmSwift
 
-var totalTimeInSeconds: String = ""
+var totalTimeAsDouble: Double = 0
+var totalDurationInSeconds: String = ""
+
+func formatTime(timeInSeconds: Double) -> String {
+    return "\(Int(round(timeInSeconds)))sec"
+}
 
 func updateTotalTime() {
     let realm = try! Realm()
     let clips = realm.objects(Clip).sorted("filename", ascending: true)
-
-    var totesTimeDub: Double = 0
+    
+    totalTimeAsDouble = 0
     
     for clip in clips {
         let duration = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename))).duration
-        totesTimeDub += round(CMTimeGetSeconds(duration))
+        totalTimeAsDouble += CMTimeGetSeconds(duration)
         
-        totalTimeInSeconds = String(Int(totesTimeDub)) + "s"
+        totalDurationInSeconds = formatTime(totalTimeAsDouble)
     }
 }
 

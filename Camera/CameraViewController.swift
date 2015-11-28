@@ -60,7 +60,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             } else {
                 showListButton.enabled = true
                 showListButton.alpha = 1
-                totalTimeLabel.text = totalTimeInSeconds    
+                totalTimeLabel.text = totalDurationInSeconds
                 totalTimeLabel.alpha = 1
             }
         }
@@ -73,7 +73,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func hideIcons() {
         switchButton.alpha = 0
         showListButton.alpha = 0
-        totalTimeLabel.alpha = 0
     }
     
     func showIcons() {
@@ -83,19 +82,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         } else {
             showListButton.alpha = 1
         }
-        totalTimeLabel.alpha = 1
     }
     
     func updateTime() {
         
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
-        var elapsedTime: NSTimeInterval = currentTime - startTime
-        let immutibleElapsedTime: NSTimeInterval = currentTime - startTime
+        let elapsedTime: NSTimeInterval = currentTime - startTime
         
-        let seconds = UInt8(elapsedTime)
-        elapsedTime -= NSTimeInterval(seconds)
+        totalTimeLabel.text = formatTime(totalTimeAsDouble + Double(elapsedTime))
         
-        let hundredthOfASecond = immutibleElapsedTime * 100
+        let hundredthOfASecond = elapsedTime * 100
         
         timerProgress = convertValue(CGFloat(hundredthOfASecond), r1Min: 0, r1Max: (CGFloat(recordingTimeLimit) * 100), r2Min: 0, r2Max: 1)
         
@@ -302,6 +298,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         startTime = NSDate.timeIntervalSinceReferenceDate()
         
         progressBar.alpha = 1
+        totalTimeLabel.alpha = 1
         
         hideIcons()
         
