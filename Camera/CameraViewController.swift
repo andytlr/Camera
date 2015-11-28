@@ -19,8 +19,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var switchButton: UIButton!
-    @IBOutlet weak var doneButton: UIButton!
-    @IBOutlet weak var soundButton: UIButton!
+    @IBOutlet weak var showListButton: UIButton!
     @IBOutlet weak var progressBar: UIProgressView!
     
     var usingbackCamera: Bool = true
@@ -53,11 +52,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var clipCount: Int! {
         didSet {
             if clipCount == 0 {
-                doneButton.alpha = 0
-                doneButton.setTitle("", forState: UIControlState.Normal)
+                showListButton.alpha = 0
+                showListButton.setTitle("", forState: UIControlState.Normal)
             } else {
-                doneButton.setTitle(totalTimeInSeconds, forState: UIControlState.Normal)
-                doneButton.alpha = 1
+                showListButton.setTitle(totalTimeInSeconds, forState: UIControlState.Normal)
+                showListButton.alpha = 1
             }
         }
     }
@@ -68,14 +67,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func hideIcons() {
         switchButton.alpha = 0
-        doneButton.alpha = 0
-        soundButton.alpha = 0
+        showListButton.alpha = 0
     }
     
     func showIcons() {
         switchButton.alpha = 1
-        doneButton.alpha = 1
-        soundButton.alpha = 1
+        showListButton.alpha = 1
     }
     
     func updateTime() {
@@ -176,7 +173,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         setupCamera()
         setCameraOrientationButtonLabel()
-        setSoundButtonLabel()
         updateButtonCount()
         
         if backCamera != nil {
@@ -191,14 +187,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         if frontCamera == nil {
             switchButton.alpha = 0
-        }
-    }
-    
-    func setSoundButtonLabel() {
-        if usingSound == true {
-            soundButton.setTitle("🎤", forState: UIControlState.Normal)
-        } else {
-            soundButton.setTitle("🎤🚫", forState: UIControlState.Normal)
         }
     }
     
@@ -430,22 +418,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBAction func tapButton(sender: AnyObject) {
 //        takeStillImage()
         toastWithMessage("Tap and hold to record", appendTo: self.view, timeShownInSeconds: 1, style: .Neutral)
-    }
-    
-    @IBAction func done(sender: AnyObject) {
-        
-    }
-    
-    @IBAction func tapSoundButton(sender: AnyObject) {
-        if usingSound == true {
-            usingSound = false
-            removeMic()
-            setSoundButtonLabel()
-        } else {
-            usingSound = true
-            startMic()
-            setSoundButtonLabel()
-        }
     }
     
     func showVideoPreview() {
