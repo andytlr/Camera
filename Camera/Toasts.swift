@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-func toastWithMessage(message: String, appendTo: UIView, timeShownInSeconds: Double = 1.5, destructive: Bool = false, accomodateStatusBar: Bool = false) {
+func toastWithMessage(message: String, appendTo: UIView, timeShownInSeconds: Double = 1.5, style: String = "positive", accomodateStatusBar: Bool = false) {
     print(message)
     
     // Setup
@@ -24,10 +24,12 @@ func toastWithMessage(message: String, appendTo: UIView, timeShownInSeconds: Dou
     }
     let toastHeight = ((fontSize * lineHeight) + (padding * 2))
     let toastView = UIView(frame: CGRectMake(0, 0, appendTo.frame.width, toastHeight + statusBarHeight))
-    if destructive == false {
-        toastView.backgroundColor = UIColor(red: 98/255, green: 217/255, blue: 98/255, alpha: 1)
+    if style == "positive" {
+        toastView.backgroundColor = greenColor.colorWithAlphaComponent(0.95)
+    } else if style == "negative" {
+        toastView.backgroundColor = redColor.colorWithAlphaComponent(0.95)
     } else {
-        toastView.backgroundColor = UIColor(red: 1, green: 0, blue: 0, alpha: 1)
+        toastView.backgroundColor = darkGreyColor.colorWithAlphaComponent(0.95)
     }
     let toastMessage = UILabel(frame: CGRectMake(padding, padding + statusBarHeight, appendTo.frame.width - (padding * 2), fontSize * lineHeight))
     toastMessage.font = UIFont.systemFontOfSize(fontSize)

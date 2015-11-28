@@ -27,8 +27,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     var clip: Clip!
     
-    var player = AVPlayer()
-    var playerLayer = AVPlayerLayer()
+    var player: AVPlayer?
+    var playerLayer: AVPlayerLayer?
     
     var textFieldOrigin = CGPoint(x: 20, y: 401)
     var textFieldNewPositionOrigin = CGPoint(x: 20, y: 401)
@@ -98,19 +98,29 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             
             player = AVPlayer(playerItem: playerItem)
             
-            player.actionAtItemEnd = .None
-            playerLayer.player = player
-            playerLayer.frame = view.bounds
-            playerLayer.backgroundColor = UIColor.clearColor().CGColor
-            playerLayer.videoGravity = AVLayerVideoGravityResize
+            player!.actionAtItemEnd = .None
+            playerLayer = AVPlayerLayer()
+            playerLayer!.player = player
+            playerLayer!.frame = view.bounds
+            playerLayer!.backgroundColor = UIColor.clearColor().CGColor
+            playerLayer!.videoGravity = AVLayerVideoGravityResize
             
-            clipView.layer.insertSublayer(playerLayer, below: overlayView.layer)
+            clipView.layer.insertSublayer(playerLayer!, below: overlayView.layer)
             
-            player.play()
+            player!.play()
             
             // Notify when we reach the end so we can loop
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player.currentItem)
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(true)
+        
+        player!.pause()
+        playerLayer!.removeFromSuperlayer()
+        player = nil
+        playerLayer = nil
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -257,7 +267,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             }
         }
         
-        player.pause()
+        player!.pause()
         dismissViewControllerAnimated(false, completion: nil)
     }
     
