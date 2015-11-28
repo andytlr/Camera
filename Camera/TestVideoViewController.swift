@@ -18,8 +18,7 @@ class TestVideoViewController: UIViewController {
     
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
-    
-    var clip: Clip!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
