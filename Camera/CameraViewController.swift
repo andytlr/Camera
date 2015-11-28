@@ -339,6 +339,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         videoOutput.stopRecording()
         removeMic()
         recordButton.alpha = 0
+        totalTimeLabel.alpha = 0
     }
     
     func takeStillImage() {

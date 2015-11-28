@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
     </dependencies>
     <scenes>
@@ -182,36 +181,22 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delete" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4pK-RU-ffq">
-                                <rect key="frame" x="285" y="323" width="90" height="21"/>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="checkmark" translatesAutoresizingMaskIntoConstraints="NO" id="nCa-4x-8xJ">
+                                <rect key="frame" x="20" y="315" width="48" height="37"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="NMd-3H-O3H"/>
-                                    <constraint firstAttribute="width" constant="90" id="pz8-nN-n9u"/>
+                                    <constraint firstAttribute="width" constant="48" id="7L9-VY-V5c"/>
+                                    <constraint firstAttribute="height" constant="37" id="rf2-K0-iGW"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keep" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vTF-Cx-nyU">
-                                <rect key="frame" x="0.0" y="323" width="90" height="21"/>
+                            </imageView>
+                            <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" image="cross" translatesAutoresizingMaskIntoConstraints="NO" id="czK-Z6-7dq">
+                                <rect key="frame" x="307" y="315" width="48" height="37"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="21" id="Pd0-Nr-dm4"/>
-                                    <constraint firstAttribute="height" constant="21" id="bHM-NA-uAS"/>
-                                    <constraint firstAttribute="height" constant="21" id="jSk-ei-i3o"/>
-                                    <constraint firstAttribute="width" constant="90" id="vZw-LF-ugV"/>
+                                    <constraint firstAttribute="width" constant="48" id="9pK-ht-DMy"/>
+                                    <constraint firstAttribute="height" constant="37" id="lat-gx-OYY"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="Pd0-Nr-dm4"/>
-                                        <exclude reference="bHM-NA-uAS"/>
-                                    </mask>
-                                </variation>
-                            </label>
+                            </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfF-60-exu">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <animations/>
@@ -225,25 +210,19 @@
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="wfF-60-exu" secondAttribute="trailing" id="1n8-Mc-1Xl"/>
-                            <constraint firstAttribute="trailing" secondItem="4pK-RU-ffq" secondAttribute="trailing" id="2Z8-ii-J7M"/>
-                            <constraint firstItem="4pK-RU-ffq" firstAttribute="centerY" secondItem="wIb-Vp-0L8" secondAttribute="centerY" id="6ZS-yt-2hW"/>
                             <constraint firstItem="wfF-60-exu" firstAttribute="top" secondItem="wIb-Vp-0L8" secondAttribute="top" id="AaP-qf-NCJ"/>
+                            <constraint firstAttribute="trailing" secondItem="czK-Z6-7dq" secondAttribute="trailing" constant="20" id="CB2-K0-vhj"/>
                             <constraint firstItem="ykY-V4-PB3" firstAttribute="top" secondItem="wfF-60-exu" secondAttribute="bottom" id="Lot-K8-FVW"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="4pK-RU-ffq" secondAttribute="trailing" constant="-20" id="Xsj-Ek-XyP"/>
+                            <constraint firstItem="nCa-4x-8xJ" firstAttribute="leading" secondItem="wIb-Vp-0L8" secondAttribute="leading" constant="20" id="Tji-A6-AmQ"/>
                             <constraint firstItem="wfF-60-exu" firstAttribute="leading" secondItem="wIb-Vp-0L8" secondAttribute="leading" id="ZAk-Z1-lcL"/>
-                            <constraint firstItem="vTF-Cx-nyU" firstAttribute="leading" secondItem="wIb-Vp-0L8" secondAttribute="leading" id="ZoS-ZE-FP9"/>
-                            <constraint firstItem="vTF-Cx-nyU" firstAttribute="centerY" secondItem="wIb-Vp-0L8" secondAttribute="centerY" id="rhj-uR-xHP"/>
+                            <constraint firstItem="czK-Z6-7dq" firstAttribute="centerY" secondItem="wIb-Vp-0L8" secondAttribute="centerY" id="eqe-ZQ-dbN"/>
+                            <constraint firstItem="nCa-4x-8xJ" firstAttribute="centerY" secondItem="wIb-Vp-0L8" secondAttribute="centerY" id="vV8-9o-xRu"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="Xsj-Ek-XyP"/>
-                            </mask>
-                        </variation>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="deleteLabel" destination="4pK-RU-ffq" id="FVy-HU-cwJ"/>
-                        <outlet property="keepLabel" destination="vTF-Cx-nyU" id="a9G-Vn-CAE"/>
+                        <outlet property="deleteIcon" destination="czK-Z6-7dq" id="fZv-7D-18W"/>
+                        <outlet property="keepIcon" destination="nCa-4x-8xJ" id="l2z-cI-KGD"/>
                         <outlet property="previewView" destination="wfF-60-exu" id="MMB-jK-R4f"/>
                     </connections>
                 </viewController>
@@ -580,6 +559,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="checkmark" width="48" height="37"/>
+        <image name="cross" width="48" height="37"/>
         <image name="spectrum" width="5" height="333"/>
     </resources>
     <inferredMetricsTieBreakers>
