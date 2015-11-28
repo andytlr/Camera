@@ -14,8 +14,9 @@ import RealmSwift
 class PreviewViewController: UIViewController {
     
     @IBOutlet weak var previewView: UIView!
-    @IBOutlet weak var deleteLabel: UILabel!
-    @IBOutlet weak var keepLabel: UILabel!
+    
+    @IBOutlet weak var deleteIcon: UIImageView!
+    @IBOutlet weak var keepIcon: UIImageView!
     
     var cameraViewController: CameraViewController!
     
@@ -42,8 +43,8 @@ class PreviewViewController: UIViewController {
         view.backgroundColor = UIColor.clearColor()
         previewView.backgroundColor = UIColor.clearColor()
         
-        deleteLabel.alpha = 0
-        keepLabel.alpha = 0
+        deleteIcon.alpha = 0
+        keepIcon.alpha = 0
         
         let filePath = getAbsolutePathForFile(clip.filename)
         
@@ -155,23 +156,23 @@ class PreviewViewController: UIViewController {
             }
             
             if translation.x > 0 {
-                keepLabel.alpha = makeOpaqueOnPan
-                deleteLabel.alpha = makeTransparentOnPan
-                deleteLabel.transform = CGAffineTransformMakeTranslation(0, 0)
-                keepLabel.transform = CGAffineTransformMakeTranslation(moveOnPan, 0)
+                keepIcon.alpha = makeOpaqueOnPan
+                deleteIcon.alpha = makeTransparentOnPan
+                deleteIcon.transform = CGAffineTransformMakeTranslation(0, 0)
+                keepIcon.transform = CGAffineTransformMakeTranslation(moveOnPan, 0)
             } else {
-                deleteLabel.alpha = makeOpaqueOnPan
-                keepLabel.alpha = makeTransparentOnPan
-                keepLabel.transform = CGAffineTransformMakeTranslation(0, 0)
-                deleteLabel.transform = CGAffineTransformMakeTranslation(moveOnPan * -1, 0)
+                deleteIcon.alpha = makeOpaqueOnPan
+                keepIcon.alpha = makeTransparentOnPan
+                keepIcon.transform = CGAffineTransformMakeTranslation(0, 0)
+                deleteIcon.transform = CGAffineTransformMakeTranslation(moveOnPan * -1, 0)
             }
             
             if translation.x < 0 {
-                keepLabel.alpha = 0
+                keepIcon.alpha = 0
             }
             
             if translation.x > 0 {
-                deleteLabel.alpha = 0
+                deleteIcon.alpha = 0
             }
             
             blackView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(makeTransparentOnPan)
@@ -190,8 +191,8 @@ class PreviewViewController: UIViewController {
                 
                 print("Keep Yo")
                 player!.pause()
-                keepLabel.alpha = 1
-                deleteLabel.alpha = 0
+                keepIcon.alpha = 1
+                deleteIcon.alpha = 0
                 view.backgroundColor = greenColor.colorWithAlphaComponent(0.95)
                 blackView.alpha = 0
                 
@@ -199,8 +200,8 @@ class PreviewViewController: UIViewController {
                     
                     self.previewView.frame.origin.x = self.view.frame.width * 1.3
                     self.previewView.frame.origin.y += translation.y
-                    self.keepLabel.transform = CGAffineTransformTranslate(self.keepLabel.transform, 0, 0)
-                    self.keepLabel.frame.origin.x = (self.view.frame.width / 2) - (self.keepLabel.frame.width / 2)
+                    self.keepIcon.transform = CGAffineTransformTranslate(self.keepIcon.transform, 0, 0)
+                    self.keepIcon.frame.origin.x = (self.view.frame.width / 2) - (self.keepIcon.frame.width / 2)
                     
                     }, completion: { (Bool) -> Void in
                         
@@ -212,8 +213,8 @@ class PreviewViewController: UIViewController {
             } else if velocity.x < -500 && translation.x < 0 || translation.x < ((view.frame.width / 3) * 2) * -1 {
                 print("Delete Yo")
                 player!.pause()
-                keepLabel.alpha = 0
-                deleteLabel.alpha = 1
+                keepIcon.alpha = 0
+                deleteIcon.alpha = 1
                 view.backgroundColor = redColor.colorWithAlphaComponent(0.95)
                 blackView.alpha = 0
                 cameraViewController.totalTimeLabel.text = totalDurationInSeconds
@@ -222,8 +223,8 @@ class PreviewViewController: UIViewController {
                     
                     self.previewView.frame.origin.x = (self.view.frame.width * 1.3) * -1
                     self.previewView.frame.origin.y += translation.y
-                    self.deleteLabel.transform = CGAffineTransformTranslate(self.deleteLabel.transform, 0, 0)
-                    self.deleteLabel.frame.origin.x = (self.view.frame.width / 2) - (self.deleteLabel.frame.width / 2)
+                    self.deleteIcon.transform = CGAffineTransformTranslate(self.deleteIcon.transform, 0, 0)
+                    self.deleteIcon.frame.origin.x = (self.view.frame.width / 2) - (self.deleteIcon.frame.width / 2)
                     
                     }, completion: { (Bool) -> Void in
                         
