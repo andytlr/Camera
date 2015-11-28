@@ -17,14 +17,16 @@ var totalDurationInSeconds: String = ""
 
 func formatTime(timeInSeconds: Int) -> String {
     
-//    let hours = timeInSeconds / 3600
+    let hours = timeInSeconds / 3600
     let minutes = (timeInSeconds % 3600) / 60
     let seconds = (timeInSeconds % 3600) % 60
     
-    if minutes == 0 {
-        return "\(seconds)s"
-    } else {
+    if hours != 0 {
+        return "\(hours)h \(minutes)m \(seconds)s"
+    } else if minutes != 0 {
         return "\(minutes)m \(seconds)s"
+    } else {
+        return "\(seconds)s"
     }
 }
 
