@@ -36,6 +36,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     var textFieldOriginalCenter: CGPoint!
     var textFieldScaleTransform: CGAffineTransform!
     
+    var blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+    
     var drawingViewController: DrawingViewController!
     
     override func viewDidLoad() {
@@ -61,8 +63,6 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         
         drawingViewController = storyboard.instantiateViewControllerWithIdentifier("DrawingViewController") as! DrawingViewController
         drawingViewController.editClipViewController = self
-        
-//        print(clip)
     }
     
     // For some unknown reason, pausing when the video goes into background and starting it again when it comes into the foreground is causing multiple instances of the audio to continue playing. If you're muted this is inaudible but the app will crash when you go back to the camera. For the moment I've commented out the .pause() and .play().
@@ -158,6 +158,15 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             attributes: [NSForegroundColorAttributeName: placeholderColor.colorWithAlphaComponent(0.3)])
     }
     
+    func blurClip() {
+        self.blurView.frame = self.clipView.frame
+        self.view.insertSubview(self.blurView, aboveSubview: self.clipView)
+    }
+    
+    func focusClip() {
+        self.blurView.removeFromSuperview()
+    }
+    
     func keyboardWillShow(notification: NSNotification) {
         // TODO: get keyboard frame
     }
@@ -168,6 +177,9 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         textInputTextField.becomeFirstResponder()
         textInputTextField.frame.origin = CGPoint(x: textFieldOrigin.x, y: textFieldOrigin.y + 250)
         
+        blurClip()
+        
+        // Show text field
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
             self.textInputTextField.frame.origin = self.textFieldOrigin
             self.textInputTextField.alpha = 1
@@ -175,6 +187,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     func endTextInput() {
+        focusClip()
+        
         let characterCount = textInputTextField.text?.characters.count
         characterCount != 0 ? commitTextInput() : cancelTextInput()
     }
@@ -238,8 +252,9 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     @IBAction func beginEditingText(sender: AnyObject) {
-        let characterCount = textInputTextField.text?.characters.count
+        blurClip()
         
+        let characterCount = textInputTextField.text?.characters.count
         if characterCount > 0 {
             // Return to original position above keyboard
             UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
@@ -249,6 +264,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     @IBAction func endEditingText(sender: AnyObject) {
+        focusClip()
+        
         UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
             self.textInputTextField.frame.origin = self.textFieldNewPositionOrigin
         }, completion: nil)
