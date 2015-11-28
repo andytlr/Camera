@@ -229,6 +229,7 @@ class PreviewViewController: UIViewController {
                         
                         self.killPreviewAndRestartCamera()
                         
+                        // Put both actions on the main thread so they happen subsequently
                         dispatch_async(dispatch_get_main_queue()) {
                             deleteSingleClip(self.clip)
                             self.cameraViewController.totalTimeLabel.text = totalDurationInSeconds
