@@ -147,9 +147,9 @@ class PreviewViewController: UIViewController {
             
             let makeTransparentOnPan = convertValue(abs(translation.x), r1Min: (view.frame.width / 8), r1Max: (view.frame.height / 2), r2Min: 0.6, r2Max: 0)
             
-            var makeOpaqueOnPan = convertValue(abs(translation.x), r1Min: (view.frame.width / 6), r1Max: (view.frame.width / 5) * 3, r2Min: 0, r2Max: 0.95)
+            var makeOpaqueOnPan = convertValue(abs(translation.x), r1Min: keepIcon.frame.width, r1Max: (view.frame.width / 5) * 3, r2Min: 0, r2Max: 0.95)
             
-            let moveOnPan = convertValue(abs(translation.x), r1Min: (view.frame.width / 8), r1Max: (view.frame.width / 5) * 3, r2Min: -25, r2Max: 60)
+            let moveOnPan = convertValue(abs(translation.x), r1Min: (view.frame.width / 8), r1Max: (view.frame.width / 5) * 3, r2Min: -23, r2Max: view.frame.width / 6)
             
             if makeOpaqueOnPan > 0.95 {
                 makeOpaqueOnPan = 0.95
