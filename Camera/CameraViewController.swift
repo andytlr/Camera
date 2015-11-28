@@ -19,8 +19,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var switchButton: UIButton!
-    @IBOutlet weak var doneButton: UIButton!
-    @IBOutlet weak var soundButton: UIButton!
+    @IBOutlet weak var showListButton: UIButton!
+    @IBOutlet weak var totalTimeLabel: UILabel!
     @IBOutlet weak var progressBar: UIProgressView!
     
     var usingbackCamera: Bool = true
@@ -53,11 +53,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var clipCount: Int! {
         didSet {
             if clipCount == 0 {
-                doneButton.alpha = 0
-                doneButton.setTitle("", forState: UIControlState.Normal)
+                showListButton.enabled = false
+                showListButton.alpha = 0.25
+                totalTimeLabel.alpha = 0
+                totalTimeLabel.text = ""
             } else {
-                doneButton.setTitle(totalTimeInSeconds, forState: UIControlState.Normal)
-                doneButton.alpha = 1
+                showListButton.enabled = true
+                showListButton.alpha = 1
+                totalTimeLabel.text = totalDurationInSeconds
+                totalTimeLabel.alpha = 1
             }
         }
     }
@@ -68,26 +72,26 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func hideIcons() {
         switchButton.alpha = 0
-        doneButton.alpha = 0
-        soundButton.alpha = 0
+        showListButton.alpha = 0
     }
     
     func showIcons() {
         switchButton.alpha = 1
-        doneButton.alpha = 1
-        soundButton.alpha = 1
+        if clipCount == 0 {
+            showListButton.alpha = 0.25
+        } else {
+            showListButton.alpha = 1
+        }
     }
     
     func updateTime() {
         
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
-        var elapsedTime: NSTimeInterval = currentTime - startTime
-        let immutibleElapsedTime: NSTimeInterval = currentTime - startTime
+        let elapsedTime: NSTimeInterval = currentTime - startTime
         
-        let seconds = UInt8(elapsedTime)
-        elapsedTime -= NSTimeInterval(seconds)
+        totalTimeLabel.text = formatTime(Int(totalTimeAsDouble + Double(elapsedTime)))
         
-        let hundredthOfASecond = immutibleElapsedTime * 100
+        let hundredthOfASecond = elapsedTime * 100
         
         timerProgress = convertValue(CGFloat(hundredthOfASecond), r1Min: 0, r1Max: (CGFloat(recordingTimeLimit) * 100), r2Min: 0, r2Max: 1)
         
@@ -173,10 +177,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         progressBar.alpha = 0
         progressBar.progress = 0
+        totalTimeLabel.font = UIFont.monospacedDigitSystemFontOfSize(14, weight: UIFontWeightRegular)
         
         setupCamera()
         setCameraOrientationButtonLabel()
-        setSoundButtonLabel()
         updateButtonCount()
         
         if backCamera != nil {
@@ -191,14 +195,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         if frontCamera == nil {
             switchButton.alpha = 0
-        }
-    }
-    
-    func setSoundButtonLabel() {
-        if usingSound == true {
-            soundButton.setTitle("🎤", forState: UIControlState.Normal)
-        } else {
-            soundButton.setTitle("🎤🚫", forState: UIControlState.Normal)
         }
     }
     
@@ -303,6 +299,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         startTime = NSDate.timeIntervalSinceReferenceDate()
         
         progressBar.alpha = 1
+        totalTimeLabel.alpha = 1
         
         hideIcons()
         
@@ -393,8 +390,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     func runWhenDeletedAllClips() {
-        delay(0.3) { // delay waits for segue to happen before showing toast.
-            toastWithMessage("Deleted", appendTo: self.view, style: .Negative)
+        delay(0.4) { // delay waits for segue to happen before showing toast.
+            toastWithMessage("Deleted", appendTo: self.view, style: .Neutral)
         }
     }
     
@@ -430,22 +427,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBAction func tapButton(sender: AnyObject) {
 //        takeStillImage()
         toastWithMessage("Tap and hold to record", appendTo: self.view, timeShownInSeconds: 1, style: .Neutral)
-    }
-    
-    @IBAction func done(sender: AnyObject) {
-        
-    }
-    
-    @IBAction func tapSoundButton(sender: AnyObject) {
-        if usingSound == true {
-            usingSound = false
-            removeMic()
-            setSoundButtonLabel()
-        } else {
-            usingSound = true
-            startMic()
-            setSoundButtonLabel()
-        }
     }
     
     func showVideoPreview() {
