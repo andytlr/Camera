@@ -22,11 +22,9 @@ func formatTime(timeInSeconds: Int) -> String {
     let seconds = (timeInSeconds % 3600) % 60
     
     if hours != 0 {
-        return "\(hours)h \(minutes)m \(seconds)s"
-    } else if minutes != 0 {
-        return "\(minutes)m \(seconds)s"
+        return String(format: "%02d", hours) + ":" + String(format: "%02d", minutes) + ":" + String(format: "%02d", seconds)
     } else {
-        return "\(seconds)s"
+        return String(format: "%02d", minutes) + ":" + String(format: "%02d", seconds)
     }
 }
 
