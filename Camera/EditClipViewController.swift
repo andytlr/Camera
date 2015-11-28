@@ -298,6 +298,13 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        textField.endEditing(true)
+        
+        let characterCount = textInputTextField.text?.characters.count
+        if characterCount == 0 {
+            textInputTextField.hidden = true
+        }
+        
         return true
     }
     
