@@ -78,7 +78,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func showIcons() {
         switchButton.alpha = 1
-        showListButton.alpha = 1
+        if clipCount == 0 {
+            showListButton.alpha = 0.25
+        } else {
+            showListButton.alpha = 1
+        }
         totalTimeLabel.alpha = 1
     }
     
