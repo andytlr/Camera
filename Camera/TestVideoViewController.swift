@@ -14,9 +14,7 @@ class TestVideoViewController: UIViewController {
 
     @IBOutlet weak var clipView: UIView!
     
-    let blackView = UIView()
-    
-    var player: AVPlayer?
+    var player: AVPlayer!
     var playerLayer: AVPlayerLayer?
 
     
@@ -27,6 +25,7 @@ class TestVideoViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         
         let filePath = "example_recording.mov"
+        print("this is working")
         let URL = NSURL(fileURLWithPath: filePath)
         let videoAsset = AVAsset(URL: URL)
         let playerItem = AVPlayerItem(asset: videoAsset)
