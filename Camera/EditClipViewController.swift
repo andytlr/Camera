@@ -151,6 +151,11 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     func setUpTextInput() {
         textInputTextField.hidden = true
+        
+        // Customize placeholder
+        let placeholderColor = UIColor.whiteColor()
+        textInputTextField.attributedPlaceholder = NSAttributedString(string: "Type something…",
+            attributes: [NSForegroundColorAttributeName: placeholderColor.colorWithAlphaComponent(0.3)])
     }
     
     func keyboardWillShow(notification: NSNotification) {
