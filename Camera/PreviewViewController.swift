@@ -215,6 +215,7 @@ class PreviewViewController: UIViewController {
                 deleteLabel.alpha = 1
                 view.backgroundColor = redColor.colorWithAlphaComponent(0.95)
                 blackView.alpha = 0
+                cameraViewController.totalTimeLabel.text = totalDurationInSeconds
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
