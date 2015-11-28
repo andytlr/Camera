@@ -180,17 +180,23 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         print("keyboard will show")
         
         if let userInfo = notification.userInfo {
-            let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+            let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+            
+            print("keyboard size: \(keyboardSize)")
             
             // Get UIKeyboard animation values
             let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
             let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
             
             // Layout math
-            let keyboardTop = keyboardSize.origin.y - keyboardSize.size.height
+            let keyboardTop = screenSize.height - keyboardSize.size.height
+            print("top: \(keyboardTop)")
+            
             let textFieldHeight = self.textInputTextField.frame.size.height
             let textFieldPadding = CGFloat(20)
             let textFieldEndY = keyboardTop - (textFieldHeight + textFieldPadding)
+            
+            print("putting it here: \(textFieldEndY)")
             
             UIView.animateWithDuration(duration, delay: 0, options: options, animations: {
                 self.textInputTextField.frame.origin = CGPoint(x: self.textFieldOrigin.x, y: textFieldEndY)
