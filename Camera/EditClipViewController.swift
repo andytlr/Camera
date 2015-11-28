@@ -30,11 +30,15 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     
-    var textFieldOrigin = CGPoint(x: 20, y: 401)
-    var textFieldNewPositionOrigin = CGPoint(x: 20, y: 401)
-    
     var textFieldOriginalCenter: CGPoint!
     var textFieldScaleTransform: CGAffineTransform!
+    
+    var screenSize: CGRect = UIScreen.mainScreen().bounds
+    
+    var textFieldOrigin = CGPoint(x: 20, y: 20)
+    var textFieldNewPositionOrigin = CGPoint(x: 20, y: 20)
+    
+    var blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
     
     var drawingViewController: DrawingViewController!
     
@@ -45,7 +49,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         textFieldPanGestureRecognizer.delegate = self
         
         // Register for keyboard events
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
         
@@ -56,13 +61,10 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         setUpTextInput()
         
         // Set up drawing shit
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         drawingViewController = storyboard.instantiateViewControllerWithIdentifier("DrawingViewController") as! DrawingViewController
         drawingViewController.editClipViewController = self
-        
-//        print(clip)
     }
     
     // For some unknown reason, pausing when the video goes into background and starting it again when it comes into the foreground is causing multiple instances of the audio to continue playing. If you're muted this is inaudible but the app will crash when you go back to the camera. For the moment I've commented out the .pause() and .play().
@@ -140,7 +142,6 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     func playerDidReachEndNotificationHandler(notification: NSNotification) {
-        // Loop video
         let playerItem = notification.object as! AVPlayerItem
         playerItem.seekToTime(kCMTimeZero)
     }
@@ -151,38 +152,102 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     func setUpTextInput() {
         textInputTextField.hidden = true
+        
+        // Set default position
+        let textFieldHeight = self.textInputTextField.frame.size.height
+        let textFieldPadding = CGFloat(40)
+        let textFieldStartY = screenSize.height - (textFieldHeight + textFieldPadding)
+        textInputTextField.frame.origin = CGPoint(x: textInputTextField.frame.origin.x, y: textFieldStartY)
+        
+        // Customize placeholder
+        let placeholderColor = UIColor.whiteColor()
+        textInputTextField.attributedPlaceholder = NSAttributedString(string: "Type something…",
+            attributes: [NSForegroundColorAttributeName: placeholderColor.colorWithAlphaComponent(0.3)])
     }
+    
+    // MARK: Blur
+    
+    func blurClip() {
+        self.blurView.frame = self.clipView.frame
+        self.view.insertSubview(self.blurView, aboveSubview: self.drawingView)
+    }
+    
+    func focusClip() {
+        self.blurView.removeFromSuperview()
+    }
+    
+    // MARK: Keyboard Events
     
     func keyboardWillShow(notification: NSNotification) {
-        // TODO: get keyboard frame
+        if let userInfo = notification.userInfo {
+            let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
+        
+            // Get UIKeyboard animation values
+            let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
+            let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+            
+            // Layout math
+            let keyboardTop = screenSize.height - keyboardSize.size.height
+            let textFieldHeight = self.textInputTextField.frame.size.height
+            let textFieldPadding = CGFloat(20)
+            let textFieldEndY = keyboardTop - (textFieldHeight + textFieldPadding)
+            
+            UIView.animateWithDuration(duration, delay: 0, options: options, animations: {
+                self.textInputTextField.frame.origin = CGPoint(x: self.textFieldOrigin.x, y: textFieldEndY)
+                self.textInputTextField.alpha = 1
+            }, completion: nil)
+        }
     }
     
+    func keyboardWillHide(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            // Get UIKeyboard animation values
+            let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
+            let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+            
+            // Layout math
+            let textFieldHeight = self.textInputTextField.frame.size.height
+            let textFieldPadding = CGFloat(40)
+            let textFieldEndY = screenSize.height - (textFieldHeight + textFieldPadding)
+            
+            UIView.animateWithDuration(duration, delay: 0, options: options, animations: {
+                self.textInputTextField.frame.origin = CGPoint(x: self.textFieldOrigin.x, y: textFieldEndY)
+                self.textInputTextField.alpha = 1
+            }, completion: nil)
+        }
+    }
+    
+    // MARK: Begin/End Text Input
+    
     func beginTextInput() {
+        blurClip()
         textInputTextField.hidden = false
         textInputTextField.alpha = 0
         textInputTextField.becomeFirstResponder()
-        textInputTextField.frame.origin = CGPoint(x: textFieldOrigin.x, y: textFieldOrigin.y + 250)
-        
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
-            self.textInputTextField.frame.origin = self.textFieldOrigin
-            self.textInputTextField.alpha = 1
-        }, completion: nil)
     }
     
     func endTextInput() {
+        focusClip()
+        
         let characterCount = textInputTextField.text?.characters.count
         characterCount != 0 ? commitTextInput() : cancelTextInput()
     }
     
     func commitTextInput() {
+        print("commit text input")
         textInputTextField.endEditing(true)
     }
     
     func cancelTextInput() {
         self.textInputTextField.endEditing(true)
         
+        // Layout math
+        let textFieldHeight = self.textInputTextField.frame.size.height
+        let textFieldPadding = CGFloat(40)
+        let textFieldEndY = screenSize.height - (textFieldHeight + textFieldPadding)
+        
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: {
-            self.textInputTextField.frame.origin = CGPoint(x: self.textFieldOrigin.x, y: self.textFieldOrigin.y + 250)
+            self.textInputTextField.frame.origin = CGPoint(x: self.textFieldOrigin.x, y: textFieldEndY)
             self.textInputTextField.alpha = 0
         }, completion: { (finished: Bool) -> Void in
             self.textInputTextField.hidden = true
@@ -193,6 +258,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         print(textInputTextField.hidden)
         textInputTextField.hidden ? beginTextInput() : endTextInput()
     }
+    
+    // MARK: Manipulate Text Layer
     
     @IBAction func panText(sender: AnyObject) {
         let translation = sender.translationInView(view)
@@ -211,48 +278,48 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     @IBAction func pinchText(sender: AnyObject) {
-        let scale = sender.scale as CGFloat
-        
-        if sender.state == .Changed {
-            textFieldScaleTransform = CGAffineTransformMakeScale(scale, scale)
-            textInputTextField.transform = textFieldScaleTransform
-        }
+//        let scale = sender.scale as CGFloat
+//        
+//        if sender.state == .Changed {
+//            textFieldScaleTransform = CGAffineTransformMakeScale(scale, scale)
+//            textInputTextField.transform = textFieldScaleTransform
+//        }
     }
     
     @IBAction func rotateText(sender: AnyObject) {
-        if sender.state == .Changed {
-            textInputTextField.transform = CGAffineTransformRotate(textFieldScaleTransform, sender.rotation)
-        }
+//        if sender.state == .Changed {
+//            textInputTextField.transform = CGAffineTransformRotate(textFieldScaleTransform, sender.rotation)
+//        }
     }
     
     // MARK: UITextFieldDelegate
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        textField.endEditing(true)
+        
+        let characterCount = textInputTextField.text?.characters.count
+        if characterCount == 0 {
+            textInputTextField.hidden = true
+        }
+        
         return true
     }
     
     @IBAction func beginEditingText(sender: AnyObject) {
-        let characterCount = textInputTextField.text?.characters.count
-        
-        if characterCount > 0 {
-            // Return to original position above keyboard
-            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
-                    self.textInputTextField.frame.origin = self.textFieldOrigin
-            }, completion: nil)
-        }
+        blurClip()
+        self.textFieldNewPositionOrigin = textInputTextField.frame.origin
     }
     
     @IBAction func endEditingText(sender: AnyObject) {
-        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
-            self.textInputTextField.frame.origin = self.textFieldNewPositionOrigin
-        }, completion: nil)
+        focusClip()
     }
     
     @IBAction func doneEditing(sender: AnyObject) {
         let realm = try! Realm()
         
         try! realm.write {
+            // Create new text layer
             if self.textInputTextField.text != "" {
                 let textLayer = TextLayer()
                 textLayer.text = self.textInputTextField.text
@@ -261,6 +328,12 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
                 self.clip.textLayer = textLayer
             }
             
+            // Clear existing text layer
+            if self.clip.textLayer != nil && self.textInputTextField.text == "" {
+                self.clip.textLayer = nil
+            }
+            
+            // Create and update drawing layer
             if self.drawingImageView.image != nil {
                 let overlayData = UIImagePNGRepresentation(self.drawingImageView.image!)
                 self.clip.overlay = overlayData
@@ -277,7 +350,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         return true
     }
     
-    // Drawing shit
+    // MARK: Drawing
     
     @IBAction func tappedDrawButton(sender: AnyObject) {
         if drawingViewController.view.superview == self.view {
