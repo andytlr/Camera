@@ -217,7 +217,6 @@ class PreviewViewController: UIViewController {
                 deleteIcon.alpha = 1
                 view.backgroundColor = redColor.colorWithAlphaComponent(0.95)
                 blackView.alpha = 0
-                cameraViewController.totalTimeLabel.text = totalDurationInSeconds
                 
                 UIView.animateWithDuration(dismissDuration, animations: { () -> Void in
                     
@@ -230,7 +229,10 @@ class PreviewViewController: UIViewController {
                         
                         self.killPreviewAndRestartCamera()
                         
-                        deleteSingleClip(self.clip)
+                        dispatch_async(dispatch_get_main_queue()) {
+                            deleteSingleClip(self.clip)
+                            self.cameraViewController.totalTimeLabel.text = totalDurationInSeconds
+                        }
                 })
                 
             } else {
