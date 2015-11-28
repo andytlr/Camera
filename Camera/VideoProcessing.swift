@@ -16,7 +16,15 @@ var totalTimeAsDouble: Double = 0
 var totalDurationInSeconds: String = ""
 
 func formatTime(timeInSeconds: Double) -> String {
-    return "\(Int(round(timeInSeconds)))sec"
+    
+    let seconds = timeInSeconds % 60
+    let minutes = timeInSeconds / 60
+    
+    if Int(minutes) == 0 {
+        return "\(Int(round(seconds)))s"
+    } else {
+        return "\(Int(minutes))m \(Int(round(seconds)))s"
+    }
 }
 
 func updateTotalTime() {

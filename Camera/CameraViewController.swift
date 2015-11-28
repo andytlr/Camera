@@ -177,6 +177,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         progressBar.alpha = 0
         progressBar.progress = 0
+        totalTimeLabel.font = UIFont.monospacedDigitSystemFontOfSize(14, weight: UIFontWeightRegular)
         
         setupCamera()
         setCameraOrientationButtonLabel()
