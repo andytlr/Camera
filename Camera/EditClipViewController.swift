@@ -30,11 +30,13 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     
-    var textFieldOrigin = CGPoint(x: 20, y: 401)
-    var textFieldNewPositionOrigin = CGPoint(x: 20, y: 401)
-    
     var textFieldOriginalCenter: CGPoint!
     var textFieldScaleTransform: CGAffineTransform!
+    
+    var screenSize: CGRect = UIScreen.mainScreen().bounds
+    
+    var textFieldOrigin = CGPoint(x: 20, y: 20)
+    var textFieldNewPositionOrigin = CGPoint(x: 20, y: 20)
     
     var blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
     
@@ -47,7 +49,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         textFieldPanGestureRecognizer.delegate = self
         
         // Register for keyboard events
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
         
@@ -152,6 +155,12 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     func setUpTextInput() {
         textInputTextField.hidden = true
         
+        print("setting up text input")
+        
+        // Set default position
+        textInputTextField.frame.origin = CGPoint(x: textInputTextField.frame.origin.x, y: screenSize.height / 2)
+        print(textInputTextField.frame.origin)
+        
         // Customize placeholder
         let placeholderColor = UIColor.whiteColor()
         textInputTextField.attributedPlaceholder = NSAttributedString(string: "Type something…",
@@ -168,22 +177,58 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     func keyboardWillShow(notification: NSNotification) {
-        // TODO: get keyboard frame
+        print("keyboard will show")
+        
+        if let userInfo = notification.userInfo {
+            let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+            
+            // Get UIKeyboard animation values
+            let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
+            let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+            
+            // Layout math
+            let keyboardTop = keyboardSize.origin.y - keyboardSize.size.height
+            let textFieldHeight = self.textInputTextField.frame.size.height
+            let textFieldPadding = CGFloat(20)
+            let textFieldEndY = keyboardTop - (textFieldHeight + textFieldPadding)
+            
+            UIView.animateWithDuration(duration, delay: 0, options: options, animations: {
+                self.textInputTextField.frame.origin = CGPoint(x: self.textFieldOrigin.x, y: textFieldEndY)
+                self.textInputTextField.alpha = 1
+            }, completion: nil)
+        }
+    }
+    
+    func keyboardWillHide(notification: NSNotification) {
+        print("keyboard will hide")
+        
+        if let userInfo = notification.userInfo {
+            let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
+            
+            // Get UIKeyboard animation values
+            let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
+            let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
+            
+            // Layout math
+            let textFieldHeight = self.textInputTextField.frame.size.height
+            let textFieldPadding = CGFloat(40)
+            let textFieldEndY = screenSize.height - (textFieldHeight + textFieldPadding)
+            
+            UIView.animateWithDuration(duration, delay: 0, options: options, animations: {
+                self.textInputTextField.frame.origin = CGPoint(x: self.textFieldOrigin.x, y: textFieldEndY)
+                self.textInputTextField.alpha = 1
+            }, completion: nil)
+        }
     }
     
     func beginTextInput() {
+        print("begin text input")
+        
         textInputTextField.hidden = false
         textInputTextField.alpha = 0
         textInputTextField.becomeFirstResponder()
-        textInputTextField.frame.origin = CGPoint(x: textFieldOrigin.x, y: textFieldOrigin.y + 250)
         
         blurClip()
-        
-        // Show text field
-        UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
-            self.textInputTextField.frame.origin = self.textFieldOrigin
-            self.textInputTextField.alpha = 1
-        }, completion: nil)
     }
     
     func endTextInput() {
@@ -194,14 +239,15 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     func commitTextInput() {
+        print("commit text input")
         textInputTextField.endEditing(true)
     }
     
     func cancelTextInput() {
         self.textInputTextField.endEditing(true)
-        
+//        
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: {
-            self.textInputTextField.frame.origin = CGPoint(x: self.textFieldOrigin.x, y: self.textFieldOrigin.y + 250)
+            self.textInputTextField.frame.origin = CGPoint(x: self.textFieldOrigin.x, y: self.screenSize.height / 2)
             self.textInputTextField.alpha = 0
         }, completion: { (finished: Bool) -> Void in
             self.textInputTextField.hidden = true
@@ -257,18 +303,18 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         let characterCount = textInputTextField.text?.characters.count
         if characterCount > 0 {
             // Return to original position above keyboard
-            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
-                    self.textInputTextField.frame.origin = self.textFieldOrigin
-            }, completion: nil)
+//            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
+//                    self.textInputTextField.frame.origin = self.textFieldOrigin
+//            }, completion: nil)
         }
     }
     
     @IBAction func endEditingText(sender: AnyObject) {
         focusClip()
         
-        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
-            self.textInputTextField.frame.origin = self.textFieldNewPositionOrigin
-        }, completion: nil)
+//        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
+//            self.textInputTextField.frame.origin = self.textFieldNewPositionOrigin
+//        }, completion: nil)
     }
     
     @IBAction func doneEditing(sender: AnyObject) {
