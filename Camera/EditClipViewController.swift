@@ -155,11 +155,11 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     func setUpTextInput() {
         textInputTextField.hidden = true
         
-        print("setting up text input")
-        
         // Set default position
-        textInputTextField.frame.origin = CGPoint(x: textInputTextField.frame.origin.x, y: screenSize.height / 2)
-        print(textInputTextField.frame.origin)
+        let textFieldHeight = self.textInputTextField.frame.size.height
+        let textFieldPadding = CGFloat(40)
+        let textFieldStartY = screenSize.height - (textFieldHeight + textFieldPadding)
+        textInputTextField.frame.origin = CGPoint(x: textInputTextField.frame.origin.x, y: textFieldStartY)
         
         // Customize placeholder
         let placeholderColor = UIColor.whiteColor()
@@ -200,11 +200,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     func keyboardWillHide(notification: NSNotification) {
-        print("keyboard will hide")
-        
         if let userInfo = notification.userInfo {
-            let keyboardSize = (userInfo[UIKeyboardFrameBeginUserInfoKey] as! NSValue).CGRectValue()
-            
             // Get UIKeyboard animation values
             let duration = userInfo[UIKeyboardAnimationDurationUserInfoKey] as! Double
             let options = UIViewAnimationOptions(rawValue: UInt((userInfo[UIKeyboardAnimationCurveUserInfoKey] as! NSNumber).integerValue << 16))
@@ -222,13 +218,10 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     func beginTextInput() {
-        print("begin text input")
-        
+        blurClip()
         textInputTextField.hidden = false
         textInputTextField.alpha = 0
         textInputTextField.becomeFirstResponder()
-        
-        blurClip()
     }
     
     func endTextInput() {
@@ -245,9 +238,14 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     func cancelTextInput() {
         self.textInputTextField.endEditing(true)
-//        
+        
+        // Layout math
+        let textFieldHeight = self.textInputTextField.frame.size.height
+        let textFieldPadding = CGFloat(40)
+        let textFieldEndY = screenSize.height - (textFieldHeight + textFieldPadding)
+        
         UIView.animateWithDuration(0.5, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: {
-            self.textInputTextField.frame.origin = CGPoint(x: self.textFieldOrigin.x, y: self.screenSize.height / 2)
+            self.textInputTextField.frame.origin = CGPoint(x: self.textFieldOrigin.x, y: textFieldEndY)
             self.textInputTextField.alpha = 0
         }, completion: { (finished: Bool) -> Void in
             self.textInputTextField.hidden = true
@@ -275,20 +273,20 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         }
     }
     
-    @IBAction func pinchText(sender: AnyObject) {
-        let scale = sender.scale as CGFloat
-        
-        if sender.state == .Changed {
-            textFieldScaleTransform = CGAffineTransformMakeScale(scale, scale)
-            textInputTextField.transform = textFieldScaleTransform
-        }
-    }
+//    @IBAction func pinchText(sender: AnyObject) {
+//        let scale = sender.scale as CGFloat
+//        
+//        if sender.state == .Changed {
+//            textFieldScaleTransform = CGAffineTransformMakeScale(scale, scale)
+//            textInputTextField.transform = textFieldScaleTransform
+//        }
+//    }
     
-    @IBAction func rotateText(sender: AnyObject) {
-        if sender.state == .Changed {
-            textInputTextField.transform = CGAffineTransformRotate(textFieldScaleTransform, sender.rotation)
-        }
-    }
+//    @IBAction func rotateText(sender: AnyObject) {
+//        if sender.state == .Changed {
+//            textInputTextField.transform = CGAffineTransformRotate(textFieldScaleTransform, sender.rotation)
+//        }
+//    }
     
     // MARK: UITextFieldDelegate
     
