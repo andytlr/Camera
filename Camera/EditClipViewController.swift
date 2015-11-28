@@ -169,7 +169,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     func blurClip() {
         self.blurView.frame = self.clipView.frame
-        self.view.insertSubview(self.blurView, aboveSubview: self.clipView)
+        self.view.insertSubview(self.blurView, aboveSubview: self.drawingView)
     }
     
     func focusClip() {
