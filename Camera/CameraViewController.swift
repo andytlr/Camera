@@ -53,9 +53,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var clipCount: Int! {
         didSet {
             if clipCount == 0 {
+                showListButton.enabled = false
+                showListButton.alpha = 0.25
                 totalTimeLabel.alpha = 0
                 totalTimeLabel.text = ""
             } else {
+                showListButton.enabled = true
+                showListButton.alpha = 1
                 totalTimeLabel.text = totalTimeInSeconds    
                 totalTimeLabel.alpha = 1
             }
@@ -69,11 +73,13 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func hideIcons() {
         switchButton.alpha = 0
         showListButton.alpha = 0
+        totalTimeLabel.alpha = 0
     }
     
     func showIcons() {
         switchButton.alpha = 1
         showListButton.alpha = 1
+        totalTimeLabel.alpha = 1
     }
     
     func updateTime() {
