@@ -171,7 +171,7 @@
 				TargetAttributes = {
 					C21477BA1BEE9FE7001474A4 = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = FG8F72SY67;
+						DevelopmentTeam = AX58DZ45MU;
 					};
 				};
 			};
@@ -393,7 +393,7 @@
 				INFOPLIST_FILE = Camera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = benashman.Camera;
+				PRODUCT_BUNDLE_IDENTIFIER = codyevol.Camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
@@ -409,7 +409,7 @@
 				INFOPLIST_FILE = Camera/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = benashman.Camera;
+				PRODUCT_BUNDLE_IDENTIFIER = codyevol.Camera;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 			};
