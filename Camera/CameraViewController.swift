@@ -427,7 +427,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     @IBAction func tapButton(sender: AnyObject) {
 //        takeStillImage()
-        toastWithMessage("Tap and hold to record", appendTo: self.view, timeShownInSeconds: 1, style: .Neutral)
+        toastWithMessage("Hold Anywhere to Record", appendTo: self.view, timeShownInSeconds: 1, style: .Neutral)
     }
     
     func showVideoPreview() {
