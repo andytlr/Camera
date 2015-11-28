@@ -15,15 +15,16 @@ import RealmSwift
 var totalTimeAsDouble: Double = 0
 var totalDurationInSeconds: String = ""
 
-func formatTime(timeInSeconds: Double) -> String {
+func formatTime(timeInSeconds: Int) -> String {
     
-    let seconds = timeInSeconds % 60
-    let minutes = timeInSeconds / 60
+//    let hours = timeInSeconds / 3600
+    let minutes = (timeInSeconds % 3600) / 60
+    let seconds = (timeInSeconds % 3600) % 60
     
-    if Int(minutes) == 0 {
-        return "\(Int(round(seconds)))s"
+    if minutes == 0 {
+        return "\(seconds)s"
     } else {
-        return "\(Int(minutes))m \(Int(round(seconds)))s"
+        return "\(minutes)m \(seconds)s"
     }
 }
 
@@ -37,7 +38,7 @@ func updateTotalTime() {
         let duration = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename))).duration
         totalTimeAsDouble += CMTimeGetSeconds(duration)
         
-        totalDurationInSeconds = formatTime(totalTimeAsDouble)
+        totalDurationInSeconds = formatTime(Int(totalTimeAsDouble))
     }
 }
 

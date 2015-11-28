@@ -89,7 +89,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
         let elapsedTime: NSTimeInterval = currentTime - startTime
         
-        totalTimeLabel.text = formatTime(totalTimeAsDouble + Double(elapsedTime))
+        totalTimeLabel.text = formatTime(Int(totalTimeAsDouble + Double(elapsedTime)))
         
         let hundredthOfASecond = elapsedTime * 100
         
