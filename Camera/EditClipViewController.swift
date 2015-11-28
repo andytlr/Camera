@@ -61,7 +61,6 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         setUpTextInput()
         
         // Set up drawing shit
-        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         drawingViewController = storyboard.instantiateViewControllerWithIdentifier("DrawingViewController") as! DrawingViewController
@@ -143,7 +142,6 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     func playerDidReachEndNotificationHandler(notification: NSNotification) {
-        // Loop video
         let playerItem = notification.object as! AVPlayerItem
         playerItem.seekToTime(kCMTimeZero)
     }
@@ -167,6 +165,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             attributes: [NSForegroundColorAttributeName: placeholderColor.colorWithAlphaComponent(0.3)])
     }
     
+    // MARK: Blur
+    
     func blurClip() {
         self.blurView.frame = self.clipView.frame
         self.view.insertSubview(self.blurView, aboveSubview: self.clipView)
@@ -175,6 +175,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     func focusClip() {
         self.blurView.removeFromSuperview()
     }
+    
+    // MARK: Keyboard Events
     
     func keyboardWillShow(notification: NSNotification) {
         print("keyboard will show")
@@ -223,6 +225,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         }
     }
     
+    // MARK: Begin/End Text Input
+    
     func beginTextInput() {
         blurClip()
         textInputTextField.hidden = false
@@ -262,6 +266,8 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         print(textInputTextField.hidden)
         textInputTextField.hidden ? beginTextInput() : endTextInput()
     }
+    
+    // MARK: Manipulate Text Layer
     
     @IBAction func panText(sender: AnyObject) {
         let translation = sender.translationInView(view)
@@ -310,7 +316,6 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     @IBAction func beginEditingText(sender: AnyObject) {
         blurClip()
-        
         self.textFieldNewPositionOrigin = textInputTextField.frame.origin
     }
     
@@ -346,7 +351,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         return true
     }
     
-    // Drawing shit
+    // MARK: Drawing
     
     @IBAction func tappedDrawButton(sender: AnyObject) {
         if drawingViewController.view.superview == self.view {
