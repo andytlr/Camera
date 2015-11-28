@@ -300,21 +300,11 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     @IBAction func beginEditingText(sender: AnyObject) {
         blurClip()
         
-        let characterCount = textInputTextField.text?.characters.count
-        if characterCount > 0 {
-            // Return to original position above keyboard
-//            UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
-//                    self.textInputTextField.frame.origin = self.textFieldOrigin
-//            }, completion: nil)
-        }
+        self.textFieldNewPositionOrigin = textInputTextField.frame.origin
     }
     
     @IBAction func endEditingText(sender: AnyObject) {
         focusClip()
-        
-//        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 10, options: [], animations: {
-//            self.textInputTextField.frame.origin = self.textFieldNewPositionOrigin
-//        }, completion: nil)
     }
     
     @IBAction func doneEditing(sender: AnyObject) {
