@@ -394,7 +394,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func runWhenDeletedAllClips() {
         delay(0.3) { // delay waits for segue to happen before showing toast.
-            toastWithMessage("Deleted", appendTo: self.view, destructive: true)
+            toastWithMessage("Deleted", appendTo: self.view, style: "destructive")
         }
     }
     
@@ -428,7 +428,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     @IBAction func tapButton(sender: AnyObject) {
-        takeStillImage()
+//        takeStillImage()
+        toastWithMessage("Tap and hold to record", appendTo: self.view, timeShownInSeconds: 1, style: "neutral")
     }
     
     @IBAction func done(sender: AnyObject) {
