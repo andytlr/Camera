@@ -24,14 +24,13 @@ class TestVideoViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         
-        let filePath = "example_recording.mov"
-        print("this is working")
-        let URL = NSURL(fileURLWithPath: filePath)
+        let filePath = NSBundle.mainBundle().pathForResource("example_recording", ofType: "mov")
+        let URL = NSURL(fileURLWithPath: filePath!)
         let videoAsset = AVAsset(URL: URL)
         let playerItem = AVPlayerItem(asset: videoAsset)
             
         playerLayer = AVPlayerLayer()
-        playerLayer!.frame = view.bounds
+        playerLayer!.frame = clipView.bounds
         player = AVPlayer(playerItem: playerItem)
         player!.actionAtItemEnd = .None
         playerLayer!.player = player
@@ -40,6 +39,5 @@ class TestVideoViewController: UIViewController {
         clipView.layer.addSublayer(playerLayer!)
         player!.play()
             
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         }
 }
