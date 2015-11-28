@@ -20,6 +20,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var switchButton: UIButton!
     @IBOutlet weak var showListButton: UIButton!
+    @IBOutlet weak var totalTimeLabel: UILabel!
     @IBOutlet weak var progressBar: UIProgressView!
     
     var usingbackCamera: Bool = true
@@ -52,11 +53,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var clipCount: Int! {
         didSet {
             if clipCount == 0 {
-                showListButton.alpha = 0
-                showListButton.setTitle("", forState: UIControlState.Normal)
+                totalTimeLabel.alpha = 0
+                totalTimeLabel.text = ""
             } else {
-                showListButton.setTitle(totalTimeInSeconds, forState: UIControlState.Normal)
-                showListButton.alpha = 1
+                totalTimeLabel.text = totalTimeInSeconds    
+                totalTimeLabel.alpha = 1
             }
         }
     }
