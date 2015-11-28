@@ -11,23 +11,37 @@ import AVKit
 import AVFoundation
 
 class TestVideoViewController: UIViewController {
+
+    @IBOutlet weak var clipView: UIView!
     
+    let blackView = UIView()
     
+    var player: AVPlayer?
+    var playerLayer: AVPlayerLayer?
+    
+    var clip: Clip!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+    override func viewWillAppear(animated: Bool) {
+        
+        let filePath = "example_recording.mov"
+        let URL = NSURL(fileURLWithPath: filePath)
+        let videoAsset = AVAsset(URL: URL)
+        let playerItem = AVPlayerItem(asset: videoAsset)
+            
+        playerLayer = AVPlayerLayer()
+        playerLayer!.frame = view.bounds
+        player = AVPlayer(playerItem: playerItem)
+        player!.actionAtItemEnd = .None
+        playerLayer!.player = player
+        playerLayer!.backgroundColor = UIColor.clearColor().CGColor
+        playerLayer!.videoGravity = AVLayerVideoGravityResize
+        clipView.layer.addSublayer(playerLayer!)
+        player!.play()
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
+        }
 }
