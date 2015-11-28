@@ -178,7 +178,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     // MARK: Keyboard Events
     
-    func keyboardWillShow(notification: NSNotification) {        
+    func keyboardWillShow(notification: NSNotification) {
         if let userInfo = notification.userInfo {
             let keyboardSize = (userInfo[UIKeyboardFrameEndUserInfoKey] as! NSValue).CGRectValue()
         
@@ -277,20 +277,20 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         }
     }
     
-//    @IBAction func pinchText(sender: AnyObject) {
+    @IBAction func pinchText(sender: AnyObject) {
 //        let scale = sender.scale as CGFloat
 //        
 //        if sender.state == .Changed {
 //            textFieldScaleTransform = CGAffineTransformMakeScale(scale, scale)
 //            textInputTextField.transform = textFieldScaleTransform
 //        }
-//    }
+    }
     
-//    @IBAction func rotateText(sender: AnyObject) {
+    @IBAction func rotateText(sender: AnyObject) {
 //        if sender.state == .Changed {
 //            textInputTextField.transform = CGAffineTransformRotate(textFieldScaleTransform, sender.rotation)
 //        }
-//    }
+    }
     
     // MARK: UITextFieldDelegate
     
