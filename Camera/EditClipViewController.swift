@@ -350,6 +350,31 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         return true
     }
     
+    // MARK: Shake
+    
+    override func canBecomeFirstResponder() -> Bool {
+        return true
+    }
+    
+    override func motionEnded(motion: UIEventSubtype, withEvent event: UIEvent?) {
+        if motion == .MotionShake {
+            if self.textInputTextField.text != "" || self.drawingImageView.image != nil {
+                let alert = UIAlertController(title: "Shake it off?", message: "Clear all text and drawings?", preferredStyle: .Alert)
+                alert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+                alert.addAction(UIAlertAction(title: "Clear", style: .Default, handler: { action in
+                    if action.style == .Default {
+                        self.textInputTextField.text = ""
+                        self.textInputTextField.endEditing(true)
+                        self.textInputTextField.hidden = true
+                        self.drawingImageView.image = nil
+                    }
+                }))
+                
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
+    }
+    
     // MARK: Drawing
     
     @IBAction func tappedDrawButton(sender: AnyObject) {
