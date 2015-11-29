@@ -440,9 +440,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         clip.filename = outputFileURL.lastPathComponent!
         clip.type = "video"
         
-        print(timerProgress)
         if timerProgress < 0.03 {
-            toastWithMessage("Hold Anywhere to Record", appendTo: self.view, timeShownInSeconds: 1, style: .Neutral)
+            delay(0.3) {
+                toastWithMessage("Hold Anywhere to Record", appendTo: self.view, timeShownInSeconds: 1, style: .Neutral)
+            }
             showIcons()
             deleteClip(clip.filename)
             recordButton.alpha = 1
