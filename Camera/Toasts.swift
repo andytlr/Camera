@@ -19,7 +19,7 @@ func toastWithMessage(message: String, appendTo: UIView, timeShownInSeconds: Dou
     
     // Setup
     let padding: CGFloat = 15
-    let fontSize: CGFloat = 18
+    let fontSize: CGFloat = 14
     let lineHeight: CGFloat = 1.4
     var statusBarHeight: CGFloat = 0
     

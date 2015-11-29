@@ -31,37 +31,36 @@
                                     <constraint firstAttribute="height" constant="79" id="X3x-yh-O3i"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" alpha="0.10000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDq-wE-gcP">
-                                <rect key="frame" x="0.0" y="545" width="148" height="79"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDq-wE-gcP">
+                                <rect key="frame" x="31" y="552" width="86" height="64"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="79" id="6wr-6Y-xdb"/>
+                                    <constraint firstAttribute="height" constant="64" id="6wr-6Y-xdb"/>
                                     <constraint firstAttribute="height" constant="79" id="Xcy-Pp-mY4"/>
-                                    <constraint firstAttribute="width" constant="148" id="uZj-zN-brl"/>
+                                    <constraint firstAttribute="width" constant="86" id="uZj-zN-brl"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                <state key="normal" title="🙎">
+                                <state key="normal" image="flip-down">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <state key="disabled" image="flip-down"/>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="Xcy-Pp-mY4"/>
                                     </mask>
                                 </variation>
                             </button>
-                            <button opaque="NO" alpha="0.10000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SJw-HR-dag">
-                                <rect key="frame" x="227" y="544" width="148" height="80"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SJw-HR-dag">
+                                <rect key="frame" x="258" y="552" width="86" height="64"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="80" id="Hac-Ev-xPN"/>
-                                    <constraint firstAttribute="height" constant="80" id="Qem-5h-xx4"/>
-                                    <constraint firstAttribute="width" constant="148" id="ZgS-Vi-LUU"/>
+                                    <constraint firstAttribute="height" constant="64" id="Qem-5h-xx4"/>
+                                    <constraint firstAttribute="width" constant="86" id="ZgS-Vi-LUU"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                <state key="normal" title="👉">
+                                <state key="normal" image="cameraroll">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
-                                <state key="disabled">
+                                <state key="disabled" image="cameraroll">
                                     <color key="titleColor" red="0.99989169840000003" green="1" blue="0.99988096950000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <variation key="default">
@@ -74,14 +73,14 @@
                         <animations/>
                         <color key="backgroundColor" red="0.19605264067649841" green="0.19609326124191284" blue="0.19605004787445068" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="SJw-HR-dag" firstAttribute="leading" secondItem="HLS-sB-eCR" secondAttribute="trailing" id="2FU-Xe-Jje"/>
-                            <constraint firstItem="TDq-wE-gcP" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="2Tv-Ec-C5w"/>
-                            <constraint firstAttribute="trailing" secondItem="SJw-HR-dag" secondAttribute="trailing" id="Bcd-Pa-Ab1"/>
+                            <constraint firstItem="SJw-HR-dag" firstAttribute="leading" secondItem="HLS-sB-eCR" secondAttribute="trailing" constant="31" id="2FU-Xe-Jje"/>
+                            <constraint firstItem="TDq-wE-gcP" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="31" id="2Tv-Ec-C5w"/>
+                            <constraint firstAttribute="trailing" secondItem="SJw-HR-dag" secondAttribute="trailing" constant="31" id="Bcd-Pa-Ab1"/>
                             <constraint firstItem="HLS-sB-eCR" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="D0s-XX-vCZ"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="TDq-wE-gcP" secondAttribute="bottom" constant="43" id="MwB-Ba-23F"/>
-                            <constraint firstItem="HLS-sB-eCR" firstAttribute="leading" secondItem="TDq-wE-gcP" secondAttribute="trailing" id="UGM-Xh-If8"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="TDq-wE-gcP" secondAttribute="bottom" constant="51" id="MwB-Ba-23F"/>
+                            <constraint firstItem="HLS-sB-eCR" firstAttribute="leading" secondItem="TDq-wE-gcP" secondAttribute="trailing" constant="31" id="UGM-Xh-If8"/>
                             <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="HLS-sB-eCR" secondAttribute="bottom" constant="43" id="hRQ-zG-Pfk"/>
-                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="SJw-HR-dag" secondAttribute="bottom" constant="43" id="hqw-wj-sWL"/>
+                            <constraint firstItem="xb3-aO-Qok" firstAttribute="top" secondItem="SJw-HR-dag" secondAttribute="bottom" constant="51" id="hqw-wj-sWL"/>
                         </constraints>
                     </view>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -93,6 +92,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="cameraroll" width="64" height="64"/>
+        <image name="flip-down" width="64" height="64"/>
         <image name="recordbutton" width="79" height="79"/>
     </resources>
 </document>
