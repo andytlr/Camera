@@ -322,9 +322,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func stopRecording() {
         print("Stop Recording")
         
-        // Stop Timer
         progressBar.alpha = 0
-        timer.invalidate()
         
         recordButton.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(0.5).CGColor
         recordButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
@@ -428,11 +426,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
-    @IBAction func tapButton(sender: AnyObject) {
-//        takeStillImage()
-        toastWithMessage("Hold Anywhere to Record", appendTo: self.view, timeShownInSeconds: 1, style: .Neutral)
-    }
-    
     func showVideoPreview() {
         addChildViewController(previewViewController)
         self.view.addSubview(self.previewViewController.view)
@@ -447,12 +440,23 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         clip.filename = outputFileURL.lastPathComponent!
         clip.type = "video"
         
-        let realm = try! Realm()
-        try! realm.write {
-            realm.add(clip)
+        print(timerProgress)
+        if timerProgress < 0.03 {
+            toastWithMessage("Hold Anywhere to Record", appendTo: self.view, timeShownInSeconds: 1, style: .Neutral)
+            showIcons()
+            deleteClip(clip.filename)
+            recordButton.alpha = 1
+            if clipCount != 0 {
+                totalTimeLabel.alpha = 1
+            }
+        } else {
+            let realm = try! Realm()
+            try! realm.write {
+                realm.add(clip)
+            }
+            showVideoPreview()
         }
-        
-        showVideoPreview()
+        timer.invalidate()
     }
 }
 
