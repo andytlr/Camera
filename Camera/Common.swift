@@ -67,3 +67,7 @@ func getAbsolutePathForFile(filename: String) -> String {
     
     return path
 }
+
+func roundToOneDecimalPlace(float: Double) -> Double {
+    return round(float * 10) / 10
+}
