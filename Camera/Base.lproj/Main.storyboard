@@ -300,6 +300,8 @@
                                             <outlet property="SceneDuration" destination="asA-dI-qEo" id="FQ9-3j-Vlp"/>
                                             <outlet property="SceneNumber" destination="DmA-8b-rkA" id="i7d-nG-m1R"/>
                                             <outlet property="clipView" destination="WG0-Wy-WiR" id="bBb-rL-dPH"/>
+                                            <outlet property="sceneDuration" destination="asA-dI-qEo" id="418-9c-p9H"/>
+                                            <outlet property="sceneNumber" destination="DmA-8b-rkA" id="ogq-kB-XZm"/>
                                             <segue destination="96O-5S-Syf" kind="presentation" identifier="editClipSegue" animates="NO" modalTransitionStyle="crossDissolve" id="AJD-mB-gbY">
                                                 <segue key="commit" inheritsFrom="parent" id="BeT-LG-eqe"/>
                                                 <segue key="preview" inheritsFrom="commit" id="fWp-er-n6J"/>

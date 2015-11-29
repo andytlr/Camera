@@ -23,9 +23,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     var loadingIndicator: UIActivityIndicatorView!
     let colorView = UIView()
     
-    var player: AVPlayer?
-    var playerLayer: AVPlayerLayer?
-    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
@@ -82,9 +79,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
             clipDurationSuffix = "Seconds"
         }
         
-        cell.SceneNumber.text = "\(clip.type): \(clip.filename)"
         cell.clip = clip
-        cell.SceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
+        cell.sceneNumber.text = "\(clip.type): \(clip.filename)"
+        cell.sceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
         
         return cell
     }
