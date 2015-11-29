@@ -53,8 +53,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var clipCount: Int! {
         didSet {
             if clipCount == 0 {
+//                showListButton
                 showListButton.enabled = false
-                showListButton.alpha = 0.25
+                showListButton.alpha = 0.5
                 totalTimeLabel.alpha = 0
                 totalTimeLabel.text = ""
             } else {
@@ -78,7 +79,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func showIcons() {
         switchButton.alpha = 1
         if clipCount == 0 {
-            showListButton.alpha = 0.25
+            showListButton.alpha = 0.5
         } else {
             showListButton.alpha = 1
         }
@@ -180,7 +181,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         totalTimeLabel.font = UIFont.monospacedDigitSystemFontOfSize(14, weight: UIFontWeightRegular)
         
         setupCamera()
-        setCameraOrientationButtonLabel()
         updateButtonCount()
         
         if backCamera != nil {
@@ -198,22 +198,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
-    func setCameraOrientationButtonLabel() {
-        if usingbackCamera == true {
-            switchButton.setTitle("🙎", forState: UIControlState.Normal)
-        } else {
-            switchButton.setTitle("🌴", forState: UIControlState.Normal)
-        }
-    }
-    
     func setupCamera() {
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
         
-        recordButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
+        recordButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.3)
         recordButton.layer.cornerRadius = 40;
         recordButton.clipsToBounds = true;
-        recordButton.layer.borderWidth = 2;
-        recordButton.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(0.5).CGColor
+        recordButton.layer.borderWidth = 1.5;
+        recordButton.layer.borderColor = UIColor.whiteColor().CGColor
         
         // Loop through all the capture devices on this phone
         for device in devices {
@@ -271,7 +263,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 }
             }
             usingbackCamera = false
-            setCameraOrientationButtonLabel()
         } else {
             endSession()
             beginSession(backCamera!)
@@ -281,7 +272,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 }
             }
             usingbackCamera = true
-            setCameraOrientationButtonLabel()
         }
     }
     
@@ -303,12 +293,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         hideIcons()
         
-        recordButton.layer.borderColor = redColor.colorWithAlphaComponent(0.5).CGColor
-        recordButton.backgroundColor = redColor.colorWithAlphaComponent(0.2)
+        recordButton.layer.borderColor = redColor.colorWithAlphaComponent(0.8).CGColor
+        recordButton.backgroundColor = redColor.colorWithAlphaComponent(0.3)
         
         UIView.animateWithDuration(0.6, delay: 0, options: [.Repeat, .Autoreverse, .CurveEaseInOut], animations: { () -> Void in
             
-            self.recordButton.transform = CGAffineTransformMakeScale(1.4, 1.4)
+            self.recordButton.transform = CGAffineTransformMakeScale(1.3, 1.3)
             
             }) { (Bool) -> Void in
         }
@@ -324,8 +314,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         progressBar.alpha = 0
         
-        recordButton.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(0.5).CGColor
-        recordButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
+        recordButton.layer.borderColor = UIColor.whiteColor().CGColor
+        recordButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.3)
         
         UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
             
@@ -407,10 +397,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if sender.state == .Ended {
             stopRecording()
         }
-    }
-    
-    @IBAction func swipeRight(sender: UISwipeGestureRecognizer) {
-        switchCameras()
     }
     
     @IBAction func longPressButton(sender: UILongPressGestureRecognizer) {

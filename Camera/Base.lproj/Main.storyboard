@@ -20,12 +20,24 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OOk-t2-LFN">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X8A-hg-dCk">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="545"/>
+                                        <animations/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="eM9-DA-fv9" appends="YES" id="Ksa-Tj-T8e"/>
+                                        </connections>
+                                    </view>
+                                </subviews>
                                 <animations/>
                                 <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="fi7-FT-psy" appends="YES" id="wC0-RW-yl8"/>
-                                    <outletCollection property="gestureRecognizers" destination="Ock-s3-pv7" appends="YES" id="6d2-6A-8dY"/>
-                                </connections>
+                                <constraints>
+                                    <constraint firstItem="X8A-hg-dCk" firstAttribute="leading" secondItem="OOk-t2-LFN" secondAttribute="leading" id="Ivr-rn-y5p"/>
+                                    <constraint firstAttribute="trailing" secondItem="X8A-hg-dCk" secondAttribute="trailing" id="d4n-KO-mHo"/>
+                                    <constraint firstAttribute="bottom" secondItem="X8A-hg-dCk" secondAttribute="bottom" constant="122" id="luI-r7-wRr"/>
+                                    <constraint firstItem="X8A-hg-dCk" firstAttribute="top" secondItem="OOk-t2-LFN" secondAttribute="top" id="o80-cc-OOx"/>
+                                </constraints>
                             </view>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="MDb-DT-yf2">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
@@ -61,33 +73,33 @@
                                     <outletCollection property="gestureRecognizers" destination="H7V-co-Tg3" appends="YES" id="h3D-An-t6T"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ox4-w2-oTz">
-                                <rect key="frame" x="0.0" y="545" width="148" height="79"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ox4-w2-oTz">
+                                <rect key="frame" x="42" y="552" width="64" height="64"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="79" id="gvs-y1-uBJ"/>
+                                    <constraint firstAttribute="height" constant="64" id="gvs-y1-uBJ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                <state key="normal" title="🙎">
+                                <state key="normal" image="flip">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <state key="highlighted" image="flip"/>
                                 <connections>
                                     <action selector="tapSwitchButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fhL-N1-ApB"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lx0-SS-lNg">
-                                <rect key="frame" x="227" y="544" width="148" height="80"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lx0-SS-lNg">
+                                <rect key="frame" x="269" y="552" width="64" height="64"/>
                                 <animations/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="80" id="XCG-tr-dAF"/>
+                                    <constraint firstAttribute="height" constant="64" id="XCG-tr-dAF"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                <state key="normal" title="👉">
+                                <state key="normal" image="list">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <state key="disabled">
                                     <color key="titleColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
+                                <state key="highlighted" image="list"/>
                                 <connections>
                                     <segue destination="nhD-o7-srJ" kind="show" id="gwI-fi-e7N"/>
                                 </connections>
@@ -99,24 +111,24 @@
                             <constraint firstItem="gZq-S3-fWn" firstAttribute="top" secondItem="MDb-DT-yf2" secondAttribute="bottom" constant="18" id="07f-xf-7mT"/>
                             <constraint firstItem="C5M-M4-Sak" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="470-DD-7Xa"/>
                             <constraint firstItem="gZq-S3-fWn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6HF-Qd-ru8"/>
-                            <constraint firstAttribute="trailing" secondItem="lx0-SS-lNg" secondAttribute="trailing" id="7z5-fj-MYu"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ox4-w2-oTz" secondAttribute="bottom" constant="43" id="8VB-BN-b90"/>
+                            <constraint firstAttribute="trailing" secondItem="lx0-SS-lNg" secondAttribute="trailing" constant="42" id="7z5-fj-MYu"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ox4-w2-oTz" secondAttribute="bottom" constant="51" id="8VB-BN-b90"/>
                             <constraint firstItem="gZq-S3-fWn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Gzr-pg-JfX"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="OOk-t2-LFN" secondAttribute="bottom" id="HH1-e8-BCw"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="C5M-M4-Sak" secondAttribute="bottom" constant="43" id="Hx1-oh-HUm"/>
                             <constraint firstItem="OOk-t2-LFN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="KOm-G2-q2C"/>
                             <constraint firstItem="MDb-DT-yf2" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Kit-SX-s9p"/>
                             <constraint firstItem="lx0-SS-lNg" firstAttribute="top" secondItem="gZq-S3-fWn" secondAttribute="bottom" constant="43" id="Nhh-hi-Ev9"/>
-                            <constraint firstItem="lx0-SS-lNg" firstAttribute="leading" secondItem="C5M-M4-Sak" secondAttribute="trailing" id="R7v-Fi-REy"/>
+                            <constraint firstItem="lx0-SS-lNg" firstAttribute="leading" secondItem="C5M-M4-Sak" secondAttribute="trailing" constant="42" id="R7v-Fi-REy"/>
                             <constraint firstItem="OOk-t2-LFN" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="aS2-tu-gqZ"/>
-                            <constraint firstItem="C5M-M4-Sak" firstAttribute="leading" secondItem="Ox4-w2-oTz" secondAttribute="trailing" id="dVI-Ox-rlO"/>
+                            <constraint firstItem="C5M-M4-Sak" firstAttribute="leading" secondItem="Ox4-w2-oTz" secondAttribute="trailing" constant="42" id="dVI-Ox-rlO"/>
                             <constraint firstAttribute="trailing" secondItem="gZq-S3-fWn" secondAttribute="trailing" id="dbu-qX-1Ma"/>
                             <constraint firstItem="MDb-DT-yf2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="eUo-dZ-k6J"/>
                             <constraint firstItem="gZq-S3-fWn" firstAttribute="top" secondItem="MDb-DT-yf2" secondAttribute="bottom" constant="18" id="iaZ-eT-BRh"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lx0-SS-lNg" secondAttribute="bottom" constant="43" id="lIn-ol-Pmy"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lx0-SS-lNg" secondAttribute="bottom" constant="51" id="lIn-ol-Pmy"/>
                             <constraint firstAttribute="trailing" secondItem="gZq-S3-fWn" secondAttribute="trailing" id="mxL-sB-Wfd"/>
                             <constraint firstAttribute="trailing" secondItem="MDb-DT-yf2" secondAttribute="trailing" id="ppa-Kf-R47"/>
-                            <constraint firstItem="Ox4-w2-oTz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="rBl-l4-OWQ"/>
+                            <constraint firstItem="Ox4-w2-oTz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="42" id="rBl-l4-OWQ"/>
                             <constraint firstAttribute="trailing" secondItem="OOk-t2-LFN" secondAttribute="trailing" id="yko-nb-poL"/>
                         </constraints>
                         <variation key="default">
@@ -146,16 +158,11 @@
                         <action selector="longPressButton:" destination="BYZ-38-t0r" id="6OW-RO-Frd"/>
                     </connections>
                 </pongPressGestureRecognizer>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.0" id="fi7-FT-psy" userLabel="Long Press Whole View">
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.0" id="eM9-DA-fv9" userLabel="Long Press Whole View">
                     <connections>
-                        <action selector="longPressWholeView:" destination="BYZ-38-t0r" id="IEM-v1-i5C"/>
+                        <action selector="longPressWholeView:" destination="BYZ-38-t0r" id="XQ7-Dj-zbu"/>
                     </connections>
                 </pongPressGestureRecognizer>
-                <swipeGestureRecognizer direction="right" id="Ock-s3-pv7" userLabel="Swipe Right">
-                    <connections>
-                        <action selector="swipeRight:" destination="BYZ-38-t0r" id="6XP-0M-yHL"/>
-                    </connections>
-                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1323.5" y="995.5"/>
         </scene>
@@ -551,6 +558,8 @@
     <resources>
         <image name="checkmark" width="48" height="37"/>
         <image name="cross" width="48" height="37"/>
+        <image name="flip" width="64" height="64"/>
+        <image name="list" width="64" height="64"/>
         <image name="spectrum" width="5" height="333"/>
     </resources>
     <inferredMetricsTieBreakers>
