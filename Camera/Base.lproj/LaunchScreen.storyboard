@@ -20,7 +20,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HLS-sB-eCR">
                                 <rect key="frame" x="148" y="545" width="79" height="79"/>
                                 <subviews>
-                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.20000000000000001" contentMode="center" fixedFrame="YES" image="recordbutton" translatesAutoresizingMaskIntoConstraints="NO" id="faY-Sw-yxG">
+                                    <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.14999999999999999" contentMode="center" fixedFrame="YES" image="recordbutton" translatesAutoresizingMaskIntoConstraints="NO" id="faY-Sw-yxG">
                                         <rect key="frame" x="0.0" y="0.0" width="79" height="79"/>
                                         <animations/>
                                     </imageView>
@@ -31,7 +31,7 @@
                                     <constraint firstAttribute="height" constant="79" id="X3x-yh-O3i"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDq-wE-gcP">
+                            <button opaque="NO" alpha="0.14999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TDq-wE-gcP">
                                 <rect key="frame" x="31" y="552" width="86" height="64"/>
                                 <animations/>
                                 <constraints>
@@ -39,7 +39,7 @@
                                     <constraint firstAttribute="height" constant="79" id="Xcy-Pp-mY4"/>
                                     <constraint firstAttribute="width" constant="86" id="uZj-zN-brl"/>
                                 </constraints>
-                                <state key="normal" image="flip-down">
+                                <state key="normal" image="flip">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <state key="disabled" image="flip-down"/>
@@ -49,7 +49,7 @@
                                     </mask>
                                 </variation>
                             </button>
-                            <button opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SJw-HR-dag">
+                            <button opaque="NO" alpha="0.14999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SJw-HR-dag">
                                 <rect key="frame" x="258" y="552" width="86" height="64"/>
                                 <animations/>
                                 <constraints>
@@ -57,7 +57,7 @@
                                     <constraint firstAttribute="height" constant="64" id="Qem-5h-xx4"/>
                                     <constraint firstAttribute="width" constant="86" id="ZgS-Vi-LUU"/>
                                 </constraints>
-                                <state key="normal" image="cameraroll">
+                                <state key="normal" image="list">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <state key="disabled" image="cameraroll">
@@ -93,7 +93,9 @@
     </scenes>
     <resources>
         <image name="cameraroll" width="64" height="64"/>
+        <image name="flip" width="64" height="64"/>
         <image name="flip-down" width="64" height="64"/>
+        <image name="list" width="64" height="64"/>
         <image name="recordbutton" width="79" height="79"/>
     </resources>
 </document>

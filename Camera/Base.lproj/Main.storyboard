@@ -79,9 +79,10 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="gvs-y1-uBJ"/>
                                 </constraints>
-                                <state key="normal" image="flip-back">
+                                <state key="normal" image="flip">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <state key="highlighted" image="flip"/>
                                 <connections>
                                     <action selector="tapSwitchButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="fhL-N1-ApB"/>
                                 </connections>
@@ -92,13 +93,13 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="XCG-tr-dAF"/>
                                 </constraints>
-                                <state key="normal" image="cameraroll">
+                                <state key="normal" image="list">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <state key="disabled">
                                     <color key="titleColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
-                                <state key="highlighted" image="cameraroll-down"/>
+                                <state key="highlighted" image="list"/>
                                 <connections>
                                     <segue destination="nhD-o7-srJ" kind="show" id="gwI-fi-e7N"/>
                                 </connections>
@@ -555,11 +556,10 @@
         </scene>
     </scenes>
     <resources>
-        <image name="cameraroll" width="64" height="64"/>
-        <image name="cameraroll-down" width="64" height="64"/>
         <image name="checkmark" width="48" height="37"/>
         <image name="cross" width="48" height="37"/>
-        <image name="flip-back" width="64" height="64"/>
+        <image name="flip" width="64" height="64"/>
+        <image name="list" width="64" height="64"/>
         <image name="spectrum" width="5" height="333"/>
     </resources>
     <inferredMetricsTieBreakers>

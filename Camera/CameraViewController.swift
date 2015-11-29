@@ -181,7 +181,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         totalTimeLabel.font = UIFont.monospacedDigitSystemFontOfSize(14, weight: UIFontWeightRegular)
         
         setupCamera()
-        setCameraOrientationButtonLabel()
         updateButtonCount()
         
         if backCamera != nil {
@@ -196,15 +195,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         if frontCamera == nil {
             switchButton.alpha = 0
-        }
-    }
-    
-    func setCameraOrientationButtonLabel() {
-        if usingbackCamera == true {
-            switchButton.setImage(UIImage(named: "flip-back") as UIImage?, forState: UIControlState.Normal)
-            switchButton.setImage(UIImage(named: "flip-down") as UIImage?, forState: UIControlState.Highlighted)
-        } else {
-            switchButton.setImage(UIImage(named: "flip-face") as UIImage?, forState: UIControlState.Normal)
         }
     }
     
@@ -273,7 +263,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 }
             }
             usingbackCamera = false
-            setCameraOrientationButtonLabel()
         } else {
             endSession()
             beginSession(backCamera!)
@@ -283,7 +272,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 }
             }
             usingbackCamera = true
-            setCameraOrientationButtonLabel()
         }
     }
     
@@ -310,7 +298,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         UIView.animateWithDuration(0.6, delay: 0, options: [.Repeat, .Autoreverse, .CurveEaseInOut], animations: { () -> Void in
             
-            self.recordButton.transform = CGAffineTransformMakeScale(1.4, 1.4)
+            self.recordButton.transform = CGAffineTransformMakeScale(1.3, 1.3)
             
             }) { (Bool) -> Void in
         }
