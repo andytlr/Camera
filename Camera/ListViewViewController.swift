@@ -80,7 +80,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         let clipDuration = clipAsset.duration
-        let clipDurationInSeconds = Int(round(CMTimeGetSeconds(clipDuration)))
+        let clipDurationInSeconds = roundToOneDecimalPlace(CMTimeGetSeconds(clipDuration))
         let clipDurationSuffix: String!
         if clipDurationInSeconds == 1 {
             clipDurationSuffix = "Second"

@@ -27,13 +27,6 @@
                                     <outletCollection property="gestureRecognizers" destination="Ock-s3-pv7" appends="YES" id="6d2-6A-8dY"/>
                                 </connections>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Keeeeeep" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goi-cw-hF3">
-                                <rect key="frame" x="149" y="323" width="77" height="21"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="MDb-DT-yf2">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="2"/>
                                 <animations/>
@@ -46,6 +39,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZq-S3-fWn">
                                 <rect key="frame" x="0.0" y="20" width="375" height="42"/>
                                 <animations/>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="23q-Ef-G1f"/>
                                 </constraints>
@@ -126,9 +120,6 @@
                             <constraint firstAttribute="trailing" secondItem="OOk-t2-LFN" secondAttribute="trailing" id="yko-nb-poL"/>
                         </constraints>
                         <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="goi-cw-hF3"/>
-                            </mask>
                             <mask key="constraints">
                                 <exclude reference="Gzr-pg-JfX"/>
                                 <exclude reference="iaZ-eT-BRh"/>
@@ -150,12 +141,12 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="H7V-co-Tg3" userLabel="Long Press Record Button">
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.0" id="H7V-co-Tg3" userLabel="Long Press Record Button">
                     <connections>
                         <action selector="longPressButton:" destination="BYZ-38-t0r" id="6OW-RO-Frd"/>
                     </connections>
                 </pongPressGestureRecognizer>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="fi7-FT-psy" userLabel="Long Press Whole View">
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.0" id="fi7-FT-psy" userLabel="Long Press Whole View">
                     <connections>
                         <action selector="longPressWholeView:" destination="BYZ-38-t0r" id="IEM-v1-i5C"/>
                     </connections>

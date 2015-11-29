@@ -16,7 +16,6 @@ enum ToastStyle {
 }
 
 func toastWithMessage(message: String, appendTo: UIView, timeShownInSeconds: Double = 1.5, style: ToastStyle = .Positive, accomodateStatusBar: Bool = false) {
-    print(message)
     
     // Setup
     let padding: CGFloat = 15
