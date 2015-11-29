@@ -43,7 +43,14 @@ class SceneTableViewCell: UITableViewCell {
             self.playerLayer!.videoGravity = AVLayerVideoGravityResize
             self.clipView.layer.addSublayer(self.playerLayer!)
             self.player!.play()
+            
+            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: self.player!.currentItem)
         }
+    }
+    
+    func playerDidReachEndNotificationHandler(notification: NSNotification) {
+        let playerItem = notification.object as! AVPlayerItem
+        playerItem.seekToTime(kCMTimeZero)
     }
     
     @IBAction func tapDeleteButton(sender: UIButton) {
