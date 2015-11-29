@@ -391,6 +391,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     func runWhenDeletedAllClips() {
+        self.updateButtonCount()
+        updateTotalTime()
+        
         delay(0.4) { // delay waits for segue to happen before showing toast.
             toastWithMessage("Deleted", appendTo: self.view, style: .Neutral)
         }

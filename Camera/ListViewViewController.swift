@@ -146,9 +146,8 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let destroyAction = UIAlertAction(title: "Delete All", style: .Destructive) { (action) in
             
-            deleteAllClips()
-            
             dispatch_async(dispatch_get_main_queue()) {
+                deleteAllClips()
                 NSNotificationCenter.defaultCenter().postNotificationName("All Clips Deleted", object: nil)
             }
             
