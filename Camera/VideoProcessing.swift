@@ -14,6 +14,9 @@ import RealmSwift
 
 var totalTimeAsDouble: Double = 0
 var totalDurationInSeconds: String = ""
+var screenSize = UIScreen.mainScreen().bounds
+
+var videoComposition: AVMutableVideoComposition!
 
 func formatTime(timeInSeconds: Int) -> String {
     
@@ -56,11 +59,34 @@ func exportVideo() {
     
     for clip in clips {
         let sourceUrl = NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename))
-        
         let sourceAsset = AVURLAsset(URL: sourceUrl, options: nil)
         
         let tracks = sourceAsset.tracksWithMediaType(AVMediaTypeVideo)
         let audios = sourceAsset.tracksWithMediaType(AVMediaTypeAudio)
+        
+        // Set up video composition
+        videoComposition = AVMutableVideoComposition(propertiesOfAsset: sourceAsset)
+        
+        // Parent layer contains video and all overlays
+        let parentLayer = CALayer()
+        parentLayer.frame = CGRectMake(0, 0, tracks[0].naturalSize.height, tracks[0].naturalSize.width)
+        
+        let videoLayer = CALayer()
+        videoLayer.frame = CGRectMake(0, 0, tracks[0].naturalSize.height, tracks[0].naturalSize.width)
+        parentLayer.addSublayer(videoLayer)
+        
+        // Add drawing to composition if the clip has one
+        if clip.overlay != nil {
+            let overlayImage = UIImage(data: clip.overlay!)
+            
+            let overlayLayer = CALayer()
+            overlayLayer.frame = CGRectMake(0, 0, tracks[0].naturalSize.height, tracks[0].naturalSize.width)
+            overlayLayer.contents = overlayImage?.CGImage
+            parentLayer.addSublayer(overlayLayer)
+        }
+        
+        // Finalize video composition
+        videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, inLayer: parentLayer)
         
         if tracks.count > 0 {
             let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
@@ -79,6 +105,7 @@ func exportVideo() {
     
     let exporter = AVAssetExportSession(asset: composition, presetName: AVAssetExportPresetHighestQuality)!
     exporter.outputURL = completeMovieUrl
+    exporter.videoComposition = videoComposition
     exporter.outputFileType = AVFileTypeMPEG4
     exporter.exportAsynchronouslyWithCompletionHandler({
         
