@@ -23,6 +23,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     var loadingIndicator: UIActivityIndicatorView!
     let colorView = UIView()
     
+    var player: AVPlayer?
+    var playerLayer: AVPlayerLayer?
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
@@ -40,8 +43,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         loadingIndicator.hidesWhenStopped = true
         loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
     }
-
-
     
     func updateTableView() {
         let realm = try! Realm()
@@ -72,24 +73,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
 
-//        print(clipAsset)
-
-
-//        print(clipAsset)
-
-        // Get thumbnail
-        
-        //let generator = AVAssetImageGenerator(asset: clipAsset)
-        //let timestamp = CMTime(seconds: 1, preferredTimescale: 60)
-        
-        //do {
-            //let imageRef = try generator.copyCGImageAtTime(timestamp, actualTime: nil)
-            //let thumbnail = UIImage(CGImage: imageRef)
-        //} catch {
-            //print("Thumbanil generation failed with error \(error)")
-        //}
-        
-        
         let clipDuration = clipAsset.duration
         let clipDurationInSeconds = roundToOneDecimalPlace(CMTimeGetSeconds(clipDuration))
         let clipDurationSuffix: String!
@@ -99,8 +82,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
             clipDurationSuffix = "Seconds"
         }
         
-        
-       // cell.SceneClip.image = thumbnail
         cell.SceneNumber.text = "\(clip.type): \(clip.filename)"
         cell.clip = clip
         cell.SceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
