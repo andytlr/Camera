@@ -9,18 +9,17 @@
 import Foundation
 import UIKit
 
-enum Style {
+enum ToastStyle {
     case Positive
     case Negative
     case Neutral
 }
 
-func toastWithMessage(message: String, appendTo: UIView, timeShownInSeconds: Double = 1.5, style: Style = .Positive, accomodateStatusBar: Bool = false) {
-    print(message)
+func toastWithMessage(message: String, appendTo: UIView, timeShownInSeconds: Double = 1.5, style: ToastStyle = .Positive, accomodateStatusBar: Bool = false) {
     
     // Setup
     let padding: CGFloat = 15
-    let fontSize: CGFloat = 18
+    let fontSize: CGFloat = 16
     let lineHeight: CGFloat = 1.4
     var statusBarHeight: CGFloat = 0
     

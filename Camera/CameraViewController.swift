@@ -19,8 +19,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var recordButton: UIButton!
     @IBOutlet weak var switchButton: UIButton!
-    @IBOutlet weak var doneButton: UIButton!
-    @IBOutlet weak var soundButton: UIButton!
+    @IBOutlet weak var showListButton: UIButton!
+    @IBOutlet weak var totalTimeLabel: UILabel!
     @IBOutlet weak var progressBar: UIProgressView!
     
     var usingbackCamera: Bool = true
@@ -53,11 +53,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var clipCount: Int! {
         didSet {
             if clipCount == 0 {
-                doneButton.alpha = 0
-                doneButton.setTitle("", forState: UIControlState.Normal)
+//                showListButton
+                showListButton.enabled = false
+                showListButton.alpha = 0.5
+                totalTimeLabel.alpha = 0
+                totalTimeLabel.text = ""
             } else {
-                doneButton.setTitle(totalTimeInSeconds, forState: UIControlState.Normal)
-                doneButton.alpha = 1
+                showListButton.enabled = true
+                showListButton.alpha = 1
+                totalTimeLabel.text = totalDurationInSeconds
+                totalTimeLabel.alpha = 1
             }
         }
     }
@@ -68,26 +73,26 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     
     func hideIcons() {
         switchButton.alpha = 0
-        doneButton.alpha = 0
-        soundButton.alpha = 0
+        showListButton.alpha = 0
     }
     
     func showIcons() {
         switchButton.alpha = 1
-        doneButton.alpha = 1
-        soundButton.alpha = 1
+        if clipCount == 0 {
+            showListButton.alpha = 0.5
+        } else {
+            showListButton.alpha = 1
+        }
     }
     
     func updateTime() {
         
         let currentTime = NSDate.timeIntervalSinceReferenceDate()
-        var elapsedTime: NSTimeInterval = currentTime - startTime
-        let immutibleElapsedTime: NSTimeInterval = currentTime - startTime
+        let elapsedTime: NSTimeInterval = currentTime - startTime
         
-        let seconds = UInt8(elapsedTime)
-        elapsedTime -= NSTimeInterval(seconds)
+        totalTimeLabel.text = formatTime(Int(totalTimeAsDouble + Double(elapsedTime)))
         
-        let hundredthOfASecond = immutibleElapsedTime * 100
+        let hundredthOfASecond = elapsedTime * 100
         
         timerProgress = convertValue(CGFloat(hundredthOfASecond), r1Min: 0, r1Max: (CGFloat(recordingTimeLimit) * 100), r2Min: 0, r2Max: 1)
         
@@ -173,10 +178,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         
         progressBar.alpha = 0
         progressBar.progress = 0
+        totalTimeLabel.font = UIFont.monospacedDigitSystemFontOfSize(14, weight: UIFontWeightRegular)
         
         setupCamera()
-        setCameraOrientationButtonLabel()
-        setSoundButtonLabel()
         updateButtonCount()
         
         if backCamera != nil {
@@ -194,30 +198,14 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
-    func setSoundButtonLabel() {
-        if usingSound == true {
-            soundButton.setTitle("🎤", forState: UIControlState.Normal)
-        } else {
-            soundButton.setTitle("🎤🚫", forState: UIControlState.Normal)
-        }
-    }
-    
-    func setCameraOrientationButtonLabel() {
-        if usingbackCamera == true {
-            switchButton.setTitle("🙎", forState: UIControlState.Normal)
-        } else {
-            switchButton.setTitle("🌴", forState: UIControlState.Normal)
-        }
-    }
-    
     func setupCamera() {
         captureSession.sessionPreset = AVCaptureSessionPresetHigh
         
-        recordButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
+        recordButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.3)
         recordButton.layer.cornerRadius = 40;
         recordButton.clipsToBounds = true;
-        recordButton.layer.borderWidth = 2;
-        recordButton.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(0.5).CGColor
+        recordButton.layer.borderWidth = 1.5;
+        recordButton.layer.borderColor = UIColor.whiteColor().CGColor
         
         // Loop through all the capture devices on this phone
         for device in devices {
@@ -275,7 +263,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 }
             }
             usingbackCamera = false
-            setCameraOrientationButtonLabel()
         } else {
             endSession()
             beginSession(backCamera!)
@@ -285,7 +272,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 }
             }
             usingbackCamera = true
-            setCameraOrientationButtonLabel()
         }
     }
     
@@ -303,15 +289,16 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         startTime = NSDate.timeIntervalSinceReferenceDate()
         
         progressBar.alpha = 1
+        totalTimeLabel.alpha = 1
         
         hideIcons()
         
-        recordButton.layer.borderColor = redColor.colorWithAlphaComponent(0.5).CGColor
-        recordButton.backgroundColor = redColor.colorWithAlphaComponent(0.2)
+        recordButton.layer.borderColor = redColor.colorWithAlphaComponent(0.8).CGColor
+        recordButton.backgroundColor = redColor.colorWithAlphaComponent(0.3)
         
         UIView.animateWithDuration(0.6, delay: 0, options: [.Repeat, .Autoreverse, .CurveEaseInOut], animations: { () -> Void in
             
-            self.recordButton.transform = CGAffineTransformMakeScale(1.4, 1.4)
+            self.recordButton.transform = CGAffineTransformMakeScale(1.3, 1.3)
             
             }) { (Bool) -> Void in
         }
@@ -325,12 +312,10 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func stopRecording() {
         print("Stop Recording")
         
-        // Stop Timer
         progressBar.alpha = 0
-        timer.invalidate()
         
-        recordButton.layer.borderColor = UIColor.whiteColor().colorWithAlphaComponent(0.5).CGColor
-        recordButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
+        recordButton.layer.borderColor = UIColor.whiteColor().CGColor
+        recordButton.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.3)
         
         UIView.animateWithDuration(0.5, delay: 0, options: [], animations: { () -> Void in
             
@@ -342,6 +327,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         videoOutput.stopRecording()
         removeMic()
         recordButton.alpha = 0
+        totalTimeLabel.alpha = 0
     }
     
     func takeStillImage() {
@@ -393,8 +379,11 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     func runWhenDeletedAllClips() {
-        delay(0.3) { // delay waits for segue to happen before showing toast.
-            toastWithMessage("Deleted", appendTo: self.view, style: .Negative)
+        self.updateButtonCount()
+        updateTotalTime()
+        
+        delay(0.4) { // delay waits for segue to happen before showing toast.
+            toastWithMessage("Deleted", appendTo: self.view, style: .Neutral)
         }
     }
     
@@ -410,10 +399,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
     }
     
-    @IBAction func swipeRight(sender: UISwipeGestureRecognizer) {
-        switchCameras()
-    }
-    
     @IBAction func longPressButton(sender: UILongPressGestureRecognizer) {
         
         if sender.state == .Began {
@@ -424,27 +409,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         if sender.state == .Ended {
             stopRecording()
-        }
-    }
-    
-    @IBAction func tapButton(sender: AnyObject) {
-//        takeStillImage()
-        toastWithMessage("Tap and hold to record", appendTo: self.view, timeShownInSeconds: 1, style: .Neutral)
-    }
-    
-    @IBAction func done(sender: AnyObject) {
-        
-    }
-    
-    @IBAction func tapSoundButton(sender: AnyObject) {
-        if usingSound == true {
-            usingSound = false
-            removeMic()
-            setSoundButtonLabel()
-        } else {
-            usingSound = true
-            startMic()
-            setSoundButtonLabel()
         }
     }
     
@@ -462,12 +426,24 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         clip.filename = outputFileURL.lastPathComponent!
         clip.type = "video"
         
-        let realm = try! Realm()
-        try! realm.write {
-            realm.add(clip)
+        if timerProgress < 0.03 {
+            delay(0.3) {
+                toastWithMessage("Hold Anywhere to Record", appendTo: self.view, timeShownInSeconds: 1, style: .Neutral)
+            }
+            showIcons()
+            deleteClip(clip.filename)
+            recordButton.alpha = 1
+            if clipCount != 0 {
+                totalTimeLabel.alpha = 1
+            }
+        } else {
+            let realm = try! Realm()
+            try! realm.write {
+                realm.add(clip)
+            }
+            showVideoPreview()
         }
-        
-        showVideoPreview()
+        timer.invalidate()
     }
 }
 
