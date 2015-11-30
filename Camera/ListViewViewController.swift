@@ -30,8 +30,8 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        self.view.backgroundColor = UIColor.blackColor()
-        clipReviewList.backgroundColor = UIColor.blackColor()
+        self.view.backgroundColor = darkGreyColor
+//        clipReviewList.backgroundColor = UIColor.blackColor()
         
         blurView.frame = self.view.bounds
         loadingIndicator = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
