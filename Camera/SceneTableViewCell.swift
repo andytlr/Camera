@@ -26,7 +26,7 @@ class SceneTableViewCell: UITableViewCell {
         
         clipView.backgroundColor = UIColor.yellowColor()
 
-        delay(0.1) {
+        delay(0.25) {
             print(self.clip)
             
             let filePath = getAbsolutePathForFile(self.clip.filename)
