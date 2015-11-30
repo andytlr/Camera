@@ -106,9 +106,19 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
             editViewController.clip = selectedClip
         }
     }
+    
+    func backToCamera() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
 
     @IBAction func backToCamera(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+        backToCamera()
+    }
+    
+    func panLeftEdge(sender: UIScreenEdgePanGestureRecognizer) {
+        if sender.state == .Began {
+            backToCamera()
+        }
     }
     
     @IBAction func tapExport(sender: AnyObject) {
@@ -153,12 +163,5 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         alertController.addAction(destroyAction)
         self.presentViewController(alertController, animated: true) { }
-    }
-    
-    func panLeftEdge(sender: UIScreenEdgePanGestureRecognizer) {
-        if sender.state == .Began {
-            navigationController!.popViewControllerAnimated(true)
-            print("edge swipe")
-        }
     }
 }
