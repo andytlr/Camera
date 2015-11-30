@@ -12,7 +12,6 @@ import AVFoundation
 
 class SceneTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var sceneNumber: UILabel!
     @IBOutlet weak var sceneDuration: UILabel!
     @IBOutlet weak var clipView: UIView!
     

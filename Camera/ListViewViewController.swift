@@ -86,7 +86,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         }
         
         cell.clip = clip
-        cell.sceneNumber.text = "\(clip.type): \(clip.filename)"
         cell.sceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
         cell.contentView.backgroundColor = darkGreyColor
         

@@ -249,7 +249,7 @@
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="374" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XlR-IY-3a3">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="301" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XlR-IY-3a3">
                                 <rect key="frame" x="0.0" y="127" width="375" height="540"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -257,22 +257,15 @@
                                 <color key="sectionIndexBackgroundColor" red="0.050980392156862744" green="0.086274509803921567" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="sectionIndexTrackingBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SceneTableViewCell" rowHeight="374" id="mMT-IG-lwV" customClass="SceneTableViewCell" customModule="Camera" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="374"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SceneTableViewCell" rowHeight="320" id="mMT-IG-lwV" customClass="SceneTableViewCell" customModule="Camera" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="320"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mMT-IG-lwV" id="PD9-Fq-uJI">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="374"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="320"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SCENE #" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmA-8b-rkA">
-                                                    <rect key="frame" x="8" y="291" width="359" height="21"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asA-dI-qEo">
-                                                    <rect key="frame" x="8" y="309" width="359" height="21"/>
+                                                    <rect key="frame" x="8" y="284" width="359" height="21"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -298,10 +291,8 @@
                                         <color key="backgroundColor" red="0.90563887357711792" green="0.0" blue="0.67993611097335815" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="SceneDuration" destination="asA-dI-qEo" id="FQ9-3j-Vlp"/>
-                                            <outlet property="SceneNumber" destination="DmA-8b-rkA" id="i7d-nG-m1R"/>
                                             <outlet property="clipView" destination="WG0-Wy-WiR" id="bBb-rL-dPH"/>
                                             <outlet property="sceneDuration" destination="asA-dI-qEo" id="418-9c-p9H"/>
-                                            <outlet property="sceneNumber" destination="DmA-8b-rkA" id="ogq-kB-XZm"/>
                                             <segue destination="96O-5S-Syf" kind="presentation" identifier="editClipSegue" animates="NO" modalTransitionStyle="crossDissolve" id="AJD-mB-gbY">
                                                 <segue key="commit" inheritsFrom="parent" id="BeT-LG-eqe"/>
                                                 <segue key="preview" inheritsFrom="commit" id="fWp-er-n6J"/>
