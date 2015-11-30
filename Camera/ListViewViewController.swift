@@ -20,6 +20,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     var clips: Results<Clip>!
     var clipCount: Int = 0
     
+    var player: AVPlayer?
+    var playerLayer: AVPlayerLayer?
+    
     var thumbnail: UIImage!
     
     var loadingIndicator: UIActivityIndicatorView!
@@ -72,7 +75,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
 
         let clip = clips[indexPath.row]
         
-        print("clip: \(clip)")
+//        print("clip: \(clip)")
         
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
 
@@ -89,7 +92,30 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.sceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
         cell.contentView.backgroundColor = darkGreyColor
         
+        let filePath = getAbsolutePathForFile(clip.filename)
+        let URL = NSURL(fileURLWithPath: filePath)
+        let videoAsset = AVAsset(URL: URL)
+        let playerItem = AVPlayerItem(asset: videoAsset)
+        
+        playerLayer = AVPlayerLayer()
+        playerLayer!.frame = cell.clipView.bounds
+        player = AVPlayer(playerItem: playerItem)
+        player!.actionAtItemEnd = .None
+        playerLayer!.player = player
+        playerLayer!.backgroundColor = UIColor.clearColor().CGColor
+        playerLayer!.videoGravity = AVLayerVideoGravityResize
+        cell.clipView.layer.addSublayer(self.playerLayer!)
+        player!.pause()
+        player!.muted = true
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
+        
         return cell
+    }
+    
+    func playerDidReachEndNotificationHandler(notification: NSNotification) {
+        let playerItem = notification.object as! AVPlayerItem
+        playerItem.seekToTime(kCMTimeZero)
     }
     
     override func didReceiveMemoryWarning() {
