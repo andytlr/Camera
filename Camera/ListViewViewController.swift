@@ -68,7 +68,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SceneTableViewCell") as! SceneTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("SceneTableViewCell", forIndexPath: indexPath) as! SceneTableViewCell
 
         let clip = clips[indexPath.row]
         
