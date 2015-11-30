@@ -15,6 +15,8 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var clipReviewList: UITableView!
 
+    var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
+
     var clips: Results<Clip>!
     var clipCount: Int = 0
     
@@ -32,6 +34,11 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
         self.view.backgroundColor = darkGreyColor
 //        clipReviewList.backgroundColor = UIColor.blackColor()
+        
+        screenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self,
+            action: "panLeftEdge:")
+        screenEdgeRecognizer.edges = .Left
+        view.addGestureRecognizer(screenEdgeRecognizer)
         
         blurView.frame = self.view.bounds
         loadingIndicator = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
@@ -146,5 +153,12 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         alertController.addAction(destroyAction)
         self.presentViewController(alertController, animated: true) { }
+    }
+    
+    func panLeftEdge(sender: UIScreenEdgePanGestureRecognizer) {
+        if sender.state == .Began {
+            navigationController!.popViewControllerAnimated(true)
+            print("edge swipe")
+        }
     }
 }
