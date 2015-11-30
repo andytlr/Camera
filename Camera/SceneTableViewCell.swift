@@ -8,18 +8,20 @@
 
 import UIKit
 import RealmSwift
+import AVFoundation
 
 class SceneTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var SceneNumber: UILabel!
-    @IBOutlet weak var SceneDuration: UILabel!
-    @IBOutlet weak var SceneClip: UIImageView!
+    @IBOutlet weak var sceneDuration: UILabel!
+    @IBOutlet weak var clipView: UIView!
     
     var clip: Clip!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        clipView.backgroundColor = UIColor.whiteColor()
     }
     
     @IBAction func tapDeleteButton(sender: UIButton) {
@@ -28,7 +30,7 @@ class SceneTableViewCell: UITableViewCell {
         // This is temporary instead of removing the row.
         sender.enabled = false
     }
-
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 

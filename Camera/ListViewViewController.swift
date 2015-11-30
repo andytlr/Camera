@@ -15,13 +15,18 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var clipReviewList: UITableView!
 
+    var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
+
     var clips: Results<Clip>!
     var clipCount: Int = 0
+    
+    var player: AVPlayer?
+    var playerLayer: AVPlayerLayer?
     
     var thumbnail: UIImage!
     
     var loadingIndicator: UIActivityIndicatorView!
-    let colorView = UIView()
+    var blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
@@ -29,9 +34,16 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        self.view.backgroundColor = darkGreyColor
+        clipReviewList.backgroundColor = darkGreyColor
         
-        colorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
-        colorView.frame = self.view.bounds
+        screenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self,
+            action: "panLeftEdge:")
+        screenEdgeRecognizer.edges = .Left
+        view.addGestureRecognizer(screenEdgeRecognizer)
+        
+        blurView.frame = self.view.bounds
         loadingIndicator = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
         loadingIndicator.center = self.view.center;
         loadingIndicator.hidesWhenStopped = true
@@ -59,26 +71,14 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SceneTableViewCell") as! SceneTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("SceneTableViewCell", forIndexPath: indexPath) as! SceneTableViewCell
 
         let clip = clips[indexPath.row]
         
 //        print("clip: \(clip)")
         
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
-//        print(clipAsset)
-        // Get thumbnail
-        
-        let generator = AVAssetImageGenerator(asset: clipAsset)
-        let timestamp = CMTime(seconds: 1, preferredTimescale: 60)
-        
-        do {
-            let imageRef = try generator.copyCGImageAtTime(timestamp, actualTime: nil)
-            _ = UIImage(CGImage: imageRef)
-        } catch {
-            print("Thumbanil generation failed with error \(error)")
-        }
-        
+
         let clipDuration = clipAsset.duration
         let clipDurationInSeconds = roundToOneDecimalPlace(CMTimeGetSeconds(clipDuration))
         let clipDurationSuffix: String!
@@ -88,12 +88,34 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
             clipDurationSuffix = "Seconds"
         }
         
-        cell.SceneClip.image = thumbnail
-        cell.SceneNumber.text = "\(clip.type): \(clip.filename)"
         cell.clip = clip
-        cell.SceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
+        cell.sceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
+        cell.contentView.backgroundColor = darkGreyColor
+        
+        let filePath = getAbsolutePathForFile(clip.filename)
+        let URL = NSURL(fileURLWithPath: filePath)
+        let videoAsset = AVAsset(URL: URL)
+        let playerItem = AVPlayerItem(asset: videoAsset)
+        
+        playerLayer = AVPlayerLayer()
+        playerLayer!.frame = cell.clipView.bounds
+        player = AVPlayer(playerItem: playerItem)
+        player!.actionAtItemEnd = .None
+        playerLayer!.player = player
+        playerLayer!.backgroundColor = UIColor.clearColor().CGColor
+        playerLayer!.videoGravity = AVLayerVideoGravityResize
+        cell.clipView.layer.addSublayer(self.playerLayer!)
+        player!.pause()
+        player!.muted = true
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         
         return cell
+    }
+    
+    func playerDidReachEndNotificationHandler(notification: NSNotification) {
+        let playerItem = notification.object as! AVPlayerItem
+        playerItem.seekToTime(kCMTimeZero)
     }
     
     override func didReceiveMemoryWarning() {
@@ -110,9 +132,19 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
             editViewController.clip = selectedClip
         }
     }
+    
+    func backToCamera() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
 
     @IBAction func backToCamera(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+        backToCamera()
+    }
+    
+    func panLeftEdge(sender: UIScreenEdgePanGestureRecognizer) {
+        if sender.state == .Began {
+            backToCamera()
+        }
     }
     
     @IBAction func tapExport(sender: AnyObject) {
@@ -123,7 +155,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         exportVideo()
         
         loadingIndicator.startAnimating()
-        view.addSubview(colorView)
+        view.addSubview(blurView)
         view.addSubview(loadingIndicator)
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenFinishedSavingToCameraRoll", name: "Finished Saving To Camera Roll", object: nil)
@@ -131,7 +163,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func runWhenFinishedSavingToCameraRoll() {
         loadingIndicator.stopAnimating()
-        colorView.removeFromSuperview()
+        blurView.removeFromSuperview()
         loadingIndicator.removeFromSuperview()
         
         toastWithMessage("Saved!", appendTo: self.view, accomodateStatusBar: true)
