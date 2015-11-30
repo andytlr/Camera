@@ -65,6 +65,9 @@ func exportVideo() {
         let audios = sourceAsset.tracksWithMediaType(AVMediaTypeAudio)
         
         // Set up video composition
+        let videoCompositionInstruction = AVMutableVideoCompositionInstruction()
+        let videoCompositionLayerInstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: trackVideo)
+        videoCompositionInstruction.layerInstructions = NSArray(object: videoCompositionLayerInstruction) as! [AVVideoCompositionLayerInstruction]
         videoComposition = AVMutableVideoComposition(propertiesOfAsset: sourceAsset)
         
         // Parent layer contains video and all overlays
@@ -97,6 +100,10 @@ func exportVideo() {
             } catch { }
             
             insertTime = CMTimeAdd(insertTime, sourceAsset.duration)
+            
+            videoCompositionInstruction.timeRange = CMTimeRangeMake(insertTime, sourceAsset.duration)
+            videoComposition.instructions = NSArray(object: videoCompositionInstruction) as! [AVVideoCompositionInstructionProtocol]
+            print("instructions: \(videoComposition.instructions)")
         }
     }
     
