@@ -43,6 +43,7 @@ class SceneTableViewCell: UITableViewCell {
             self.playerLayer!.videoGravity = AVLayerVideoGravityResize
             self.clipView.layer.addSublayer(self.playerLayer!)
             self.player!.play()
+            self.player!.muted = true
             
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: self.player!.currentItem)
         }
