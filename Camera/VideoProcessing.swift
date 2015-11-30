@@ -54,6 +54,9 @@ func exportVideo() {
     let trackAudio:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeAudio, preferredTrackID: CMPersistentTrackID())
     var insertTime = kCMTimeZero
     
+    let videoCompositionLayerInstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: trackVideo)
+    let videoCompositionInstruction = AVMutableVideoCompositionInstruction()
+    
     let realm = try! Realm()
     let clips = realm.objects(Clip).sorted("filename", ascending: true)
     
@@ -65,9 +68,6 @@ func exportVideo() {
         let audios = sourceAsset.tracksWithMediaType(AVMediaTypeAudio)
         
         // Set up video composition
-        let videoCompositionInstruction = AVMutableVideoCompositionInstruction()
-        let videoCompositionLayerInstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: trackVideo)
-        videoCompositionInstruction.layerInstructions = NSArray(object: videoCompositionLayerInstruction) as! [AVVideoCompositionLayerInstruction]
         videoComposition = AVMutableVideoComposition(propertiesOfAsset: sourceAsset)
         
         // Parent layer contains video and all overlays
@@ -101,11 +101,12 @@ func exportVideo() {
             
             insertTime = CMTimeAdd(insertTime, sourceAsset.duration)
             
-            videoCompositionInstruction.timeRange = CMTimeRangeMake(insertTime, sourceAsset.duration)
-            videoComposition.instructions = NSArray(object: videoCompositionInstruction) as! [AVVideoCompositionInstructionProtocol]
-            print("instructions: \(videoComposition.instructions)")
+            videoCompositionInstruction.timeRange = CMTimeRangeMake(kCMTimeZero, insertTime)
         }
     }
+    
+    videoCompositionInstruction.layerInstructions = NSArray(object: videoCompositionLayerInstruction) as! [AVVideoCompositionLayerInstruction]
+    videoComposition.instructions = NSArray(object: videoCompositionInstruction) as! [AVVideoCompositionInstructionProtocol]
     
     let exportPath = NSTemporaryDirectory().stringByAppendingFormat("/\(currentTimeStamp()).mov")
     let completeMovieUrl: NSURL = NSURL.fileURLWithPath(exportPath)
