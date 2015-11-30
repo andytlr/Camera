@@ -72,7 +72,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
 
         let clip = clips[indexPath.row]
         
-//        print("clip: \(clip)")
+        print("clip: \(clip)")
         
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
 
