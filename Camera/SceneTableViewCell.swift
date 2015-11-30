@@ -24,7 +24,7 @@ class SceneTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         
-        clipView.backgroundColor = UIColor.yellowColor()
+        clipView.backgroundColor = UIColor.whiteColor()
 
         delay(0.25) {
             print(self.clip)

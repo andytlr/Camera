@@ -33,7 +33,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         super.viewDidLoad()
     
         self.view.backgroundColor = darkGreyColor
-//        clipReviewList.backgroundColor = UIColor.blackColor()
+        clipReviewList.backgroundColor = darkGreyColor
         
         screenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self,
             action: "panLeftEdge:")
@@ -88,6 +88,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         cell.clip = clip
         cell.sceneNumber.text = "\(clip.type): \(clip.filename)"
         cell.sceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
+        cell.contentView.backgroundColor = darkGreyColor
         
         return cell
     }
