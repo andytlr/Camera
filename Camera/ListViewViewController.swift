@@ -21,7 +21,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     var thumbnail: UIImage!
     
     var loadingIndicator: UIActivityIndicatorView!
-    let colorView = UIView()
+    var blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
@@ -33,8 +33,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         self.view.backgroundColor = UIColor.blackColor()
         clipReviewList.backgroundColor = UIColor.blackColor()
         
-        colorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
-        colorView.frame = self.view.bounds
+        blurView.frame = self.view.bounds
         loadingIndicator = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
         loadingIndicator.center = self.view.center;
         loadingIndicator.hidesWhenStopped = true
@@ -113,7 +112,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         exportVideo()
         
         loadingIndicator.startAnimating()
-        view.addSubview(colorView)
+        view.addSubview(blurView)
         view.addSubview(loadingIndicator)
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenFinishedSavingToCameraRoll", name: "Finished Saving To Camera Roll", object: nil)
@@ -121,7 +120,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func runWhenFinishedSavingToCameraRoll() {
         loadingIndicator.stopAnimating()
-        colorView.removeFromSuperview()
+        blurView.removeFromSuperview()
         loadingIndicator.removeFromSuperview()
         
         toastWithMessage("Saved!", appendTo: self.view, accomodateStatusBar: true)
