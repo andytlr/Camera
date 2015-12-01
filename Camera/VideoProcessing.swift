@@ -72,15 +72,16 @@ func exportVideo() {
         videoComposition = AVMutableVideoComposition(propertiesOfAsset: sourceAsset)
         
         // Add drawing to composition if the clip has one
-        if clip.overlay != nil {
+//        if clip.overlay != nil {
             let overlayImage = UIImage(data: clip.overlay!)
             
             let overlayLayer = CALayer()
+            overlayLayer.opacity = 0
             overlayLayer.frame = CGRectMake(0, 0, tracks[0].naturalSize.height, tracks[0].naturalSize.width)
             overlayLayer.contents = overlayImage?.CGImage
             
             overlayLayers.append(overlayLayer)
-        }
+//        }
         
 
         
@@ -91,6 +92,15 @@ func exportVideo() {
                 try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
                 try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio, atTime: insertTime)
             } catch { }
+            
+            //            if clip.overlay != nil {
+            let animation = CABasicAnimation(keyPath: "opacity")
+            animation.duration = 0
+            animation.fromValue = 0
+            animation.toValue = 1
+            animation.beginTime = CMTimeGetSeconds(insertTime) + CMTimeGetSeconds(sourceAsset.duration)
+            overlayLayer.addAnimation(animation, forKey: "animateOpacity")
+            //            }
             
             insertTime = CMTimeAdd(insertTime, sourceAsset.duration)
             
