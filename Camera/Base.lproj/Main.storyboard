@@ -246,77 +246,9 @@
                         <subviews>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1hB-hm-IQZ">
                                 <rect key="frame" x="0.0" y="107" width="375" height="560"/>
-                                <animations/>
-                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="464" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XlR-IY-3a3">
-                                <rect key="frame" x="0.0" y="127" width="375" height="540"/>
-                                <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="sectionIndexBackgroundColor" red="0.050980392156862744" green="0.086274509803921567" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="sectionIndexTrackingBackgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SceneTableViewCell" rowHeight="464" id="mMT-IG-lwV" customClass="SceneTableViewCell" customModule="Camera" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="464"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mMT-IG-lwV" id="PD9-Fq-uJI">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="464"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gRJ-xv-l52">
-                                                    <rect key="frame" x="314" y="223" width="45" height="30"/>
-                                                    <animations/>
-                                                    <state key="normal" title="Delete"/>
-                                                    <connections>
-                                                        <action selector="tapDeleteButton:" destination="mMT-IG-lwV" eventType="touchUpInside" id="HFJ-ET-xw6"/>
-                                                    </connections>
-                                                </button>
-                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="WG0-Wy-WiR" userLabel="clipview">
-                                                    <rect key="frame" x="79" y="20" width="216" height="384"/>
-                                                    <animations/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asA-dI-qEo">
-                                                    <rect key="frame" x="8" y="412" width="359" height="21"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <animations/>
-                                        </tableViewCellContentView>
-                                        <animations/>
-                                        <color key="backgroundColor" red="0.90563887357711792" green="0.0" blue="0.67993611097335815" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <connections>
-                                            <outlet property="SceneDuration" destination="asA-dI-qEo" id="FQ9-3j-Vlp"/>
-                                            <outlet property="clipView" destination="WG0-Wy-WiR" id="bBb-rL-dPH"/>
-                                            <outlet property="sceneDuration" destination="asA-dI-qEo" id="418-9c-p9H"/>
-                                            <segue destination="96O-5S-Syf" kind="presentation" identifier="editClipSegue" animates="NO" modalTransitionStyle="crossDissolve" id="AJD-mB-gbY">
-                                                <segue key="commit" inheritsFrom="parent" id="BeT-LG-eqe"/>
-                                                <segue key="preview" inheritsFrom="commit" id="fWp-er-n6J"/>
-                                            </segue>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qNK-e5-BOw" userLabel="MoviePreview">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qp-v4-9Sv">
-                                        <rect key="frame" x="125" y="20" width="125" height="90"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                        <state key="normal" title="💾">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="tapExport:" destination="nhD-o7-srJ" eventType="touchUpInside" id="dDS-d7-lRw"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi">
-                                        <rect key="frame" x="0.0" y="20" width="125" height="90"/>
+                                        <rect key="frame" x="0.0" y="470" width="125" height="90"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
                                         <state key="normal" title="📷">
@@ -326,35 +258,107 @@
                                             <action selector="backToCamera:" destination="nhD-o7-srJ" eventType="touchUpInside" id="W2f-dO-SVH"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZR8-37-cdL">
-                                        <rect key="frame" x="250" y="20" width="125" height="89"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAv-ct-ArT">
+                                        <rect key="frame" x="250" y="470" width="125" height="90"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                        <state key="normal" title="❌">
+                                        <state key="normal" title="⏯">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
-                                        <connections>
-                                            <action selector="tapDeleteButton:" destination="nhD-o7-srJ" eventType="touchUpInside" id="1h5-Ax-ojg"/>
-                                        </connections>
                                     </button>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kMK-Kl-gUt">
+                                        <rect key="frame" x="0.0" y="8" width="375" height="454"/>
+                                        <animations/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ewi-8X-mRi">
+                                            <size key="itemSize" width="231" height="449.5"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" reuseIdentifier="CollectionViewCell" id="Oew-pC-wVK" customClass="CollectionViewCell" customModule="Camera" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="2.5" width="231" height="449.5"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="231" height="449.5"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M2h-iI-QMS">
+                                                            <rect key="frame" x="15" y="416" width="216" height="30"/>
+                                                            <animations/>
+                                                            <state key="normal" title="Delete"/>
+                                                            <connections>
+                                                                <action selector="tapDelete:" destination="Oew-pC-wVK" eventType="touchUpInside" id="AB2-vg-dLY"/>
+                                                            </connections>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQG-p5-Z8l">
+                                                            <rect key="frame" x="15" y="392" width="216" height="30"/>
+                                                            <animations/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <color key="textColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XKl-5Q-xqR">
+                                                            <rect key="frame" x="15" y="8" width="216" height="384"/>
+                                                            <animations/>
+                                                            <color key="backgroundColor" red="0.50229090452194214" green="0.40129917860031128" blue="0.44941216707229614" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </view>
+                                                    </subviews>
+                                                    <animations/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <animations/>
+                                                <color key="backgroundColor" red="0.99215686270000003" green="0.80000000000000004" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                <connections>
+                                                    <outlet property="clipView" destination="XKl-5Q-xqR" id="Xe5-AH-GQS"/>
+                                                    <outlet property="sceneDuration" destination="oQG-p5-Z8l" id="raz-mX-OLL"/>
+                                                    <segue destination="96O-5S-Syf" kind="presentation" identifier="EditClip" modalTransitionStyle="crossDissolve" id="bs0-ND-A2A">
+                                                        <segue key="commit" inheritsFrom="parent" id="k9c-xf-l9r"/>
+                                                        <segue key="preview" inheritsFrom="commit" id="BuD-71-Djj"/>
+                                                    </segue>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZR8-37-cdL">
+                                <rect key="frame" x="0.0" y="20" width="125" height="89"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                <state key="normal" title="❌">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapDeleteButton:" destination="nhD-o7-srJ" eventType="touchUpInside" id="1h5-Ax-ojg"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qp-v4-9Sv">
+                                <rect key="frame" x="250" y="20" width="125" height="90"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="42"/>
+                                <state key="normal" title="💾">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapExport:" destination="nhD-o7-srJ" eventType="touchUpInside" id="dDS-d7-lRw"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.11416656523942947" green="0.0938887819647789" blue="0.10201955586671829" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
-                        <outlet property="ClipReviewList" destination="XlR-IY-3a3" id="8vQ-Bu-mma"/>
+                        <outlet property="clipCollection" destination="kMK-Kl-gUt" id="xMt-gW-WcF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XRo-ij-n4Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1781.5" y="995.5"/>
+            <point key="canvasLocation" x="1781.5" y="993.5"/>
         </scene>
         <!--Edit Clip View Controller-->
         <scene sceneID="fuB-Kn-2tf">
@@ -559,6 +563,6 @@
         <image name="spectrum" width="5" height="333"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AJD-mB-gbY"/>
+        <segue reference="bs0-ND-A2A"/>
     </inferredMetricsTieBreakers>
 </document>

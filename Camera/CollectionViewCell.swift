@@ -1,19 +1,19 @@
 //
-//  SceneTableViewCell.swift
+//  CollectionViewCell.swift
 //  Camera
 //
-//  Created by Cody Evol on 11/19/15.
+//  Created by Andy Taylor on 11/30/15.
 //  Copyright © 2015 Andy Taylor. All rights reserved.
 //
 
 import UIKit
-import RealmSwift
+import AVKit
 import AVFoundation
 
-class SceneTableViewCell: UITableViewCell {
-
-    @IBOutlet weak var sceneDuration: UILabel!
+class CollectionViewCell: UICollectionViewCell {
+    
     @IBOutlet weak var clipView: UIView!
+    @IBOutlet weak var sceneDuration: UILabel!
     
     var clip: Clip!
     
@@ -24,17 +24,10 @@ class SceneTableViewCell: UITableViewCell {
         clipView.backgroundColor = UIColor.whiteColor()
     }
     
-    @IBAction func tapDeleteButton(sender: UIButton) {
+    @IBAction func tapDelete(sender: UIButton) {
         deleteSingleClip(clip)
         
         // This is temporary instead of removing the row.
         sender.enabled = false
     }
-    
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
 }
