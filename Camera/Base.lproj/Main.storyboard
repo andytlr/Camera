@@ -277,6 +277,7 @@
                                                 <color key="backgroundColor" red="0.99215686270000003" green="0.80000000000000004" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <outlet property="clipView" destination="XKl-5Q-xqR" id="Xe5-AH-GQS"/>
+                                                    <segue destination="96O-5S-Syf" kind="presentation" identifier="EditClip" id="bs0-ND-A2A"/>
                                                 </connections>
                                             </collectionViewCell>
                                         </cells>

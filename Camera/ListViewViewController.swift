@@ -177,6 +177,13 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "EditClip" {
+            let editViewController = segue.destinationViewController as! EditClipViewController
+            let selectedClipIndex = self.clipCollection.indexPathForCell(sender as! UICollectionViewCell)?.row
+            
+            let selectedClip = clips[selectedClipIndex!]
+            editViewController.clip = selectedClip
+        }
         if segue.identifier == "editClipSegue" {
             let editViewController = segue.destinationViewController as! EditClipViewController
             let selectedClipIndex = self.clipReviewList.indexPathForCell(sender as! UITableViewCell)?.row
