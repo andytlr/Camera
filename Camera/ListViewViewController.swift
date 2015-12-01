@@ -56,6 +56,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         clips = realm.objects(Clip).sorted("filename", ascending: false)
         
         clipReviewList.reloadData()
+        clipCollection.reloadData()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -63,6 +64,9 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         clipReviewList.dataSource = self
         clipReviewList.delegate = self
+        
+        clipCollection.dataSource = self
+        clipCollection.delegate = self
         
         updateTableView()
     }
