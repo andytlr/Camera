@@ -13,6 +13,7 @@ import AVFoundation
 class CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet weak var clipView: UIView!
+    @IBOutlet weak var sceneDuration: UILabel!
     
     var clip: Clip!
     
@@ -23,4 +24,10 @@ class CollectionViewCell: UICollectionViewCell {
 //        clipView.backgroundColor = UIColor.whiteColor()
     }
     
+    @IBAction func tapDelete(sender: UIButton) {
+        deleteSingleClip(clip)
+        
+        // This is temporary instead of removing the row.
+        sender.enabled = false
+    }
 }
