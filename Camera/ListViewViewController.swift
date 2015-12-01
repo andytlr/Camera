@@ -107,6 +107,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         playerLayer!.videoGravity = AVLayerVideoGravityResize
         cell.clipView.layer.addSublayer(self.playerLayer!)
         player!.pause()
+//        player!.play()
         player!.muted = true
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
