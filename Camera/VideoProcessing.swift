@@ -17,6 +17,7 @@ var totalDurationInSeconds: String = ""
 var screenSize = UIScreen.mainScreen().bounds
 
 var videoComposition: AVMutableVideoComposition!
+var overlayLayers = [CALayer]()
 
 func formatTime(timeInSeconds: Int) -> String {
     
@@ -70,14 +71,6 @@ func exportVideo() {
         // Set up video composition
         videoComposition = AVMutableVideoComposition(propertiesOfAsset: sourceAsset)
         
-        // Parent layer contains video and all overlays
-        let parentLayer = CALayer()
-        parentLayer.frame = CGRectMake(0, 0, tracks[0].naturalSize.height, tracks[0].naturalSize.width)
-        
-        let videoLayer = CALayer()
-        videoLayer.frame = CGRectMake(0, 0, tracks[0].naturalSize.height, tracks[0].naturalSize.width)
-        parentLayer.addSublayer(videoLayer)
-        
         // Add drawing to composition if the clip has one
         if clip.overlay != nil {
             let overlayImage = UIImage(data: clip.overlay!)
@@ -85,11 +78,11 @@ func exportVideo() {
             let overlayLayer = CALayer()
             overlayLayer.frame = CGRectMake(0, 0, tracks[0].naturalSize.height, tracks[0].naturalSize.width)
             overlayLayer.contents = overlayImage?.CGImage
-            parentLayer.addSublayer(overlayLayer)
+            
+            overlayLayers.append(overlayLayer)
         }
         
-        // Finalize video composition
-        videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, inLayer: parentLayer)
+
         
         if tracks.count > 0 {
             let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
@@ -104,6 +97,25 @@ func exportVideo() {
             videoCompositionInstruction.timeRange = CMTimeRangeMake(kCMTimeZero, insertTime)
         }
     }
+    
+    print("overlay layers: \(overlayLayers)")
+    
+    // Parent layer contains video and all overlays
+    let parentLayer = CALayer()
+    parentLayer.frame = CGRectMake(0, 0, screenSize.height, screenSize.width)
+    
+    if overlayLayers.count > 0 {
+        for overlayLayer in overlayLayers {
+            parentLayer.addSublayer(overlayLayer)
+        }
+    }
+    
+    let videoLayer = CALayer()
+    videoLayer.frame = CGRectMake(0, 0, screenSize.height, screenSize.width)
+    parentLayer.addSublayer(videoLayer)
+    
+    // Finalize video composition
+    videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, inLayer: parentLayer)
     
     videoCompositionInstruction.layerInstructions = NSArray(object: videoCompositionLayerInstruction) as! [AVVideoCompositionLayerInstruction]
     videoComposition.instructions = NSArray(object: videoCompositionInstruction) as! [AVVideoCompositionInstructionProtocol]
