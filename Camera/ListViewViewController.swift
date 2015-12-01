@@ -11,9 +11,8 @@ import AVKit
 import AVFoundation
 import RealmSwift
 
-class ListViewViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
+class ListViewViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    @IBOutlet weak var clipReviewList: UITableView!
     @IBOutlet weak var clipCollection: UICollectionView!
 
     var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
@@ -36,8 +35,8 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     override func viewDidLoad() {
         super.viewDidLoad()
     
-        self.view.backgroundColor = darkGreyColor
-        clipReviewList.backgroundColor = darkGreyColor
+        view.backgroundColor = darkGreyColor
+        clipCollection.backgroundColor = UIColor.clearColor()
         
         screenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self,
             action: "panLeftEdge:")
@@ -55,15 +54,11 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         let realm = try! Realm()
         clips = realm.objects(Clip).sorted("filename", ascending: false)
         
-        clipReviewList.reloadData()
         clipCollection.reloadData()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        
-        clipReviewList.dataSource = self
-        clipReviewList.delegate = self
         
         clipCollection.dataSource = self
         clipCollection.delegate = self
@@ -96,60 +91,13 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         
         cell.clip = clip
         cell.sceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
-//        cell.contentView.backgroundColor = darkGreyColor
+        cell.contentView.backgroundColor = darkGreyColor
 //
         let filePath = getAbsolutePathForFile(clip.filename)
         let URL = NSURL(fileURLWithPath: filePath)
         let videoAsset = AVAsset(URL: URL)
         let playerItem = AVPlayerItem(asset: videoAsset)
 
-        playerLayer = AVPlayerLayer()
-        playerLayer!.frame = cell.clipView.bounds
-        player = AVPlayer(playerItem: playerItem)
-        player!.actionAtItemEnd = .None
-        playerLayer!.player = player
-        playerLayer!.backgroundColor = UIColor.clearColor().CGColor
-        playerLayer!.videoGravity = AVLayerVideoGravityResize
-        cell.clipView.layer.addSublayer(self.playerLayer!)
-        player!.pause()
-        player!.muted = true
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
-        
-        return cell
-    }
-    
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return clips.count
-    }
-    
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SceneTableViewCell", forIndexPath: indexPath) as! SceneTableViewCell
-
-        let clip = clips[indexPath.row]
-        
-//        print("clip: \(clip)")
-        
-        let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
-
-        let clipDuration = clipAsset.duration
-        let clipDurationInSeconds = roundToOneDecimalPlace(CMTimeGetSeconds(clipDuration))
-        let clipDurationSuffix: String!
-        if clipDurationInSeconds == 1 {
-            clipDurationSuffix = "Second"
-        } else {
-            clipDurationSuffix = "Seconds"
-        }
-        
-        cell.clip = clip
-        cell.sceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
-        cell.contentView.backgroundColor = darkGreyColor
-        
-        let filePath = getAbsolutePathForFile(clip.filename)
-        let URL = NSURL(fileURLWithPath: filePath)
-        let videoAsset = AVAsset(URL: URL)
-        let playerItem = AVPlayerItem(asset: videoAsset)
-        
         playerLayer = AVPlayerLayer()
         playerLayer!.frame = cell.clipView.bounds
         player = AVPlayer(playerItem: playerItem)
@@ -181,13 +129,6 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
             let editViewController = segue.destinationViewController as! EditClipViewController
             let selectedClipIndex = self.clipCollection.indexPathForCell(sender as! UICollectionViewCell)?.row
             
-            let selectedClip = clips[selectedClipIndex!]
-            editViewController.clip = selectedClip
-        }
-        if segue.identifier == "editClipSegue" {
-            let editViewController = segue.destinationViewController as! EditClipViewController
-            let selectedClipIndex = self.clipReviewList.indexPathForCell(sender as! UITableViewCell)?.row
-    
             let selectedClip = clips[selectedClipIndex!]
             editViewController.clip = selectedClip
         }

@@ -21,7 +21,7 @@ class CollectionViewCell: UICollectionViewCell {
         super.awakeFromNib()
         // Initialization code
         
-//        clipView.backgroundColor = UIColor.whiteColor()
+        clipView.backgroundColor = UIColor.whiteColor()
     }
     
     @IBAction func tapDelete(sender: UIButton) {
