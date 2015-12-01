@@ -20,7 +20,8 @@ class CollectionViewCell: UICollectionViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        
+        clipView.layer.cornerRadius = 5
+        clipView.clipsToBounds = true;
         clipView.backgroundColor = UIColor.whiteColor()
     }
     
