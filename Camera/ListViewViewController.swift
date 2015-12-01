@@ -11,9 +11,10 @@ import AVKit
 import AVFoundation
 import RealmSwift
 
-class ListViewViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ListViewViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var clipReviewList: UITableView!
+    @IBOutlet weak var clipCollection: UICollectionView!
 
     var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
 
@@ -64,6 +65,54 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         clipReviewList.delegate = self
         
         updateTableView()
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return clips.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCell
+        
+        let clip = clips[indexPath.row]
+        
+        //        print("clip: \(clip)")
+        
+        let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
+        
+        let clipDuration = clipAsset.duration
+        let clipDurationInSeconds = roundToOneDecimalPlace(CMTimeGetSeconds(clipDuration))
+        let clipDurationSuffix: String!
+        if clipDurationInSeconds == 1 {
+            clipDurationSuffix = "Second"
+        } else {
+            clipDurationSuffix = "Seconds"
+        }
+        
+        cell.clip = clip
+//        cell.sceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
+//        cell.contentView.backgroundColor = darkGreyColor
+//
+        let filePath = getAbsolutePathForFile(clip.filename)
+        let URL = NSURL(fileURLWithPath: filePath)
+        let videoAsset = AVAsset(URL: URL)
+        let playerItem = AVPlayerItem(asset: videoAsset)
+
+        playerLayer = AVPlayerLayer()
+        playerLayer!.frame = cell.clipView.bounds
+        player = AVPlayer(playerItem: playerItem)
+        player!.actionAtItemEnd = .None
+        playerLayer!.player = player
+        playerLayer!.backgroundColor = UIColor.clearColor().CGColor
+        playerLayer!.videoGravity = AVLayerVideoGravityResize
+        cell.clipView.layer.addSublayer(self.playerLayer!)
+        player!.pause()
+        player!.muted = true
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
+        
+        return cell
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
