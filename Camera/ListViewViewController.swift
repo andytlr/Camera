@@ -45,7 +45,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         blurView.frame = self.view.bounds
         loadingIndicator = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
-        loadingIndicator.center = self.view.center;
+        loadingIndicator.center = self.view.center
         loadingIndicator.hidesWhenStopped = true
         loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
     }
