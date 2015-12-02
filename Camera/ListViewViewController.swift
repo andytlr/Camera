@@ -48,6 +48,15 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         loadingIndicator.center = self.view.center
         loadingIndicator.hidesWhenStopped = true
         loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
+        
+        clipCollection.dataSource = self
+        clipCollection.delegate = self
+        
+        updateTableView()
+        
+        let item = collectionView(clipCollection, numberOfItemsInSection: 0) - 1
+        let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
+        clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
     }
     
     func updateTableView() {
@@ -60,14 +69,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        clipCollection.dataSource = self
-        clipCollection.delegate = self
-        
         updateTableView()
-        
-        let item = collectionView(clipCollection, numberOfItemsInSection: 0) - 1
-        let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
-        clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
