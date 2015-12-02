@@ -135,7 +135,7 @@ class PreviewViewController: UIViewController {
             let maskImage = CALayer()
             maskImage.frame = CGRectMake(0, 0, view.frame.width, view.frame.height)
             maskImage.backgroundColor = UIColor.blackColor().CGColor
-            maskImage.cornerRadius = 10
+            maskImage.cornerRadius = 8
             previewView.layer.mask = maskImage
             
             blackView.frame = self.view.bounds
