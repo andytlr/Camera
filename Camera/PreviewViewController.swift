@@ -40,6 +40,12 @@ class PreviewViewController: UIViewController {
         let realm = try! Realm()
         clip = realm.objects(Clip).last!
         
+        let maskImage = CALayer()
+        maskImage.frame = CGRectMake(0, 0, view.frame.width, view.frame.height)
+        maskImage.backgroundColor = UIColor.blackColor().CGColor
+        maskImage.cornerRadius = 10
+        previewView.layer.mask = maskImage
+        
         view.backgroundColor = UIColor.clearColor()
         previewView.backgroundColor = UIColor.clearColor()
         
