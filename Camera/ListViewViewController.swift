@@ -92,7 +92,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         cell.clip = clip
         cell.sceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
         cell.contentView.backgroundColor = darkGreyColor
-//
+
         let filePath = getAbsolutePathForFile(clip.filename)
         let URL = NSURL(fileURLWithPath: filePath)
         let videoAsset = AVAsset(URL: URL)
