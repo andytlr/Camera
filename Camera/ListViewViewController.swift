@@ -52,7 +52,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     
     func updateTableView() {
         let realm = try! Realm()
-        clips = realm.objects(Clip).sorted("filename", ascending: false)
+        clips = realm.objects(Clip).sorted("filename", ascending: true)
         
         clipCollection.reloadData()
     }
@@ -64,6 +64,10 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         clipCollection.delegate = self
         
         updateTableView()
+        
+        let item = collectionView(clipCollection, numberOfItemsInSection: 0) - 1
+        let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
+        clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
