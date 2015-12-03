@@ -67,7 +67,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let item = collectionView(clipCollection, numberOfItemsInSection: 0) - 1
         let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
-        clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
+        clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Left, animated: false)
     }
     
     func updateTableView() {
@@ -97,18 +97,12 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
         
+        cell.clip = clip
+        cell.contentView.backgroundColor = darkGreyColor
+        
         let clipDuration = clipAsset.duration
         let clipDurationInSeconds = roundToOneDecimalPlace(CMTimeGetSeconds(clipDuration))
-        let clipDurationSuffix: String!
-        if clipDurationInSeconds == 1 {
-            clipDurationSuffix = "Second"
-        } else {
-            clipDurationSuffix = "Seconds"
-        }
-        
-        cell.clip = clip
-        cell.sceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
-        cell.contentView.backgroundColor = darkGreyColor
+        cell.sceneDuration.text = String("\(clipDurationInSeconds)s")
 
         let filePath = getAbsolutePathForFile(clip.filename)
         let URL = NSURL(fileURLWithPath: filePath)

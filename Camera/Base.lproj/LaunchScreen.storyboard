@@ -71,7 +71,7 @@
                             </button>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" red="0.19605264067649841" green="0.19609326124191284" blue="0.19605004787445068" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.1372351348400116" green="0.13726624846458435" blue="0.13723316788673401" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="SJw-HR-dag" firstAttribute="leading" secondItem="HLS-sB-eCR" secondAttribute="trailing" constant="31" id="2FU-Xe-Jje"/>
                             <constraint firstItem="TDq-wE-gcP" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="31" id="2Tv-Ec-C5w"/>
