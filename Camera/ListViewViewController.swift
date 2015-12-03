@@ -223,7 +223,6 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
             dispatch_async(dispatch_get_main_queue()) {
                 deleteAllClips()
                 NSNotificationCenter.defaultCenter().postNotificationName("All Clips Deleted", object: nil)
-//                self.updateTableView()
                 self.backToCamera()
             }
         }
