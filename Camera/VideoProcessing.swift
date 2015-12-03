@@ -77,6 +77,9 @@ func exportVideo() {
         if tracks.count > 0 {
             let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
             let assetTrackAudio:AVAssetTrack = audios[0] as AVAssetTrack
+            
+            let assetSize = assetTrack.naturalSize
+            
             do {
                 try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
                 try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio, atTime: insertTime)
@@ -84,33 +87,33 @@ func exportVideo() {
                 videoCompositionLayerInstruction.setTransform(assetTrack.preferredTransform, atTime: insertTime)
                 
                 // Parent layer contains video and all overlays
-                parentLayer.frame = CGRectMake(0, 0, assetTrack.naturalSize.width, assetTrack.naturalSize.height)
+                parentLayer.frame = CGRectMake(0, 0, assetSize.height, assetSize.width)
                 
-                videoLayer.frame = CGRectMake(0, 0, assetTrack.naturalSize.height, assetTrack.naturalSize.width)
+                videoLayer.frame = CGRectMake(0, 0, assetSize.height, assetSize.width)
                 parentLayer.addSublayer(videoLayer)
+                
+                if clip.overlay != nil {
+                    let overlayImage = UIImage(data: clip.overlay!)
+                    
+                    let overlayLayer = CALayer()
+                    overlayLayer.opacity = 0
+                    overlayLayer.frame = CGRectMake(0, 0, assetSize.height, assetSize.width)
+                    overlayLayer.contents = overlayImage?.CGImage
+                    
+                    let animation = CABasicAnimation(keyPath: "opacity")
+                    animation.duration = CMTimeGetSeconds(sourceAsset.duration)
+                    animation.fromValue = 1
+                    animation.toValue = 1
+                    animation.beginTime = CMTimeGetSeconds(insertTime) + 0.0000000000000000000000000001
+                    animation.fillMode = kCAFillModeForwards
+                    animation.removedOnCompletion = true
+                    
+                    overlayLayer.addAnimation(animation, forKey: "animateOpacity")
+                    
+                    overlayLayers.append(overlayLayer)
+                }
 
             } catch { }
-            
-            if clip.overlay != nil {
-                let overlayImage = UIImage(data: clip.overlay!)
-                
-                let overlayLayer = CALayer()
-                overlayLayer.opacity = 0
-                overlayLayer.frame = CGRectMake(0, 0, tracks[0].naturalSize.height, tracks[0].naturalSize.width)
-                overlayLayer.contents = overlayImage?.CGImage
-                
-                let animation = CABasicAnimation(keyPath: "opacity")
-                animation.duration = CMTimeGetSeconds(sourceAsset.duration)
-                animation.fromValue = 1
-                animation.toValue = 1
-                animation.beginTime = CMTimeGetSeconds(insertTime) + 0.0000000000000000000000000001
-                animation.fillMode = kCAFillModeForwards
-                animation.removedOnCompletion = true
-
-                overlayLayer.addAnimation(animation, forKey: "animateOpacity")
-                
-                overlayLayers.append(overlayLayer)
-            }
             
             insertTime = CMTimeAdd(insertTime, sourceAsset.duration)
             
