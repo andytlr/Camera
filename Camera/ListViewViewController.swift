@@ -45,23 +45,29 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         blurView.frame = self.view.bounds
         loadingIndicator = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
-        loadingIndicator.center = self.view.center;
+        loadingIndicator.center = self.view.center
         loadingIndicator.hidesWhenStopped = true
         loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
+        
+        clipCollection.dataSource = self
+        clipCollection.delegate = self
+        
+        updateTableView()
+        
+        let item = collectionView(clipCollection, numberOfItemsInSection: 0) - 1
+        let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
+        clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Right, animated: true)
     }
     
     func updateTableView() {
         let realm = try! Realm()
-        clips = realm.objects(Clip).sorted("filename", ascending: false)
+        clips = realm.objects(Clip).sorted("filename", ascending: true)
         
         clipCollection.reloadData()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
-        
-        clipCollection.dataSource = self
-        clipCollection.delegate = self
         
         updateTableView()
     }
@@ -92,7 +98,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         cell.clip = clip
         cell.sceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
         cell.contentView.backgroundColor = darkGreyColor
-//
+
         let filePath = getAbsolutePathForFile(clip.filename)
         let URL = NSURL(fileURLWithPath: filePath)
         let videoAsset = AVAsset(URL: URL)
@@ -107,6 +113,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         playerLayer!.videoGravity = AVLayerVideoGravityResize
         cell.clipView.layer.addSublayer(self.playerLayer!)
         player!.pause()
+//        player!.play()
         player!.muted = true
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)

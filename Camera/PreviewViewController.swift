@@ -132,6 +132,12 @@ class PreviewViewController: UIViewController {
             view.backgroundColor = UIColor.clearColor()
             previewView.backgroundColor = UIColor.clearColor()
             
+            let maskImage = CALayer()
+            maskImage.frame = CGRectMake(0, 0, view.frame.width, view.frame.height)
+            maskImage.backgroundColor = UIColor.blackColor().CGColor
+            maskImage.cornerRadius = 8
+            previewView.layer.mask = maskImage
+            
             blackView.frame = self.view.bounds
             blackView.alpha = 0.85
             view.insertSubview(blackView, atIndex: 0)
@@ -182,6 +188,8 @@ class PreviewViewController: UIViewController {
             }
         }
         if sender.state == .Ended {
+            
+            previewView.layer.mask = nil
             
             let dismissDuration = Double(convertValue(abs(velocity.y), r1Min: 0, r1Max: 150, r2Min: 0.3, r2Max: 0.1))
             
