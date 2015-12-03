@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X8A-hg-dCk">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="650"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="560"/>
                                         <animations/>
                                         <gestureRecognizers/>
                                         <connections>
@@ -35,7 +35,7 @@
                                 <constraints>
                                     <constraint firstItem="X8A-hg-dCk" firstAttribute="leading" secondItem="OOk-t2-LFN" secondAttribute="leading" id="Ivr-rn-y5p"/>
                                     <constraint firstAttribute="trailing" secondItem="X8A-hg-dCk" secondAttribute="trailing" id="d4n-KO-mHo"/>
-                                    <constraint firstAttribute="bottom" secondItem="X8A-hg-dCk" secondAttribute="bottom" constant="17" id="luI-r7-wRr"/>
+                                    <constraint firstAttribute="bottom" secondItem="X8A-hg-dCk" secondAttribute="bottom" constant="107" id="luI-r7-wRr"/>
                                     <constraint firstItem="X8A-hg-dCk" firstAttribute="top" secondItem="OOk-t2-LFN" secondAttribute="top" id="o80-cc-OOx"/>
                                 </constraints>
                             </view>
