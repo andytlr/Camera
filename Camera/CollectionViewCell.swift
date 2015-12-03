@@ -23,6 +23,9 @@ class CollectionViewCell: UICollectionViewCell {
         clipView.layer.cornerRadius = 5
         clipView.clipsToBounds = true;
         clipView.backgroundColor = UIColor.whiteColor()
+        
+        sceneDuration.layer.cornerRadius = 15
+        sceneDuration.clipsToBounds = true;
     }
     
     @IBAction func tapDelete(sender: UIButton) {
