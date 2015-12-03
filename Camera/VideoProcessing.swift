@@ -58,6 +58,9 @@ func exportVideo() {
     let videoCompositionLayerInstruction = AVMutableVideoCompositionLayerInstruction(assetTrack: trackVideo)
     let videoCompositionInstruction = AVMutableVideoCompositionInstruction()
     
+    let videoLayer = CALayer()
+    let parentLayer = CALayer()
+    
     let realm = try! Realm()
     let clips = realm.objects(Clip).sorted("filename", ascending: true)
     
@@ -77,6 +80,15 @@ func exportVideo() {
             do {
                 try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
                 try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio, atTime: insertTime)
+                
+                videoCompositionLayerInstruction.setTransform(assetTrack.preferredTransform, atTime: insertTime)
+                
+                // Parent layer contains video and all overlays
+                parentLayer.frame = CGRectMake(0, 0, assetTrack.naturalSize.width, assetTrack.naturalSize.height)
+                
+                videoLayer.frame = CGRectMake(0, 0, assetTrack.naturalSize.height, assetTrack.naturalSize.width)
+                parentLayer.addSublayer(videoLayer)
+
             } catch { }
             
             if clip.overlay != nil {
@@ -106,23 +118,11 @@ func exportVideo() {
         }
     }
     
-    for i in 0...overlayLayers.count - 1 {
-        print("overlay layers: \(overlayLayers[i].animationForKey("animateOpacity")?.beginTime)")
-    }
-    
-    // Parent layer contains video and all overlays
-    let parentLayer = CALayer()
-    parentLayer.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
-    
     if overlayLayers.count > 0 {
         for overlayLayer in overlayLayers {
             parentLayer.addSublayer(overlayLayer)
         }
     }
-    
-    let videoLayer = CALayer()
-    videoLayer.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
-    parentLayer.addSublayer(videoLayer)
     
     // Finalize video composition
     videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, inLayer: parentLayer)
