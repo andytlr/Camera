@@ -71,20 +71,6 @@ func exportVideo() {
         // Set up video composition
         videoComposition = AVMutableVideoComposition(propertiesOfAsset: sourceAsset)
         
-        // Add drawing to composition if the clip has one
-//        if clip.overlay != nil {
-            let overlayImage = UIImage(data: clip.overlay!)
-            
-            let overlayLayer = CALayer()
-            overlayLayer.opacity = 0
-            overlayLayer.frame = CGRectMake(0, 0, tracks[0].naturalSize.height, tracks[0].naturalSize.width)
-            overlayLayer.contents = overlayImage?.CGImage
-            
-            overlayLayers.append(overlayLayer)
-//        }
-        
-
-        
         if tracks.count > 0 {
             let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
             let assetTrackAudio:AVAssetTrack = audios[0] as AVAssetTrack
@@ -93,14 +79,26 @@ func exportVideo() {
                 try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio, atTime: insertTime)
             } catch { }
             
-            //            if clip.overlay != nil {
-            let animation = CABasicAnimation(keyPath: "opacity")
-            animation.duration = 0
-            animation.fromValue = 0
-            animation.toValue = 1
-            animation.beginTime = CMTimeGetSeconds(insertTime) + CMTimeGetSeconds(sourceAsset.duration)
-            overlayLayer.addAnimation(animation, forKey: "animateOpacity")
-            //            }
+            if clip.overlay != nil {
+                let overlayImage = UIImage(data: clip.overlay!)
+                
+                let overlayLayer = CALayer()
+                overlayLayer.opacity = 0
+                overlayLayer.frame = CGRectMake(0, 0, tracks[0].naturalSize.height, tracks[0].naturalSize.width)
+                overlayLayer.contents = overlayImage?.CGImage
+                
+                let animation = CABasicAnimation(keyPath: "opacity")
+                animation.duration = CMTimeGetSeconds(sourceAsset.duration)
+                animation.fromValue = 1
+                animation.toValue = 1
+                animation.beginTime = CMTimeGetSeconds(insertTime) + 0.0000000000000000000000000001
+                animation.fillMode = kCAFillModeForwards
+                animation.removedOnCompletion = true
+
+                overlayLayer.addAnimation(animation, forKey: "animateOpacity")
+                
+                overlayLayers.append(overlayLayer)
+            }
             
             insertTime = CMTimeAdd(insertTime, sourceAsset.duration)
             
@@ -108,11 +106,13 @@ func exportVideo() {
         }
     }
     
-    print("overlay layers: \(overlayLayers)")
+    for i in 0...overlayLayers.count - 1 {
+        print("overlay layers: \(overlayLayers[i].animationForKey("animateOpacity")?.beginTime)")
+    }
     
     // Parent layer contains video and all overlays
     let parentLayer = CALayer()
-    parentLayer.frame = CGRectMake(0, 0, screenSize.height, screenSize.width)
+    parentLayer.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
     
     if overlayLayers.count > 0 {
         for overlayLayer in overlayLayers {
@@ -121,7 +121,7 @@ func exportVideo() {
     }
     
     let videoLayer = CALayer()
-    videoLayer.frame = CGRectMake(0, 0, screenSize.height, screenSize.width)
+    videoLayer.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
     parentLayer.addSublayer(videoLayer)
     
     // Finalize video composition
