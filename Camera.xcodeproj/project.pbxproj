@@ -16,6 +16,7 @@
 		C21477C91BEE9FE7001474A4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C21477C71BEE9FE7001474A4 /* LaunchScreen.storyboard */; };
 		C21477D11BEFE7BB001474A4 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21477D01BEFE7BB001474A4 /* Common.swift */; };
 		C21A4FD41C0192FE00B62989 /* CameraRoll.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21A4FD31C0192FE00B62989 /* CameraRoll.swift */; };
+		C21A97D81C0FDF6A0077A1FC /* CollectionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = C21A97D71C0FDF6A0077A1FC /* CollectionViewFlowLayout.swift */; };
 		C228843B1C02515A000549EB /* Toasts.swift in Sources */ = {isa = PBXBuildFile; fileRef = C228843A1C02515A000549EB /* Toasts.swift */; };
 		C24E087F1C016A0500891902 /* VideoProcessing.swift in Sources */ = {isa = PBXBuildFile; fileRef = C24E087E1C016A0500891902 /* VideoProcessing.swift */; };
 		C278C95F1BF846C800285CDF /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C278C95E1BF846C800285CDF /* PreviewViewController.swift */; };
@@ -43,6 +44,7 @@
 		C21477CA1BEE9FE7001474A4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C21477D01BEFE7BB001474A4 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		C21A4FD31C0192FE00B62989 /* CameraRoll.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraRoll.swift; sourceTree = "<group>"; };
+		C21A97D71C0FDF6A0077A1FC /* CollectionViewFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewFlowLayout.swift; sourceTree = "<group>"; };
 		C228843A1C02515A000549EB /* Toasts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Toasts.swift; sourceTree = "<group>"; };
 		C24E087E1C016A0500891902 /* VideoProcessing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoProcessing.swift; sourceTree = "<group>"; };
 		C278C95E1BF846C800285CDF /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
@@ -109,6 +111,7 @@
 				CA498DBF1C00F21A007A8FCF /* Clip.swift */,
 				C21A4FD31C0192FE00B62989 /* CameraRoll.swift */,
 				C228843A1C02515A000549EB /* Toasts.swift */,
+				C21A97D71C0FDF6A0077A1FC /* CollectionViewFlowLayout.swift */,
 				C2EDD11B1C0D367A007347D8 /* CollectionViewCell.swift */,
 				616937DE1BF64AEA00B47C38 /* ListViewViewController.swift */,
 				C24E087E1C016A0500891902 /* VideoProcessing.swift */,
@@ -264,6 +267,7 @@
 				C21477D11BEFE7BB001474A4 /* Common.swift in Sources */,
 				CAF6CB211C0510E0004FFF3B /* PassThroughView.swift in Sources */,
 				C21477BF1BEE9FE7001474A4 /* AppDelegate.swift in Sources */,
+				C21A97D81C0FDF6A0077A1FC /* CollectionViewFlowLayout.swift in Sources */,
 				CAF6569F1BF7C02A00B0E42F /* EditClipViewController.swift in Sources */,
 				C21A4FD41C0192FE00B62989 /* CameraRoll.swift in Sources */,
 				C2EA1FA11C08D177002A51D3 /* GlobalVariables.swift in Sources */,
