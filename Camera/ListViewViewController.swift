@@ -169,7 +169,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
             
             if AVAudioSession.sharedInstance().category != AVAudioSessionCategoryPlayAndRecord {
                 do {
-//                    try AVAudioSession.sharedInstance().setActive(false)
+                    try AVAudioSession.sharedInstance().setActive(false)
                     try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
                     try AVAudioSession.sharedInstance().setActive(true)
                 } catch let error as NSError { print(error) }
