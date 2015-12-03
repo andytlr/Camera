@@ -53,11 +53,21 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         clipCollection.delegate = self
         
         updateTableView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        var insets = self.clipCollection.contentInset
+        let value = (self.view.frame.size.width - (self.clipCollection.collectionViewLayout as! UICollectionViewFlowLayout).itemSize.width) * 0.5
+        insets.left = value
+        insets.right = value
+        self.clipCollection.contentInset = insets
+        self.clipCollection.decelerationRate = UIScrollViewDecelerationRateFast
         
         let item = collectionView(clipCollection, numberOfItemsInSection: 0) - 1
         let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
         clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Left, animated: true)
-        clipCollection.decelerationRate = UIScrollViewDecelerationRateFast
     }
     
     func updateTableView() {
