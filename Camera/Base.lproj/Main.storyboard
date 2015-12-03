@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Segues with Peek and Pop" minToolsVersion="7.1"/>
     </dependencies>
     <scenes>
@@ -244,33 +245,74 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi" userLabel="back to camera">
-                                <rect key="frame" x="31" y="565" width="66" height="66"/>
+                            <view alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8D0-GW-COg">
+                                <rect key="frame" x="0.0" y="534" width="375" height="133"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="center" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi" userLabel="back to camera">
+                                        <rect key="frame" x="25" y="34" width="66" height="66"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="66" id="ICY-wo-D9v"/>
+                                            <constraint firstAttribute="width" constant="66" id="qgr-Gc-FaY"/>
+                                        </constraints>
+                                        <state key="normal" image="backtocamera">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="backToCamera:" destination="nhD-o7-srJ" eventType="touchUpInside" id="W2f-dO-SVH"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="center" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAv-ct-ArT">
+                                        <rect key="frame" x="197" y="34" width="66" height="66"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="66" id="blr-dt-S4l"/>
+                                            <constraint firstAttribute="height" constant="66" id="xnL-fI-0s3"/>
+                                        </constraints>
+                                        <state key="normal" image="playpause">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="center" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qp-v4-9Sv">
+                                        <rect key="frame" x="283" y="34" width="66" height="66"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="66" id="PQn-VM-z8y"/>
+                                            <constraint firstAttribute="height" constant="66" id="lLv-h6-hWp"/>
+                                        </constraints>
+                                        <state key="normal" image="save">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tapExport:" destination="nhD-o7-srJ" eventType="touchUpInside" id="dDS-d7-lRw"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="center" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZR8-37-cdL">
+                                        <rect key="frame" x="111" y="34" width="66" height="66"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="66" id="YRj-NY-UuX"/>
+                                            <constraint firstAttribute="height" constant="66" id="e3K-qe-Ikm"/>
+                                        </constraints>
+                                        <state key="normal" image="trash-1">
+                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tapDeleteButton:" destination="nhD-o7-srJ" eventType="touchUpInside" id="1h5-Ax-ojg"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <animations/>
-                                <state key="normal" image="backtocamera">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="backToCamera:" destination="nhD-o7-srJ" eventType="touchUpInside" id="W2f-dO-SVH"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAv-ct-ArT">
-                                <rect key="frame" x="201" y="567" width="66" height="66"/>
-                                <animations/>
-                                <state key="normal" image="playpause">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                            </button>
-                            <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qp-v4-9Sv">
-                                <rect key="frame" x="289" y="567" width="66" height="66"/>
-                                <animations/>
-                                <state key="normal" image="save">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="tapExport:" destination="nhD-o7-srJ" eventType="touchUpInside" id="dDS-d7-lRw"/>
-                                </connections>
-                            </button>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="1qp-v4-9Sv" secondAttribute="trailing" constant="26" id="CJs-O9-zWe"/>
+                                    <constraint firstItem="JTg-Hj-Nxi" firstAttribute="leading" secondItem="8D0-GW-COg" secondAttribute="leading" constant="25" id="Fkk-Ep-lg1"/>
+                                    <constraint firstItem="YAv-ct-ArT" firstAttribute="leading" secondItem="ZR8-37-cdL" secondAttribute="trailing" constant="20" id="Nxi-xH-IPK"/>
+                                    <constraint firstItem="1qp-v4-9Sv" firstAttribute="leading" secondItem="YAv-ct-ArT" secondAttribute="trailing" constant="20" id="Pwv-9Z-n3a"/>
+                                    <constraint firstItem="ZR8-37-cdL" firstAttribute="leading" secondItem="JTg-Hj-Nxi" secondAttribute="trailing" constant="20" id="vJt-d4-4Ry"/>
+                                    <constraint firstItem="JTg-Hj-Nxi" firstAttribute="centerY" secondItem="8D0-GW-COg" secondAttribute="centerY" id="weE-oB-8lV"/>
+                                </constraints>
+                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kMK-Kl-gUt">
                                 <rect key="frame" x="0.0" y="134" width="375" height="400"/>
                                 <animations/>
@@ -327,20 +369,15 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZR8-37-cdL">
-                                <rect key="frame" x="115" y="566" width="66" height="66"/>
-                                <animations/>
-                                <state key="normal" image="trash-1">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="tapDeleteButton:" destination="nhD-o7-srJ" eventType="touchUpInside" id="1h5-Ax-ojg"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.11416656523942947" green="0.0938887819647789" blue="0.10201955586671829" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="fub-dA-U8I" firstAttribute="top" secondItem="8D0-GW-COg" secondAttribute="bottom" id="0RN-Yh-ikr"/>
+                            <constraint firstItem="8D0-GW-COg" firstAttribute="leading" secondItem="nYb-nR-g9O" secondAttribute="leadingMargin" constant="-20" id="F2X-Vk-Yrk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8D0-GW-COg" secondAttribute="trailing" constant="-20" id="KNq-Nv-NLW"/>
+                        </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
