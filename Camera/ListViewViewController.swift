@@ -23,6 +23,9 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     
+    var players: [AVPlayer?] = []
+    var playerLayers: [AVPlayerLayer?] = []
+    
     var thumbnail: UIImage!
     
     var loadingIndicator: UIActivityIndicatorView!
@@ -117,9 +120,12 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         playerLayer!.backgroundColor = UIColor.clearColor().CGColor
         playerLayer!.videoGravity = AVLayerVideoGravityResize
         cell.clipView.layer.addSublayer(self.playerLayer!)
-        player!.pause()
-//        player!.play()
+//        player!.pause()
+        player!.play()
         player!.muted = true
+        
+        players.append(player)
+        playerLayers.append(playerLayer)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         
@@ -147,7 +153,30 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     func backToCamera() {
-        self.navigationController?.popViewControllerAnimated(true)
+        dispatch_async(dispatch_get_main_queue()) {
+            
+            print(self.players)
+            
+            for var player in self.players {
+                player!.pause()
+                player = nil
+            }
+            
+            for var playerLayer in self.playerLayers {
+                playerLayer!.removeFromSuperlayer()
+                playerLayer = nil
+            }
+            
+            if AVAudioSession.sharedInstance().category != AVAudioSessionCategoryPlayAndRecord {
+                do {
+//                    try AVAudioSession.sharedInstance().setActive(false)
+                    try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
+                    try AVAudioSession.sharedInstance().setActive(true)
+                } catch let error as NSError { print(error) }
+            }
+            
+            self.navigationController?.popViewControllerAnimated(true)
+        }
     }
 
     @IBAction func backToCamera(sender: AnyObject) {
