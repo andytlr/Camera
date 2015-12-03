@@ -245,7 +245,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.69999999999999996" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8D0-GW-COg">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Ib-QF-vnj" userLabel="backgroundview">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KQS-wS-Yjb" userLabel="bg image view">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <animations/>
+                                    </imageView>
+                                </subviews>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="KQS-wS-Yjb" secondAttribute="trailing" id="4E1-4G-IFe"/>
+                                    <constraint firstItem="KQS-wS-Yjb" firstAttribute="top" secondItem="2Ib-QF-vnj" secondAttribute="top" id="VHm-IF-Jlu"/>
+                                    <constraint firstItem="KQS-wS-Yjb" firstAttribute="leading" secondItem="2Ib-QF-vnj" secondAttribute="leading" id="brd-7A-o93"/>
+                                    <constraint firstAttribute="bottom" secondItem="KQS-wS-Yjb" secondAttribute="bottom" id="brl-Ba-Puf"/>
+                                </constraints>
+                            </view>
+                            <view alpha="0.29999999999999999" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8D0-GW-COg" userLabel="button view">
                                 <rect key="frame" x="0.0" y="534" width="375" height="133"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="center" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi" userLabel="back to camera">
@@ -374,15 +391,22 @@
                         <color key="backgroundColor" red="0.11416656523942947" green="0.0938887819647789" blue="0.10201955586671829" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="fub-dA-U8I" firstAttribute="top" secondItem="8D0-GW-COg" secondAttribute="bottom" id="0RN-Yh-ikr"/>
                             <constraint firstItem="8D0-GW-COg" firstAttribute="leading" secondItem="nYb-nR-g9O" secondAttribute="leadingMargin" constant="-20" id="F2X-Vk-Yrk"/>
+                            <constraint firstItem="fub-dA-U8I" firstAttribute="top" secondItem="8D0-GW-COg" secondAttribute="bottom" id="GGF-Fd-Sww"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="2Ib-QF-vnj" secondAttribute="trailing" constant="-20" id="JbR-MU-836"/>
                             <constraint firstAttribute="trailingMargin" secondItem="8D0-GW-COg" secondAttribute="trailing" constant="-20" id="KNq-Nv-NLW"/>
+                            <constraint firstItem="2Ib-QF-vnj" firstAttribute="top" secondItem="P3o-jb-RxK" secondAttribute="bottom" id="UBA-f7-Kd5"/>
+                            <constraint firstItem="2Ib-QF-vnj" firstAttribute="leading" secondItem="nYb-nR-g9O" secondAttribute="leadingMargin" constant="-20" id="WHY-Eh-11y"/>
+                            <constraint firstItem="fub-dA-U8I" firstAttribute="top" secondItem="2Ib-QF-vnj" secondAttribute="bottom" id="zhw-z2-P5r"/>
                         </constraints>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
+                        <outlet property="backgroundView" destination="2Ib-QF-vnj" id="tia-zZ-Y1R"/>
+                        <outlet property="bgImageView" destination="KQS-wS-Yjb" id="ICW-p8-SUa"/>
                         <outlet property="clipCollection" destination="kMK-Kl-gUt" id="xMt-gW-WcF"/>
+                        <outlet property="mainView" destination="nYb-nR-g9O" id="b5T-fW-Fc1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XRo-ij-n4Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
