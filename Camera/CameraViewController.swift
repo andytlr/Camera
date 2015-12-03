@@ -24,7 +24,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBOutlet weak var progressBar: UIProgressView!
     
     var usingbackCamera: Bool = true
-    var usingSound: Bool = true
     
     var timerProgress: CGFloat! {
         didSet {
@@ -244,19 +243,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if usingbackCamera == true {
             endSession()
             beginSession(frontCamera!)
-            if usingSound == true {
-                if microphone != nil {
-                    captureSession.addInput(micInput)
-                }
+            if microphone != nil {
+                captureSession.addInput(micInput)
             }
             usingbackCamera = false
         } else {
             endSession()
             beginSession(backCamera!)
-            if usingSound == true {
-                if microphone != nil {
-                    captureSession.addInput(micInput)
-                }
+            if microphone != nil {
+                captureSession.addInput(micInput)
             }
             usingbackCamera = true
         }
