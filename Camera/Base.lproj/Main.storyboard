@@ -244,45 +244,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi">
-                                <rect key="frame" x="27" y="560" width="80" height="79"/>
+                            <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi" userLabel="back to camera">
+                                <rect key="frame" x="31" y="565" width="66" height="66"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <state key="normal" title="📷">
+                                <state key="normal" image="backtocamera">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="backToCamera:" destination="nhD-o7-srJ" eventType="touchUpInside" id="W2f-dO-SVH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAv-ct-ArT">
-                                <rect key="frame" x="187" y="560" width="80" height="79"/>
+                            <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAv-ct-ArT">
+                                <rect key="frame" x="201" y="567" width="66" height="66"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <state key="normal" title="⏯">
+                                <state key="normal" image="playpause">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qp-v4-9Sv">
-                                <rect key="frame" x="267" y="560" width="80" height="79"/>
+                            <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qp-v4-9Sv">
+                                <rect key="frame" x="289" y="567" width="66" height="66"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <state key="normal" title="💾">
+                                <state key="normal" image="save">
                                     <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="tapExport:" destination="nhD-o7-srJ" eventType="touchUpInside" id="dDS-d7-lRw"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZR8-37-cdL">
-                                <rect key="frame" x="107" y="560" width="80" height="79"/>
-                                <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
-                                <state key="normal" title="❌">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="tapDeleteButton:" destination="nhD-o7-srJ" eventType="touchUpInside" id="1h5-Ax-ojg"/>
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kMK-Kl-gUt">
@@ -341,6 +327,16 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZR8-37-cdL">
+                                <rect key="frame" x="115" y="566" width="66" height="66"/>
+                                <animations/>
+                                <state key="normal" image="trash-1">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapDeleteButton:" destination="nhD-o7-srJ" eventType="touchUpInside" id="1h5-Ax-ojg"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.11416656523942947" green="0.0938887819647789" blue="0.10201955586671829" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -552,11 +548,15 @@
         </scene>
     </scenes>
     <resources>
+        <image name="backtocamera" width="43" height="36"/>
         <image name="checkmark" width="48" height="37"/>
         <image name="cross" width="48" height="37"/>
         <image name="flip" width="64" height="64"/>
         <image name="list" width="64" height="64"/>
+        <image name="playpause" width="43" height="34"/>
+        <image name="save" width="35" height="34"/>
         <image name="spectrum" width="5" height="333"/>
+        <image name="trash-1" width="39" height="35"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="k9c-xf-l9r"/>
