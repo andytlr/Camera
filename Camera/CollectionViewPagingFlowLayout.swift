@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CollectionViewFlowLayout: UICollectionViewFlowLayout {
+class CollectionViewPagingFlowLayout: UICollectionViewFlowLayout {
 
     override func targetContentOffsetForProposedContentOffset(proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
         

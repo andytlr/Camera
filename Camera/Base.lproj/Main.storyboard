@@ -288,7 +288,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kMK-Kl-gUt">
                                 <rect key="frame" x="0.0" y="117" width="375" height="420"/>
                                 <animations/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ewi-8X-mRi" customClass="CollectionViewFlowLayout" customModule="Camera" customModuleProvider="target">
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Ewi-8X-mRi" customClass="CollectionViewPagingFlowLayout" customModule="Camera" customModuleProvider="target">
                                     <size key="itemSize" width="231" height="384"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
