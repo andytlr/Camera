@@ -24,6 +24,7 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     @IBOutlet weak var textInputTextField: UITextField!
     @IBOutlet var textFieldPanGestureRecognizer: UIPanGestureRecognizer!
     @IBOutlet weak var doneButton: UIButton!
+    @IBOutlet weak var addDrawingButton: UIButton!
     
     var clip: Clip!
     

@@ -10,37 +10,28 @@ import UIKit
 
 class LightboxTransition: BaseTransition {
     
-    var blackView: UIView!
-    
     override func presentTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
         
-        blackView = UIView()
-        blackView.backgroundColor = UIColor(white: 0, alpha: 0.8)
-        blackView.frame = fromViewController.view.frame
-        blackView.alpha = 0
+        let toViewController = toViewController as! EditClipViewController
         
-        fromViewController.view.addSubview(blackView)
-        
-        toViewController.view.alpha = 0
-        toViewController.view.transform = CGAffineTransformMakeScale(0, 0)
+        toViewController.view.transform = CGAffineTransformMakeScale(0.6, 0.6)
+        toViewController.doneButton.alpha = 0
+        toViewController.addDrawingButton.alpha = 0
         
         UIView.animateWithDuration(duration, animations: {
-            toViewController.view.alpha = 1
-            toViewController.view.transform = CGAffineTransformMakeScale(0.8, 0.8)
-            //self.blackView.alpha = 1
+            toViewController.view.transform = CGAffineTransformMakeScale(1, 1)
         }) { (finished: Bool) -> Void in
+            toViewController.doneButton.alpha = 1
+            toViewController.addDrawingButton.alpha = 1
             self.finish()
         }
     }
     
     override func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
         
-        blackView.removeFromSuperview()
-        
-        fromViewController.view.alpha = 1
+        fromViewController.view.transform = CGAffineTransformMakeScale(1, 1)
         UIView.animateWithDuration(duration, animations: {
-            fromViewController.view.alpha = 0
-            fromViewController.view.transform = CGAffineTransformMakeScale(0.001, 0.001)
+            fromViewController.view.transform = CGAffineTransformMakeScale(0.6, 0.6)
         }) { (finished: Bool) -> Void in
             self.finish()
         }
