@@ -16,6 +16,8 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     @IBOutlet weak var clipCollection: UICollectionView!
 
     var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
+    
+    var lightboxTransition: LightboxTransition!
 
     var clips: Results<Clip>!
     var clipCount: Int = 0
@@ -45,6 +47,8 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
             action: "panLeftEdge:")
         screenEdgeRecognizer.edges = .Left
         view.addGestureRecognizer(screenEdgeRecognizer)
+        
+        lightboxTransition = LightboxTransition()
         
         blurView.frame = self.view.bounds
         loadingIndicator = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
@@ -146,6 +150,9 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         if segue.identifier == "EditClip" {
             let editViewController = segue.destinationViewController as! EditClipViewController
             let selectedClipIndex = self.clipCollection.indexPathForCell(sender as! UICollectionViewCell)?.row
+            
+            editViewController.modalPresentationStyle = UIModalPresentationStyle.Custom
+            editViewController.transitioningDelegate = lightboxTransition
             
             let selectedClip = clips[selectedClipIndex!]
             editViewController.clip = selectedClip
