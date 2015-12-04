@@ -76,6 +76,8 @@ class PreviewViewController: UIViewController {
             playerLayer!.videoGravity = AVLayerVideoGravityResize
             previewView.layer.addSublayer(playerLayer!)
             player!.play()
+            // Perhaps here if the volume changes I could unmute.
+            player!.muted = true
             
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         }

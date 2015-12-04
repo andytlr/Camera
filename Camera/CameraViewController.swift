@@ -102,28 +102,19 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
 
         if microphone != nil {
             
+            // this is happening async at the moment. I'm not sure if putting it in this closure is even necessary.
+            // Or perhaps it even needs to be blocking. Or perhaps it'll just not have sound for the first few ms.
             let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
             dispatch_async(dispatch_get_global_queue(priority, 0)) {
                 
-                if AVAudioSession.sharedInstance().category != AVAudioSessionCategoryPlayAndRecord {
-                    do {
-                        try AVAudioSession.sharedInstance().setActive(false)
-                        try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord, withOptions: [.MixWithOthers, .AllowBluetooth, .DefaultToSpeaker])
-                        try AVAudioSession.sharedInstance().setActive(true)
-                    } catch let error as NSError { print(error) }
-                }
-                
                 self.captureSession.automaticallyConfiguresApplicationAudioSession = false
-                
-                if AVAudioSession.sharedInstance().category == AVAudioSessionCategoryPlayAndRecord {
-                    self.captureSession.addInput(self.micInput!)
-                }
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    // update some UI
-                }
+                self.captureSession.addInput(self.micInput!)
             }
         }
+    }
+    
+    func stopMic() {
+        self.captureSession.removeInput(self.micInput!)
     }
     
     func updateButtonCount() {
@@ -144,7 +135,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        startMic()
+//        startMic()
         updateButtonCount()
     }
 
@@ -243,16 +234,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if usingbackCamera == true {
             endSession()
             beginSession(frontCamera!)
-            if microphone != nil {
-                captureSession.addInput(micInput)
-            }
+//            startMic()
             usingbackCamera = false
         } else {
             endSession()
             beginSession(backCamera!)
-            if microphone != nil {
-                captureSession.addInput(micInput)
-            }
+//            startMic()
             usingbackCamera = true
         }
     }
@@ -264,6 +251,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func startRecording() {
         
         print("Start Recording")
+        
+        // Not sure where the right place to do this is. If it delays the start of the recording then perhaps on view did appear.
+        startMic()
         
         // Start timer
         let aSelector: Selector = "updateTime"
@@ -307,9 +297,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         }
         
         videoOutput.stopRecording()
-        removeMic()
         recordButton.alpha = 0
         totalTimeLabel.alpha = 0
+        stopMic()
     }
     
     func takeStillImage() {
@@ -346,17 +336,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
                 self.view.addSubview(self.previewViewController.view)
                 self.previewViewController.didMoveToParentViewController(self)
             }
-        }
-    }
-    
-    func removeMic() {
-        if microphone != nil {
-            do {
-                captureSession.removeInput(micInput)
-                try AVAudioSession.sharedInstance().setActive(false)
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
-                try AVAudioSession.sharedInstance().setActive(true)
-            } catch let error as NSError { print(error) }
         }
     }
     
@@ -401,18 +380,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     @IBAction func tapShowList(sender: UIButton) {
-        dispatch_async(dispatch_get_main_queue()) {
-            self.removeMic()
-            if self.microphone != nil {
-                do {
-                    self.captureSession.removeInput(self.micInput)
-                    try AVAudioSession.sharedInstance().setActive(false)
-                    try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
-                    try AVAudioSession.sharedInstance().setActive(true)
-                } catch let error as NSError { print(error) }
-            }
-            self.performSegueWithIdentifier("ShowList", sender: self)
-        }
+        self.performSegueWithIdentifier("ShowList", sender: self)
     }
     
     // MARK: AVCaptureFileOutputRecordingDelegate
