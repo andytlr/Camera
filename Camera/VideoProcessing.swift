@@ -63,12 +63,19 @@ func exportVideo() {
         let audios = sourceAsset.tracksWithMediaType(AVMediaTypeAudio)
         
         if tracks.count > 0 {
-            let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
-            let assetTrackAudio:AVAssetTrack = audios[0] as AVAssetTrack
-            do {
-                try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
-                try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio, atTime: insertTime)
-            } catch { }
+            if audios.count > 0 {
+                let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
+                let assetTrackAudio:AVAssetTrack = audios[0] as AVAssetTrack
+                do {
+                    try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
+                    try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio, atTime: insertTime)
+                } catch { }
+            } else {
+                let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
+                do {
+                    try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
+                } catch { }
+            }
             
             insertTime = CMTimeAdd(insertTime, sourceAsset.duration)
         }
