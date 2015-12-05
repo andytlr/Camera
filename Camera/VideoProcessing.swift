@@ -62,15 +62,27 @@ func exportVideo() {
         let tracks = sourceAsset.tracksWithMediaType(AVMediaTypeVideo)
         let audios = sourceAsset.tracksWithMediaType(AVMediaTypeAudio)
         
+        print("Video Tracks: \(tracks.count)")
+        print("Audio Tracks: \(audios.count)")
+        
         if tracks.count > 0 {
-            let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
-            let assetTrackAudio:AVAssetTrack = audios[0] as AVAssetTrack
-            do {
-                try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
-                try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio, atTime: insertTime)
-            } catch { }
-            
-            insertTime = CMTimeAdd(insertTime, sourceAsset.duration)
+            if audios.count > 0 {
+                let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
+                let assetTrackAudio:AVAssetTrack = audios[0] as AVAssetTrack
+                do {
+                    try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
+                    try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio, atTime: insertTime)
+                } catch { }
+                
+                insertTime = CMTimeAdd(insertTime, sourceAsset.duration)
+            } else {
+                let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
+                do {
+                    try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
+                } catch { }
+                
+                insertTime = CMTimeAdd(insertTime, sourceAsset.duration)
+            }
         }
     }
     
