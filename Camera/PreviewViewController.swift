@@ -107,7 +107,7 @@ class PreviewViewController: UIViewController {
     
     func killPreviewAndRestartCamera() {
         if self.clip.type == "video" {
-            self.cameraViewController.startMic()
+//            self.cameraViewController.startMic()
         }
         delay(0.1) {
             self.playerLayer!.removeFromSuperlayer()

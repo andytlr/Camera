@@ -38,7 +38,9 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var previewLayer: AVCaptureVideoPreviewLayer?
     
     var backCamera: AVCaptureDevice?
+    var backCameraInput: AVCaptureDeviceInput?
     var frontCamera: AVCaptureDevice?
+    var frontCameraInput: AVCaptureDeviceInput?
     var microphone: AVCaptureDevice?
     var micInput: AVCaptureDeviceInput?
     
@@ -161,17 +163,30 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         updateButtonCount()
         
         if backCamera != nil {
+            do {
+                backCameraInput = try AVCaptureDeviceInput(device: backCamera)
+            } catch { }
+            
             beginSession(backCamera!)
+        }
+        
+        if frontCamera != nil {
+            do {
+                frontCameraInput = try AVCaptureDeviceInput(device: frontCamera)
+            } catch { }
+        }
+        
+        if frontCamera == nil {
+            switchButton.alpha = 0
         }
         
         if microphone != nil {
             do {
                 micInput = try AVCaptureDeviceInput(device: microphone)
             } catch { }
-        }
-        
-        if frontCamera == nil {
-            switchButton.alpha = 0
+            
+            self.captureSession.automaticallyConfiguresApplicationAudioSession = false
+            self.captureSession.addInput(micInput!)
         }
     }
     
@@ -234,12 +249,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if usingbackCamera == true {
             endSession()
             beginSession(frontCamera!)
-//            startMic()
+            startMic()
             usingbackCamera = false
         } else {
             endSession()
             beginSession(backCamera!)
-//            startMic()
+            startMic()
             usingbackCamera = true
         }
     }
@@ -253,7 +268,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         print("Start Recording")
         
         // Not sure where the right place to do this is. If it delays the start of the recording then perhaps on view did appear.
-        startMic()
+//        startMic()
         
         // Start timer
         let aSelector: Selector = "updateTime"
@@ -299,7 +314,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         videoOutput.stopRecording()
         recordButton.alpha = 0
         totalTimeLabel.alpha = 0
-        stopMic()
     }
     
     func takeStillImage() {
