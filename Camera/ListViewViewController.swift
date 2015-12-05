@@ -160,22 +160,17 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     func backToCamera() {
-        dispatch_async(dispatch_get_main_queue()) {
-            
-            print(self.players)
-            
-            for var player in self.players {
-                player!.pause()
-                player = nil
-            }
-            
-            for var playerLayer in self.playerLayers {
-                playerLayer!.removeFromSuperlayer()
-                playerLayer = nil
-            }
-            
-            self.navigationController?.popViewControllerAnimated(true)
+        for var player in self.players {
+            player!.pause()
+            player = nil
         }
+        
+        for var playerLayer in self.playerLayers {
+            playerLayer!.removeFromSuperlayer()
+            playerLayer = nil
+        }
+        
+        self.navigationController?.popViewControllerAnimated(true)
     }
 
     @IBAction func backToCamera(sender: AnyObject) {
