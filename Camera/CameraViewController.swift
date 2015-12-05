@@ -188,6 +188,8 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             self.captureSession.automaticallyConfiguresApplicationAudioSession = false
             self.captureSession.addInput(micInput!)
         }
+        
+        print(captureSession.inputs)
     }
     
     func setupCamera() {
