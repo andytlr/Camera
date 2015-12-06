@@ -134,9 +134,20 @@ func exportVideo() {
                     UIGraphicsEndImageContext()
                     
                     let textLayer = CALayer()
+                    textLayer.opacity = 0
                     textLayer.frame = CGRectMake(0, 0, assetSize.height, assetSize.width)
                     textLayer.contents = image.CGImage
                     textLayer.contentsScale = UIScreen.mainScreen().scale
+                    
+                    let animation = CABasicAnimation(keyPath: "opacity")
+                    animation.duration = CMTimeGetSeconds(sourceAsset.duration)
+                    animation.fromValue = 1
+                    animation.toValue = 1
+                    animation.beginTime = CMTimeGetSeconds(insertTime) + 0.0000000000000000000000000001
+                    animation.fillMode = kCAFillModeForwards
+                    animation.removedOnCompletion = true
+                    
+                    textLayer.addAnimation(animation, forKey: "animateOpacity")
                     
                     textLayers.append(textLayer)
                 }
