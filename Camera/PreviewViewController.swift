@@ -140,7 +140,7 @@ class PreviewViewController: UIViewController {
     
     func killPreviewAndRestartCamera() {
         
-//        Volume.reset()
+        Volume.reset()
         
         delay(0.1) {
             self.playerLayer!.removeFromSuperlayer()
