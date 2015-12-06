@@ -40,12 +40,14 @@ class PreviewViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appDidEnterForeground", name: UIApplicationDidBecomeActiveNotification, object: nil)
         
-        volumeView = MPVolumeView(frame: CGRectMake(20, 20, view.frame.width - 40, 44))
+        volumeView = MPVolumeView(frame: CGRectMake(20, 13, view.frame.width - 40, 44))
         view.addSubview(volumeView)
         volumeView.alpha = 0
         volumeView.tintColor = UIColor.whiteColor()
         volumeView.showsRouteButton = false
         volumeView.setVolumeThumbImage(UIImage(named: "handle"), forState: UIControlState.Normal)
+        volumeView.setMinimumVolumeSliderImage(UIImage(named: "bar"), forState: UIControlState.Normal)
+        volumeView.setMaximumVolumeSliderImage(UIImage(named: "track"), forState: UIControlState.Normal)
         
         Volume.keepIntact = false
         
