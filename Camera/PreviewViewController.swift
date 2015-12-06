@@ -24,6 +24,7 @@ class PreviewViewController: UIViewController {
     
     let blackView = UIView()
     var volumeView = MPVolumeView()
+    var dismissVolumeControlTimer: NSTimer?
     
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
@@ -97,9 +98,8 @@ class PreviewViewController: UIViewController {
                 if self.player != nil {
                     self.player!.muted = false
                 }
-//                delay(3) {
-//                    self.volumeView.alpha = 0
-//                }
+                self.dismissVolumeControlTimer?.invalidate()
+                self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
             }
             
             Volume.Down.when {
@@ -107,13 +107,17 @@ class PreviewViewController: UIViewController {
                 if self.player != nil {
                     self.player!.muted = false
                 }
-//                delay(3) {
-//                    self.volumeView.alpha = 0
-//                }
+                self.dismissVolumeControlTimer?.invalidate()
+                self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
             }
             
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         }
+    }
+    
+    func hideVolumeControl() {
+        volumeView.alpha = 0
+        dkhccljfrfveebdgrdjkdbbrrkevrirkdismissVolumeControlTimer?.invalidate()
     }
     
     deinit {
@@ -145,6 +149,7 @@ class PreviewViewController: UIViewController {
     func killPreviewAndRestartCamera() {
         
         Volume.reset()
+        dismissVolumeControlTimer?.invalidate()
         
         delay(0.1) {
             self.playerLayer!.removeFromSuperlayer()
