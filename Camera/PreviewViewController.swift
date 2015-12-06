@@ -25,6 +25,12 @@ class PreviewViewController: UIViewController {
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     
+    var audioVolume = AVAudioSession.sharedInstance().outputVolume {
+        didSet {
+            player!.muted = false
+        }
+    }
+    
     var clip: Clip!
     
     override func viewDidLoad() {
@@ -78,6 +84,12 @@ class PreviewViewController: UIViewController {
             player!.play()
             // Perhaps here if the volume changes I could unmute.
             player!.muted = true
+            
+            delay(2) {
+                if self.audioVolume != AVAudioSession.sharedInstance().outputVolume {
+                    self.player!.muted = false
+                }
+            }
             
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         }
