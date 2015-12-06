@@ -105,11 +105,11 @@ class PreviewViewController: UIViewController {
     }
     
     func appWillEnterBackground() {
-//        player.pause()
+        player!.pause()
     }
     
     func appDidEnterForeground() {
-//        player.play()
+        player!.play()
     }
 
     override func didReceiveMemoryWarning() {
