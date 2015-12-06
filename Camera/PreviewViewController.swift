@@ -10,6 +10,7 @@ import UIKit
 import AVKit
 import AVFoundation
 import RealmSwift
+import Volumer
 
 class PreviewViewController: UIViewController {
     
@@ -25,9 +26,6 @@ class PreviewViewController: UIViewController {
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     
-    var audioVolume = AVAudioSession.sharedInstance().outputVolume
-    var timer: NSTimer?
-    
     var clip: Clip!
     
     override func viewDidLoad() {
@@ -39,6 +37,9 @@ class PreviewViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appDidEnterForeground", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        Volume.keepIntact = false
+//        Volume.use(self.volumeView)
         
         let realm = try! Realm()
         clip = realm.objects(Clip).last!
@@ -79,19 +80,23 @@ class PreviewViewController: UIViewController {
             playerLayer!.videoGravity = AVLayerVideoGravityResize
             previewView.layer.addSublayer(playerLayer!)
             player!.play()
-            // Perhaps here if the volume changes I could unmute.
             player!.muted = true
-            audioVolume = AVAudioSession.sharedInstance().outputVolume
             
-            timer = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "setTimeout", userInfo: nil, repeats: true)
+            Volume.when(.Up) {
+                print("UP!")
+                if self.player != nil {
+                    self.player!.muted = false
+                }
+            }
+            
+            Volume.Down.when {
+                print("Down")
+                if self.player != nil {
+                    self.player!.muted = false
+                }
+            }
             
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
-        }
-    }
-    
-    func setTimeout(){
-        if audioVolume != AVAudioSession.sharedInstance().outputVolume {
-            player!.muted = false
         }
     }
     
@@ -105,11 +110,15 @@ class PreviewViewController: UIViewController {
     }
     
     func appWillEnterBackground() {
-        player!.pause()
+        if player != nil {
+            player!.pause()
+        }
     }
     
     func appDidEnterForeground() {
-        player!.play()
+        if player != nil {
+            player!.play()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -119,7 +128,7 @@ class PreviewViewController: UIViewController {
     
     func killPreviewAndRestartCamera() {
         
-        timer!.invalidate()
+//        Volume.reset()
         
         delay(0.1) {
             self.playerLayer!.removeFromSuperlayer()

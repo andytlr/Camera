@@ -69,11 +69,15 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     }
     
     func appWillEnterBackground() {
-        player!.pause()
+        if player != nil {
+            player!.pause()
+        }
     }
     
     func appDidEnterForeground() {
-        player!.play()
+        if player != nil {
+            player!.play()
+        }
     }
     
     override func viewWillAppear(animated: Bool) {
