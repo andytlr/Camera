@@ -81,6 +81,7 @@ class PreviewViewController: UIViewController {
             player!.play()
             // Perhaps here if the volume changes I could unmute.
             player!.muted = true
+            audioVolume = AVAudioSession.sharedInstance().outputVolume
             
             timer = NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: "setTimeout", userInfo: nil, repeats: true)
             
