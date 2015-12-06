@@ -81,9 +81,8 @@ func exportVideo() {
             let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
             let assetTrackAudio:AVAssetTrack = audios[0] as AVAssetTrack
             
-            let assetSize = assetTrack.naturalSize
-            
-            let assetSizeFixed = CGSizeMake(720, 1280)
+            let renderSize = videoComposition.renderSize
+            let renderFrame = CGRectMake(0, 0, renderSize.width, renderSize.height)
             
             do {
                 try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
@@ -92,9 +91,9 @@ func exportVideo() {
                 videoCompositionLayerInstruction.setTransform(assetTrack.preferredTransform, atTime: insertTime)
                 
                 // Parent layer contains video and all overlays
-                parentLayer.frame = CGRectMake(0, 0, assetSizeFixed.width, assetSizeFixed.height)
+                parentLayer.frame = renderFrame
                 
-                videoLayer.frame = CGRectMake(0, 0, assetSizeFixed.width, assetSizeFixed.height)
+                videoLayer.frame = renderFrame
                 parentLayer.addSublayer(videoLayer)
                 
                 // Embed overlay
@@ -103,7 +102,7 @@ func exportVideo() {
                     
                     let overlayLayer = CALayer()
                     overlayLayer.opacity = 0
-                    overlayLayer.frame = CGRectMake(0, 0, assetSizeFixed.width, assetSizeFixed.height)
+                    overlayLayer.frame = renderFrame
                     overlayLayer.contents = overlayImage?.CGImage
                     
                     let animation = CABasicAnimation(keyPath: "opacity")
@@ -141,7 +140,7 @@ func exportVideo() {
                     // Set up text layer
                     let textLayer = CALayer()
                     textLayer.opacity = 0
-                    textLayer.frame = CGRectMake(0, 0, assetSizeFixed.width, assetSizeFixed.height)
+                    textLayer.frame = renderFrame
                     textLayer.contents = image.CGImage
                     textLayer.contentsScale = UIScreen.mainScreen().scale
                     
@@ -177,6 +176,8 @@ func exportVideo() {
            parentLayer.addSublayer(textLayer)
         }
     }
+    
+    print("render size: \(videoComposition.renderSize)")
     
     // Finalize video composition
     videoComposition.animationTool = AVVideoCompositionCoreAnimationTool(postProcessingAsVideoLayer: videoLayer, inLayer: parentLayer)
