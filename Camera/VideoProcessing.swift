@@ -81,8 +81,16 @@ func exportVideo() {
             let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
             let assetTrackAudio:AVAssetTrack = audios[0] as AVAssetTrack
             
+            // Set global render size
+            videoComposition.renderSize = CGSizeMake(1080, 1920) // TODO: make this not shit
+            print(videoComposition.renderScale)
             let renderSize = videoComposition.renderSize
             let renderFrame = CGRectMake(0, 0, renderSize.width, renderSize.height)
+            
+            print("\(assetTrack.naturalSize.width)")
+            
+            if assetTrack.naturalSize.width < renderSize.width {
+            }
             
             do {
                 try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
