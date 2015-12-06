@@ -93,12 +93,9 @@ func exportVideo() {
             let renderSize = videoComposition.renderSize
             let renderFrame = CGRectMake(0, 0, renderSize.width, renderSize.height)
             
-            print("asset height: \(assetTrack!.naturalSize.height)")
-            print("render width \(videoComposition.renderSize.width)")
-            
+            // Set up transforms
             let rotationTransform = assetTrack?.preferredTransform
             let scaleFactor = renderSize.width / (assetTrack?.naturalSize.height)!
-            print("scale factor: \(scaleFactor)")
             let scaleTransform = CGAffineTransformMakeScale(scaleFactor, scaleFactor)
             let combinedTransform = CGAffineTransformConcat(rotationTransform!, scaleTransform)
             
