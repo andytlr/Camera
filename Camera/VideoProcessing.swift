@@ -22,6 +22,7 @@ var textLayers = [CALayer]()
 
 var assetTrack:AVAssetTrack?
 var assetTrackAudio:AVAssetTrack?
+var largestAssetSize = CGSizeMake(0, 0)
 
 var reallySmallNumber = 0.0000000000000000000000000001
 
@@ -87,8 +88,15 @@ func exportVideo() {
                 assetTrackAudio = audios[0] as AVAssetTrack
             }
             
+            // Get largest asset size
+            print("natural height: \(assetTrack!.naturalSize.height)")
+            print("largest asset width: \(largestAssetSize.width)")
+            if assetTrack!.naturalSize.height > largestAssetSize.width {
+                largestAssetSize = CGSizeMake(assetTrack!.naturalSize.height, assetTrack!.naturalSize.width)
+            }
+            
             // Set global render size
-            videoComposition.renderSize = CGSizeMake(1080, 1920)
+            videoComposition.renderSize = CGSizeMake(1080, 1920) // TODO: Make this dynamic – largest video size
             let renderSize = videoComposition.renderSize
             let renderFrame = CGRectMake(0, 0, renderSize.width, renderSize.height)
             
@@ -103,6 +111,7 @@ func exportVideo() {
             
             // If any video is smaller than the render size, scale it up
             if assetTrack!.naturalSize.height < renderSize.width {
+                print("scaling!!!")
                 videoCompositionLayerInstruction.setTransform(combinedTransform, atTime: insertTime)
             } else {
                 videoCompositionLayerInstruction.setTransform(rotationTransform!, atTime: insertTime)
