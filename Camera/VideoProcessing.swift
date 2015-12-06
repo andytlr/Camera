@@ -96,9 +96,6 @@ func exportVideo() {
                     try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio!, atTime: insertTime)
                 }
                 
-                print("video \(trackVideo)")
-                print("audio \(trackAudio)")
-                
                 videoCompositionLayerInstruction.setTransform(assetTrack!.preferredTransform, atTime: insertTime)
                 
                 // Parent layer contains video and all overlays
