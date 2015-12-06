@@ -124,7 +124,6 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         playerLayer!.backgroundColor = UIColor.clearColor().CGColor
         playerLayer!.videoGravity = AVLayerVideoGravityResize
         cell.clipView.layer.addSublayer(self.playerLayer!)
-//        player!.pause()
         player!.play()
         player!.muted = true
         

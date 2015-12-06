@@ -101,11 +101,7 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     }
     
     func startMic() {
-
         if microphone != nil {
-            
-            // this is happening async at the moment. I'm not sure if putting it in this closure is even necessary.
-            // Or perhaps it even needs to be blocking. Or perhaps it'll just not have sound for the first few ms.
             let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
             dispatch_async(dispatch_get_global_queue(priority, 0)) {
                 
@@ -137,7 +133,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-//        startMic()
         updateButtonCount()
     }
 
@@ -266,9 +261,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     func startRecording() {
         
         print("Start Recording")
-        
-        // Not sure where the right place to do this is. If it delays the start of the recording then perhaps on view did appear.
-//        startMic()
         
         // Start timer
         let aSelector: Selector = "updateTime"

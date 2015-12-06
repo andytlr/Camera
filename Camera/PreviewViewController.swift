@@ -121,9 +121,6 @@ class PreviewViewController: UIViewController {
         
         timer!.invalidate()
         
-        if self.clip.type == "video" {
-//            self.cameraViewController.startMic()
-        }
         delay(0.1) {
             self.playerLayer!.removeFromSuperlayer()
             self.player = nil
