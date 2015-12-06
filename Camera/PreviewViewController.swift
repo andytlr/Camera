@@ -43,7 +43,9 @@ class PreviewViewController: UIViewController {
         volumeView = MPVolumeView(frame: CGRectMake(20, 20, view.frame.width - 40, 44))
         view.addSubview(volumeView)
         volumeView.alpha = 0
+        volumeView.tintColor = UIColor.whiteColor()
         volumeView.showsRouteButton = false
+        volumeView.setVolumeThumbImage(UIImage(named: "handle"), forState: UIControlState.Normal)
         
         Volume.keepIntact = false
         
