@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X8A-hg-dCk">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="650"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="560"/>
                                         <animations/>
                                         <gestureRecognizers/>
                                         <connections>
@@ -35,7 +35,7 @@
                                 <constraints>
                                     <constraint firstItem="X8A-hg-dCk" firstAttribute="leading" secondItem="OOk-t2-LFN" secondAttribute="leading" id="Ivr-rn-y5p"/>
                                     <constraint firstAttribute="trailing" secondItem="X8A-hg-dCk" secondAttribute="trailing" id="d4n-KO-mHo"/>
-                                    <constraint firstAttribute="bottom" secondItem="X8A-hg-dCk" secondAttribute="bottom" constant="17" id="luI-r7-wRr"/>
+                                    <constraint firstAttribute="bottom" secondItem="X8A-hg-dCk" secondAttribute="bottom" constant="107" id="luI-r7-wRr"/>
                                     <constraint firstItem="X8A-hg-dCk" firstAttribute="top" secondItem="OOk-t2-LFN" secondAttribute="top" id="o80-cc-OOx"/>
                                 </constraints>
                             </view>
@@ -101,7 +101,7 @@
                                 </state>
                                 <state key="highlighted" image="list"/>
                                 <connections>
-                                    <segue destination="nhD-o7-srJ" kind="show" id="gwI-fi-e7N"/>
+                                    <action selector="tapShowList:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9OF-Hr-y9g"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -150,6 +150,7 @@
                         <outlet property="showListButton" destination="lx0-SS-lNg" id="p3J-tW-HIQ"/>
                         <outlet property="switchButton" destination="Ox4-w2-oTz" id="v08-ys-5xA"/>
                         <outlet property="totalTimeLabel" destination="gZq-S3-fWn" id="st7-TN-zTD"/>
+                        <segue destination="nhD-o7-srJ" kind="show" identifier="ShowList" id="ouC-QI-ifs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

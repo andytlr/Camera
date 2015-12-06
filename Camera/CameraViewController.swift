@@ -24,7 +24,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     @IBOutlet weak var progressBar: UIProgressView!
     
     var usingbackCamera: Bool = true
-    var usingSound: Bool = true
     
     var timerProgress: CGFloat! {
         didSet {
@@ -148,19 +147,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         startMic()
         updateButtonCount()
     }
-    
-    override func viewDidDisappear(animated: Bool) {
-        super.viewDidDisappear(animated)
-        
-        if microphone != nil {
-            do {
-                captureSession.removeInput(micInput)
-                try AVAudioSession.sharedInstance().setActive(false)
-                try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
-                try AVAudioSession.sharedInstance().setActive(true)
-            } catch let error as NSError { print(error) }
-        }
-    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -257,19 +243,15 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         if usingbackCamera == true {
             endSession()
             beginSession(frontCamera!)
-            if usingSound == true {
-                if microphone != nil {
-                    captureSession.addInput(micInput)
-                }
+            if microphone != nil {
+                captureSession.addInput(micInput)
             }
             usingbackCamera = false
         } else {
             endSession()
             beginSession(backCamera!)
-            if usingSound == true {
-                if microphone != nil {
-                    captureSession.addInput(micInput)
-                }
+            if microphone != nil {
+                captureSession.addInput(micInput)
             }
             usingbackCamera = true
         }
@@ -416,6 +398,21 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         addChildViewController(previewViewController)
         self.view.addSubview(self.previewViewController.view)
         self.previewViewController.didMoveToParentViewController(self)
+    }
+    
+    @IBAction func tapShowList(sender: UIButton) {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.removeMic()
+            if self.microphone != nil {
+                do {
+                    self.captureSession.removeInput(self.micInput)
+                    try AVAudioSession.sharedInstance().setActive(false)
+                    try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
+                    try AVAudioSession.sharedInstance().setActive(true)
+                } catch let error as NSError { print(error) }
+            }
+            self.performSegueWithIdentifier("ShowList", sender: self)
+        }
     }
     
     // MARK: AVCaptureFileOutputRecordingDelegate
