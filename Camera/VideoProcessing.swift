@@ -88,16 +88,18 @@ func exportVideo() {
             }
             
             // Set global render size
-            videoComposition.renderSize = CGSizeMake(1080, 1920) // TODO: make this not shit
-            print(videoComposition.renderScale)
+            videoComposition.renderSize = CGSizeMake(1080, 1920)
             let renderSize = videoComposition.renderSize
             let renderFrame = CGRectMake(0, 0, renderSize.width, renderSize.height)
             
             // Set up transforms
             let rotationTransform = assetTrack?.preferredTransform
-            let scaleFactor = renderSize.width / (assetTrack?.naturalSize.height)!
+            let scaleFactor = renderSize.width / assetTrack!.naturalSize.height
             let scaleTransform = CGAffineTransformMakeScale(scaleFactor, scaleFactor)
             let combinedTransform = CGAffineTransformConcat(rotationTransform!, scaleTransform)
+            
+            print("Render size: \(videoComposition.renderSize)")
+            print("Scale factor: \(scaleFactor)")
             
             // If any video is smaller than the render size, scale it up
             if assetTrack!.naturalSize.height < renderSize.width {
@@ -111,8 +113,6 @@ func exportVideo() {
                 if audios.count > 0 {
                     try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio!, atTime: insertTime)
                 }
-                
-//                videoCompositionLayerInstruction.setTransform(assetTrack!.preferredTransform, atTime: insertTime)
                 
                 // Parent layer contains video and all overlays
                 parentLayer.frame = renderFrame
