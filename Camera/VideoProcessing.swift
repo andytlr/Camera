@@ -83,6 +83,8 @@ func exportVideo() {
             
             let assetSize = assetTrack.naturalSize
             
+            let assetSizeFixed = CGSizeMake(720, 1280)
+            
             do {
                 try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
                 try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio, atTime: insertTime)
@@ -90,9 +92,9 @@ func exportVideo() {
                 videoCompositionLayerInstruction.setTransform(assetTrack.preferredTransform, atTime: insertTime)
                 
                 // Parent layer contains video and all overlays
-                parentLayer.frame = CGRectMake(0, 0, assetSize.height, assetSize.width)
+                parentLayer.frame = CGRectMake(0, 0, assetSizeFixed.width, assetSizeFixed.height)
                 
-                videoLayer.frame = CGRectMake(0, 0, assetSize.height, assetSize.width)
+                videoLayer.frame = CGRectMake(0, 0, assetSizeFixed.width, assetSizeFixed.height)
                 parentLayer.addSublayer(videoLayer)
                 
                 // Embed overlay
@@ -101,7 +103,7 @@ func exportVideo() {
                     
                     let overlayLayer = CALayer()
                     overlayLayer.opacity = 0
-                    overlayLayer.frame = CGRectMake(0, 0, assetSize.height, assetSize.width)
+                    overlayLayer.frame = CGRectMake(0, 0, assetSizeFixed.width, assetSizeFixed.height)
                     overlayLayer.contents = overlayImage?.CGImage
                     
                     let animation = CABasicAnimation(keyPath: "opacity")
@@ -139,7 +141,7 @@ func exportVideo() {
                     // Set up text layer
                     let textLayer = CALayer()
                     textLayer.opacity = 0
-                    textLayer.frame = CGRectMake(0, 0, assetSize.height, assetSize.width)
+                    textLayer.frame = CGRectMake(0, 0, assetSizeFixed.width, assetSizeFixed.height)
                     textLayer.contents = image.CGImage
                     textLayer.contentsScale = UIScreen.mainScreen().scale
                     
