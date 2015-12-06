@@ -117,7 +117,7 @@ class PreviewViewController: UIViewController {
     
     func hideVolumeControl() {
         volumeView.alpha = 0
-        dkhccljfrfveebdgrdjkdbbrrkevrirkdismissVolumeControlTimer?.invalidate()
+        dismissVolumeControlTimer?.invalidate()
     }
     
     deinit {
