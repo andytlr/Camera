@@ -18,6 +18,7 @@ var screenSize = UIScreen.mainScreen().bounds
 
 var videoComposition: AVMutableVideoComposition!
 var overlayLayers = [CALayer]()
+var textLayers = [CALayer]()
 
 func formatTime(timeInSeconds: Int) -> String {
     
@@ -92,6 +93,7 @@ func exportVideo() {
                 videoLayer.frame = CGRectMake(0, 0, assetSize.height, assetSize.width)
                 parentLayer.addSublayer(videoLayer)
                 
+                // Embed overlay
                 if clip.overlay != nil {
                     let overlayImage = UIImage(data: clip.overlay!)
                     
@@ -112,7 +114,32 @@ func exportVideo() {
                     
                     overlayLayers.append(overlayLayer)
                 }
-
+                
+                // Embed text
+                if clip.textLayer != nil {
+                    print("adding text layer")
+                    
+                    let textView = UIView(frame: CGRectMake(0, 0, screenSize.width, screenSize.height))
+                    let label = UILabel(frame: CGRectFromString((clip.textLayer?.frame)!))
+                    label.text = clip.textLayer?.text
+                    label.textColor = UIColor.redColor()
+                    label.textAlignment = .Center
+                    label.textColor = UIColor.whiteColor()
+                    label.font = UIFont.systemFontOfSize(32.0, weight: UIFontWeightBold)
+                    textView.addSubview(label)
+                    
+                    UIGraphicsBeginImageContextWithOptions(textView.frame.size, false, UIScreen.mainScreen().scale)
+                    textView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+                    let image = UIGraphicsGetImageFromCurrentImageContext()
+                    UIGraphicsEndImageContext()
+                    
+                    let textLayer = CALayer()
+                    textLayer.frame = CGRectMake(0, 0, assetSize.height, assetSize.width)
+                    textLayer.contents = image.CGImage
+                    textLayer.contentsScale = UIScreen.mainScreen().scale
+                    
+                    textLayers.append(textLayer)
+                }
             } catch { }
             
             insertTime = CMTimeAdd(insertTime, sourceAsset.duration)
@@ -124,6 +151,12 @@ func exportVideo() {
     if overlayLayers.count > 0 {
         for overlayLayer in overlayLayers {
             parentLayer.addSublayer(overlayLayer)
+        }
+    }
+    
+    if textLayers.count > 0 {
+        for textLayer in textLayers {
+           parentLayer.addSublayer(textLayer)
         }
     }
     
