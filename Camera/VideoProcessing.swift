@@ -20,6 +20,8 @@ var videoComposition: AVMutableVideoComposition!
 var overlayLayers = [CALayer]()
 var textLayers = [CALayer]()
 
+var reallySmallNumber = 0.0000000000000000000000000001
+
 func formatTime(timeInSeconds: Int) -> String {
     
     let hours = timeInSeconds / 3600
@@ -106,7 +108,7 @@ func exportVideo() {
                     animation.duration = CMTimeGetSeconds(sourceAsset.duration)
                     animation.fromValue = 1
                     animation.toValue = 1
-                    animation.beginTime = CMTimeGetSeconds(insertTime) + 0.0000000000000000000000000001
+                    animation.beginTime = CMTimeGetSeconds(insertTime) + reallySmallNumber
                     animation.fillMode = kCAFillModeForwards
                     animation.removedOnCompletion = true
                     
@@ -117,8 +119,8 @@ func exportVideo() {
                 
                 // Embed text
                 if clip.textLayer != nil {
-                    print("adding text layer")
                     
+                    // Create mock view
                     let textView = UIView(frame: CGRectMake(0, 0, screenSize.width, screenSize.height))
                     let label = UILabel(frame: CGRectFromString((clip.textLayer?.frame)!))
                     label.text = clip.textLayer?.text
@@ -128,22 +130,25 @@ func exportVideo() {
                     label.font = UIFont.systemFontOfSize(32.0, weight: UIFontWeightBold)
                     textView.addSubview(label)
                     
+                    // Generate image from mock view
                     UIGraphicsBeginImageContextWithOptions(textView.frame.size, false, UIScreen.mainScreen().scale)
                     textView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
                     let image = UIGraphicsGetImageFromCurrentImageContext()
                     UIGraphicsEndImageContext()
                     
+                    // Set up text layer
                     let textLayer = CALayer()
                     textLayer.opacity = 0
                     textLayer.frame = CGRectMake(0, 0, assetSize.height, assetSize.width)
                     textLayer.contents = image.CGImage
                     textLayer.contentsScale = UIScreen.mainScreen().scale
                     
+                    // Show text layer at correct times
                     let animation = CABasicAnimation(keyPath: "opacity")
                     animation.duration = CMTimeGetSeconds(sourceAsset.duration)
                     animation.fromValue = 1
                     animation.toValue = 1
-                    animation.beginTime = CMTimeGetSeconds(insertTime) + 0.0000000000000000000000000001
+                    animation.beginTime = CMTimeGetSeconds(insertTime) + reallySmallNumber
                     animation.fillMode = kCAFillModeForwards
                     animation.removedOnCompletion = true
                     
