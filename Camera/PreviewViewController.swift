@@ -49,7 +49,6 @@ class PreviewViewController: UIViewController {
         volumeView.setVolumeThumbImage(UIImage(named: "handle"), forState: UIControlState.Normal)
         volumeView.setMinimumVolumeSliderImage(UIImage(named: "bar"), forState: UIControlState.Normal)
         volumeView.setMaximumVolumeSliderImage(UIImage(named: "track"), forState: UIControlState.Normal)
-        
         Volume.keepIntact = false
         
         let realm = try! Realm()

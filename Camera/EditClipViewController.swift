@@ -10,6 +10,8 @@ import UIKit
 import AVKit
 import AVFoundation
 import RealmSwift
+import Volumer
+import MediaPlayer
 
 class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRecognizerDelegate {
 
@@ -30,6 +32,9 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
+    
+    var volumeView = MPVolumeView()
+    var dismissVolumeControlTimer: NSTimer?
     
     var textFieldOriginalCenter: CGPoint!
     var textFieldScaleTransform: CGAffineTransform!
@@ -61,11 +66,25 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         overlayView.backgroundColor = UIColor.clearColor()
         setUpTextInput()
         
+        volumeView = MPVolumeView(frame: CGRectMake(20, 13, view.frame.width - 40, 44))
+        view.addSubview(volumeView)
+        volumeView.alpha = 0
+        volumeView.tintColor = UIColor.whiteColor()
+        volumeView.showsRouteButton = false
+        volumeView.setVolumeThumbImage(UIImage(named: "handle"), forState: UIControlState.Normal)
+        volumeView.setMinimumVolumeSliderImage(UIImage(named: "bar"), forState: UIControlState.Normal)
+        volumeView.setMaximumVolumeSliderImage(UIImage(named: "track"), forState: UIControlState.Normal)
+        Volume.keepIntact = false
+        
         // Set up drawing shit
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         
         drawingViewController = storyboard.instantiateViewControllerWithIdentifier("DrawingViewController") as! DrawingViewController
         drawingViewController.editClipViewController = self
+    }
+    
+    override func prefersStatusBarHidden() -> Bool {
+        return true
     }
     
     func appWillEnterBackground() {
@@ -110,6 +129,18 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
             playerLayer!.backgroundColor = UIColor.clearColor().CGColor
             playerLayer!.videoGravity = AVLayerVideoGravityResize
             
+            Volume.when(.Up) {
+                self.volumeView.alpha = 1
+                self.dismissVolumeControlTimer?.invalidate()
+                self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
+            }
+            
+            Volume.Down.when {
+                self.volumeView.alpha = 1
+                self.dismissVolumeControlTimer?.invalidate()
+                self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
+            }
+            
             clipView.layer.insertSublayer(playerLayer!, below: overlayView.layer)
             
             player!.play()
@@ -119,6 +150,11 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         }
     }
     
+    func hideVolumeControl() {
+        volumeView.alpha = 0
+        dismissVolumeControlTimer?.invalidate()
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(true)
         
@@ -126,6 +162,9 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
         playerLayer!.removeFromSuperlayer()
         player = nil
         playerLayer = nil
+        
+        Volume.reset()
+        dismissVolumeControlTimer?.invalidate()
     }
     
     override func viewDidAppear(animated: Bool) {
