@@ -97,10 +97,13 @@ func exportVideo() {
             print("render width \(videoComposition.renderSize.width)")
             
             let rotationTransform = assetTrack?.preferredTransform
-            let scaleTransform = CGAffineTransformMakeScale(1.5, 1.5)
+            let scaleFactor = renderSize.width / (assetTrack?.naturalSize.height)!
+            print("scale factor: \(scaleFactor)")
+            let scaleTransform = CGAffineTransformMakeScale(scaleFactor, scaleFactor)
             let combinedTransform = CGAffineTransformConcat(rotationTransform!, scaleTransform)
             
-            if assetTrack!.naturalSize.height < 1080 {
+            // If any video is smaller than the render size, scale it up
+            if assetTrack!.naturalSize.height < renderSize.width {
                 videoCompositionLayerInstruction.setTransform(combinedTransform, atTime: insertTime)
             } else {
                 videoCompositionLayerInstruction.setTransform(rotationTransform!, atTime: insertTime)
