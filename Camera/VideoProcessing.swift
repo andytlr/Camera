@@ -20,6 +20,9 @@ var videoComposition: AVMutableVideoComposition!
 var overlayLayers = [CALayer]()
 var textLayers = [CALayer]()
 
+var assetTrack:AVAssetTrack?
+var assetTrackAudio:AVAssetTrack?
+
 var reallySmallNumber = 0.0000000000000000000000000001
 
 func formatTime(timeInSeconds: Int) -> String {
@@ -78,8 +81,11 @@ func exportVideo() {
         videoComposition = AVMutableVideoComposition(propertiesOfAsset: sourceAsset)
         
         if tracks.count > 0 {
-            let assetTrack:AVAssetTrack = tracks[0] as AVAssetTrack
-            let assetTrackAudio:AVAssetTrack = audios[0] as AVAssetTrack
+            assetTrack = tracks[0] as AVAssetTrack
+            
+            if audios.count > 0 {
+                assetTrackAudio = audios[0] as AVAssetTrack
+            }
             
             // Set global render size
             videoComposition.renderSize = CGSizeMake(1080, 1920) // TODO: make this not shit
@@ -93,10 +99,12 @@ func exportVideo() {
             }
             
             do {
-                try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack, atTime: insertTime)
-                try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio, atTime: insertTime)
+                try trackVideo.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrack!, atTime: insertTime)
+                if audios.count > 0 {
+                    try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio!, atTime: insertTime)
+                }
                 
-                videoCompositionLayerInstruction.setTransform(assetTrack.preferredTransform, atTime: insertTime)
+                videoCompositionLayerInstruction.setTransform(assetTrack!.preferredTransform, atTime: insertTime)
                 
                 // Parent layer contains video and all overlays
                 parentLayer.frame = renderFrame
@@ -181,7 +189,7 @@ func exportVideo() {
     
     if textLayers.count > 0 {
         for textLayer in textLayers {
-           parentLayer.addSublayer(textLayer)
+            parentLayer.addSublayer(textLayer)
         }
     }
     

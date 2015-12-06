@@ -11,17 +11,22 @@ import AVKit
 import AVFoundation
 import RealmSwift
 
-class ListViewViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class ListViewViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    @IBOutlet weak var clipReviewList: UITableView!
+    @IBOutlet weak var clipCollection: UICollectionView!
+
+    var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
 
     var clips: Results<Clip>!
     var clipCount: Int = 0
     
+    var player: AVPlayer?
+    var playerLayer: AVPlayerLayer?
+    
     var thumbnail: UIImage!
     
     var loadingIndicator: UIActivityIndicatorView!
-    let colorView = UIView()
+    var blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
@@ -29,71 +34,101 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
+        view.backgroundColor = darkGreyColor
+        clipCollection.backgroundColor = UIColor.clearColor()
         
-        colorView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
-        colorView.frame = self.view.bounds
+        screenEdgeRecognizer = UIScreenEdgePanGestureRecognizer(target: self,
+            action: "panLeftEdge:")
+        screenEdgeRecognizer.edges = .Left
+        view.addGestureRecognizer(screenEdgeRecognizer)
+        
+        blurView.frame = self.view.bounds
         loadingIndicator = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
-        loadingIndicator.center = self.view.center;
+        loadingIndicator.center = self.view.center
         loadingIndicator.hidesWhenStopped = true
         loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.White
+        
+        clipCollection.dataSource = self
+        clipCollection.delegate = self
+        
+        updateTableView()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        var insets = self.clipCollection.contentInset
+        let value = (self.view.frame.size.width - (self.clipCollection.collectionViewLayout as! UICollectionViewFlowLayout).itemSize.width) * 0.5
+        insets.left = value
+        insets.right = value
+        self.clipCollection.contentInset = insets
+        self.clipCollection.decelerationRate = UIScrollViewDecelerationRateFast
+        
+        let item = collectionView(clipCollection, numberOfItemsInSection: 0) - 1
+        let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
+        clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Left, animated: false)
     }
     
     func updateTableView() {
         let realm = try! Realm()
-        clips = realm.objects(Clip).sorted("filename", ascending: false)
+        clips = realm.objects(Clip).sorted("filename", ascending: true)
         
-        clipReviewList.reloadData()
+        clipCollection.reloadData()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        clipReviewList.dataSource = self
-        clipReviewList.delegate = self
-        
         updateTableView()
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return clips.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SceneTableViewCell") as! SceneTableViewCell
-
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCell
+        
         let clip = clips[indexPath.row]
         
-//        print("clip: \(clip)")
+        //        print("clip: \(clip)")
         
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
-//        print(clipAsset)
-        // Get thumbnail
         
-        let generator = AVAssetImageGenerator(asset: clipAsset)
-        let timestamp = CMTime(seconds: 1, preferredTimescale: 60)
-        
-        do {
-            let imageRef = try generator.copyCGImageAtTime(timestamp, actualTime: nil)
-            _ = UIImage(CGImage: imageRef)
-        } catch {
-            print("Thumbanil generation failed with error \(error)")
-        }
+        cell.clip = clip
+        cell.contentView.backgroundColor = darkGreyColor
         
         let clipDuration = clipAsset.duration
         let clipDurationInSeconds = roundToOneDecimalPlace(CMTimeGetSeconds(clipDuration))
-        let clipDurationSuffix: String!
-        if clipDurationInSeconds == 1 {
-            clipDurationSuffix = "Second"
-        } else {
-            clipDurationSuffix = "Seconds"
-        }
+        cell.sceneDuration.text = String("\(clipDurationInSeconds)s")
+
+        let filePath = getAbsolutePathForFile(clip.filename)
+        let URL = NSURL(fileURLWithPath: filePath)
+        let videoAsset = AVAsset(URL: URL)
+        let playerItem = AVPlayerItem(asset: videoAsset)
+
+        playerLayer = AVPlayerLayer()
+        playerLayer!.frame = cell.clipView.bounds
+        player = AVPlayer(playerItem: playerItem)
+        player!.actionAtItemEnd = .None
+        playerLayer!.player = player
+        playerLayer!.backgroundColor = UIColor.clearColor().CGColor
+        playerLayer!.videoGravity = AVLayerVideoGravityResize
+        cell.clipView.layer.addSublayer(self.playerLayer!)
+        player!.pause()
+//        player!.play()
+        player!.muted = true
         
-        cell.SceneClip.image = thumbnail
-        cell.SceneNumber.text = "\(clip.type): \(clip.filename)"
-        cell.clip = clip
-        cell.SceneDuration.text = String("\(clipDurationInSeconds) \(clipDurationSuffix)")
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         
         return cell
+    }
+    
+    func playerDidReachEndNotificationHandler(notification: NSNotification) {
+        let playerItem = notification.object as! AVPlayerItem
+        playerItem.seekToTime(kCMTimeZero)
     }
     
     override func didReceiveMemoryWarning() {
@@ -102,17 +137,27 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "editClipSegue" {
+        if segue.identifier == "EditClip" {
             let editViewController = segue.destinationViewController as! EditClipViewController
-            let selectedClipIndex = self.clipReviewList.indexPathForCell(sender as! UITableViewCell)?.row
-    
+            let selectedClipIndex = self.clipCollection.indexPathForCell(sender as! UICollectionViewCell)?.row
+            
             let selectedClip = clips[selectedClipIndex!]
             editViewController.clip = selectedClip
         }
     }
+    
+    func backToCamera() {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
 
     @IBAction func backToCamera(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+        backToCamera()
+    }
+    
+    func panLeftEdge(sender: UIScreenEdgePanGestureRecognizer) {
+        if sender.state == .Began {
+            backToCamera()
+        }
     }
     
     @IBAction func tapExport(sender: AnyObject) {
@@ -123,7 +168,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
         exportVideo()
         
         loadingIndicator.startAnimating()
-        view.addSubview(colorView)
+        view.addSubview(blurView)
         view.addSubview(loadingIndicator)
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "runWhenFinishedSavingToCameraRoll", name: "Finished Saving To Camera Roll", object: nil)
@@ -131,7 +176,7 @@ class ListViewViewController: UIViewController, UITableViewDataSource, UITableVi
     
     func runWhenFinishedSavingToCameraRoll() {
         loadingIndicator.stopAnimating()
-        colorView.removeFromSuperview()
+        blurView.removeFromSuperview()
         loadingIndicator.removeFromSuperview()
         
         toastWithMessage("Saved!", appendTo: self.view, accomodateStatusBar: true)

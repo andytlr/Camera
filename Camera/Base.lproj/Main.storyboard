@@ -22,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X8A-hg-dCk">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="545"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="650"/>
                                         <animations/>
                                         <gestureRecognizers/>
                                         <connections>
@@ -35,7 +35,7 @@
                                 <constraints>
                                     <constraint firstItem="X8A-hg-dCk" firstAttribute="leading" secondItem="OOk-t2-LFN" secondAttribute="leading" id="Ivr-rn-y5p"/>
                                     <constraint firstAttribute="trailing" secondItem="X8A-hg-dCk" secondAttribute="trailing" id="d4n-KO-mHo"/>
-                                    <constraint firstAttribute="bottom" secondItem="X8A-hg-dCk" secondAttribute="bottom" constant="122" id="luI-r7-wRr"/>
+                                    <constraint firstAttribute="bottom" secondItem="X8A-hg-dCk" secondAttribute="bottom" constant="17" id="luI-r7-wRr"/>
                                     <constraint firstItem="X8A-hg-dCk" firstAttribute="top" secondItem="OOk-t2-LFN" secondAttribute="top" id="o80-cc-OOx"/>
                                 </constraints>
                             </view>
@@ -49,7 +49,7 @@
                                 <color key="trackTintColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                             </progressView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gZq-S3-fWn">
-                                <rect key="frame" x="0.0" y="20" width="375" height="42"/>
+                                <rect key="frame" x="0.0" y="15" width="375" height="42"/>
                                 <animations/>
                                 <gestureRecognizers/>
                                 <constraints>
@@ -60,7 +60,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C5M-M4-Sak">
-                                <rect key="frame" x="148" y="545" width="79" height="79"/>
+                                <rect key="frame" x="148" y="560" width="79" height="79"/>
                                 <animations/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <gestureRecognizers/>
@@ -74,7 +74,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ox4-w2-oTz">
-                                <rect key="frame" x="42" y="552" width="64" height="64"/>
+                                <rect key="frame" x="42" y="567" width="64" height="64"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="gvs-y1-uBJ"/>
@@ -88,7 +88,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lx0-SS-lNg">
-                                <rect key="frame" x="269" y="552" width="64" height="64"/>
+                                <rect key="frame" x="269" y="567" width="64" height="64"/>
                                 <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="XCG-tr-dAF"/>
@@ -108,14 +108,14 @@
                         <animations/>
                         <color key="backgroundColor" red="0.1215686275" green="0.12941176469999999" blue="0.14117647059999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="gZq-S3-fWn" firstAttribute="top" secondItem="MDb-DT-yf2" secondAttribute="bottom" constant="18" id="07f-xf-7mT"/>
+                            <constraint firstItem="gZq-S3-fWn" firstAttribute="top" secondItem="MDb-DT-yf2" secondAttribute="bottom" constant="13" id="07f-xf-7mT"/>
                             <constraint firstItem="C5M-M4-Sak" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="470-DD-7Xa"/>
                             <constraint firstItem="gZq-S3-fWn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6HF-Qd-ru8"/>
                             <constraint firstAttribute="trailing" secondItem="lx0-SS-lNg" secondAttribute="trailing" constant="42" id="7z5-fj-MYu"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ox4-w2-oTz" secondAttribute="bottom" constant="51" id="8VB-BN-b90"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Ox4-w2-oTz" secondAttribute="bottom" constant="36" id="8VB-BN-b90"/>
                             <constraint firstItem="gZq-S3-fWn" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Gzr-pg-JfX"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="OOk-t2-LFN" secondAttribute="bottom" id="HH1-e8-BCw"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="C5M-M4-Sak" secondAttribute="bottom" constant="43" id="Hx1-oh-HUm"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="C5M-M4-Sak" secondAttribute="bottom" constant="28" id="Hx1-oh-HUm"/>
                             <constraint firstItem="OOk-t2-LFN" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="KOm-G2-q2C"/>
                             <constraint firstItem="MDb-DT-yf2" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="Kit-SX-s9p"/>
                             <constraint firstItem="lx0-SS-lNg" firstAttribute="top" secondItem="gZq-S3-fWn" secondAttribute="bottom" constant="43" id="Nhh-hi-Ev9"/>
@@ -125,7 +125,7 @@
                             <constraint firstAttribute="trailing" secondItem="gZq-S3-fWn" secondAttribute="trailing" id="dbu-qX-1Ma"/>
                             <constraint firstItem="MDb-DT-yf2" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="eUo-dZ-k6J"/>
                             <constraint firstItem="gZq-S3-fWn" firstAttribute="top" secondItem="MDb-DT-yf2" secondAttribute="bottom" constant="18" id="iaZ-eT-BRh"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lx0-SS-lNg" secondAttribute="bottom" constant="51" id="lIn-ol-Pmy"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="lx0-SS-lNg" secondAttribute="bottom" constant="36" id="lIn-ol-Pmy"/>
                             <constraint firstAttribute="trailing" secondItem="gZq-S3-fWn" secondAttribute="trailing" id="mxL-sB-Wfd"/>
                             <constraint firstAttribute="trailing" secondItem="MDb-DT-yf2" secondAttribute="trailing" id="ppa-Kf-R47"/>
                             <constraint firstItem="Ox4-w2-oTz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="42" id="rBl-l4-OWQ"/>
@@ -244,121 +244,117 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="77" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="XlR-IY-3a3">
-                                <rect key="frame" x="0.0" y="107" width="375" height="600"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi">
+                                <rect key="frame" x="27" y="560" width="80" height="79"/>
                                 <animations/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="sectionIndexBackgroundColor" red="0.050980392156862744" green="0.086274509803921567" blue="0.12549019607843137" alpha="1" colorSpace="calibratedRGB"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="SceneTableViewCell" rowHeight="88" id="mMT-IG-lwV" customClass="SceneTableViewCell" customModule="Camera" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="375" height="88"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mMT-IG-lwV" id="PD9-Fq-uJI">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="87.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="📷">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="backToCamera:" destination="nhD-o7-srJ" eventType="touchUpInside" id="W2f-dO-SVH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YAv-ct-ArT">
+                                <rect key="frame" x="187" y="560" width="80" height="79"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="⏯">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qp-v4-9Sv">
+                                <rect key="frame" x="267" y="560" width="80" height="79"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="💾">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapExport:" destination="nhD-o7-srJ" eventType="touchUpInside" id="dDS-d7-lRw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZR8-37-cdL">
+                                <rect key="frame" x="107" y="560" width="80" height="79"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="32"/>
+                                <state key="normal" title="❌">
+                                    <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="tapDeleteButton:" destination="nhD-o7-srJ" eventType="touchUpInside" id="1h5-Ax-ojg"/>
+                                </connections>
+                            </button>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kMK-Kl-gUt">
+                                <rect key="frame" x="0.0" y="134" width="375" height="400"/>
+                                <animations/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="20" minimumInteritemSpacing="0.0" id="Ewi-8X-mRi" customClass="CollectionViewPagingFlowLayout" customModule="Camera" customModuleProvider="target">
+                                    <size key="itemSize" width="225" height="400"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" reuseIdentifier="CollectionViewCell" id="Oew-pC-wVK" customClass="CollectionViewCell" customModule="Camera" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="225" height="400"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="225" height="400"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SCENE #" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DmA-8b-rkA">
-                                                    <rect key="frame" x="15" y="12" width="185" height="21"/>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XKl-5Q-xqR">
+                                                    <rect key="frame" x="0.0" y="0.0" width="225" height="400"/>
                                                     <animations/>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="00:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="asA-dI-qEo">
-                                                    <rect key="frame" x="15" y="33" width="185" height="21"/>
-                                                    <animations/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HQA-JI-22e">
-                                                    <rect key="frame" x="217" y="0.0" width="158" height="88"/>
-                                                    <animations/>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bTy-Pk-Emt">
-                                                    <rect key="frame" x="15" y="46" width="45" height="30"/>
+                                                    <color key="backgroundColor" red="0.50229090452194214" green="0.40129917860031128" blue="0.44941216707229614" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                </view>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M2h-iI-QMS">
+                                                    <rect key="frame" x="8" y="16" width="209" height="30"/>
                                                     <animations/>
                                                     <state key="normal" title="Delete"/>
-                                                    <state key="disabled">
-                                                        <color key="titleColor" red="0.87464016675949097" green="0.87479060888290405" blue="0.87463068962097168" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    </state>
                                                     <connections>
-                                                        <action selector="tapDeleteButton:" destination="mMT-IG-lwV" eventType="touchUpInside" id="yoa-e9-sQD"/>
+                                                        <action selector="tapDelete:" destination="Oew-pC-wVK" eventType="touchUpInside" id="AB2-vg-dLY"/>
                                                     </connections>
                                                 </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2.9s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQG-p5-Z8l">
+                                                    <rect key="frame" x="87" y="353" width="51" height="30"/>
+                                                    <animations/>
+                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <animations/>
-                                        </tableViewCellContentView>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
                                         <animations/>
+                                        <color key="backgroundColor" red="0.99215686270000003" green="0.80000000000000004" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <size key="customSize" width="225" height="400"/>
                                         <connections>
-                                            <outlet property="SceneClip" destination="HQA-JI-22e" id="oRV-N4-MW7"/>
-                                            <outlet property="SceneDuration" destination="asA-dI-qEo" id="FQ9-3j-Vlp"/>
-                                            <outlet property="SceneNumber" destination="DmA-8b-rkA" id="i7d-nG-m1R"/>
-                                            <segue destination="96O-5S-Syf" kind="presentation" identifier="editClipSegue" animates="NO" modalTransitionStyle="crossDissolve" id="AJD-mB-gbY">
-                                                <segue key="commit" inheritsFrom="parent" id="BeT-LG-eqe"/>
-                                                <segue key="preview" inheritsFrom="commit" id="fWp-er-n6J"/>
+                                            <outlet property="clipView" destination="XKl-5Q-xqR" id="Xe5-AH-GQS"/>
+                                            <outlet property="sceneDuration" destination="oQG-p5-Z8l" id="raz-mX-OLL"/>
+                                            <segue destination="96O-5S-Syf" kind="presentation" identifier="EditClip" modalTransitionStyle="crossDissolve" id="bs0-ND-A2A">
+                                                <segue key="commit" inheritsFrom="parent" id="k9c-xf-l9r"/>
+                                                <segue key="preview" inheritsFrom="commit" id="BuD-71-Djj"/>
                                             </segue>
                                         </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                            </tableView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qNK-e5-BOw" userLabel="MoviePreview">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="110"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1qp-v4-9Sv">
-                                        <rect key="frame" x="125" y="20" width="125" height="90"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                        <state key="normal" title="💾">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="tapExport:" destination="nhD-o7-srJ" eventType="touchUpInside" id="dDS-d7-lRw"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi">
-                                        <rect key="frame" x="0.0" y="20" width="125" height="90"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                        <state key="normal" title="👈">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="backToCamera:" destination="nhD-o7-srJ" eventType="touchUpInside" id="W2f-dO-SVH"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZR8-37-cdL">
-                                        <rect key="frame" x="250" y="20" width="125" height="89"/>
-                                        <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="42"/>
-                                        <state key="normal" title="❌">
-                                            <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="tapDeleteButton:" destination="nhD-o7-srJ" eventType="touchUpInside" id="1h5-Ax-ojg"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <animations/>
-                                <color key="backgroundColor" red="0.24356064200401306" green="0.24360895156860352" blue="0.2435576319694519" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                            </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.11416656523942947" green="0.0938887819647789" blue="0.10201955586671829" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <gestureRecognizers/>
                     </view>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="375" height="667"/>
                     <connections>
-                        <outlet property="ClipReviewList" destination="XlR-IY-3a3" id="8vQ-Bu-mma"/>
+                        <outlet property="clipCollection" destination="kMK-Kl-gUt" id="xMt-gW-WcF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XRo-ij-n4Q" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <panGestureRecognizer minimumNumberOfTouches="1" id="1Qz-GR-Yxu">
-                    <connections>
-                        <action selector="ScenePan:" destination="nhD-o7-srJ" id="YNs-je-Vlj"/>
-                    </connections>
-                </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1781.5" y="995.5"/>
+            <point key="canvasLocation" x="1781.5" y="993.5"/>
         </scene>
         <!--Edit Clip View Controller-->
         <scene sceneID="fuB-Kn-2tf">
@@ -563,6 +559,6 @@
         <image name="spectrum" width="5" height="333"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="AJD-mB-gbY"/>
+        <segue reference="k9c-xf-l9r"/>
     </inferredMetricsTieBreakers>
 </document>
