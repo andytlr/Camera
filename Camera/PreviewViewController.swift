@@ -138,6 +138,8 @@ class PreviewViewController: UIViewController {
     func appDidEnterForeground() {
         if player != nil {
             player!.play()
+            player?.muted = true
+            volumeView.alpha = 0
         }
     }
 
