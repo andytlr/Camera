@@ -93,9 +93,17 @@ func exportVideo() {
             let renderSize = videoComposition.renderSize
             let renderFrame = CGRectMake(0, 0, renderSize.width, renderSize.height)
             
-            print("\(assetTrack.naturalSize.width)")
+            print("asset height: \(assetTrack!.naturalSize.height)")
+            print("render width \(videoComposition.renderSize.width)")
             
-            if assetTrack.naturalSize.width < renderSize.width {
+            let rotationTransform = assetTrack?.preferredTransform
+            let scaleTransform = CGAffineTransformMakeScale(1.5, 1.5)
+            let combinedTransform = CGAffineTransformConcat(rotationTransform!, scaleTransform)
+            
+            if assetTrack!.naturalSize.height < 1080 {
+                videoCompositionLayerInstruction.setTransform(combinedTransform, atTime: insertTime)
+            } else {
+                videoCompositionLayerInstruction.setTransform(rotationTransform!, atTime: insertTime)
             }
             
             do {
@@ -104,7 +112,7 @@ func exportVideo() {
                     try trackAudio.insertTimeRange(CMTimeRangeMake(kCMTimeZero,sourceAsset.duration), ofTrack: assetTrackAudio!, atTime: insertTime)
                 }
                 
-                videoCompositionLayerInstruction.setTransform(assetTrack!.preferredTransform, atTime: insertTime)
+//                videoCompositionLayerInstruction.setTransform(assetTrack!.preferredTransform, atTime: insertTime)
                 
                 // Parent layer contains video and all overlays
                 parentLayer.frame = renderFrame
