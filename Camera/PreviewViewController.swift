@@ -11,6 +11,7 @@ import AVKit
 import AVFoundation
 import RealmSwift
 import Volumer
+import MediaPlayer
 
 class PreviewViewController: UIViewController {
     
@@ -22,6 +23,7 @@ class PreviewViewController: UIViewController {
     var cameraViewController: CameraViewController!
     
     let blackView = UIView()
+    var volumeView = MPVolumeView()
     
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
@@ -38,8 +40,12 @@ class PreviewViewController: UIViewController {
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appDidEnterForeground", name: UIApplicationDidBecomeActiveNotification, object: nil)
         
+        volumeView = MPVolumeView(frame: CGRectMake(20, 20, view.frame.width - 40, 44))
+        view.addSubview(volumeView)
+        volumeView.alpha = 0
+        volumeView.showsRouteButton = false
+        
         Volume.keepIntact = false
-//        Volume.use(self.volumeView)
         
         let realm = try! Realm()
         clip = realm.objects(Clip).last!
@@ -83,17 +89,23 @@ class PreviewViewController: UIViewController {
             player!.muted = true
             
             Volume.when(.Up) {
-                print("UP!")
+                self.volumeView.alpha = 1
                 if self.player != nil {
                     self.player!.muted = false
                 }
+//                delay(3) {
+//                    self.volumeView.alpha = 0
+//                }
             }
             
             Volume.Down.when {
-                print("Down")
+                self.volumeView.alpha = 1
                 if self.player != nil {
                     self.player!.muted = false
                 }
+//                delay(3) {
+//                    self.volumeView.alpha = 0
+//                }
             }
             
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
@@ -132,6 +144,7 @@ class PreviewViewController: UIViewController {
         
         delay(0.1) {
             self.playerLayer!.removeFromSuperlayer()
+            self.volumeView.alpha = 0
             self.player = nil
             self.playerLayer = nil
             self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
@@ -152,6 +165,7 @@ class PreviewViewController: UIViewController {
         if sender.state == .Began {
             view.backgroundColor = UIColor.clearColor()
             previewView.backgroundColor = UIColor.clearColor()
+            volumeView.alpha = 0
             
             let maskImage = CALayer()
             maskImage.frame = CGRectMake(0, 0, view.frame.width, view.frame.height)
