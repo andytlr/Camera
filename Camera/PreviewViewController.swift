@@ -10,6 +10,8 @@ import UIKit
 import AVKit
 import AVFoundation
 import RealmSwift
+import Volumer
+import MediaPlayer
 
 class PreviewViewController: UIViewController {
     
@@ -21,6 +23,8 @@ class PreviewViewController: UIViewController {
     var cameraViewController: CameraViewController!
     
     let blackView = UIView()
+    var volumeView = MPVolumeView()
+    var dismissVolumeControlTimer: NSTimer?
     
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
@@ -36,6 +40,16 @@ class PreviewViewController: UIViewController {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appWillEnterBackground", name: UIApplicationWillResignActiveNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "appDidEnterForeground", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
+        volumeView = MPVolumeView(frame: CGRectMake(20, 13, view.frame.width - 40, 44))
+        view.addSubview(volumeView)
+        volumeView.alpha = 0
+        volumeView.tintColor = UIColor.whiteColor()
+        volumeView.showsRouteButton = false
+        volumeView.setVolumeThumbImage(UIImage(named: "handle"), forState: UIControlState.Normal)
+        volumeView.setMinimumVolumeSliderImage(UIImage(named: "bar"), forState: UIControlState.Normal)
+        volumeView.setMaximumVolumeSliderImage(UIImage(named: "track"), forState: UIControlState.Normal)
+        Volume.keepIntact = false
         
         let realm = try! Realm()
         clip = realm.objects(Clip).last!
@@ -76,9 +90,33 @@ class PreviewViewController: UIViewController {
             playerLayer!.videoGravity = AVLayerVideoGravityResize
             previewView.layer.addSublayer(playerLayer!)
             player!.play()
+            player!.muted = true
+            
+            Volume.when(.Up) {
+                self.volumeView.alpha = 1
+                if self.player != nil {
+                    self.player!.muted = false
+                }
+                self.dismissVolumeControlTimer?.invalidate()
+                self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
+            }
+            
+            Volume.Down.when {
+                self.volumeView.alpha = 1
+                if self.player != nil {
+                    self.player!.muted = false
+                }
+                self.dismissVolumeControlTimer?.invalidate()
+                self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
+            }
             
             NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         }
+    }
+    
+    func hideVolumeControl() {
+        volumeView.alpha = 0
+        dismissVolumeControlTimer?.invalidate()
     }
     
     deinit {
@@ -91,11 +129,17 @@ class PreviewViewController: UIViewController {
     }
     
     func appWillEnterBackground() {
-//        player.pause()
+        if player != nil {
+            player!.pause()
+        }
     }
     
     func appDidEnterForeground() {
-//        player.play()
+        if player != nil {
+            player!.play()
+            player?.muted = true
+            volumeView.alpha = 0
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -104,13 +148,13 @@ class PreviewViewController: UIViewController {
     }
     
     func killPreviewAndRestartCamera() {
-        if self.cameraViewController.usingSound == true {
-            if self.clip.type == "video" {
-                self.cameraViewController.startMic()
-            }
-        }
+        
+        Volume.reset()
+        dismissVolumeControlTimer?.invalidate()
+        
         delay(0.1) {
             self.playerLayer!.removeFromSuperlayer()
+            self.volumeView.alpha = 0
             self.player = nil
             self.playerLayer = nil
             self.previewView.transform = CGAffineTransformMakeDegreeRotation(0)
@@ -131,6 +175,7 @@ class PreviewViewController: UIViewController {
         if sender.state == .Began {
             view.backgroundColor = UIColor.clearColor()
             previewView.backgroundColor = UIColor.clearColor()
+            volumeView.alpha = 0
             
             let maskImage = CALayer()
             maskImage.frame = CGRectMake(0, 0, view.frame.width, view.frame.height)
