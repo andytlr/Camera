@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="4ct-Ky-8pw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nhD-o7-srJ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -266,10 +266,6 @@
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8D0-GW-COg" userLabel="button view">
                                 <rect key="frame" x="0.0" y="534" width="375" height="133"/>
                                 <subviews>
-                                    <view alpha="0.5" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Frt-C7-8Mk" userLabel="transparentbg">
-                                        <rect key="frame" x="0.0" y="-3" width="375" height="143"/>
-                                        <animations/>
-                                    </view>
                                     <button opaque="NO" alpha="0.69999999999999996" contentMode="center" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi" userLabel="back to camera">
                                         <rect key="frame" x="25" y="34" width="66" height="66"/>
                                         <animations/>
@@ -405,8 +401,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="8D0-GW-COg" secondAttribute="trailing" constant="-20" id="KNq-Nv-NLW"/>
                             <constraint firstItem="2Ib-QF-vnj" firstAttribute="top" secondItem="P3o-jb-RxK" secondAttribute="bottom" id="UBA-f7-Kd5"/>
                             <constraint firstItem="2Ib-QF-vnj" firstAttribute="leading" secondItem="nYb-nR-g9O" secondAttribute="leadingMargin" constant="-20" id="WHY-Eh-11y"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Frt-C7-8Mk" secondAttribute="trailing" constant="-20" id="nVh-a7-iBo"/>
-                            <constraint firstItem="Frt-C7-8Mk" firstAttribute="leading" secondItem="nYb-nR-g9O" secondAttribute="leadingMargin" constant="-20" id="xAv-IH-YPL"/>
                             <constraint firstItem="fub-dA-U8I" firstAttribute="top" secondItem="2Ib-QF-vnj" secondAttribute="bottom" id="zhw-z2-P5r"/>
                         </constraints>
                     </view>
