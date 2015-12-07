@@ -12,9 +12,12 @@ import AVFoundation
 import RealmSwift
 
 class ListViewViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+    @IBOutlet var mainView: UIView!
     
+    @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var clipCollection: UICollectionView!
 
+    @IBOutlet weak var bgImageView: UIImageView!
     var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
     
     var lightboxTransition: LightboxTransition!
@@ -59,6 +62,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         clipCollection.dataSource = self
         clipCollection.delegate = self
         
+        
         updateTableView()
     }
     
@@ -81,8 +85,42 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let realm = try! Realm()
         clips = realm.objects(Clip).sorted("filename", ascending: true)
         
+        
+        let firstClip = clips.first!
+        
+        
+        print(firstClip)
+        
+        
+        let firstClipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(firstClip.filename)))
+        
+        let imageGenerator = AVAssetImageGenerator(asset: firstClipAsset)
+        imageGenerator.appliesPreferredTrackTransform = true
+        
+        do {
+            let cgImage = try imageGenerator.copyCGImageAtTime(CMTimeMake (0,1), actualTime: nil)
+            
+            let firstClipImage = UIImage(CGImage: cgImage)
+
+            bgImageView.image = firstClipImage
+            
+            let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
+            
+            self.blurView.frame = self.mainView.frame
+            
+            self.bgImageView.insertSubview(self.blurView, aboveSubview: self.bgImageView)
+            
+            
+            
+            
+        } catch let error as NSError {
+            print(error)
+        }
+        
         clipCollection.reloadData()
     }
+    
+    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
