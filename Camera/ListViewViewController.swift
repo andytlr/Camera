@@ -148,7 +148,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         player!.actionAtItemEnd = .None
         cell.playerLayer.player = player
         
-//        player!.play()
+        player!.play()
         player!.muted = true
         players.append(player)
         playerLayers.append(playerLayer)
