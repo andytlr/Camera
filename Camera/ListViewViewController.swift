@@ -124,7 +124,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let clip = clips[indexPath.row]
         
-        //        print("clip: \(clip)")
+        // print("clip: \(clip)")
         
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
         
@@ -134,23 +134,18 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let clipDuration = clipAsset.duration
         let clipDurationInSeconds = roundToOneDecimalPlace(CMTimeGetSeconds(clipDuration))
         cell.sceneDuration.text = String("\(clipDurationInSeconds)s")
-
+        
         let filePath = getAbsolutePathForFile(clip.filename)
         let URL = NSURL(fileURLWithPath: filePath)
         let videoAsset = AVAsset(URL: URL)
         let playerItem = AVPlayerItem(asset: videoAsset)
-
-        playerLayer = AVPlayerLayer()
-        playerLayer!.frame = cell.clipView.bounds
+        
         player = AVPlayer(playerItem: playerItem)
         player!.actionAtItemEnd = .None
-        playerLayer!.player = player
-        playerLayer!.backgroundColor = UIColor.clearColor().CGColor
-        playerLayer!.videoGravity = AVLayerVideoGravityResize
-        cell.clipView.layer.addSublayer(self.playerLayer!)
+        cell.playerLayer.player = player
+        
         player!.play()
         player!.muted = true
-        
         players.append(player)
         playerLayers.append(playerLayer)
         
