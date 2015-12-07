@@ -82,7 +82,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let lastClip = clips.last!
         
-        print(lastClip)
+//        print(lastClip)
         
         let lastClipAssett = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(lastClip.filename)))
         
@@ -125,8 +125,16 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCell
+        cell.layer.shouldRasterize = true
+        cell.layer.rasterizationScale = UIScreen.mainScreen().scale
         
         let clip = clips[indexPath.row]
+        
+        // attempts to get currently visible cell
+        let visibleRect: CGRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
+        let visiblePoint: CGPoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect))
+        let currentlyVisible = collectionView.indexPathForItemAtPoint(visiblePoint)
+        print(currentlyVisible!.row)
         
         // print("clip: \(clip)")
         
@@ -148,7 +156,8 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         player!.actionAtItemEnd = .None
         cell.playerLayer.player = player
         
-        player!.play()
+//        player!.play()
+        
         player!.muted = true
         players.append(player)
         playerLayers.append(playerLayer)
