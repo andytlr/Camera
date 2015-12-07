@@ -107,15 +107,13 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        updateTableView()
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
-        
-        let item = collectionView(clipCollection, numberOfItemsInSection: 0) - 1
-        let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
-        clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: false)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.updateTableView()
+            
+            let item = self.collectionView(self.clipCollection, numberOfItemsInSection: 0) - 1
+            let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
+            self.clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: false)
+        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
