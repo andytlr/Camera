@@ -89,14 +89,12 @@ func exportVideo() {
             }
             
             // Get largest asset size
-            print("natural height: \(assetTrack!.naturalSize.height)")
-            print("largest asset width: \(largestAssetSize.width)")
             if assetTrack!.naturalSize.height > largestAssetSize.width {
                 largestAssetSize = CGSizeMake(assetTrack!.naturalSize.height, assetTrack!.naturalSize.width)
             }
             
             // Set global render size
-            videoComposition.renderSize = CGSizeMake(1080, 1920) // TODO: Make this dynamic – largest video size
+            videoComposition.renderSize = largestAssetSize
             let renderSize = videoComposition.renderSize
             let renderFrame = CGRectMake(0, 0, renderSize.width, renderSize.height)
             
@@ -153,7 +151,6 @@ func exportVideo() {
                 
                 // Embed text
                 if clip.textLayer != nil {
-                    
                     // Create mock view
                     let textView = UIView(frame: CGRectMake(0, 0, screenSize.width, screenSize.height))
                     let label = UILabel(frame: CGRectFromString((clip.textLayer?.frame)!))
