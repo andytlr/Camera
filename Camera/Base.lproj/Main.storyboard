@@ -266,11 +266,6 @@
                             <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8D0-GW-COg" userLabel="button view">
                                 <rect key="frame" x="0.0" y="534" width="375" height="133"/>
                                 <subviews>
-                                    <view alpha="0.5" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Frt-C7-8Mk" userLabel="transparentbg">
-                                        <rect key="frame" x="0.0" y="-3" width="375" height="143"/>
-                                        <animations/>
-                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
                                     <button opaque="NO" alpha="0.69999999999999996" contentMode="center" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JTg-Hj-Nxi" userLabel="back to camera">
                                         <rect key="frame" x="25" y="34" width="66" height="66"/>
                                         <animations/>
@@ -360,7 +355,9 @@
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M2h-iI-QMS">
                                                     <rect key="frame" x="8" y="16" width="209" height="30"/>
                                                     <animations/>
-                                                    <state key="normal" title="Delete"/>
+                                                    <state key="normal" title="Delete">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
                                                     <connections>
                                                         <action selector="tapDelete:" destination="Oew-pC-wVK" eventType="touchUpInside" id="AB2-vg-dLY"/>
                                                     </connections>
@@ -404,8 +401,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="8D0-GW-COg" secondAttribute="trailing" constant="-20" id="KNq-Nv-NLW"/>
                             <constraint firstItem="2Ib-QF-vnj" firstAttribute="top" secondItem="P3o-jb-RxK" secondAttribute="bottom" id="UBA-f7-Kd5"/>
                             <constraint firstItem="2Ib-QF-vnj" firstAttribute="leading" secondItem="nYb-nR-g9O" secondAttribute="leadingMargin" constant="-20" id="WHY-Eh-11y"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Frt-C7-8Mk" secondAttribute="trailing" constant="-20" id="nVh-a7-iBo"/>
-                            <constraint firstItem="Frt-C7-8Mk" firstAttribute="leading" secondItem="nYb-nR-g9O" secondAttribute="leadingMargin" constant="-20" id="xAv-IH-YPL"/>
                             <constraint firstItem="fub-dA-U8I" firstAttribute="top" secondItem="2Ib-QF-vnj" secondAttribute="bottom" id="zhw-z2-P5r"/>
                         </constraints>
                     </view>
@@ -482,20 +477,18 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q0Y-g2-5N0" userLabel="Overlay View – Chrome only" customClass="PassThroughView" customModule="Camera" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONU-M2-ip9">
-                                        <rect key="frame" x="305" y="33" width="50" height="50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONU-M2-ip9">
+                                        <rect key="frame" x="320" y="36" width="36" height="43"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                        <state key="normal" title="✏"/>
+                                        <state key="normal" image="pencil"/>
                                         <connections>
                                             <action selector="tappedDrawButton:" destination="96O-5S-Syf" eventType="touchUpInside" id="Sui-Qw-GUY"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9y3-Nd-A3A">
-                                        <rect key="frame" x="20" y="33" width="50" height="50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9y3-Nd-A3A">
+                                        <rect key="frame" x="13" y="25" width="66" height="66"/>
                                         <animations/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                        <state key="normal" title="👌">
+                                        <state key="normal" image="trash-1">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
@@ -624,6 +617,7 @@
         <image name="cross" width="48" height="37"/>
         <image name="flip" width="64" height="64"/>
         <image name="list" width="64" height="64"/>
+        <image name="pencil" width="30" height="38"/>
         <image name="playpause" width="36" height="28"/>
         <image name="save" width="32" height="28"/>
         <image name="spectrum" width="5" height="333"/>
