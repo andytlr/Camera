@@ -372,7 +372,6 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <animations/>
-                                                <color key="backgroundColor" red="0.99215686270000003" green="0.80000000000000004" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <size key="customSize" width="225" height="400"/>
                                                 <connections>
                                                     <outlet property="clipView" destination="XKl-5Q-xqR" id="Xe5-AH-GQS"/>
