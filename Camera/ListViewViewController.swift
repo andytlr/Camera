@@ -85,16 +85,13 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let realm = try! Realm()
         clips = realm.objects(Clip).sorted("filename", ascending: true)
         
+        let lastClip = clips.last!
         
-        let firstClip = clips.first!
+        print(lastClip)
         
+        let lastClipAssett = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(lastClip.filename)))
         
-        print(firstClip)
-        
-        
-        let firstClipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(firstClip.filename)))
-        
-        let imageGenerator = AVAssetImageGenerator(asset: firstClipAsset)
+        let imageGenerator = AVAssetImageGenerator(asset: lastClipAssett)
         imageGenerator.appliesPreferredTrackTransform = true
         
         do {
