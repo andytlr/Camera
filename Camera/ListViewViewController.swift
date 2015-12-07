@@ -62,7 +62,6 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         clipCollection.dataSource = self
         clipCollection.delegate = self
         
-        
         updateTableView()
     }
     
@@ -78,7 +77,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let item = collectionView(clipCollection, numberOfItemsInSection: 0) - 1
         let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
-        clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Left, animated: false)
+        clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
     }
     
     func updateTableView() {
