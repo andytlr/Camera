@@ -74,10 +74,6 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         insets.right = value
         self.clipCollection.contentInset = insets
         self.clipCollection.decelerationRate = UIScrollViewDecelerationRateFast
-        
-        let item = collectionView(clipCollection, numberOfItemsInSection: 0) - 1
-        let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
-        clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: true)
     }
     
     func updateTableView() {
@@ -114,6 +110,14 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         updateTableView()
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        
+        let item = collectionView(clipCollection, numberOfItemsInSection: 0) - 1
+        let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
+        clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: false)
+    }
+    
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return clips.count
     }
@@ -144,7 +148,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         player!.actionAtItemEnd = .None
         cell.playerLayer.player = player
         
-        player!.play()
+//        player!.play()
         player!.muted = true
         players.append(player)
         playerLayers.append(playerLayer)
@@ -178,15 +182,15 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     func backToCamera() {
-        for var player in self.players {
-            player!.pause()
-            player = nil
-        }
-        
-        for var playerLayer in self.playerLayers {
-            playerLayer!.removeFromSuperlayer()
-            playerLayer = nil
-        }
+//        for var player in self.players {
+//            player!.pause()
+//            player = nil
+//        }
+//        
+//        for var playerLayer in self.playerLayers {
+//            playerLayer!.removeFromSuperlayer()
+//            playerLayer = nil
+//        }
         
         self.navigationController?.popViewControllerAnimated(true)
     }
