@@ -106,7 +106,8 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
             
             let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
             
-            self.blurView.frame = self.mainView.frame
+            self.blurView.frame = mainView.frame
+
             
             self.bgImageView.insertSubview(self.blurView, aboveSubview: self.bgImageView)
             
