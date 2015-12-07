@@ -12,12 +12,12 @@ import AVFoundation
 import RealmSwift
 
 class ListViewViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    @IBOutlet var mainView: UIView!
     
+    @IBOutlet var mainView: UIView!
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var clipCollection: UICollectionView!
-
     @IBOutlet weak var bgImageView: UIImageView!
+    
     var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
     
     var lightboxTransition: LightboxTransition!

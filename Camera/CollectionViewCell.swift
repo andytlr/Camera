@@ -24,7 +24,7 @@ class CollectionViewCell: UICollectionViewCell {
         // Initialization code
         clipView.layer.cornerRadius = 5
         clipView.clipsToBounds = true
-        clipView.backgroundColor = UIColor.clearColor()
+        clipView.backgroundColor = darkGreyColor
         
         sceneDuration.layer.cornerRadius = 15
         sceneDuration.clipsToBounds = true
