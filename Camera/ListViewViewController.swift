@@ -53,7 +53,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         lightboxTransition = LightboxTransition()
         
-        blurView.frame = self.view.bounds
+//        blurView.frame = self.view.bounds
         loadingIndicator = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
         loadingIndicator.center = self.view.center
         loadingIndicator.hidesWhenStopped = true
@@ -130,7 +130,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
         
         cell.clip = clip
-        cell.contentView.backgroundColor = darkGreyColor
+        cell.contentView.backgroundColor = UIColor.clearColor()
         
         let clipDuration = clipAsset.duration
         let clipDurationInSeconds = roundToOneDecimalPlace(CMTimeGetSeconds(clipDuration))
