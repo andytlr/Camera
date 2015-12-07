@@ -130,11 +130,15 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let clip = clips[indexPath.row]
         
-        // attempts to get currently visible cell
+        // attempts to get currently visible cell. It does seem to work but it only runs once.
         let visibleRect: CGRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
         let visiblePoint: CGPoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect))
         let currentlyVisible = collectionView.indexPathForItemAtPoint(visiblePoint)
         print(currentlyVisible!.row)
+        
+        if currentlyVisible!.row == indexPath.row {
+            print("\(currentlyVisible!.row) matches \(indexPath.row)")
+        }
         
         // print("clip: \(clip)")
         
