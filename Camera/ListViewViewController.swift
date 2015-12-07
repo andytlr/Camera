@@ -11,7 +11,7 @@ import AVKit
 import AVFoundation
 import RealmSwift
 
-class ListViewViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
+class ListViewViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate {
     
     @IBOutlet var mainView: UIView!
     @IBOutlet weak var backgroundView: UIView!
@@ -128,16 +128,16 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let clip = clips[indexPath.row]
         
-        // attempts to get currently visible cell. It does seem to work but it only runs once.
-        let visibleRect: CGRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
-        let visiblePoint: CGPoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect))
-        let currentlyVisible = collectionView.indexPathForItemAtPoint(visiblePoint)
-        print(currentlyVisible!.row)
-        
-        if currentlyVisible!.row == indexPath.row {
-            print("\(currentlyVisible!.row) matches \(indexPath.row)")
-        }
-        
+//        // attempts to get currently visible cell. It does seem to work but it only runs once.
+//        let visibleRect: CGRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
+//        let visiblePoint: CGPoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect))
+//        let currentlyVisible = collectionView.indexPathForItemAtPoint(visiblePoint)
+//        print(currentlyVisible!.row)
+//        
+//        if currentlyVisible!.row == indexPath.row {
+//            print("\(currentlyVisible!.row) matches \(indexPath.row)")
+//        }
+//        
         // print("clip: \(clip)")
         
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
@@ -167,6 +167,12 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         
         return cell
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        let visibleRect: CGRect = CGRect(origin: self.clipCollection.contentOffset, size: self.clipCollection.bounds.size)
+        let visiblePoint: CGPoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect))
+        let visibleRow = self.clipCollection.indexPathForItemAtPoint(visiblePoint)
     }
     
     func playerDidReachEndNotificationHandler(notification: NSNotification) {
