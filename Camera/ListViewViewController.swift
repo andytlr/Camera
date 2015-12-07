@@ -85,34 +85,22 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let realm = try! Realm()
         clips = realm.objects(Clip).sorted("filename", ascending: true)
         
+        let lastClip = clips.last!
         
-        let firstClip = clips.first!
+        print(lastClip)
         
+        let lastClipAssett = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(lastClip.filename)))
         
-        print(firstClip)
-        
-        
-        let firstClipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(firstClip.filename)))
-        
-        let imageGenerator = AVAssetImageGenerator(asset: firstClipAsset)
+        let imageGenerator = AVAssetImageGenerator(asset: lastClipAssett)
         imageGenerator.appliesPreferredTrackTransform = true
         
         do {
             let cgImage = try imageGenerator.copyCGImageAtTime(CMTimeMake (0,1), actualTime: nil)
-            
-            let firstClipImage = UIImage(CGImage: cgImage)
 
+            let firstClipImage = UIImage(CGImage: cgImage)
             bgImageView.image = firstClipImage
             
-            let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
-            
-            self.blurView.frame = mainView.frame
-
-            
-            self.bgImageView.insertSubview(self.blurView, aboveSubview: self.bgImageView)
-            
-            
-            
+            self.backgroundView.insertSubview(self.blurView, aboveSubview: self.bgImageView)
             
         } catch let error as NSError {
             print(error)
@@ -120,8 +108,6 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         clipCollection.reloadData()
     }
-    
-    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
@@ -144,7 +130,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
         
         cell.clip = clip
-        cell.contentView.backgroundColor = darkGreyColor
+        cell.contentView.backgroundColor = UIColor.clearColor()
         
         let clipDuration = clipAsset.duration
         let clipDurationInSeconds = roundToOneDecimalPlace(CMTimeGetSeconds(clipDuration))
@@ -237,7 +223,8 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     
     func runWhenFinishedSavingToCameraRoll() {
         loadingIndicator.stopAnimating()
-        blurView.removeFromSuperview()
+//        blurView.removeFromSuperview()
+        self.bgImageView.insertSubview(self.blurView, aboveSubview: self.bgImageView)
         loadingIndicator.removeFromSuperview()
         
         toastWithMessage("Saved!", appendTo: self.view, accomodateStatusBar: true)

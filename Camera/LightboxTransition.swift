@@ -17,14 +17,14 @@ class LightboxTransition: BaseTransition {
         toViewController.view.transform = CGAffineTransformMakeScale(0.6, 0.6)
         toViewController.doneButton.alpha = 0
         toViewController.addDrawingButton.alpha = 0
-        
-        UIView.animateWithDuration(duration, animations: {
-            toViewController.view.transform = CGAffineTransformMakeScale(1, 1)
-        }) { (finished: Bool) -> Void in
-            toViewController.doneButton.alpha = 1
-            toViewController.addDrawingButton.alpha = 1
-            self.finish()
-        }
+
+        UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0, options: [], animations: {
+                toViewController.view.transform = CGAffineTransformMakeScale(1, 1)
+            }, completion: { Bool -> Void in
+                toViewController.doneButton.alpha = 1
+                toViewController.addDrawingButton.alpha = 1
+                self.finish()
+        })
     }
     
     override func dismissTransition(containerView: UIView, fromViewController: UIViewController, toViewController: UIViewController) {
