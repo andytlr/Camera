@@ -19,12 +19,17 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
 
     @IBOutlet weak var bgImageView: UIImageView!
     var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
+    
+    var lightboxTransition: LightboxTransition!
 
     var clips: Results<Clip>!
     var clipCount: Int = 0
     
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
+    
+    var players: [AVPlayer?] = []
+    var playerLayers: [AVPlayerLayer?] = []
     
     var thumbnail: UIImage!
     
@@ -45,6 +50,8 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
             action: "panLeftEdge:")
         screenEdgeRecognizer.edges = .Left
         view.addGestureRecognizer(screenEdgeRecognizer)
+        
+        lightboxTransition = LightboxTransition()
         
         blurView.frame = self.view.bounds
         loadingIndicator = UIActivityIndicatorView(frame: CGRectMake(50, 10, 37, 37)) as UIActivityIndicatorView
@@ -155,9 +162,11 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         playerLayer!.backgroundColor = UIColor.clearColor().CGColor
         playerLayer!.videoGravity = AVLayerVideoGravityResize
         cell.clipView.layer.addSublayer(self.playerLayer!)
-        player!.pause()
-//        player!.play()
+        player!.play()
         player!.muted = true
+        
+        players.append(player)
+        playerLayers.append(playerLayer)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         
@@ -179,12 +188,25 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
             let editViewController = segue.destinationViewController as! EditClipViewController
             let selectedClipIndex = self.clipCollection.indexPathForCell(sender as! UICollectionViewCell)?.row
             
+            editViewController.modalPresentationStyle = UIModalPresentationStyle.Custom
+            editViewController.transitioningDelegate = lightboxTransition
+            
             let selectedClip = clips[selectedClipIndex!]
             editViewController.clip = selectedClip
         }
     }
     
     func backToCamera() {
+        for var player in self.players {
+            player!.pause()
+            player = nil
+        }
+        
+        for var playerLayer in self.playerLayers {
+            playerLayer!.removeFromSuperlayer()
+            playerLayer = nil
+        }
+        
         self.navigationController?.popViewControllerAnimated(true)
     }
 
@@ -234,8 +256,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
                 NSNotificationCenter.defaultCenter().postNotificationName("All Clips Deleted", object: nil)
             }
             
-            self.updateTableView()
-            self.navigationController!.popViewControllerAnimated(true)
+            self.backToCamera()
         }
         
         alertController.addAction(destroyAction)
