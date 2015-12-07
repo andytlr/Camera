@@ -99,20 +99,11 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         do {
             let cgImage = try imageGenerator.copyCGImageAtTime(CMTimeMake (0,1), actualTime: nil)
-            
-            let firstClipImage = UIImage(CGImage: cgImage)
 
+            let firstClipImage = UIImage(CGImage: cgImage)
             bgImageView.image = firstClipImage
             
-            let blurView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
-            
-            self.blurView.frame = mainView.frame
-
-            
-            self.bgImageView.insertSubview(self.blurView, aboveSubview: self.bgImageView)
-            
-            
-            
+            self.backgroundView.insertSubview(self.blurView, aboveSubview: self.bgImageView)
             
         } catch let error as NSError {
             print(error)
@@ -120,8 +111,6 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         clipCollection.reloadData()
     }
-    
-    
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
@@ -237,7 +226,8 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     
     func runWhenFinishedSavingToCameraRoll() {
         loadingIndicator.stopAnimating()
-        blurView.removeFromSuperview()
+//        blurView.removeFromSuperview()
+        self.bgImageView.insertSubview(self.blurView, aboveSubview: self.bgImageView)
         loadingIndicator.removeFromSuperview()
         
         toastWithMessage("Saved!", appendTo: self.view, accomodateStatusBar: true)
