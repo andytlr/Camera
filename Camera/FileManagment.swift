@@ -36,8 +36,15 @@ func deleteSingleClip(clip: Clip) {
 func deleteSingleClipAtIndex(index: Int) {
     print("deleting clip at index \(index)")
     
-    let clips = returnContentsOfClipsDirectory()
-    print(clips)
+    let realm = try! Realm()
+    let clips = realm.objects(Clip).sorted("filename", ascending: true)
+    
+    let clip = clips[index]
+    deleteClip(clip.filename)
+    
+    try! realm.write {
+        realm.delete(clip)
+    }
 }
 
 func deleteAllClips() {

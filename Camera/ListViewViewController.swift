@@ -185,7 +185,9 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let cell = sender.view as! UICollectionViewCell
         let index = self.clipCollection.indexPathForCell(cell)!.item
         deleteSingleClipAtIndex(index)
-        
+        updateTableView()
+    }
+    
     func scrollViewDidScroll(scrollView: UIScrollView) {
 //        let visibleRect: CGRect = CGRect(origin: self.clipCollection.contentOffset, size: self.clipCollection.bounds.size)
 //        let visiblePoint: CGPoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect))
