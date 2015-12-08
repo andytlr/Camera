@@ -33,6 +33,13 @@ func deleteSingleClip(clip: Clip) {
     }
 }
 
+func deleteSingleClipAtIndex(index: Int) {
+    print("deleting clip at index \(index)")
+    
+    let clips = returnContentsOfClipsDirectory()
+    print(clips)
+}
+
 func deleteAllClips() {
     let clips = returnContentsOfClipsDirectory()
     

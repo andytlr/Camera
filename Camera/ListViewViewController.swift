@@ -155,9 +155,26 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         players.append(player)
         playerLayers.append(playerLayer)
         
+        ///
+        
+        let deleteAction = Selector("deleteCell:")
+        let deleteGesture = UISwipeGestureRecognizer(target: self, action: deleteAction)
+        deleteGesture.direction = .Up
+        cell.addGestureRecognizer(deleteGesture)
+        
+        ///
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         
         return cell
+    }
+    
+    func deleteCell(sender: UISwipeGestureRecognizer) {
+        print("delete cell")
+        let cell = sender.view as! UICollectionViewCell
+        let index = self.clipCollection.indexPathForCell(cell)!.item
+        deleteSingleClipAtIndex(index)
+        
     }
     
     func playerDidReachEndNotificationHandler(notification: NSNotification) {
