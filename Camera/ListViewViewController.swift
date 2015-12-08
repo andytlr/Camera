@@ -11,19 +11,22 @@ import AVKit
 import AVFoundation
 import RealmSwift
 
-class ListViewViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
-    @IBOutlet var mainView: UIView!
+class ListViewViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate {
     
+    @IBOutlet var mainView: UIView!
     @IBOutlet weak var backgroundView: UIView!
     @IBOutlet weak var clipCollection: UICollectionView!
-
     @IBOutlet weak var bgImageView: UIImageView!
+    
     var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
     
     var lightboxTransition: LightboxTransition!
 
     var clips: Results<Clip>!
     var clipCount: Int = 0
+    
+    var currentlyVisibleClip: Int = 0
+    var currentIndexPath: Int = 0
     
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
@@ -62,7 +65,6 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         clipCollection.dataSource = self
         clipCollection.delegate = self
         
-        
         updateTableView()
     }
     
@@ -75,10 +77,6 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         insets.right = value
         self.clipCollection.contentInset = insets
         self.clipCollection.decelerationRate = UIScrollViewDecelerationRateFast
-        
-        let item = collectionView(clipCollection, numberOfItemsInSection: 0) - 1
-        let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
-        clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.Left, animated: false)
     }
     
     func updateTableView() {
@@ -87,7 +85,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let lastClip = clips.last!
         
-        print(lastClip)
+//        print(lastClip)
         
         let lastClipAssett = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(lastClip.filename)))
         
@@ -112,7 +110,13 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
         
-        updateTableView()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.updateTableView()
+            
+            let item = self.collectionView(self.clipCollection, numberOfItemsInSection: 0) - 1
+            let lastItemIndex = NSIndexPath(forItem: item, inSection: 0)
+            self.clipCollection.scrollToItemAtIndexPath(lastItemIndex, atScrollPosition: UICollectionViewScrollPosition.CenteredHorizontally, animated: false)
+        }
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -122,10 +126,12 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: indexPath) as! CollectionViewCell
+        cell.layer.shouldRasterize = true
+        cell.layer.rasterizationScale = UIScreen.mainScreen().scale
         
         let clip = clips[indexPath.row]
         
-        //        print("clip: \(clip)")
+        // print("clip: \(clip)")
         
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
         
@@ -135,23 +141,28 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let clipDuration = clipAsset.duration
         let clipDurationInSeconds = roundToOneDecimalPlace(CMTimeGetSeconds(clipDuration))
         cell.sceneDuration.text = String("\(clipDurationInSeconds)s")
-
+        
         let filePath = getAbsolutePathForFile(clip.filename)
         let URL = NSURL(fileURLWithPath: filePath)
         let videoAsset = AVAsset(URL: URL)
         let playerItem = AVPlayerItem(asset: videoAsset)
-
-        playerLayer = AVPlayerLayer()
-        playerLayer!.frame = cell.clipView.bounds
+        
         player = AVPlayer(playerItem: playerItem)
         player!.actionAtItemEnd = .None
-        playerLayer!.player = player
-        playerLayer!.backgroundColor = UIColor.clearColor().CGColor
-        playerLayer!.videoGravity = AVLayerVideoGravityResize
-        cell.clipView.layer.addSublayer(self.playerLayer!)
-        player!.play()
-        player!.muted = true
+        cell.playerLayer.player = player
         
+        currentIndexPath = indexPath.row
+        
+        print("index path row \(currentIndexPath)")
+        print("currently visible \(currentlyVisibleClip)")
+        
+//        if currentIndexPath == currentlyVisibleClip {
+//            player!.play()
+//        }
+        
+        player!.play()
+        
+        player!.muted = true
         players.append(player)
         playerLayers.append(playerLayer)
         
@@ -175,6 +186,22 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let index = self.clipCollection.indexPathForCell(cell)!.item
         deleteSingleClipAtIndex(index)
         
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        let visibleRect: CGRect = CGRect(origin: self.clipCollection.contentOffset, size: self.clipCollection.bounds.size)
+//        let visiblePoint: CGPoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect))
+//        let visibleIndexPath = self.clipCollection.indexPathForItemAtPoint(visiblePoint)
+        
+        
+//        print("derp \(visibleIndexPath!.row)")
+//        self.currentlyVisibleClip = visibleIndexPath!.row
+        
+        let cellWidth: CGFloat = 225
+        let cellPadding: CGFloat = 20
+        currentlyVisibleClip = Int(self.clipCollection.contentOffset.x / (cellWidth + cellPadding))
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+      
     }
     
     func playerDidReachEndNotificationHandler(notification: NSNotification) {
@@ -201,15 +228,15 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     func backToCamera() {
-        for var player in self.players {
-            player!.pause()
-            player = nil
-        }
-        
-        for var playerLayer in self.playerLayers {
-            playerLayer!.removeFromSuperlayer()
-            playerLayer = nil
-        }
+//        for var player in self.players {
+//            player!.pause()
+//            player = nil
+//        }
+//        
+//        for var playerLayer in self.playerLayers {
+//            playerLayer!.removeFromSuperlayer()
+//            playerLayer = nil
+//        }
         
         self.navigationController?.popViewControllerAnimated(true)
     }

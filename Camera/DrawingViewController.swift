@@ -25,7 +25,7 @@ class DrawingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        strokeWidth = 8.0
+        strokeWidth = 4.0
         strokeOpacity = 1.0
     }
     
