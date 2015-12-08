@@ -172,7 +172,12 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
         let visibleRect: CGRect = CGRect(origin: self.clipCollection.contentOffset, size: self.clipCollection.bounds.size)
         let visiblePoint: CGPoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect))
-        let visibleRow = self.clipCollection.indexPathForItemAtPoint(visiblePoint)
+        let visibleIndexPath = self.clipCollection.indexPathForItemAtPoint(visiblePoint)
+        
+        let cell = self.clipCollection.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: visibleIndexPath!) as! CollectionViewCell
+        
+        print(visibleIndexPath!.row)
+        print(cell.sceneDuration.text)
     }
     
     func playerDidReachEndNotificationHandler(notification: NSNotification) {
