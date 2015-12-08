@@ -185,24 +185,32 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
         let clipView = sender.view
+        let deleteThreshold = CGFloat(-180)
         
         if sender.state == .Began {
             clipViewDefaultOrigin = sender.view!.frame.origin
         } else if sender.state == .Changed {
             clipView?.transform = CGAffineTransformMakeTranslation(0, translation.y)
+            print(translation.y)
+            if translation.y < deleteThreshold {
+                print("passed delete threshold")
+            }
         } else if sender.state == .Ended {
-            if velocity.y < 0 {
-                print("delete clip")
+            if translation.y < deleteThreshold {
+                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
+                        sender.view?.transform = CGAffineTransformMakeTranslation(0, -1000) // TODO: Make end value relative
+                    }, completion: { Bool -> Void in
+                        print("deleting cell")
+                        let cell = sender.view as! UICollectionViewCell
+                        let index = self.clipCollection.indexPathForCell(cell)!.item
+                        deleteSingleClipAtIndex(index)
+                    }
+                )
+                print("deleting clip")
             } else {
-                clipView!.frame.origin = clipViewDefaultOrigin
+                print("cancel deletion")
             }
         }
-        
-//        print("delete cell")
-//        let cell = sender.view as! UICollectionViewCell
-//        let index = self.clipCollection.indexPathForCell(cell)!.item
-//        deleteSingleClipAtIndex(index)
-//        updateTableView()
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
