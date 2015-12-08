@@ -39,6 +39,8 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     var loadingIndicator: UIActivityIndicatorView!
     var blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
     
+    var clipViewDefaultOrigin: CGPoint!
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
@@ -169,8 +171,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         ///
         
         let deleteAction = Selector("deleteCell:")
-        let deleteGesture = UISwipeGestureRecognizer(target: self, action: deleteAction)
-        deleteGesture.direction = .Up
+        let deleteGesture = UIPanGestureRecognizer(target: self, action: deleteAction)
         cell.addGestureRecognizer(deleteGesture)
         
         ///
@@ -180,12 +181,28 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         return cell
     }
     
-    func deleteCell(sender: UISwipeGestureRecognizer) {
-        print("delete cell")
-        let cell = sender.view as! UICollectionViewCell
-        let index = self.clipCollection.indexPathForCell(cell)!.item
-        deleteSingleClipAtIndex(index)
-        updateTableView()
+    func deleteCell(sender: UIPanGestureRecognizer) {
+        let translation = sender.translationInView(view)
+        let velocity = sender.velocityInView(view)
+        let clipView = sender.view
+        
+        if sender.state == .Began {
+            clipViewDefaultOrigin = sender.view!.frame.origin
+        } else if sender.state == .Changed {
+            clipView?.transform = CGAffineTransformMakeTranslation(0, translation.y)
+        } else if sender.state == .Ended {
+            if velocity.y < 0 {
+                print("delete clip")
+            } else {
+                clipView!.frame.origin = clipViewDefaultOrigin
+            }
+        }
+        
+//        print("delete cell")
+//        let cell = sender.view as! UICollectionViewCell
+//        let index = self.clipCollection.indexPathForCell(cell)!.item
+//        deleteSingleClipAtIndex(index)
+//        updateTableView()
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {

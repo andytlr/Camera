@@ -250,6 +250,66 @@
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                         <animations/>
                                     </imageView>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kMK-Kl-gUt">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="667" id="Urk-WK-fsP"/>
+                                        </constraints>
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="20" minimumInteritemSpacing="0.0" id="Ewi-8X-mRi" customClass="CollectionViewPagingFlowLayout" customModule="Camera" customModuleProvider="target">
+                                            <size key="itemSize" width="225" height="400"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" reuseIdentifier="CollectionViewCell" id="Oew-pC-wVK" customClass="CollectionViewCell" customModule="Camera" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="133.5" width="225" height="400"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="225" height="400"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XKl-5Q-xqR">
+                                                            <rect key="frame" x="0.0" y="0.0" width="225" height="400"/>
+                                                            <animations/>
+                                                            <color key="backgroundColor" red="0.50229090452194214" green="0.40129917860031128" blue="0.44941216707229614" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        </view>
+                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M2h-iI-QMS">
+                                                            <rect key="frame" x="8" y="16" width="209" height="30"/>
+                                                            <animations/>
+                                                            <state key="normal" title="Delete">
+                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="tapDelete:" destination="Oew-pC-wVK" eventType="touchUpInside" id="AB2-vg-dLY"/>
+                                                            </connections>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2.9s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQG-p5-Z8l">
+                                                            <rect key="frame" x="87" y="353" width="51" height="30"/>
+                                                            <animations/>
+                                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <color key="textColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <animations/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <animations/>
+                                                <size key="customSize" width="225" height="400"/>
+                                                <connections>
+                                                    <outlet property="clipView" destination="XKl-5Q-xqR" id="Xe5-AH-GQS"/>
+                                                    <outlet property="sceneDuration" destination="oQG-p5-Z8l" id="raz-mX-OLL"/>
+                                                    <segue destination="96O-5S-Syf" kind="presentation" identifier="EditClip" modalTransitionStyle="crossDissolve" id="bs0-ND-A2A">
+                                                        <segue key="commit" inheritsFrom="parent" id="k9c-xf-l9r"/>
+                                                        <segue key="preview" inheritsFrom="commit" id="BuD-71-Djj"/>
+                                                    </segue>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
                                     <button opaque="NO" alpha="0.69999998807907104" contentMode="center" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9c-jf-31W" userLabel="back to camera">
                                         <rect key="frame" x="24" y="569" width="66" height="66"/>
                                         <animations/>
@@ -324,66 +384,6 @@
                                             <constraint firstAttribute="height" constant="66" id="HHx-4z-8Yd"/>
                                         </constraints>
                                     </view>
-                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="kMK-Kl-gUt">
-                                        <rect key="frame" x="0.0" y="134" width="375" height="400"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="400" id="Urk-WK-fsP"/>
-                                        </constraints>
-                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="20" minimumInteritemSpacing="0.0" id="Ewi-8X-mRi" customClass="CollectionViewPagingFlowLayout" customModule="Camera" customModuleProvider="target">
-                                            <size key="itemSize" width="225" height="400"/>
-                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        </collectionViewFlowLayout>
-                                        <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="left" reuseIdentifier="CollectionViewCell" id="Oew-pC-wVK" customClass="CollectionViewCell" customModule="Camera" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="0.0" width="225" height="400"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="225" height="400"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XKl-5Q-xqR">
-                                                            <rect key="frame" x="0.0" y="0.0" width="225" height="400"/>
-                                                            <animations/>
-                                                            <color key="backgroundColor" red="0.50229090452194214" green="0.40129917860031128" blue="0.44941216707229614" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                        </view>
-                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M2h-iI-QMS">
-                                                            <rect key="frame" x="8" y="16" width="209" height="30"/>
-                                                            <animations/>
-                                                            <state key="normal" title="Delete">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="tapDelete:" destination="Oew-pC-wVK" eventType="touchUpInside" id="AB2-vg-dLY"/>
-                                                            </connections>
-                                                        </button>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2.9s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQG-p5-Z8l">
-                                                            <rect key="frame" x="87" y="353" width="51" height="30"/>
-                                                            <animations/>
-                                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                            <color key="textColor" red="0.99989169836044312" green="1" blue="0.99988096952438354" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                    </subviews>
-                                                    <animations/>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
-                                                <animations/>
-                                                <size key="customSize" width="225" height="400"/>
-                                                <connections>
-                                                    <outlet property="clipView" destination="XKl-5Q-xqR" id="Xe5-AH-GQS"/>
-                                                    <outlet property="sceneDuration" destination="oQG-p5-Z8l" id="raz-mX-OLL"/>
-                                                    <segue destination="96O-5S-Syf" kind="presentation" identifier="EditClip" modalTransitionStyle="crossDissolve" id="bs0-ND-A2A">
-                                                        <segue key="commit" inheritsFrom="parent" id="k9c-xf-l9r"/>
-                                                        <segue key="preview" inheritsFrom="commit" id="BuD-71-Djj"/>
-                                                    </segue>
-                                                </connections>
-                                            </collectionViewCell>
-                                        </cells>
-                                    </collectionView>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
