@@ -25,6 +25,9 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     var clips: Results<Clip>!
     var clipCount: Int = 0
     
+    var currentlyVisibleClip: Int = 0
+    var currentIndexPath: Int = 0
+    
     var player: AVPlayer?
     var playerLayer: AVPlayerLayer?
     
@@ -128,16 +131,6 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         let clip = clips[indexPath.row]
         
-//        // attempts to get currently visible cell. It does seem to work but it only runs once.
-//        let visibleRect: CGRect = CGRect(origin: collectionView.contentOffset, size: collectionView.bounds.size)
-//        let visiblePoint: CGPoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect))
-//        let currentlyVisible = collectionView.indexPathForItemAtPoint(visiblePoint)
-//        print(currentlyVisible!.row)
-//        
-//        if currentlyVisible!.row == indexPath.row {
-//            print("\(currentlyVisible!.row) matches \(indexPath.row)")
-//        }
-//        
         // print("clip: \(clip)")
         
         let clipAsset = AVURLAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
@@ -158,7 +151,16 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         player!.actionAtItemEnd = .None
         cell.playerLayer.player = player
         
-//        player!.play()
+        currentIndexPath = indexPath.row
+        
+        print("index path row \(currentIndexPath)")
+        print("currently visible \(currentlyVisibleClip)")
+        
+//        if currentIndexPath == currentlyVisibleClip {
+//            player!.play()
+//        }
+        
+        player!.play()
         
         player!.muted = true
         players.append(player)
@@ -169,15 +171,22 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         return cell
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        let visibleRect: CGRect = CGRect(origin: self.clipCollection.contentOffset, size: self.clipCollection.bounds.size)
+//        let visiblePoint: CGPoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect))
+//        let visibleIndexPath = self.clipCollection.indexPathForItemAtPoint(visiblePoint)
+        
+        
+//        print("derp \(visibleIndexPath!.row)")
+//        self.currentlyVisibleClip = visibleIndexPath!.row
+        
+        let cellWidth: CGFloat = 225
+        let cellPadding: CGFloat = 20
+        currentlyVisibleClip = Int(self.clipCollection.contentOffset.x / (cellWidth + cellPadding))
+    }
+    
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        let visibleRect: CGRect = CGRect(origin: self.clipCollection.contentOffset, size: self.clipCollection.bounds.size)
-        let visiblePoint: CGPoint = CGPointMake(CGRectGetMidX(visibleRect), CGRectGetMidY(visibleRect))
-        let visibleIndexPath = self.clipCollection.indexPathForItemAtPoint(visiblePoint)
-        
-        let cell = self.clipCollection.dequeueReusableCellWithReuseIdentifier("CollectionViewCell", forIndexPath: visibleIndexPath!) as! CollectionViewCell
-        
-        print(visibleIndexPath!.row)
-        print(cell.sceneDuration.text)
+
     }
     
     func playerDidReachEndNotificationHandler(notification: NSNotification) {
