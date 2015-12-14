@@ -11,7 +11,7 @@ import AVKit
 import AVFoundation
 import RealmSwift
 
-class ListViewViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate {
+class ListViewViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet var mainView: UIView!
     @IBOutlet weak var backgroundView: UIView!
@@ -19,6 +19,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     @IBOutlet weak var bgImageView: UIImageView!
     
     var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
+    var deleteGesture: UIPanGestureRecognizer!
     
     var lightboxTransition: LightboxTransition!
 
@@ -39,6 +40,8 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     var loadingIndicator: UIActivityIndicatorView!
     var blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
     
+    var clipOriginalY: CGFloat!
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
     }
@@ -54,6 +57,12 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         screenEdgeRecognizer.edges = .Left
         view.addGestureRecognizer(screenEdgeRecognizer)
         
+        let deleteAction = Selector("deleteCell:")
+        deleteGesture = UIPanGestureRecognizer(target: self, action: deleteAction)
+        
+        screenEdgeRecognizer.delegate = self
+        deleteGesture.delegate = self
+        
         lightboxTransition = LightboxTransition()
         
         blurView.frame = self.view.bounds
@@ -66,6 +75,10 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         clipCollection.delegate = self
         
         updateTableView()
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
     
     override func viewDidLayoutSubviews() {
@@ -165,10 +178,68 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         player!.muted = true
         players.append(player)
         playerLayers.append(playerLayer)
+
+        cell.addGestureRecognizer(deleteGesture)
+//        deleteGesture.enabled = false
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         
         return cell
+    }
+    
+    func deleteCell(sender: UIPanGestureRecognizer) {
+        let translation = sender.translationInView(view)
+        let velocity = sender.velocityInView(view)
+        let clipView = sender.view
+        
+        if sender.state == .Began {
+            clipOriginalY = clipView!.frame.origin.y
+        }
+        
+        if sender.state == .Changed {
+            
+            clipView!.frame.origin.y = clipOriginalY + translation.y
+            
+            print(translation.y)
+            
+            if translation.y > 0 {
+                clipView!.frame.origin.y = clipOriginalY + (translation.y / 7)
+            }
+        }
+        
+        if sender.state == .Ended {
+            
+            print(velocity.y)
+            
+//            if velocity.y < -350 || translation.y < -350 {
+            if translation.y < -350 {
+                
+                UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
+                    
+                    clipView!.frame.origin.y = 0 - self.view.frame.height
+                    
+                    }, completion: { (Bool) -> Void in
+                        
+                        print("deleting cell")
+                        let cell = sender.view as! UICollectionViewCell
+                        let index = self.clipCollection.indexPathForCell(cell)!.item
+                        deleteSingleClipAtIndex(index)
+                        self.clipCollection.reloadData()
+                })
+                
+                print("deleting clip")
+                
+            } else {
+                
+                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
+                    
+                    print("cancel deletion")
+                    clipView?.frame.origin.y = self.clipOriginalY
+                    
+                    }, completion: { (Bool) -> Void in
+                })
+            }
+        }
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -186,7 +257,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-
+      
     }
     
     func playerDidReachEndNotificationHandler(notification: NSNotification) {
