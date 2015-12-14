@@ -67,9 +67,6 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         clipCollection.dataSource = self
         clipCollection.delegate = self
         
-        // 400 below is clip height. Pretty crappy code but works for the moment.
-        clipOriginalY = (view.frame.size.height - 400) / 2
-        
         updateTableView()
     }
     
@@ -190,7 +187,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let clipView = sender.view
         
         if sender.state == .Began {
-            
+            clipOriginalY = clipView!.frame.origin.y
         }
         
 //        if velocity.x != 0 {
