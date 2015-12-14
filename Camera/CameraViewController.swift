@@ -47,14 +47,12 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
     var startTime = NSTimeInterval()
     var timer = NSTimer()
     
-    let stillImageOutput = AVCaptureStillImageOutput()
     let videoOutput = AVCaptureMovieFileOutput()
     let devices = AVCaptureDevice.devices()
     
     var clipCount: Int! {
         didSet {
             if clipCount == 0 {
-//                showListButton
                 showListButton.enabled = false
                 showListButton.alpha = 0.5
                 totalTimeLabel.alpha = 0
@@ -229,10 +227,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
             previewLayer?.frame = self.view.layer.frame
             captureSession.startRunning()
             
-            stillImageOutput.outputSettings = [AVVideoCodecKey:AVVideoCodecJPEG]
-            if captureSession.canAddOutput(stillImageOutput) {
-                captureSession.addOutput(stillImageOutput)
-            }
             if captureSession.canAddOutput(videoOutput) {
                 captureSession.addOutput(videoOutput)
             }
@@ -306,43 +300,6 @@ class CameraViewController: UIViewController, AVCaptureFileOutputRecordingDelega
         videoOutput.stopRecording()
         recordButton.alpha = 0
         totalTimeLabel.alpha = 0
-    }
-    
-    func takeStillImage() {
-        print("Take Photo")
-        cameraView.alpha = 0
-        hideIcons()
-        recordButton.alpha = 0
-        delay(0.085) {
-            self.cameraView.alpha = 1
-        }
-        if let videoConnection = stillImageOutput.connectionWithMediaType(AVMediaTypeVideo) {
-            stillImageOutput.captureStillImageAsynchronouslyFromConnection(videoConnection) {
-                (imageDataSampleBuffer, error) -> Void in
-                
-                let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataSampleBuffer)
-                
-                let documentsPath = NSSearchPathForDirectoriesInDomains(.DocumentDirectory, .UserDomainMask, true)[0] as NSString
-                
-                let outputPath = documentsPath.stringByAppendingPathComponent("/clips/\(currentTimeStamp()).jpg")
-                let outputPathURL = NSURL(fileURLWithPath: outputPath)
-                
-                imageData.writeToFile(outputPath, atomically: true)
-                
-                let clip = Clip()
-                clip.filename = outputPathURL.lastPathComponent!
-                clip.type = "photo"
-                
-                let realm = try! Realm()
-                try! realm.write {
-                    realm.add(clip)
-                }
-
-                self.addChildViewController(self.previewViewController)
-                self.view.addSubview(self.previewViewController.view)
-                self.previewViewController.didMoveToParentViewController(self)
-            }
-        }
     }
     
     func runWhenDeletedAllClips() {
