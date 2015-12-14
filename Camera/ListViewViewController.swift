@@ -188,9 +188,6 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
         let clipView = sender.view
-        let deleteThreshold: CGFloat = -180
-        
-        print(clipOriginalY)
         
         if sender.state == .Began {
 //            clipViewDefaultOrigin = sender.view!.frame.origin
@@ -202,21 +199,20 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
             
             print(translation.y)
             
-            if translation.y < deleteThreshold {
-                print("passed delete threshold")
-            }
-            
             if translation.y > 0 {
                 clipView!.frame.origin.y = clipOriginalY + (translation.y / 7)
             }
         }
         
         if sender.state == .Ended {
-            if translation.y < deleteThreshold {
+            
+            print(velocity.y)
+            
+            if velocity.y < -350 || translation.y < -350 {
                 
-                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
+                UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
                     
-                    clipView!.transform = CGAffineTransformTranslate(clipView!.transform, 0, -1000) // TODO: Make end value relative
+                    clipView!.frame.origin.y = 0 - self.view.frame.height
                     
                     }, completion: { (Bool) -> Void in
                         
