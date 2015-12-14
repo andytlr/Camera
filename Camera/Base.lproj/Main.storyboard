@@ -501,22 +501,22 @@
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q0Y-g2-5N0" userLabel="Overlay View – Chrome only" customClass="PassThroughView" customModule="Camera" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="116"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONU-M2-ip9">
-                                        <rect key="frame" x="320" y="36" width="36" height="43"/>
+                                    <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9y3-Nd-A3A">
+                                        <rect key="frame" x="15" y="20" width="66" height="66"/>
                                         <animations/>
-                                        <state key="normal" image="pencil"/>
-                                        <connections>
-                                            <action selector="tappedDrawButton:" destination="96O-5S-Syf" eventType="touchUpInside" id="Sui-Qw-GUY"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9y3-Nd-A3A">
-                                        <rect key="frame" x="13" y="25" width="66" height="66"/>
-                                        <animations/>
-                                        <state key="normal" image="trash-1">
+                                        <state key="normal" image="acceptEdits">
                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                         <connections>
                                             <action selector="doneEditing:" destination="96O-5S-Syf" eventType="touchUpInside" id="D0D-yO-aQB"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONU-M2-ip9">
+                                        <rect key="frame" x="268" y="13" width="107" height="79"/>
+                                        <animations/>
+                                        <state key="normal" image="pencil"/>
+                                        <connections>
+                                            <action selector="tappedDrawButton:" destination="96O-5S-Syf" eventType="touchUpInside" id="Sui-Qw-GUY"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -591,11 +591,12 @@
                                     <action selector="colorChanged:" destination="Hcq-c3-RIz" eventType="valueChanged" id="uCc-C6-A9m"/>
                                 </connections>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XrJ-aO-DHM">
-                                <rect key="frame" x="35" y="607" width="30" height="30"/>
+                            <button opaque="NO" contentMode="center" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XrJ-aO-DHM">
+                                <rect key="frame" x="0.0" y="580" width="85" height="79"/>
                                 <animations/>
-                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
-                                <state key="normal" title="✨"/>
+                                <state key="normal" image="Clear">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="clearDrawing:" destination="Hcq-c3-RIz" eventType="touchUpInside" id="ery-SL-2FR"/>
                                     <action selector="clearDrawing:" destination="96O-5S-Syf" eventType="touchUpInside" id="l55-Ia-XUL"/>
@@ -636,12 +637,14 @@
         </scene>
     </scenes>
     <resources>
+        <image name="Clear" width="26" height="38"/>
+        <image name="acceptEdits" width="38" height="27"/>
         <image name="backtocamera" width="44" height="36"/>
         <image name="checkmark" width="48" height="37"/>
         <image name="cross" width="48" height="37"/>
         <image name="flip" width="64" height="64"/>
         <image name="list" width="64" height="64"/>
-        <image name="pencil" width="30" height="38"/>
+        <image name="pencil" width="34" height="38"/>
         <image name="playpause" width="36" height="28"/>
         <image name="save" width="32" height="28"/>
         <image name="spectrum" width="5" height="333"/>
