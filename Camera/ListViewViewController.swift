@@ -173,6 +173,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let deleteAction = Selector("deleteCell:")
         let deleteGesture = UIPanGestureRecognizer(target: self, action: deleteAction)
         cell.addGestureRecognizer(deleteGesture)
+//        deleteGesture.enabled = false
         
         ///
         
