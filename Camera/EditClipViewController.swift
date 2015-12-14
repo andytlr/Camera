@@ -102,52 +102,37 @@ class EditClipViewController: UIViewController, UITextFieldDelegate, UIGestureRe
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(true)
 
-        let filePath = getAbsolutePathForFile(clip.filename)
+        // Set up player
+        let videoAsset = AVAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
+        let playerItem = AVPlayerItem(asset: videoAsset)
         
-        if clip.type == "photo" {
-            print("handling photo")
-            
-            let image = UIImage(contentsOfFile: filePath)
-            let imageView = UIImageView(image: image)
-            
-            imageView.frame = self.view.bounds
-            clipView.addSubview(imageView)
-            
-        } else if clip.type == "video" {
-            print("handling video")
-            
-            // Set up player
-            let videoAsset = AVAsset(URL: NSURL(fileURLWithPath: getAbsolutePathForFile(clip.filename)))
-            let playerItem = AVPlayerItem(asset: videoAsset)
-            
-            player = AVPlayer(playerItem: playerItem)
-            
-            player!.actionAtItemEnd = .None
-            playerLayer = AVPlayerLayer()
-            playerLayer!.player = player
-            playerLayer!.frame = view.bounds
-            playerLayer!.backgroundColor = UIColor.clearColor().CGColor
-            playerLayer!.videoGravity = AVLayerVideoGravityResize
-            
-            Volume.when(.Up) {
-                self.volumeView.alpha = 1
-                self.dismissVolumeControlTimer?.invalidate()
-                self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
-            }
-            
-            Volume.Down.when {
-                self.volumeView.alpha = 1
-                self.dismissVolumeControlTimer?.invalidate()
-                self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
-            }
-            
-            clipView.layer.insertSublayer(playerLayer!, below: overlayView.layer)
-            
-            player!.play()
-            
-            // Notify when we reach the end so we can loop
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
+        player = AVPlayer(playerItem: playerItem)
+        
+        player!.actionAtItemEnd = .None
+        playerLayer = AVPlayerLayer()
+        playerLayer!.player = player
+        playerLayer!.frame = view.bounds
+        playerLayer!.backgroundColor = UIColor.clearColor().CGColor
+        playerLayer!.videoGravity = AVLayerVideoGravityResize
+        
+        Volume.when(.Up) {
+            self.volumeView.alpha = 1
+            self.dismissVolumeControlTimer?.invalidate()
+            self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
         }
+        
+        Volume.Down.when {
+            self.volumeView.alpha = 1
+            self.dismissVolumeControlTimer?.invalidate()
+            self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
+        }
+        
+        clipView.layer.insertSublayer(playerLayer!, below: overlayView.layer)
+        
+        player!.play()
+        
+        // Notify when we reach the end so we can loop
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
     }
     
     func hideVolumeControl() {

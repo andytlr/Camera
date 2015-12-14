@@ -16,7 +16,6 @@ import MediaPlayer
 class PreviewViewController: UIViewController {
     
     @IBOutlet weak var previewView: UIView!
-    
     @IBOutlet weak var deleteIcon: UIImageView!
     @IBOutlet weak var keepIcon: UIImageView!
     
@@ -62,56 +61,40 @@ class PreviewViewController: UIViewController {
         
         let filePath = getAbsolutePathForFile(clip.filename)
         
-        if clip.type == "photo" {
-            
-            let image = UIImage(contentsOfFile: filePath)!
-            let imageView = UIImageView(image: image)
-            
-            // Conditionally use lines below to mirror preview a selfie.
-            
-//            let mirrorImage = UIImage(CGImage: image.CGImage!, scale: 1.0, orientation: .LeftMirrored)
-//            let imageView = UIImageView(image: mirrorImage)
-            
-            imageView.frame = self.view.bounds
-            previewView.addSubview(imageView)
-            
-        } else if clip.type == "video" {
-            
-            let URL = NSURL(fileURLWithPath: filePath)
-            let videoAsset = AVAsset(URL: URL)
-            let playerItem = AVPlayerItem(asset: videoAsset)
-            
-            playerLayer = AVPlayerLayer()
-            playerLayer!.frame = view.bounds
-            player = AVPlayer(playerItem: playerItem)
-            player!.actionAtItemEnd = .None
-            playerLayer!.player = player
-            playerLayer!.backgroundColor = UIColor.clearColor().CGColor
-            playerLayer!.videoGravity = AVLayerVideoGravityResize
-            previewView.layer.addSublayer(playerLayer!)
-            player!.play()
-            player!.muted = true
-            
-            Volume.when(.Up) {
-                self.volumeView.alpha = 1
-                if self.player != nil {
-                    self.player!.muted = false
-                }
-                self.dismissVolumeControlTimer?.invalidate()
-                self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
+        let URL = NSURL(fileURLWithPath: filePath)
+        let videoAsset = AVAsset(URL: URL)
+        let playerItem = AVPlayerItem(asset: videoAsset)
+        
+        playerLayer = AVPlayerLayer()
+        playerLayer!.frame = view.bounds
+        player = AVPlayer(playerItem: playerItem)
+        player!.actionAtItemEnd = .None
+        playerLayer!.player = player
+        playerLayer!.backgroundColor = UIColor.clearColor().CGColor
+        playerLayer!.videoGravity = AVLayerVideoGravityResize
+        previewView.layer.addSublayer(playerLayer!)
+        player!.play()
+        player!.muted = true
+        
+        Volume.when(.Up) {
+            self.volumeView.alpha = 1
+            if self.player != nil {
+                self.player!.muted = false
             }
-            
-            Volume.Down.when {
-                self.volumeView.alpha = 1
-                if self.player != nil {
-                    self.player!.muted = false
-                }
-                self.dismissVolumeControlTimer?.invalidate()
-                self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
-            }
-            
-            NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
+            self.dismissVolumeControlTimer?.invalidate()
+            self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
         }
+        
+        Volume.Down.when {
+            self.volumeView.alpha = 1
+            if self.player != nil {
+                self.player!.muted = false
+            }
+            self.dismissVolumeControlTimer?.invalidate()
+            self.dismissVolumeControlTimer = NSTimer.scheduledTimerWithTimeInterval(2.0, target: self, selector: Selector("hideVolumeControl"), userInfo: nil, repeats: false)
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
     }
     
     func hideVolumeControl() {
