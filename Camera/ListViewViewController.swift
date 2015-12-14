@@ -162,7 +162,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
 //            player!.play()
 //        }
         
-//        player!.play()
+        player!.play()
         
         player!.muted = true
         players.append(player)
@@ -189,10 +189,6 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         if sender.state == .Began {
             clipOriginalY = clipView!.frame.origin.y
         }
-        
-//        if velocity.x != 0 {
-//            velocity.x = 0
-//        }
         
         if sender.state == .Changed {
             
