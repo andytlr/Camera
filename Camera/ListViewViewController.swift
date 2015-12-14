@@ -204,6 +204,10 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
             if translation.y < deleteThreshold {
                 print("passed delete threshold")
             }
+            
+            if translation.y > 0 {
+                clipView!.frame.origin.y = clipOriginalY + (translation.y / 7)
+            }
         }
         
         if sender.state == .Ended {
