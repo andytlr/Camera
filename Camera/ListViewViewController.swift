@@ -11,7 +11,7 @@ import AVKit
 import AVFoundation
 import RealmSwift
 
-class ListViewViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate {
+class ListViewViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     
     @IBOutlet var mainView: UIView!
     @IBOutlet weak var backgroundView: UIView!
@@ -19,6 +19,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     @IBOutlet weak var bgImageView: UIImageView!
     
     var screenEdgeRecognizer: UIScreenEdgePanGestureRecognizer!
+    var deleteGesture: UIPanGestureRecognizer!
     
     var lightboxTransition: LightboxTransition!
 
@@ -56,6 +57,12 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         screenEdgeRecognizer.edges = .Left
         view.addGestureRecognizer(screenEdgeRecognizer)
         
+        let deleteAction = Selector("deleteCell:")
+        deleteGesture = UIPanGestureRecognizer(target: self, action: deleteAction)
+        
+        screenEdgeRecognizer.delegate = self
+        deleteGesture.delegate = self
+        
         lightboxTransition = LightboxTransition()
         
         blurView.frame = self.view.bounds
@@ -68,6 +75,10 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         clipCollection.delegate = self
         
         updateTableView()
+    }
+    
+    func gestureRecognizer(gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWithGestureRecognizer otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
     
     override func viewDidLayoutSubviews() {
@@ -167,15 +178,9 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         player!.muted = true
         players.append(player)
         playerLayers.append(playerLayer)
-        
-        ///
-        
-        let deleteAction = Selector("deleteCell:")
-        let deleteGesture = UIPanGestureRecognizer(target: self, action: deleteAction)
+
         cell.addGestureRecognizer(deleteGesture)
 //        deleteGesture.enabled = false
-        
-        ///
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "playerDidReachEndNotificationHandler:", name: "AVPlayerItemDidPlayToEndTimeNotification", object: player!.currentItem)
         
