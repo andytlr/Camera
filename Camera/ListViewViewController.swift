@@ -189,6 +189,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         if sender.state == .Began {
             clipViewDefaultOrigin = sender.view!.frame.origin
+            clipView!.transform = CGAffineTransformMakeTranslation(0, 0)
         }
         
         if sender.state == .Changed {
@@ -197,6 +198,10 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
             if translation.y < deleteThreshold {
                 print("passed delete threshold")
             }
+            
+            if translation.y >= 20 {
+                clipView!.transform = CGAffineTransformTranslate(clipView!.transform, 0, 50)
+            }
         }
         
         if sender.state == .Ended {
@@ -204,7 +209,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
                 
                 UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
                     
-                    sender.view?.transform = CGAffineTransformMakeTranslation(0, -1000) // TODO: Make end value relative
+                    clipView!.transform = CGAffineTransformTranslate(clipView!.transform, 0, -1000) // TODO: Make end value relative
                     
                     }, completion: { (Bool) -> Void in
                         
