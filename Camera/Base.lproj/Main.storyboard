@@ -275,16 +275,6 @@
                                                             <animations/>
                                                             <color key="backgroundColor" red="0.50229090452194214" green="0.40129917860031128" blue="0.44941216707229614" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </view>
-                                                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M2h-iI-QMS">
-                                                            <rect key="frame" x="8" y="16" width="209" height="30"/>
-                                                            <animations/>
-                                                            <state key="normal" title="Delete">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <connections>
-                                                                <action selector="tapDelete:" destination="Oew-pC-wVK" eventType="touchUpInside" id="AB2-vg-dLY"/>
-                                                            </connections>
-                                                        </button>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2.9s" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oQG-p5-Z8l">
                                                             <rect key="frame" x="87" y="353" width="51" height="30"/>
                                                             <animations/>

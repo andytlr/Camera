@@ -35,11 +35,4 @@ class CollectionViewCell: UICollectionViewCell {
         playerLayer!.videoGravity = AVLayerVideoGravityResize
         clipView.layer.addSublayer(self.playerLayer!)
     }
-    
-    @IBAction func tapDelete(sender: UIButton) {
-        deleteSingleClip(clip)
-        
-        // This is temporary instead of removing the row.
-        sender.enabled = false
-    }
 }
