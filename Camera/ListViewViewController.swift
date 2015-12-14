@@ -39,7 +39,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     var loadingIndicator: UIActivityIndicatorView!
     var blurView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Dark))
     
-    var clipViewDefaultOrigin: CGPoint!
+    var clipOriginalY: CGFloat!
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return .LightContent
@@ -66,6 +66,8 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         clipCollection.dataSource = self
         clipCollection.delegate = self
+        
+        clipOriginalY = (view.frame.size.height - 400) / 2
         
         updateTableView()
     }
@@ -185,22 +187,22 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let translation = sender.translationInView(view)
         let velocity = sender.velocityInView(view)
         let clipView = sender.view
-        let deleteThreshold = CGFloat(-180)
+        let deleteThreshold: CGFloat = -180
+        
+        print(clipOriginalY)
         
         if sender.state == .Began {
-            clipViewDefaultOrigin = sender.view!.frame.origin
-            clipView!.transform = CGAffineTransformMakeTranslation(0, 0)
+//            clipViewDefaultOrigin = sender.view!.frame.origin
         }
         
         if sender.state == .Changed {
-            clipView?.transform = CGAffineTransformMakeTranslation(0, translation.y)
+            
+            clipView!.frame.origin.y = clipOriginalY + translation.y
+            
             print(translation.y)
+            
             if translation.y < deleteThreshold {
                 print("passed delete threshold")
-            }
-            
-            if translation.y >= 20 {
-                clipView!.transform = CGAffineTransformTranslate(clipView!.transform, 0, 50)
             }
         }
         
@@ -226,7 +228,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
                 UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
                     
                     print("cancel deletion")
-                    clipView?.transform = CGAffineTransformIdentity
+                    clipView?.frame.origin.y = self.clipOriginalY
                     
                     }, completion: { (Bool) -> Void in
                 })
