@@ -189,26 +189,42 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         
         if sender.state == .Began {
             clipViewDefaultOrigin = sender.view!.frame.origin
-        } else if sender.state == .Changed {
+        }
+        
+        if sender.state == .Changed {
             clipView?.transform = CGAffineTransformMakeTranslation(0, translation.y)
             print(translation.y)
             if translation.y < deleteThreshold {
                 print("passed delete threshold")
             }
-        } else if sender.state == .Ended {
+        }
+        
+        if sender.state == .Ended {
             if translation.y < deleteThreshold {
-                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: [], animations: {
-                        sender.view?.transform = CGAffineTransformMakeTranslation(0, -1000) // TODO: Make end value relative
-                    }, completion: { Bool -> Void in
+                
+                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
+                    
+                    sender.view?.transform = CGAffineTransformMakeTranslation(0, -1000) // TODO: Make end value relative
+                    
+                    }, completion: { (Bool) -> Void in
+                        
                         print("deleting cell")
                         let cell = sender.view as! UICollectionViewCell
                         let index = self.clipCollection.indexPathForCell(cell)!.item
                         deleteSingleClipAtIndex(index)
-                    }
-                )
+                })
+                
                 print("deleting clip")
+                
             } else {
-                print("cancel deletion")
+                
+                UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
+                    
+                    print("cancel deletion")
+                    clipView?.transform = CGAffineTransformIdentity
+                    
+                    }, completion: { (Bool) -> Void in
+                })
             }
         }
     }
