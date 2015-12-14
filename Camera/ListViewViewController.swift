@@ -165,7 +165,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
 //            player!.play()
 //        }
         
-        player!.play()
+//        player!.play()
         
         player!.muted = true
         players.append(player)
@@ -190,8 +190,12 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
         let clipView = sender.view
         
         if sender.state == .Began {
-//            clipViewDefaultOrigin = sender.view!.frame.origin
+            
         }
+        
+//        if velocity.x != 0 {
+//            velocity.x = 0
+//        }
         
         if sender.state == .Changed {
             
@@ -208,7 +212,8 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
             
             print(velocity.y)
             
-            if velocity.y < -350 || translation.y < -350 {
+//            if velocity.y < -350 || translation.y < -350 {
+            if translation.y < -350 {
                 
                 UIView.animateWithDuration(0.6, delay: 0, usingSpringWithDamping: 0.9, initialSpringVelocity: 10, options: [], animations: { () -> Void in
                     
@@ -220,6 +225,7 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
                         let cell = sender.view as! UICollectionViewCell
                         let index = self.clipCollection.indexPathForCell(cell)!.item
                         deleteSingleClipAtIndex(index)
+                        self.clipCollection.reloadData()
                 })
                 
                 print("deleting clip")
