@@ -54,6 +54,11 @@ func updateTotalTime() {
 }
 
 func exportVideo() {
+    savingToCameraRollBackgroundTask = UIApplication.sharedApplication().beginBackgroundTaskWithExpirationHandler({ () -> Void in
+        
+        print("Background Task Expired")
+    })
+    
     let composition = AVMutableComposition()
     let trackVideo:AVMutableCompositionTrack = composition.addMutableTrackWithMediaType(AVMediaTypeVideo, preferredTrackID: CMPersistentTrackID())
     

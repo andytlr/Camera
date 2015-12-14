@@ -227,10 +227,6 @@ class ListViewViewController: UIViewController, UICollectionViewDataSource, UICo
     }
     
     @IBAction func tapExport(sender: AnyObject) {
-        
-        savingToCameraRollBackgroundTask = UIApplication.sharedApplication().beginBackgroundTaskWithName("Exporting To Camera Roll") { () -> Void in
-            print("Background Task Expired")
-        }
         exportVideo()
         
         loadingIndicator.startAnimating()
