@@ -578,15 +578,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view alpha="0.90000000000000002" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EVE-wc-3Rh" userLabel="Color Bar" customClass="RKColorSlider">
+                            <view alpha="0.90000000000000002" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EVE-wc-3Rh" userLabel="Color Bar" customClass="RKColorSlider">
                                 <rect key="frame" x="345" y="0.0" width="30" height="667"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="spectrum" translatesAutoresizingMaskIntoConstraints="NO" id="qxh-fj-Utf">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spectrum" translatesAutoresizingMaskIntoConstraints="NO" id="qxh-fj-Utf">
                                         <rect key="frame" x="20" y="0.0" width="10" height="667"/>
                                         <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="10" id="Zli-LQ-FNE"/>
+                                        </constraints>
                                     </imageView>
                                 </subviews>
                                 <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="30" id="8bz-Hg-A1T"/>
+                                    <constraint firstAttribute="bottom" secondItem="qxh-fj-Utf" secondAttribute="bottom" id="Gp5-pC-fyd"/>
+                                    <constraint firstItem="qxh-fj-Utf" firstAttribute="top" secondItem="EVE-wc-3Rh" secondAttribute="top" id="Grs-eC-vSU"/>
+                                    <constraint firstAttribute="trailing" secondItem="qxh-fj-Utf" secondAttribute="trailing" id="KLs-p1-nDq"/>
+                                </constraints>
                                 <connections>
                                     <action selector="colorChanged:" destination="Hcq-c3-RIz" eventType="valueChanged" id="uCc-C6-A9m"/>
                                 </connections>
@@ -604,6 +613,11 @@
                             </button>
                         </subviews>
                         <animations/>
+                        <constraints>
+                            <constraint firstItem="EVE-wc-3Rh" firstAttribute="top" secondItem="yum-zk-eqD" secondAttribute="top" id="1aO-bi-p10"/>
+                            <constraint firstItem="J2Q-fQ-g8e" firstAttribute="top" secondItem="EVE-wc-3Rh" secondAttribute="bottom" id="mn5-pb-qWw"/>
+                            <constraint firstAttribute="trailing" secondItem="EVE-wc-3Rh" secondAttribute="trailing" id="qSJ-Zu-akH"/>
+                        </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
